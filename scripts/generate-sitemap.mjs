@@ -24,7 +24,7 @@ const routes = [
 const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${routes.map(r => `  <url>
-    <loc>https://www.katharis.de${r.url}</loc>
+    <loc>https://katharis.de${r.url}</loc>
     <lastmod>${today}</lastmod>
     <changefreq>${r.changefreq}</changefreq>
     <priority>${r.priority}</priority>
