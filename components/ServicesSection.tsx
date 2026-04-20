@@ -112,14 +112,13 @@ const services: Service[] = [
   },
 ];
 
-type FormState = { name: string; email: string; telefon: string; ort: string; nachricht: string };
+type FormState = { name: string; telefon: string; ort: string };
 
-const emptyForm: FormState = { name: "", email: "", telefon: "", ort: "", nachricht: "" };
+const emptyForm: FormState = { name: "", telefon: "", ort: "" };
 
 export default function ServicesSection() {
   const [activeId, setActiveId] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
-  const [addCleaning, setAddCleaning] = useState(false);
   const [form, setForm] = useState<FormState>(emptyForm);
   const [errorMsg, setErrorMsg] = useState("");
 
@@ -145,7 +144,6 @@ export default function ServicesSection() {
   function openService(id: string) {
     setActiveId(id);
     setSubmitted(false);
-    setAddCleaning(false);
     setForm(emptyForm);
     setErrorMsg("");
   }
@@ -157,11 +155,8 @@ export default function ServicesSection() {
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    // Pflichtfeld-Validierung (zusätzlich zu HTML5 required)
-    if (!form.name.trim() || !form.email.trim() || !form.telefon.trim()) {
-      setErrorMsg(
-        "Bitte vervollständigen Sie Ihre Kontaktdaten, damit wir uns umgehend für eine kostenlose Beratung bei Ihnen melden können."
-      );
+    if (!form.name.trim() || !form.telefon.trim() || !form.ort.trim()) {
+      setErrorMsg("Bitte füllen Sie alle Pflichtfelder aus.");
       return;
     }
     setErrorMsg("");
@@ -403,111 +398,27 @@ export default function ServicesSection() {
                       </div>
                     </div>
 
-                    {/* Upsell Checkbox – Grundreinigung (nur bei Messie-Hilfe & Haushaltsauflösung) */}
-                    {active.showCleaningUpsell && (
-                      <label
-                        id="reinigung-upsell"
-                        className="flex items-start gap-3 rounded-xl px-4 py-3 cursor-pointer select-none transition-colors"
-                        style={{
-                          border: `2px solid ${ACCENT}`,
-                          backgroundColor: addCleaning ? ACCENT + "15" : "transparent",
-                        }}
-                      >
-                        <input
-                          type="checkbox"
-                          checked={addCleaning}
-                          onChange={(e) => setAddCleaning(e.target.checked)}
-                          className="sr-only"
-                        />
-                        <span
-                          className="mt-0.5 w-5 h-5 rounded-md flex items-center justify-center shrink-0 transition-colors"
-                          style={{
-                            border: `2px solid ${ACCENT}`,
-                            backgroundColor: addCleaning ? ACCENT : "transparent",
-                          }}
-                        >
-                          {addCleaning && <Check size={13} color="#fff" strokeWidth={3} />}
-                        </span>
-                        <span className="text-sm leading-snug" style={{ color: PRIMARY }}>
-                          <strong>Optional:</strong> Grundreinigung nach Räumung erwünscht
-                        </span>
-                      </label>
-                    )}
-
                     {[
-                      {
-                        name: "name",
-                        label: "Vor- & Nachname",
-                        placeholder: "Ihr vollständiger Name",
-                        type: "text",
-                        required: true,
-                      },
-                      {
-                        name: "email",
-                        label: "E-Mail",
-                        placeholder: "name@beispiel.de",
-                        type: "email",
-                        required: true,
-                      },
-                      {
-                        name: "telefon",
-                        label: "Telefonnummer",
-                        placeholder: "z. B. 0711 123456",
-                        type: "tel",
-                        required: true,
-                      },
-                      {
-                        name: "ort",
-                        label: "Einsatzort",
-                        placeholder: "z. B. Böblingen, Stuttgart...",
-                        type: "text",
-                        required: false,
-                      },
+                      { name: "name",    label: "Vor- & Nachname",        placeholder: "Ihr vollständiger Name",  type: "text" },
+                      { name: "telefon", label: "Telefonnummer",           placeholder: "z. B. 0711 123456",       type: "tel"  },
+                      { name: "ort",     label: "Einsatzort (PLZ / Stadt)", placeholder: "z. B. 71032 Böblingen",  type: "text" },
                     ].map((f) => (
                       <div key={f.name}>
-                        <label
-                          className="text-xs font-semibold mb-1 block"
-                          style={{ color: PRIMARY }}
-                        >
-                          {f.label}
-                          {f.required && <span style={{ color: ACCENT }}> *</span>}
+                        <label className="text-xs font-semibold mb-1 block" style={{ color: PRIMARY }}>
+                          {f.label}<span style={{ color: ACCENT }}> *</span>
                         </label>
                         <input
                           type={f.type}
                           name={f.name}
                           value={form[f.name as keyof FormState]}
                           onChange={handleChange}
-                          required={f.required}
+                          required
                           placeholder={f.placeholder}
                           className="w-full rounded-xl px-4 py-3 text-sm outline-none transition-all"
-                          style={{
-                            border: `2px solid ${ACCENT}`,
-                            color: PRIMARY,
-                          }}
+                          style={{ border: `2px solid ${ACCENT}`, color: PRIMARY }}
                         />
                       </div>
                     ))}
-
-                    <div>
-                      <label
-                        className="text-xs font-semibold mb-1 block"
-                        style={{ color: PRIMARY }}
-                      >
-                        Kurze Beschreibung
-                      </label>
-                      <textarea
-                        name="nachricht"
-                        value={form.nachricht}
-                        onChange={handleChange}
-                        rows={3}
-                        placeholder="Was können wir für Sie tun?"
-                        className="w-full rounded-xl px-4 py-3 text-sm outline-none transition-all resize-none"
-                        style={{
-                          border: `2px solid ${ACCENT}`,
-                          color: PRIMARY,
-                        }}
-                      />
-                    </div>
 
                     <button
                       type="submit"
