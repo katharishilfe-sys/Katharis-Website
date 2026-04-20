@@ -22,11 +22,36 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
 }
 
 export default function KontaktPage() {
-  const [showDummy, setShowDummy] = useState(false);
+  const [form, setForm] = useState({ name: "", telefon: "", einsatzort: "" });
+  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+  const [errorMsg, setErrorMsg] = useState("");
 
-  function handleSubmit(e: React.FormEvent) {
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  }
+
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setShowDummy(true);
+    setStatus("sending");
+    setErrorMsg("");
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setStatus("success");
+      } else {
+        setErrorMsg(data.error ?? "Unbekannter Fehler");
+        setStatus("error");
+      }
+    } catch {
+      setErrorMsg("Verbindungsfehler. Bitte rufen Sie uns direkt an.");
+      setStatus("error");
+    }
   }
 
   return (
@@ -50,10 +75,7 @@ export default function KontaktPage() {
 
           {/* Person 1 */}
           <div className="flex items-start gap-4">
-            <div
-              className="w-12 h-12 rounded-full flex items-center justify-center shrink-0"
-              style={{ backgroundColor: ACCENT + "20" }}
-            >
+            <div className="w-12 h-12 rounded-full flex items-center justify-center shrink-0" style={{ backgroundColor: ACCENT + "20" }}>
               <User size={22} style={{ color: ACCENT }} />
             </div>
             <div>
@@ -64,10 +86,7 @@ export default function KontaktPage() {
 
           {/* Person 2 */}
           <div className="flex items-start gap-4">
-            <div
-              className="w-12 h-12 rounded-full flex items-center justify-center shrink-0"
-              style={{ backgroundColor: ACCENT + "20" }}
-            >
+            <div className="w-12 h-12 rounded-full flex items-center justify-center shrink-0" style={{ backgroundColor: ACCENT + "20" }}>
               <User size={22} style={{ color: ACCENT }} />
             </div>
             <div>
@@ -84,39 +103,22 @@ export default function KontaktPage() {
 
           {/* Contact info */}
           <div className="flex flex-col gap-3 mt-2">
-            <a
-              href="tel:07031/6953604"
-              className="flex items-center gap-3 text-base font-bold transition-opacity hover:opacity-80"
-              style={{ color: PRIMARY }}
-            >
-              <div
-                className="w-10 h-10 rounded-full flex items-center justify-center shrink-0"
-                style={{ backgroundColor: ACCENT }}
-              >
+            <a href="tel:07031/6953604" className="flex items-center gap-3 text-base font-bold transition-opacity hover:opacity-80" style={{ color: PRIMARY }}>
+              <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0" style={{ backgroundColor: ACCENT }}>
                 <Phone size={18} color="#fff" />
               </div>
               07031/6953604
             </a>
-            <a
-              href="mailto:info@katharis.de"
-              className="flex items-center gap-3 text-base font-bold transition-opacity hover:opacity-80"
-              style={{ color: PRIMARY }}
-            >
-              <div
-                className="w-10 h-10 rounded-full flex items-center justify-center shrink-0"
-                style={{ backgroundColor: ACCENT }}
-              >
+            <a href="mailto:info@katharis.de" className="flex items-center gap-3 text-base font-bold transition-opacity hover:opacity-80" style={{ color: PRIMARY }}>
+              <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0" style={{ backgroundColor: ACCENT }}>
                 <Mail size={18} color="#fff" />
               </div>
               info@katharis.de
             </a>
           </div>
 
-          {/* Opening hours mini-badge */}
-          <div
-            className="rounded-xl px-5 py-3 mt-2 text-sm text-white"
-            style={{ backgroundColor: PRIMARY }}
-          >
+          {/* Opening hours */}
+          <div className="rounded-xl px-5 py-3 mt-2 text-sm text-white" style={{ backgroundColor: PRIMARY }}>
             <strong>Mo. – Sa.</strong> 08:00 – 20:00 Uhr · Kostenlose Vor-Ort-Besichtigung
           </div>
         </div>
@@ -130,39 +132,46 @@ export default function KontaktPage() {
             Kostenloses Angebot anfordern
           </h2>
 
-          <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-            <Field label="Vor- & Nachname *">
-              <input required name="name" placeholder="Ihr vollständiger Name" className={inputClass} style={inputStyle} />
-            </Field>
+          {status === "success" ? (
+            <div className="rounded-2xl p-8 text-center" style={{ backgroundColor: PRIMARY }}>
+              <div className="text-4xl mb-3">✓</div>
+              <h3 className="text-xl font-bold text-white mb-2">Vielen Dank!</h3>
+              <p className="text-white/80">
+                Wir melden uns umgehend unter{" "}
+                <a href="tel:07031/6953604" className="font-bold underline" style={{ color: ACCENT }}>
+                  07031/6953604
+                </a>
+                .
+              </p>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+              <Field label="Vor- & Nachname *">
+                <input required name="name" value={form.name} onChange={handleChange} placeholder="Ihr vollständiger Name" className={inputClass} style={inputStyle} />
+              </Field>
 
-            <Field label="Telefonnummer *">
-              <input required name="telefon" type="tel" placeholder="z. B. 0711 123456" className={inputClass} style={inputStyle} />
-            </Field>
+              <Field label="Telefonnummer *">
+                <input required name="telefon" type="tel" value={form.telefon} onChange={handleChange} placeholder="z. B. 0711 123456" className={inputClass} style={inputStyle} />
+              </Field>
 
-            <Field label="Einsatzort (PLZ / Stadt) *">
-              <input required name="einsatzort" placeholder="z. B. 71032 Böblingen" className={inputClass} style={inputStyle} />
-            </Field>
+              <Field label="Einsatzort (PLZ / Stadt) *">
+                <input required name="einsatzort" value={form.einsatzort} onChange={handleChange} placeholder="z. B. 71032 Böblingen" className={inputClass} style={inputStyle} />
+              </Field>
 
-            <button
-              type="submit"
-              className="w-full py-4 rounded-full font-bold text-white text-base transition-opacity hover:opacity-90"
-              style={{ backgroundColor: ACCENT }}
-            >
-              Anfrage absenden
-            </button>
+              {status === "error" && (
+                <p className="text-red-600 text-sm">{errorMsg}</p>
+              )}
 
-            {showDummy && (
-              <div className="rounded-2xl p-6" style={{ backgroundColor: PRIMARY }}>
-                <p className="text-white text-base leading-relaxed">
-                  Unser Online-Formular wird aktuell gewartet. Für eine sofortige und diskrete Hilfe
-                  rufen Sie uns bitte direkt an unter:{" "}
-                  <a href="tel:07031/6953604" className="font-bold underline" style={{ color: ACCENT }}>
-                    07031/6953604
-                  </a>
-                </p>
-              </div>
-            )}
-          </form>
+              <button
+                type="submit"
+                disabled={status === "sending"}
+                className="w-full py-4 rounded-full font-bold text-white text-base transition-opacity hover:opacity-90 disabled:opacity-50"
+                style={{ backgroundColor: ACCENT }}
+              >
+                {status === "sending" ? "Wird gesendet..." : "Anfrage absenden"}
+              </button>
+            </form>
+          )}
         </div>
 
       </div>
