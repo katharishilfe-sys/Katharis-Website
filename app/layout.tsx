@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import Script from "next/script";
 
 const geistSans = Geist({
@@ -17,9 +15,11 @@ export const metadata: Metadata = {
   keywords:
     "Entrümpelung, Messie-Hilfe, Haushaltsauflösung, Böblingen, Stuttgart, Pflegekasse, Kostenübernahme, Grundreinigung",
   robots: "index, follow",
+  metadataBase: new URL("https://www.katharis.de"),
   icons: {
-    icon: "/katharis-logo.png",
-    apple: "/katharis-logo.png",
+    icon: "/favicon-512.png",
+    apple: "/favicon-512.png",
+    shortcut: "/favicon-512.png",
   },
   openGraph: {
     title: "Entrümpelung & Messie-Hilfe Böblingen | Katharis",
@@ -29,6 +29,21 @@ export const metadata: Metadata = {
     url: "https://www.katharis.de",
     siteName: "Katharis",
     locale: "de_DE",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Katharis – Hilfe statt Chaos",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Entrümpelung & Messie-Hilfe Böblingen | Katharis",
+    description:
+      "Diskrete Entrümpelung, Haushaltsauflösung & Messie-Hilfe in Böblingen und Stuttgart. Bis zu 100 % Kostenübernahme durch Pflegekasse!",
+    images: ["/og-image.png"],
   },
 };
 
@@ -83,9 +98,7 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col" style={{ backgroundColor: "#E8F1F2" }}>
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        {children}
       </body>
     </html>
   );
