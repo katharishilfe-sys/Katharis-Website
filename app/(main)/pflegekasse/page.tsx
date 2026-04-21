@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Script from "next/script";
+import Breadcrumb from "@/components/Breadcrumb";
 
 export const metadata: Metadata = {
   title: "Pflegekasse übernimmt Kosten – Messie-Hilfe | Katharis",
@@ -62,11 +63,12 @@ export default function PflegekassePage() {
   return (
     <>
     <Script
-      id="faq-schema"
+      id="faq-schema-pflegekasse"
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
     />
-    <div className="max-w-4xl mx-auto px-4 py-16 md:py-24">
+    <Breadcrumb crumbs={[{ label: "Startseite", href: "/" }, { label: "Pflegekasse" }]} />
+    <div className="max-w-4xl mx-auto px-4 py-10 md:py-16">
       {/* Hero */}
       <p className="text-sm font-semibold uppercase tracking-widest mb-4 text-center" style={{ color: "#EBA059" }}>
         Ihre Pflegekasse zahlt – wir erklären wie

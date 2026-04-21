@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Breadcrumb from "@/components/Breadcrumb";
 
 export const metadata: Metadata = {
   title: "Über uns – Katharis | Diskrete Messie-Hilfe in Böblingen & Stuttgart",
@@ -9,7 +10,9 @@ export const metadata: Metadata = {
 
 export default function UeberUnsPage() {
   return (
-    <div className="max-w-3xl mx-auto px-4 py-16 md:py-24">
+    <>
+    <Breadcrumb crumbs={[{ label: "Startseite", href: "/" }, { label: "Über uns" }]} />
+    <div className="max-w-3xl mx-auto px-4 py-10 md:py-16">
       <p className="text-sm font-semibold uppercase tracking-widest mb-4" style={{ color: "#EBA059" }}>
         Wer wir sind
       </p>
@@ -75,5 +78,6 @@ export default function UeberUnsPage() {
         </Link>
       </div>
     </div>
+    </>
   );
 }

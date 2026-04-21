@@ -1,12 +1,46 @@
 import Link from "next/link";
+import Script from "next/script";
 import { CheckCircle2, Shield, Clock, Heart, HandHeart, BadgeEuro, Sparkles } from "lucide-react";
 import ServicesSection from "@/components/ServicesSection";
 import FaqSection from "@/components/FaqSection";
 import StepsSection from "@/components/StepsSection";
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Erfahren meine Nachbarn von dem Einsatz?",
+      acceptedAnswer: { "@type": "Answer", text: "Nein. Absolute Diskretion ist unser oberstes Gebot. Wir rücken nicht mit auffällig beschrifteten Fahrzeugen an und verhalten uns im Treppenhaus und vor dem Gebäude unauffällig. Niemand erfährt, warum wir bei Ihnen sind." },
+    },
+    {
+      "@type": "Question",
+      name: "Muss ich mich für den Zustand meiner Wohnung schämen?",
+      acceptedAnswer: { "@type": "Answer", text: "Auf gar keinen Fall. Wir haben in unserer Laufbahn schon alles gesehen und wissen, dass solche Situationen oft durch Krankheit, Schicksalsschläge oder Überforderung entstehen. Unser Team arbeitet zu 100 % ohne Vorwürfe und begegnet Ihnen mit größtem Respekt." },
+    },
+    {
+      "@type": "Question",
+      name: "Wie genau funktioniert das mit der Pflegekasse?",
+      acceptedAnswer: { "@type": "Answer", text: "Wenn bei Ihnen oder einem Angehörigen ein anerkannter Pflegegrad vorliegt, können Entrümpelungs- und Reinigungsarbeiten oft als wohnumfeldverbessernde Maßnahmen bezuschusst werden – bis zu einer Höhe von 4.000 € (was oft 100 % unserer Kosten deckt). Wir beraten Sie dazu gerne in unserem kostenlosen Erstgespräch." },
+    },
+    {
+      "@type": "Question",
+      name: "Werden wichtige Dokumente oder Wertsachen einfach weggeworfen?",
+      acceptedAnswer: { "@type": "Answer", text: "Nein, niemals. Wir arbeiten extrem sorgfältig. Sollten wir bei der Räumung auf persönliche Dokumente, Fotos, Bargeld oder Wertsachen stoßen, sortieren wir diese systematisch aus und übergeben sie Ihnen sicher." },
+    },
+    {
+      "@type": "Question",
+      name: "Muss ich während der Räumung vor Ort sein?",
+      acceptedAnswer: { "@type": "Answer", text: "Das bleibt ganz Ihnen überlassen. Wenn es Sie emotional zu sehr belastet, können Sie uns einfach die Schlüssel übergeben und wir kümmern uns um alles. Wir übergeben Ihnen am Ende die Wohnung besenrein." },
+    },
+  ],
+};
+
 export default function Home() {
   return (
     <>
+      <Script id="faq-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       {/* ── Hero ──────────────────────────────────────────────── */}
       <section
         className="relative flex items-center justify-center min-h-[85vh] px-4 py-24 overflow-hidden"
