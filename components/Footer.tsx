@@ -8,7 +8,7 @@ const PRIMARY = "#1A3C34";
 const leistungen = [
   { label: "Messie-Hilfe", href: "/leistungen/messie-hilfe" },
   { label: "Entrümpelung", href: "/leistungen/entruempelung" },
-  { label: "Haushaltsauflösung", href: "/leistungen/entruempelung" },
+  { label: "Grundreinigung", href: "/leistungen/grundreinigung" },
   { label: "Pflegekassen-Abrechnung", href: "/pflegekasse" },
 ];
 

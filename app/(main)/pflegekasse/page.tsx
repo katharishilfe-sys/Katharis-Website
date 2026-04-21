@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   title: "Pflegekasse übernimmt Kosten – Messie-Hilfe | Katharis",
@@ -26,8 +27,45 @@ const steps = [
   },
 ];
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Wer hat Anspruch auf Kostenübernahme durch die Pflegekasse?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Grundsätzlich können Personen mit einem anerkannten Pflegegrad Leistungen der Pflegekasse in Anspruch nehmen. In vielen Fällen besteht auch ohne offiziellen Pflegegrad ein Anspruch – wir klären das gemeinsam mit Ihnen.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Muss ich den Antrag bei der Pflegekasse selbst stellen?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Nein. Katharis unterstützt Sie vollständig beim Antragsverfahren. Wir bereiten alles vor, erklären jeden Schritt und stehen bei Rückfragen der Pflegekasse zur Verfügung.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Wie lange dauert es, bis die Pflegekasse zahlt?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Die Bearbeitungszeit variiert je nach Pflegekasse. Wir kennen die üblichen Abläufe und sorgen dafür, dass Ihr Antrag vollständig und korrekt eingereicht wird – für eine schnellstmögliche Bearbeitung.",
+      },
+    },
+  ],
+};
+
 export default function PflegekassePage() {
   return (
+    <>
+    <Script
+      id="faq-schema"
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+    />
     <div className="max-w-4xl mx-auto px-4 py-16 md:py-24">
       {/* Hero */}
       <p className="text-sm font-semibold uppercase tracking-widest mb-4 text-center" style={{ color: "#EBA059" }}>
@@ -156,5 +194,6 @@ export default function PflegekassePage() {
         </Link>
       </div>
     </div>
+    </>
   );
 }

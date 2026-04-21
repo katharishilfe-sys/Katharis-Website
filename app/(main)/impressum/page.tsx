@@ -31,15 +31,6 @@ export default function ImpressumPage() {
         </section>
 
         <section>
-          <h2 className="font-bold text-lg mb-2" style={{ opacity: 1 }}>Betriebshaftpflichtversicherung</h2>
-          <p>
-            Katharis GbR verfügt über eine Betriebshaftpflichtversicherung bei:
-          </p>
-          <p className="mt-2 italic">[Name des Versicherers – Platzhalter, bitte ergänzen]</p>
-          <p className="mt-1">Geltungsbereich: Bundesrepublik Deutschland</p>
-        </section>
-
-        <section>
           <h2 className="font-bold text-lg mb-2" style={{ opacity: 1 }}>Haftungsausschluss (Disclaimer)</h2>
 
           <h3 className="font-semibold mb-1">Haftung für Inhalte</h3>

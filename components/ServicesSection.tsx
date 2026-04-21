@@ -113,12 +113,13 @@ const services: Service[] = [
 ];
 
 type FormState = { name: string; telefon: string; ort: string };
+type FormStatus = "idle" | "sending" | "success" | "error";
 
 const emptyForm: FormState = { name: "", telefon: "", ort: "" };
 
 export default function ServicesSection() {
   const [activeId, setActiveId] = useState<string | null>(null);
-  const [submitted, setSubmitted] = useState(false);
+  const [formStatus, setFormStatus] = useState<FormStatus>("idle");
   const [form, setForm] = useState<FormState>(emptyForm);
   const [errorMsg, setErrorMsg] = useState("");
 
@@ -143,7 +144,7 @@ export default function ServicesSection() {
 
   function openService(id: string) {
     setActiveId(id);
-    setSubmitted(false);
+    setFormStatus("idle");
     setForm(emptyForm);
     setErrorMsg("");
   }
@@ -153,15 +154,38 @@ export default function ServicesSection() {
     if (errorMsg) setErrorMsg("");
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!form.name.trim() || !form.telefon.trim() || !form.ort.trim()) {
       setErrorMsg("Bitte füllen Sie alle Pflichtfelder aus.");
       return;
     }
     setErrorMsg("");
-    setSubmitted(true);
-    setForm(emptyForm);
+    setFormStatus("sending");
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: form.name,
+          telefon: form.telefon,
+          einsatzort: form.ort,
+          leistung: active?.formSelection,
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setFormStatus("success");
+        setForm(emptyForm);
+      } else {
+        setErrorMsg(data.error ?? "Unbekannter Fehler");
+        setFormStatus("error");
+      }
+    } catch {
+      setErrorMsg("Verbindungsfehler. Bitte rufen Sie uns an.");
+      setFormStatus("error");
+    }
   }
 
   return (
@@ -351,7 +375,7 @@ export default function ServicesSection() {
                   Kostenloses Angebot anfordern
                 </h3>
 
-                {submitted ? (
+                {formStatus === "success" ? (
                   <div
                     className="rounded-2xl p-8 text-center"
                     style={{ backgroundColor: "#e8f7ee", border: "2px solid #16a34a" }}
@@ -422,13 +446,14 @@ export default function ServicesSection() {
 
                     <button
                       type="submit"
-                      className="w-full py-3 rounded-full font-bold text-white text-sm transition-opacity hover:opacity-90 mt-2"
+                      disabled={formStatus === "sending"}
+                      className="w-full py-3 rounded-full font-bold text-white text-sm transition-opacity hover:opacity-90 disabled:opacity-50 mt-2"
                       style={{ backgroundColor: ACCENT }}
                     >
-                      Angebot anfordern →
+                      {formStatus === "sending" ? "Wird gesendet..." : "Angebot anfordern →"}
                     </button>
 
-                    {errorMsg && (
+                    {(formStatus === "error" && errorMsg) && (
                       <div
                         role="alert"
                         className="rounded-xl px-4 py-3 text-sm leading-relaxed"

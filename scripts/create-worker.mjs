@@ -25,7 +25,7 @@ export default {
     if (url.pathname === "/api/contact" && request.method === "POST") {
       try {
         const body = await request.json();
-        const { name, telefon, einsatzort } = body;
+        const { name, telefon, einsatzort, leistung } = body;
 
         if (!name || !telefon || !einsatzort) {
           return Response.json(
@@ -36,9 +36,14 @@ export default {
 
         const emailText =
           "Neue Anfrage über katharis.de\\n\\n" +
+          (leistung ? "0. Leistung:      " + leistung + "\\n" : "") +
           "1. Name:          " + name + "\\n" +
           "2. Telefonnummer: " + telefon + "\\n" +
           "3. Einsatzort:    " + einsatzort;
+
+        const subject = leistung
+          ? "Neue Anfrage: " + leistung + " – Katharis"
+          : "Neue Anfrage – Katharis";
 
         const toEmail = env.CONTACT_EMAIL ?? "info@katharis.de";
 
@@ -51,7 +56,7 @@ export default {
           body: JSON.stringify({
             from: "Katharis Anfrage <noreply@katharis.de>",
             to: [toEmail],
-            subject: "Neue Anfrage – Katharis",
+            subject: subject,
             text: emailText,
           }),
         });

@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   keywords:
     "Entrümpelung, Messie-Hilfe, Haushaltsauflösung, Böblingen, Stuttgart, Pflegekasse, Kostenübernahme, Grundreinigung",
   robots: "index, follow",
-  metadataBase: new URL("https://www.katharis.de"),
+  metadataBase: new URL("https://katharis.de"),
   icons: {
     icon: "/favicon-512.png",
     apple: "/favicon-512.png",
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     description:
       "Diskrete Entrümpelung, Haushaltsauflösung & Messie-Hilfe in Böblingen und Stuttgart. Bis zu 100 % Kostenübernahme durch Ihre Pflegekasse möglich! Jetzt anrufen.",
     type: "website",
-    url: "https://www.katharis.de",
+    url: "https://katharis.de",
     siteName: "Katharis",
     locale: "de_DE",
     images: [
@@ -51,7 +51,7 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
   name: "Katharis",
-  url: "https://www.katharis.de",
+  url: "https://katharis.de",
   telephone: "07031/6953604",
   email: "info@katharis.de",
   address: {
@@ -67,7 +67,9 @@ const jsonLd = {
   ],
   description:
     "Diskrete Entrümpelung, Haushaltsauflösung und spezialisierte Messie-Hilfe in Böblingen und Stuttgart. Bis zu 100 % Kostenübernahme durch die Pflegekasse möglich. Optionale Grundreinigung zubuchbar.",
-  areaServed: ["Böblingen", "Stuttgart"],
+  priceRange: "€€",
+  image: "https://katharis.de/og-image.png",
+  areaServed: ["Böblingen", "Stuttgart", "Sindelfingen", "Leonberg", "Herrenberg"],
   openingHoursSpecification: {
     "@type": "OpeningHoursSpecification",
     dayOfWeek: [
