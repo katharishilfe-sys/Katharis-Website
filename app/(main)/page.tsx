@@ -3,7 +3,6 @@ import { CheckCircle2, Shield, Clock, Heart, HandHeart, BadgeEuro, Sparkles } fr
 import ServicesSection from "@/components/ServicesSection";
 import FaqSection from "@/components/FaqSection";
 import StepsSection from "@/components/StepsSection";
-import TestimonialsSection from "@/components/TestimonialsSection";
 
 export default function Home() {
   return (
@@ -159,9 +158,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* ── Testimonials ──────────────────────────────────────── */}
-      <TestimonialsSection />
 
       {/* ── 3 Schritte ────────────────────────────────────────── */}
       <StepsSection />
