@@ -111,6 +111,26 @@ export default function MessieHilfePage() {
           </div>
         </div>
 
+        {/* Pflegekasse Crosslink */}
+        <div className="mb-16 rounded-2xl p-6 flex flex-col sm:flex-row items-center gap-5 justify-between"
+          style={{ backgroundColor: "#EBA05915", border: "2px solid #EBA05940" }}>
+          <div>
+            <p className="font-bold text-lg mb-1" style={{ color: "#1A3C34" }}>
+              Wussten Sie? Ihre Pflegekasse übernimmt bis zu 100 % der Kosten.
+            </p>
+            <p className="text-sm" style={{ color: "#1A3C34", opacity: 0.75 }}>
+              Wir übernehmen den gesamten Antragsprozess – Sie müssen sich um nichts kümmern.
+            </p>
+          </div>
+          <Link
+            href="/pflegekasse"
+            className="shrink-0 px-6 py-3 rounded-full font-bold text-white text-sm transition-opacity hover:opacity-90"
+            style={{ backgroundColor: "#EBA059" }}
+          >
+            Mehr erfahren →
+          </Link>
+        </div>
+
         {/* Ablauf */}
         <div className="mb-16">
           <p className="text-sm font-semibold uppercase tracking-widest mb-3" style={{ color: "#EBA059" }}>Unser Ablauf</p>

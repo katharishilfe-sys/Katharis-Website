@@ -111,6 +111,21 @@ export default function PflegekassePage() {
         </div>
       </div>
 
+      {/* Messie-Hilfe Crosslink */}
+      <div className="mb-12 rounded-2xl p-6 flex flex-col sm:flex-row items-center gap-5 justify-between"
+        style={{ backgroundColor: "#1A3C3408", border: "1px solid #1A3C3420" }}>
+        <p className="text-base font-medium" style={{ color: "#1A3C34" }}>
+          Sie suchen konkrete Informationen zu unserem <strong>Messie-Hilfe</strong>-Angebot?
+        </p>
+        <Link
+          href="/leistungen/messie-hilfe"
+          className="shrink-0 px-6 py-3 rounded-full font-bold text-white text-sm transition-opacity hover:opacity-90"
+          style={{ backgroundColor: "#1A3C34" }}
+        >
+          Zur Messie-Hilfe →
+        </Link>
+      </div>
+
       {/* Steps */}
       <div className="grid md:grid-cols-3 gap-6 mb-16">
         {steps.map((step) => (
