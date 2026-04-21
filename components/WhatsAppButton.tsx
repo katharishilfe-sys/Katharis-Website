@@ -1,4 +1,4 @@
-const WA_NUMBER = "4970316953604"; // +49 7031 6953604
+const WA_NUMBER = "4917643466399"; // +49 176 43466399
 const WA_TEXT = encodeURIComponent(
   "Hallo, ich interessiere mich für Ihre Messie-Hilfe und würde gerne mehr erfahren."
 );
