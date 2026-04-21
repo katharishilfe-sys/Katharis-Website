@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "AGB – Allgemeine Geschäftsbedingungen | Katharis",
   description: "Allgemeine Geschäftsbedingungen der Katharis GbR für Entrümpelung, Haushaltsauflösung und Spezialreinigung.",
+  robots: { index: false, follow: false },
 };
 
 const sections = [

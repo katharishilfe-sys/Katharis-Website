@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Datenschutzerklärung – Katharis",
   description: "Datenschutzerklärung der Katharis GbR – Messie-Hilfe in Böblingen & Stuttgart.",
+  robots: { index: false, follow: false },
 };
 
 export default function DatenschutzPage() {

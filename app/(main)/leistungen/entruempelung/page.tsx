@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import Script from "next/script";
 import Breadcrumb from "@/components/Breadcrumb";
 
 export const metadata: Metadata = {
@@ -19,24 +20,42 @@ const leistungen = [
   "Unterstützung bei Pflegekassen-Abrechnung",
 ];
 
-const faqs = [
-  {
-    q: "Was kostet eine Entrümpelung?",
-    a: "Die Kosten hängen vom Volumen und Aufwand ab. Wir erstellen nach der kostenlosen Besichtigung einen transparenten Kostenvoranschlag – ohne versteckte Kosten. In vielen Fällen übernimmt die Pflegekasse bis zu 100 % der Kosten.",
-  },
-  {
-    q: "Wie schnell können Sie kommen?",
-    a: "In der Regel sind wir innerhalb von 2–5 Werktagen vor Ort. Bei dringendem Bedarf versuchen wir, einen früheren Termin zu finden. Rufen Sie uns einfach an.",
-  },
-  {
-    q: "Was passiert mit noch verwertbaren Gegenständen?",
-    a: "Gut erhaltene Möbel, Kleidung oder Elektrogeräte werden nach Möglichkeit gespendet oder weiterverkauft. Der Erlös kann auf Ihre Rechnung angerechnet werden.",
-  },
-];
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Was kostet eine Entrümpelung?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Die Kosten hängen vom Volumen und Aufwand ab. Wir erstellen nach der kostenlosen Besichtigung einen transparenten Kostenvoranschlag – ohne versteckte Kosten. In vielen Fällen übernimmt die Pflegekasse bis zu 100 % der Kosten.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Wie schnell können Sie kommen?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "In der Regel sind wir innerhalb von 2–5 Werktagen vor Ort. Bei dringendem Bedarf versuchen wir, einen früheren Termin zu finden. Rufen Sie uns einfach an.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Was passiert mit noch verwertbaren Gegenständen?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Gut erhaltene Möbel, Kleidung oder Elektrogeräte werden nach Möglichkeit gespendet oder weiterverkauft. Der Erlös kann auf Ihre Rechnung angerechnet werden.",
+      },
+    },
+  ],
+};
 
 export default function EntruempelungPage() {
   return (
     <>
+      <Script id="faq-entruempelung" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+
       <Breadcrumb crumbs={[
         { label: "Startseite", href: "/" },
         { label: "Leistungen", href: "/" },
@@ -111,10 +130,10 @@ export default function EntruempelungPage() {
         <div className="mb-16">
           <h2 className="text-2xl font-bold mb-8" style={{ color: "#1A3C34" }}>Häufige Fragen zur Entrümpelung</h2>
           <div className="flex flex-col gap-6">
-            {faqs.map((f) => (
-              <div key={f.q} className="border-b pb-6" style={{ borderColor: "#1A3C3420" }}>
-                <h3 className="font-bold text-base mb-2" style={{ color: "#1A3C34" }}>{f.q}</h3>
-                <p className="text-base leading-relaxed" style={{ color: "#1A3C34", opacity: 0.75 }}>{f.a}</p>
+            {faqSchema.mainEntity.map((f) => (
+              <div key={f.name} className="border-b pb-6" style={{ borderColor: "#1A3C3420" }}>
+                <h3 className="font-bold text-base mb-2" style={{ color: "#1A3C34" }}>{f.name}</h3>
+                <p className="text-base leading-relaxed" style={{ color: "#1A3C34", opacity: 0.75 }}>{f.acceptedAnswer.text}</p>
               </div>
             ))}
           </div>

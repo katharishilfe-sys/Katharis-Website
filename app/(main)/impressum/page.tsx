@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Impressum – Katharis",
   description: "Impressum der Katharis – Messie-Hilfe in Böblingen & Stuttgart.",
+  robots: { index: false, follow: false },
 };
 
 export default function ImpressumPage() {
@@ -22,6 +23,7 @@ export default function ImpressumPage() {
         <section>
           <h2 className="font-bold text-lg mb-2" style={{ opacity: 1 }}>Kontakt</h2>
           <p>Telefon: <a href="tel:07031/6953604" className="underline">07031/6953604</a></p>
+          <p>E-Mail: <a href="mailto:info@katharis.de" className="underline">info@katharis.de</a></p>
         </section>
 
         <section>
@@ -76,8 +78,13 @@ export default function ImpressumPage() {
 
         <section>
           <h2 className="font-bold text-lg mb-2" style={{ opacity: 1 }}>Streitschlichtung</h2>
+          <p className="mb-2">
+            Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit:{" "}
+            <a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener noreferrer" className="underline">
+              https://ec.europa.eu/consumers/odr/
+            </a>
+          </p>
           <p>
-            Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit.
             Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer
             Verbraucherschlichtungsstelle teilzunehmen.
           </p>

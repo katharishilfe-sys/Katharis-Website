@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Script from "next/script";
 import Breadcrumb from "@/components/Breadcrumb";
 
 export const metadata: Metadata = {
@@ -26,9 +27,42 @@ const wann = [
   { titel: "Vor einem Einzug", text: "Damit Sie in einer frisch gereinigten Wohnung starten können." },
 ];
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Was ist der Unterschied zwischen Grundreinigung und normaler Reinigung?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Eine Grundreinigung geht weit über die normale Reinigung hinaus: Schränke werden innen und außen gereinigt, Heizkörpernischen gesäubert, Böden tiefengereinigt und Gerüche neutralisiert. Wir setzen Profi-Reinigungsmittel und Geräte ein, die im Alltag nicht verfügbar sind.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Kann die Grundreinigung direkt nach der Entrümpelung stattfinden?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Ja – und das ist der häufigste Fall. Unser Team übernimmt beides aus einer Hand: zuerst die Entrümpelung, dann die Grundreinigung. So sparen Sie Zeit und erhalten die Räume in einem Zug besenrein.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Wie lange dauert eine Grundreinigung?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Das hängt von Größe und Zustand der Räume ab. Eine durchschnittliche 3-Zimmer-Wohnung dauert in der Regel 4–8 Stunden. Bei stark verschmutzten Wohnungen oder nach einer Messie-Räumung kann es länger dauern – wir geben Ihnen nach der Besichtigung eine realistische Einschätzung.",
+      },
+    },
+  ],
+};
+
 export default function GrundreinigungPage() {
   return (
     <>
+      <Script id="faq-grundreinigung" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+
       <Breadcrumb crumbs={[
         { label: "Startseite", href: "/" },
         { label: "Leistungen", href: "/" },
@@ -87,6 +121,19 @@ export default function GrundreinigungPage() {
               <div key={w.titel} className="rounded-2xl p-6 bg-white shadow-sm" style={{ border: "1px solid #1A3C3410" }}>
                 <h3 className="font-bold text-base mb-2" style={{ color: "#1A3C34" }}>{w.titel}</h3>
                 <p className="text-sm leading-relaxed" style={{ color: "#1A3C34", opacity: 0.75 }}>{w.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* FAQ */}
+        <div className="mb-16">
+          <h2 className="text-2xl font-bold mb-8" style={{ color: "#1A3C34" }}>Häufige Fragen zur Grundreinigung</h2>
+          <div className="flex flex-col gap-6">
+            {faqSchema.mainEntity.map((f) => (
+              <div key={f.name} className="border-b pb-6" style={{ borderColor: "#1A3C3420" }}>
+                <h3 className="font-bold text-base mb-2" style={{ color: "#1A3C34" }}>{f.name}</h3>
+                <p className="text-base leading-relaxed" style={{ color: "#1A3C34", opacity: 0.75 }}>{f.acceptedAnswer.text}</p>
               </div>
             ))}
           </div>
