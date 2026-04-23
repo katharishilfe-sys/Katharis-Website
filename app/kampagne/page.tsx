@@ -30,7 +30,7 @@ export default function KampagnePage() {
             style={{ backgroundColor: ACCENT }}
           >
             <Phone size={16} />
-            07031 / 6953604
+            07031/6953604
           </a>
         </div>
       </header>
@@ -189,7 +189,7 @@ export default function KampagnePage() {
               style={{ backgroundColor: ACCENT }}
             >
               <Phone size={18} />
-              07031 / 6953604
+              07031/6953604
             </a>
             <Link
               href="/kontakt"

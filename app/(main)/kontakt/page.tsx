@@ -6,6 +6,12 @@ export const metadata: Metadata = {
   title: "Kontakt – Katharis | Diskrete Messie-Hilfe in Böblingen & Stuttgart",
   description:
     "Jetzt kostenlos und unverbindlich Kontakt aufnehmen. Katharis berät Sie diskret in Böblingen & Stuttgart – telefonisch, per Mail oder Formular.",
+  openGraph: {
+    title: "Kontakt – Katharis",
+    description: "Jetzt kostenlos und unverbindlich Kontakt aufnehmen. Diskret, respektvoll und ohne Vorwürfe – in Böblingen & Stuttgart.",
+    url: "https://katharis.de/kontakt",
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Katharis – Kontakt aufnehmen" }],
+  },
 };
 
 export default function KontaktPage() {

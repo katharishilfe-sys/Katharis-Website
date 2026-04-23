@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /kampagne/
 
-Sitemap: https://www.katharis.de/sitemap.xml
+Sitemap: https://katharis.de/sitemap.xml
