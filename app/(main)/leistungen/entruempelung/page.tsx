@@ -8,6 +8,12 @@ export const metadata: Metadata = {
   title: "Entrümpelung in Böblingen & Stuttgart – Katharis",
   description:
     "Professionelle und diskrete Entrümpelung & Haushaltsauflösung in Böblingen & Stuttgart. Kostenlose Besichtigung, faire Preise, besenreine Übergabe. Jetzt anfragen.",
+  openGraph: {
+    title: "Entrümpelung in Böblingen & Stuttgart – Katharis",
+    description: "Professionelle und diskrete Entrümpelung & Haushaltsauflösung. Kostenlose Besichtigung, faire Preise, besenreine Übergabe.",
+    url: "https://katharis.de/leistungen/entruempelung",
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Katharis – Entrümpelung" }],
+  },
 };
 
 const leistungen = [
@@ -58,7 +64,7 @@ export default function EntruempelungPage() {
 
       <Breadcrumb crumbs={[
         { label: "Startseite", href: "/" },
-        { label: "Leistungen", href: "/" },
+        { label: "Leistungen", href: "/leistungen" },
         { label: "Entrümpelung" },
       ]} />
 

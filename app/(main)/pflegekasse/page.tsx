@@ -8,6 +8,12 @@ export const metadata: Metadata = {
   title: "Pflegekasse übernimmt Kosten – Messie-Hilfe | Katharis",
   description:
     "Wussten Sie, dass Ihre Pflegekasse bis zu 100 % der Kosten für professionelle Messie-Hilfe übernehmen kann? Katharis berät Sie kostenlos in Böblingen & Stuttgart.",
+  openGraph: {
+    title: "Pflegekasse übernimmt bis zu 100 % – Katharis",
+    description: "Ihre Pflegekasse kann bis zu 100 % der Kosten für Messie-Hilfe übernehmen. Katharis begleitet Sie durch den gesamten Antragsprozess.",
+    url: "https://katharis.de/pflegekasse",
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Katharis – Pflegekasse Kostenübernahme" }],
+  },
 };
 
 const steps = [

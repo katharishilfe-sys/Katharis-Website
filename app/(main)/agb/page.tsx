@@ -89,7 +89,7 @@ export default function AgbPage() {
         Allgemeine Geschäftsbedingungen
       </h1>
       <p className="text-sm mb-10" style={{ color: "#1A3C34", opacity: 0.6 }}>
-        Katharis GbR · Olgastraße 8 · 71032 Böblingen · Stand: 2026
+        Katharis GbR · Olgastraße 8 · 71032 Böblingen · Stand: April 2026
       </p>
 
       <div className="space-y-10 text-base leading-relaxed" style={{ color: "#1A3C34", opacity: 0.85 }}>

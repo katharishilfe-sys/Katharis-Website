@@ -7,6 +7,12 @@ export const metadata: Metadata = {
   title: "Über uns – Katharis | Diskrete Messie-Hilfe in Böblingen & Stuttgart",
   description:
     "Lernen Sie Daniel Altenhof und Kemal David Gülcü kennen – die Gründer von Katharis. Wir helfen Menschen in schwierigen Wohnsituationen, diskret und ohne Vorwürfe.",
+  openGraph: {
+    title: "Über uns – Katharis",
+    description: "Lernen Sie die Gründer von Katharis kennen. Wir helfen Menschen in schwierigen Wohnsituationen – diskret, ohne Vorwürfe, in Böblingen & Stuttgart.",
+    url: "https://katharis.de/ueber-uns",
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Katharis – Das Team" }],
+  },
 };
 
 const PRIMARY = "#1A3C34";

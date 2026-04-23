@@ -13,7 +13,7 @@ export default function DatenschutzPage() {
         Datenschutzerklärung
       </h1>
       <p className="text-sm mb-12" style={{ color: "#1A3C34", opacity: 0.6 }}>
-        Katharis GbR · Stand: 2026
+        Katharis GbR · Stand: April 2026
       </p>
 
       <div className="space-y-12 text-base leading-relaxed" style={{ color: "#1A3C34", opacity: 0.85 }}>
@@ -103,6 +103,21 @@ export default function DatenschutzPage() {
             Datenschutzerklärung von Cloudflare: https://www.cloudflare.com/privacypolicy/
           </p>
 
+          {/* Resend */}
+          <h3 className="font-semibold mb-2">E-Mail-Versand über Resend</h3>
+          <p className="mb-6">
+            Zum Versand von Anfrage-Benachrichtigungen nutzen wir den Dienst Resend der
+            Resend Inc., 2261 Market Street #4008, San Francisco, CA 94114, USA. Wenn Sie
+            unser Kontaktformular nutzen, werden Ihre übermittelten Daten (Name, Telefonnummer,
+            Einsatzort) über die Infrastruktur von Resend an uns weitergeleitet.
+            Mit Resend haben wir einen Auftragsverarbeitungsvertrag (AVV) gemäß Art. 28 DSGVO
+            geschlossen. Resend verarbeitet Ihre Daten ausschließlich zur Übermittlung der
+            E-Mail und speichert diese nicht dauerhaft. Weitere Informationen finden Sie unter:{" "}
+            <a href="https://resend.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer" className="underline">
+              resend.com/legal/privacy-policy
+            </a>
+          </p>
+
           {/* Contact Form */}
           <h3 className="font-semibold mb-2">Kontaktformular</h3>
           <p className="mb-3">
@@ -128,13 +143,20 @@ export default function DatenschutzPage() {
             Bearbeitung der an uns gerichteten Anfragen (Art. 6 Abs. 1 lit. f DSGVO) oder
             auf Ihrer Einwilligung (Art. 6 Abs. 1 lit. a DSGVO), sofern diese abgefragt wurde.
           </p>
-          <p>
+          <p className="mb-3">
             Die von Ihnen im Kontaktformular eingegebenen Daten verbleiben bei uns, bis Sie
             uns zur Löschung auffordern, Ihre Einwilligung zur Speicherung widerrufen oder
             der Zweck für die Datenspeicherung entfällt (z. B. nach abgeschlossener Bearbeitung
-            Ihrer Anfrage). Zwingende gesetzliche Bestimmungen – insbesondere Aufbewahrungsfristen
-            – bleiben unberührt. Eine Weitergabe Ihrer Daten an Dritte erfolgt nicht ohne
-            Ihre ausdrückliche Einwilligung.
+            Ihrer Anfrage). Reine Anfragen ohne Auftragserteilung werden spätestens nach
+            12 Monaten gelöscht. Bei erteiltem Auftrag gelten die gesetzlichen
+            Aufbewahrungsfristen (§ 257 HGB, § 147 AO: 6–10 Jahre). Eine Weitergabe Ihrer
+            Daten an Dritte erfolgt nicht ohne Ihre ausdrückliche Einwilligung.
+          </p>
+          <p>
+            Zur Wahrnehmung Ihrer Rechte aus Art. 15–21 DSGVO (Auskunft, Berichtigung,
+            Löschung etc.) wenden Sie sich bitte an{" "}
+            <a href="mailto:info@katharis.de" className="underline">info@katharis.de</a>.
+            Wir antworten innerhalb von 30 Tagen.
           </p>
         </section>
 

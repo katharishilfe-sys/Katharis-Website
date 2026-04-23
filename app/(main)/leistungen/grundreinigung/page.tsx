@@ -7,6 +7,12 @@ export const metadata: Metadata = {
   title: "Grundreinigung in Böblingen & Stuttgart – Katharis",
   description:
     "Professionelle Grundreinigung & Tiefenreinigung in Böblingen & Stuttgart. Nach Entrümpelung, Messie-Sanierung oder Auszug – hygienisch sauber von Boden bis Decke.",
+  openGraph: {
+    title: "Grundreinigung in Böblingen & Stuttgart – Katharis",
+    description: "Professionelle Tiefenreinigung nach Entrümpelung, Messie-Sanierung oder Auszug – von Boden bis Decke.",
+    url: "https://katharis.de/leistungen/grundreinigung",
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Katharis – Grundreinigung" }],
+  },
 };
 
 const bereiche = [
@@ -65,7 +71,7 @@ export default function GrundreinigungPage() {
 
       <Breadcrumb crumbs={[
         { label: "Startseite", href: "/" },
-        { label: "Leistungen", href: "/" },
+        { label: "Leistungen", href: "/leistungen" },
         { label: "Grundreinigung" },
       ]} />
 

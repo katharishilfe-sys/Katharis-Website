@@ -8,6 +8,12 @@ export const metadata: Metadata = {
   title: "Messie-Hilfe in Böblingen & Stuttgart – Katharis",
   description:
     "Einfühlsame Messie-Hilfe mit bis zu 100 % Kostenübernahme durch die Pflegekasse. Katharis hilft Ihnen in Böblingen & Stuttgart – ohne Verurteilung, ohne Aufsehen.",
+  openGraph: {
+    title: "Messie-Hilfe in Böblingen & Stuttgart – Katharis",
+    description: "Einfühlsame Messie-Hilfe mit bis zu 100 % Kostenübernahme durch die Pflegekasse. Ohne Verurteilung, ohne Aufsehen.",
+    url: "https://katharis.de/leistungen/messie-hilfe",
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Katharis – Messie-Hilfe" }],
+  },
 };
 
 const faqSchema = {
@@ -56,7 +62,7 @@ export default function MessieHilfePage() {
 
       <Breadcrumb crumbs={[
         { label: "Startseite", href: "/" },
-        { label: "Leistungen", href: "/" },
+        { label: "Leistungen", href: "/leistungen" },
         { label: "Messie-Hilfe" },
       ]} />
 

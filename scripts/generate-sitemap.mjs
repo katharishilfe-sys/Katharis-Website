@@ -10,6 +10,7 @@ const today = new Date().toISOString().split("T")[0];
 const routes = [
   { url: "/",                              priority: "1.0", changefreq: "weekly"  },
   { url: "/kontakt/",                      priority: "0.9", changefreq: "monthly" },
+  { url: "/leistungen/",                    priority: "0.85",changefreq: "monthly" },
   { url: "/leistungen/messie-hilfe/",      priority: "0.9", changefreq: "monthly" },
   { url: "/leistungen/entruempelung/",     priority: "0.8", changefreq: "monthly" },
   { url: "/leistungen/grundreinigung/",    priority: "0.8", changefreq: "monthly" },
