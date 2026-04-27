@@ -57,58 +57,7 @@ export default function KontaktForm() {
   return (
     <div className="grid md:grid-cols-2 gap-10 md:gap-14 items-start">
 
-      {/* Left – Ansprechpartner */}
-      <div className="flex flex-col gap-6">
-        <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: ACCENT }}>
-          Ihre direkten Ansprechpartner
-        </p>
-
-        <div className="flex items-start gap-4">
-          <div className="w-12 h-12 rounded-full flex items-center justify-center shrink-0" style={{ backgroundColor: ACCENT + "20" }}>
-            <User size={22} style={{ color: ACCENT }} />
-          </div>
-          <div>
-            <p className="font-bold text-lg" style={{ color: PRIMARY }}>Daniel Altenhof</p>
-            <p className="text-sm" style={{ color: PRIMARY, opacity: 0.65 }}>Geschäftsführer</p>
-          </div>
-        </div>
-
-        <div className="flex items-start gap-4">
-          <div className="w-12 h-12 rounded-full flex items-center justify-center shrink-0" style={{ backgroundColor: ACCENT + "20" }}>
-            <User size={22} style={{ color: ACCENT }} />
-          </div>
-          <div>
-            <p className="font-bold text-lg" style={{ color: PRIMARY }}>Kemal David Gülcü</p>
-            <p className="text-sm" style={{ color: PRIMARY, opacity: 0.65 }}>Partner &amp; Geschäftsführer</p>
-          </div>
-        </div>
-
-        <p className="text-base leading-relaxed" style={{ color: PRIMARY, opacity: 0.75 }}>
-          Wir kümmern uns persönlich um Ihr Anliegen. Diskret, respektvoll und auf Augenhöhe.
-          Zögern Sie nicht, uns direkt anzurufen.
-        </p>
-
-        <div className="flex flex-col gap-3 mt-2">
-          <a href="tel:07031/6953604" className="flex items-center gap-3 text-base font-bold transition-opacity hover:opacity-80" style={{ color: PRIMARY }}>
-            <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0" style={{ backgroundColor: ACCENT }}>
-              <Phone size={18} color="#fff" />
-            </div>
-            07031/6953604
-          </a>
-          <a href="mailto:info@katharis.de" className="flex items-center gap-3 text-base font-bold transition-opacity hover:opacity-80" style={{ color: PRIMARY }}>
-            <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0" style={{ backgroundColor: ACCENT }}>
-              <Mail size={18} color="#fff" />
-            </div>
-            info@katharis.de
-          </a>
-        </div>
-
-        <div className="rounded-xl px-5 py-3 mt-2 text-sm text-white" style={{ backgroundColor: PRIMARY }}>
-          <strong>Mo. – Sa.</strong> 08:00 – 20:00 Uhr · Kostenlose Vor-Ort-Besichtigung
-        </div>
-      </div>
-
-      {/* Right – Formular */}
+      {/* Left – Formular (erste Spalte = oben auf Mobile) */}
       <div className="bg-white rounded-2xl p-8 md:p-10 shadow-sm" style={{ border: "1px solid #1A3C3415" }}>
         <p className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: ACCENT }}>
           Anfrage senden
@@ -157,6 +106,57 @@ export default function KontaktForm() {
             </button>
           </form>
         )}
+      </div>
+
+      {/* Right – Ansprechpartner (zweite Spalte = unten auf Mobile) */}
+      <div className="flex flex-col gap-6">
+        <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: ACCENT }}>
+          Ihre direkten Ansprechpartner
+        </p>
+
+        <div className="flex items-start gap-4">
+          <div className="w-12 h-12 rounded-full flex items-center justify-center shrink-0" style={{ backgroundColor: ACCENT + "20" }}>
+            <User size={22} style={{ color: ACCENT }} />
+          </div>
+          <div>
+            <p className="font-bold text-lg" style={{ color: PRIMARY }}>Daniel Altenhof</p>
+            <p className="text-sm" style={{ color: PRIMARY, opacity: 0.65 }}>Geschäftsführer</p>
+          </div>
+        </div>
+
+        <div className="flex items-start gap-4">
+          <div className="w-12 h-12 rounded-full flex items-center justify-center shrink-0" style={{ backgroundColor: ACCENT + "20" }}>
+            <User size={22} style={{ color: ACCENT }} />
+          </div>
+          <div>
+            <p className="font-bold text-lg" style={{ color: PRIMARY }}>Kemal David Gülcü</p>
+            <p className="text-sm" style={{ color: PRIMARY, opacity: 0.65 }}>Partner &amp; Geschäftsführer</p>
+          </div>
+        </div>
+
+        <p className="text-base leading-relaxed" style={{ color: PRIMARY, opacity: 0.75 }}>
+          Wir kümmern uns persönlich um Ihr Anliegen. Diskret, respektvoll und auf Augenhöhe.
+          Zögern Sie nicht, uns direkt anzurufen.
+        </p>
+
+        <div className="flex flex-col gap-3 mt-2">
+          <a href="tel:07031/6953604" className="flex items-center gap-3 text-base font-bold transition-opacity hover:opacity-80" style={{ color: PRIMARY }}>
+            <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0" style={{ backgroundColor: ACCENT }}>
+              <Phone size={18} color="#fff" />
+            </div>
+            07031/6953604
+          </a>
+          <a href="mailto:info@katharis.de" className="flex items-center gap-3 text-base font-bold transition-opacity hover:opacity-80" style={{ color: PRIMARY }}>
+            <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0" style={{ backgroundColor: ACCENT }}>
+              <Mail size={18} color="#fff" />
+            </div>
+            info@katharis.de
+          </a>
+        </div>
+
+        <div className="rounded-xl px-5 py-3 mt-2 text-sm text-white" style={{ backgroundColor: PRIMARY }}>
+          <strong>Mo. – Sa.</strong> 08:00 – 20:00 Uhr · Kostenlose Vor-Ort-Besichtigung
+        </div>
       </div>
 
     </div>
