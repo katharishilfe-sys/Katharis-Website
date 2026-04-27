@@ -17,8 +17,16 @@ export default function KampagnePage() {
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: "#f9fafb" }}>
 
-      {/* ── Sticky Mini-Header ────────────────────────────────── */}
-      <header className="sticky top-0 z-50 bg-white shadow-sm">
+      {/* ── Announcement Banner + Mini-Header (sticky together) ── */}
+      <div className="sticky top-0 z-50">
+        <Link
+          href="/kontakt"
+          className="block w-full text-center py-2.5 px-4 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+          style={{ backgroundColor: "#C0392B" }}
+        >
+          Ihr Pflegekassen-Budget verfällt am 1.&nbsp;Juli – Jetzt nutzen&nbsp;&rarr;
+        </Link>
+      <header className="bg-white shadow-sm">
         <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <Image src="/katharis-logo.png" alt="Katharis" width={38} height={38} />
@@ -34,6 +42,7 @@ export default function KampagnePage() {
           </a>
         </div>
       </header>
+      </div>
 
       {/* ── Hero ──────────────────────────────────────────────── */}
       <section
