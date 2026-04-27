@@ -101,28 +101,54 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Column 3 – Erreichbarkeit */}
+          {/* Column 3 – Standorte + Ratgeber + Erreichbarkeit */}
           <div className="flex flex-col items-start" style={{ margin: 0, padding: 0 }}>
             <h3
               className="text-xs font-semibold uppercase tracking-widest"
               style={{ ...topItemStyle, color: ACCENT, marginTop: 34 }}
             >
-              Für Sie da
+              Standorte
             </h3>
             <ul
-              className="flex flex-col gap-3 text-sm text-white/75"
-              style={{ marginTop: 20, padding: 0, listStyle: "none" }}
+              className="flex flex-col gap-2 text-sm text-white/75"
+              style={{ marginTop: 16, padding: 0, listStyle: "none" }}
             >
-              <li className="flex items-center gap-3">
-                <Clock size={16} style={{ color: ACCENT }} className="shrink-0" />
-                <span>
-                  <strong className="text-white">Mo. – Sa.</strong> 08:00 – 20:00 Uhr
-                </span>
+              {[
+                { label: "Böblingen", href: "/standorte/boeblingen" },
+                { label: "Stuttgart", href: "/standorte/stuttgart" },
+                { label: "Sindelfingen", href: "/standorte/sindelfingen" },
+                { label: "Leonberg", href: "/standorte/leonberg" },
+                { label: "Herrenberg", href: "/standorte/herrenberg" },
+              ].map((s) => (
+                <li key={s.href} style={{ margin: 0, padding: 0 }}>
+                  <Link href={s.href} className="hover:text-white transition-colors">{s.label}</Link>
+                </li>
+              ))}
+            </ul>
+            <h3
+              className="text-xs font-semibold uppercase tracking-widest"
+              style={{ ...topItemStyle, color: ACCENT, marginTop: 20 }}
+            >
+              Ratgeber
+            </h3>
+            <ul
+              className="flex flex-col gap-2 text-sm text-white/75"
+              style={{ marginTop: 16, padding: 0, listStyle: "none" }}
+            >
+              <li style={{ margin: 0, padding: 0 }}>
+                <Link href="/ratgeber/messie-syndrom" className="hover:text-white transition-colors">Messie-Syndrom</Link>
               </li>
-              <li className="leading-relaxed" style={{ margin: 0, padding: 0 }}>
-                Kostenlose Vor-Ort-Besichtigung.
+              <li style={{ margin: 0, padding: 0 }}>
+                <Link href="/ratgeber/pflegekasse-entruempelung" className="hover:text-white transition-colors">Pflegekasse & Entrümpelung</Link>
+              </li>
+              <li style={{ margin: 0, padding: 0 }}>
+                <Link href="/ratgeber/haushaltsaufloesung-kosten" className="hover:text-white transition-colors">Haushaltsauflösung Kosten</Link>
               </li>
             </ul>
+            <div className="flex items-center gap-2 mt-5 text-sm text-white/75">
+              <Clock size={16} style={{ color: ACCENT }} className="shrink-0" />
+              <span><strong className="text-white">Mo. – Sa.</strong> 08:00 – 20:00 Uhr</span>
+            </div>
           </div>
 
         </div>
