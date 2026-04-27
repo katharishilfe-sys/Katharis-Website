@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { CheckCircle2, Phone, Shield, Clock, BadgeEuro, HandHeart, Sparkles } from "lucide-react";
+import AnnouncementBanner from "@/components/AnnouncementBanner";
 
 const PRIMARY = "#1A3C34";
 const ACCENT = "#EBA059";
@@ -17,16 +18,8 @@ export default function KampagnePage() {
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: "#f9fafb" }}>
 
-      {/* ── Announcement Banner + Mini-Header (sticky together) ── */}
-      <div className="sticky top-0 z-50">
-        <Link
-          href="/kontakt"
-          className="block w-full text-center py-2.5 px-4 text-sm font-semibold text-white transition-opacity hover:opacity-90"
-          style={{ backgroundColor: "#C0392B" }}
-        >
-          Ihr Pflegekassen-Budget verfällt am 1.&nbsp;Juli – Jetzt nutzen&nbsp;&rarr;
-        </Link>
-      <header className="bg-white shadow-sm">
+      {/* ── Sticky Mini-Header ────────────────────────────────── */}
+      <header className="sticky top-0 z-50 bg-white shadow-sm">
         <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <Image src="/katharis-logo.png" alt="Katharis" width={38} height={38} />
@@ -42,7 +35,6 @@ export default function KampagnePage() {
           </a>
         </div>
       </header>
-      </div>
 
       {/* ── Hero ──────────────────────────────────────────────── */}
       <section
@@ -231,6 +223,8 @@ export default function KampagnePage() {
 
       {/* Spacer damit Inhalt nicht hinter dem Sticky-Bar verschwindet */}
       <div className="md:hidden h-20" />
+
+      <AnnouncementBanner />
 
       {/* ── Minimal Footer ────────────────────────────────────── */}
       <footer className="py-5 px-4 text-center text-xs" style={{ color: PRIMARY, opacity: 0.5 }}>
