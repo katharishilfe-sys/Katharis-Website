@@ -5,9 +5,9 @@ import Script from "next/script";
 import Breadcrumb from "@/components/Breadcrumb";
 
 export const metadata: Metadata = {
-  title: "Pflegekasse übernimmt Kosten – Messie-Hilfe | Katharis",
+  title: "Entrümpelung & Messie-Hilfe: Pflegekasse zahlt bis zu 4.000 € | Katharis",
   description:
-    "Wussten Sie, dass Ihre Pflegekasse bis zu 100 % der Kosten für professionelle Messie-Hilfe übernehmen kann? Katharis berät Sie kostenlos in Böblingen & Stuttgart.",
+    "Pflegekasse zahlt Entrümpelung & Messie-Hilfe – bis zu 4.000 € pro Jahr (§45b SGB XI). Übertragenes Budget verfällt am 1. Juli. Jetzt kostenlos beraten lassen in Böblingen & Stuttgart.",
   openGraph: {
     title: "Pflegekasse übernimmt bis zu 100 % – Katharis",
     description: "Ihre Pflegekasse kann bis zu 100 % der Kosten für Messie-Hilfe übernehmen. Katharis begleitet Sie durch den gesamten Antragsprozess.",
@@ -82,11 +82,34 @@ export default function PflegekassePage() {
       <h1 className="text-3xl md:text-5xl font-bold leading-tight text-center mb-6" style={{ color: "#1A3C34" }}>
         Messie-Hilfe: Bis zu 100&nbsp;% Kostenübernahme durch Ihre Pflegekasse.
       </h1>
-      <p className="text-lg text-center max-w-2xl mx-auto mb-16" style={{ color: "#1A3C34", opacity: 0.75 }}>
+      <p className="text-lg text-center max-w-2xl mx-auto mb-6" style={{ color: "#1A3C34", opacity: 0.75 }}>
         Viele Menschen wissen nicht, dass professionelle Unterstützung bei der Wohnungsreinigung
         und -räumung eine anerkannte Pflegeleistung sein kann. Wir klären Sie auf – kostenlos,
         ehrlich und ohne versteckte Bedingungen.
       </p>
+
+      {/* Urgency Banner */}
+      <div className="max-w-2xl mx-auto mb-8 rounded-2xl px-6 py-4 text-center font-semibold text-sm" style={{ backgroundColor: "#EBA05920", border: "2px solid #EBA059", color: "#1A3C34" }}>
+        ⚠️ Ihr übertragenes Pflegekassen-Budget aus 2025 verfällt am <strong>1. Juli 2026</strong>. Jetzt noch nutzen.
+      </div>
+
+      {/* CTA above the fold */}
+      <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+        <a
+          href="tel:07031/6953604"
+          className="flex items-center justify-center gap-2 px-8 py-4 rounded-full font-bold text-white text-base transition-opacity hover:opacity-90"
+          style={{ backgroundColor: "#EBA059" }}
+        >
+          Jetzt anrufen: 07031/6953604
+        </a>
+        <Link
+          href="/kontakt"
+          className="flex items-center justify-center px-8 py-4 rounded-full font-bold text-base border-2 transition-all hover:bg-[#1A3C34] hover:text-white"
+          style={{ color: "#1A3C34", borderColor: "#1A3C34" }}
+        >
+          Kostenlos anfragen
+        </Link>
+      </div>
 
       {/* Image + Steps side by side */}
       <div className="flex flex-col md:flex-row gap-10 md:gap-14 items-start mb-16">
@@ -105,9 +128,10 @@ export default function PflegekassePage() {
             Wir setzen uns gemeinsam an den Tisch.
           </h2>
           <p className="text-base leading-relaxed" style={{ color: "#1A3C34", opacity: 0.8 }}>
-            Der Antragsprozess bei der Pflegekasse kann sich anfühlen wie ein undurchdringlicher
-            Dschungel aus Formularen und Fristen. Katharis übernimmt das für Sie – von der ersten
-            Prüfung bis zur finalen Einreichung.
+            Nach <strong>§45b SGB XI</strong> haben Pflegebedürftige Anspruch auf einen
+            Entlastungsbetrag von bis zu <strong>125 € pro Monat</strong> – das sind bis zu
+            <strong> 4.000 € pro Jahr</strong>, die für Entrümpelung und Reinigung genutzt
+            werden können. Nicht genutzte Beträge aus dem Vorjahr verfallen am <strong>1. Juli</strong>.
           </p>
           <p className="text-base leading-relaxed" style={{ color: "#1A3C34", opacity: 0.8 }}>
             Wir kümmern uns um den kompletten Papierkram, erklären Ihnen jeden Schritt in
