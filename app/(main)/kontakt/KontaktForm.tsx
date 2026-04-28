@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Phone, Mail, User } from "lucide-react";
+import Image from "next/image";
+import { Phone, Mail } from "lucide-react";
 
 const ACCENT = "#EBA059";
 const PRIMARY = "#1A3C34";
@@ -115,9 +116,9 @@ export default function KontaktForm() {
         </p>
 
         <div className="flex items-start gap-4">
-          <div className="w-12 h-12 rounded-full flex items-center justify-center shrink-0" style={{ backgroundColor: ACCENT + "20" }}>
-            <User size={22} style={{ color: ACCENT }} />
-          </div>
+          <Image src="/daniel.jpg" alt="Daniel Altenhof" width={52} height={52}
+            className="rounded-full object-cover shrink-0"
+            style={{ width: 52, height: 52, objectPosition: "center top" }} />
           <div>
             <p className="font-bold text-lg" style={{ color: PRIMARY }}>Daniel Altenhof</p>
             <p className="text-sm" style={{ color: PRIMARY, opacity: 0.65 }}>Geschäftsführer</p>
@@ -125,9 +126,9 @@ export default function KontaktForm() {
         </div>
 
         <div className="flex items-start gap-4">
-          <div className="w-12 h-12 rounded-full flex items-center justify-center shrink-0" style={{ backgroundColor: ACCENT + "20" }}>
-            <User size={22} style={{ color: ACCENT }} />
-          </div>
+          <Image src="/kemal.jpg" alt="Kemal David Gülcü" width={52} height={52}
+            className="rounded-full object-cover shrink-0"
+            style={{ width: 52, height: 52, objectPosition: "center top" }} />
           <div>
             <p className="font-bold text-lg" style={{ color: PRIMARY }}>Kemal David Gülcü</p>
             <p className="text-sm" style={{ color: PRIMARY, opacity: 0.65 }}>Partner &amp; Geschäftsführer</p>

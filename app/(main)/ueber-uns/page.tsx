@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { Phone, Mail } from "lucide-react";
 import Breadcrumb from "@/components/Breadcrumb";
 
@@ -36,13 +37,13 @@ const team = [
   {
     name: "Daniel Altenhof",
     rolle: "Geschäftsführer & Gründer",
-    initials: "DA",
+    foto: "/daniel.jpg",
     text: "Daniel ist das organisatorische Herz von Katharis. Er koordiniert die Einsätze, hält den Kontakt zu den Pflegekassen und sorgt dafür, dass jeder Auftrag reibungslos läuft – vom ersten Anruf bis zur Übergabe.",
   },
   {
     name: "Kemal David Gülcü",
     rolle: "Partner & Geschäftsführer",
-    initials: "KG",
+    foto: "/kemal.jpg",
     text: "Kemal bringt jahrelange Erfahrung in der praktischen Umsetzung von Räumungen mit. Seine ruhige, respektvolle Art schafft von Anfang an Vertrauen – besonders in sensiblen Situationen.",
   },
 ];
@@ -92,12 +93,14 @@ export default function UeberUnsPage() {
             {team.map((p) => (
               <div key={p.name} className="rounded-2xl p-7 bg-white shadow-sm flex flex-col gap-4" style={{ border: "1px solid #1A3C3410" }}>
                 <div className="flex items-center gap-4">
-                  <div
-                    className="w-14 h-14 rounded-full flex items-center justify-center text-white font-black text-lg shrink-0"
-                    style={{ backgroundColor: PRIMARY }}
-                  >
-                    {p.initials}
-                  </div>
+                  <Image
+                    src={p.foto}
+                    alt={p.name}
+                    width={64}
+                    height={64}
+                    className="w-16 h-16 rounded-full object-cover shrink-0"
+                    style={{ objectPosition: "center top" }}
+                  />
                   <div>
                     <p className="font-bold text-lg leading-tight" style={{ color: PRIMARY }}>{p.name}</p>
                     <p className="text-sm" style={{ color: ACCENT, fontWeight: 600 }}>{p.rolle}</p>
