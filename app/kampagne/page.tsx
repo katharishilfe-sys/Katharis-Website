@@ -111,23 +111,35 @@ export default function KampagnePage() {
         </div>
       </section>
 
-      {/* ── Pflegekasse Block ──────────────────────────────────── */}
+      {/* ── Für Angehörige ────────────────────────────────────── */}
       <section className="py-16 px-4">
         <div className="max-w-4xl mx-auto">
           <div
-            className="rounded-3xl p-8 md:p-12 flex flex-col md:flex-row gap-8 items-center"
-            style={{ backgroundColor: `${ACCENT}15`, border: `2px solid ${ACCENT}40` }}
+            className="rounded-3xl p-8 md:p-12"
+            style={{ backgroundColor: PRIMARY }}
           >
-            <div className="text-6xl font-black" style={{ color: ACCENT }}>100%</div>
-            <div>
-              <h2 className="text-xl md:text-2xl font-bold mb-3" style={{ color: PRIMARY }}>
-                Ihre Pflegekasse übernimmt die Kosten
-              </h2>
-              <p className="leading-relaxed" style={{ color: PRIMARY, opacity: 0.75 }}>
-                In vielen Fällen trägt Ihre Pflegekasse bis zu 100 % der Kosten für die Messie-Hilfe.
-                Wir kennen den Antragsprozess genau und helfen Ihnen Schritt für Schritt dabei –
-                ohne bürokratischen Stress.
-              </p>
+            <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: ACCENT }}>
+              Für Söhne, Töchter & Angehörige
+            </p>
+            <h2 className="text-xl md:text-2xl font-bold text-white mb-4">
+              Sie machen sich Sorgen um Ihre Eltern?
+            </h2>
+            <p className="leading-relaxed text-white/75 mb-6">
+              Viele Erstkontakte kommen von Kindern, die für ihre Eltern Hilfe suchen –
+              und nicht wissen wie. Das kennen wir. Wir gehen einfühlsam auf Ihre Eltern ein,
+              erklären jeden Schritt verständlich und sorgen dafür, dass sie sich
+              sicher und respektiert fühlen. In vielen Fällen übernimmt die Pflegekasse
+              bis zu <strong className="text-white">100 % der Kosten</strong>.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <a
+                href="tel:07031/6953604"
+                className="flex items-center justify-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-opacity hover:opacity-90"
+                style={{ backgroundColor: ACCENT, color: PRIMARY }}
+              >
+                <Phone size={16} />
+                Jetzt gemeinsam besprechen
+              </a>
             </div>
           </div>
         </div>
