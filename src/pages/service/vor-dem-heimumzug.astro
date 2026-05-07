@@ -1,31 +1,181 @@
-﻿---
+---
 import PageLayout from '@layouts/PageLayout.astro';
-import { hooks, kontakt } from '@data/content';
+import { hooks, pflegekassenTöpfe } from '@data/content';
+import { generateLocalBusinessSchema, generateServiceSchema, generateFAQPageSchema } from '@lib/schema-org';
+import CallCTA from '@components/CallCTA';
+import RueckrufButton from '@components/RueckrufButton';
+
+const localBusinessSchema = generateLocalBusinessSchema();
+const serviceSchema = generateServiceSchema({
+  serviceName: 'Vollräumung vor dem Pflegeheim-Umzug',
+  serviceDescription: 'Vollräumung mit Pflegekassen-Direktabrechnung in Stuttgart und LK Böblingen. Vermieter-Übergabe besenrein. Para 45a SGB XI anerkannt.',
+  serviceUrl: 'https://katharis.de/service/vor-dem-heimumzug/',
+});
+
+const faqs = [
+  {
+    question: 'Wie schnell können Sie räumen?',
+    answer: 'Vor-Ort-Termin innerhalb einer Woche. Vollräumung typisch zwei bis fünf Tage je nach Wohnungsgröße. Bei akutem Druck sprechen Sie uns offen an.',
+  },
+  {
+    question: 'Was passiert mit den Erbstücken?',
+    answer: 'Sie entscheiden, was bleibt. Wir machen Foto-Doku und Wert-Liste auf Wunsch. Sie bekommen die Liste mit Unterschrift für Ihre Unterlagen.',
+  },
+  {
+    question: 'Was machen Sie mit Sperrgut und Müll?',
+    answer: 'Wir melden Sperrgut beim Vermieter oder bei der Stadt an, koordinieren Abholung oder fahren selbst zum Wertstoffhof. Entsorgungs-Kosten sind im Auftrag enthalten.',
+  },
+  {
+    question: 'Wer organisiert den Vermieter-Termin?',
+    answer: 'Wir können das übernehmen, wenn Sie uns Vollmacht oder Vermieter-Kontakt geben. Sie müssen nicht dabei sein.',
+  },
+  {
+    question: 'Was wenn die Pflegekasse nicht alles übernimmt?',
+    answer: 'Wir besprechen das transparent vor Auftragsbeginn. Bei Pflegegrad 1 zum Beispiel reicht der Entlastungsbetrag oft nicht für eine Vollräumung, dann besprechen wir Privat-Backup mit Festpreis oder Stundensatz, 19 Prozent Umsatzsteuer.',
+  },
+  {
+    question: 'Was wenn Pflegegrad noch nicht beantragt ist?',
+    answer: 'Wir helfen administrativ beim Antrag. Bei Bewilligung kann die Pflegekasse rückwirkend ab Antragsdatum erstatten. Bei Termin-Druck können wir parallel als Privat-Auftrag anfangen, im Bewilligungs-Fall rückwirkend abrechnen.',
+  },
+  {
+    question: 'Sind Sie versichert wenn etwas kaputt geht?',
+    answer: 'Ja, 3 Mio Euro für Sach- und Personenschäden ohne Selbstbeteiligung.',
+  },
+];
+
+const faqSchema = generateFAQPageSchema(faqs);
+
+const serviceKarten = [
+  {
+    title: 'Erbstücke sichern',
+    text: 'Wir gehen mit Ihnen oder einem Bevollmächtigten durch die Wohnung und sortieren in drei Kategorien: Erbstücke und Werte zum Behalten, Verschenken oder Sozialkaufhaus, Entsorgung. Foto-Doku der Wert-Gegenstände auf Wunsch.',
+  },
+  {
+    title: 'Vollräumung',
+    text: 'Komplette Wohnung leer. Möbel, Hausrat, Kleidung, Papier-Kram. Wir kümmern uns um Sperrgut-Anmeldung beim Vermieter und um die Entsorgung gemäß regionalen Vorschriften.',
+  },
+  {
+    title: 'Tiefenreinigung',
+    text: 'Böden, Sanitär-Bereiche, Küche, Fenster. Damit der Vermieter die Wohnung als besenrein abnimmt.',
+  },
+  {
+    title: 'Vermieter-Übergabe besenrein',
+    text: 'Wir koordinieren den Vermieter-Termin und übergeben mit Protokoll. Schlüssel-Quittung dokumentiert. Sie müssen nicht selbst dabei sein, wenn das für Sie nicht passt.',
+  },
+];
 ---
 
 <PageLayout
   title="Vollräumung vor Heimumzug Stuttgart - Pflegekasse zahlt | Katharis"
-  description="Vollräumung mit Pflegekassen-Direktabrechnung in Stuttgart und LK Böblingen. Vermieter-Übergabe besenrein. Para 45a anerkannt."
+  description="Vollräumung mit Pflegekassen-Direktabrechnung in Stuttgart und LK Böblingen. Vermieter-Übergabe besenrein. Para 45a anerkannt. Erbstücke werden gesichert."
 >
+  <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <!-- Hero -->
   <section class="bg-background py-16 md:py-24">
     <div class="max-w-content mx-auto px-4">
-      <h1 class="text-4xl md:text-5xl font-bold text-primary">Vollräumung vor dem Pflegeheim-Umzug</h1>
+      <h1 class="text-4xl md:text-5xl font-bold text-primary leading-tight">Vollräumung vor dem Pflegeheim-Umzug</h1>
       <p class="mt-4 text-lg text-primary/80">{hooks.master}</p>
       <p class="mt-2 text-sm text-primary/60">{hooks.geltungsbereich}</p>
-      <p class="mt-6 text-primary/80">Pflegegrad liegt vor? Wir rechnen direkt mit der Pflegekasse ab. Vermieter-Termin in wenigen Wochen? Wir koordinieren.</p>
+      <p class="mt-6 text-primary/80">
+        Pflegegrad liegt vor? Wir rechnen direkt mit der Pflegekasse ab. Vermieter-Termin in wenigen Wochen?
+        Wir koordinieren.
+      </p>
       <div class="flex flex-col sm:flex-row gap-3 mt-8">
-        <a href={`tel:${kontakt.telefonHref}`} class="px-6 py-3 rounded-full font-bold text-white bg-accent-dark hover:opacity-90">Jetzt anrufen</a>
-        <a href="/kontakt/" class="px-6 py-3 rounded-full font-bold text-primary border-2 border-primary hover:bg-primary hover:text-white transition-colors">Rückruf anfordern</a>
+        <CallCTA client:load />
+        <RueckrufButton client:load sourceCta="rueckruf-heimumzug-hero" />
       </div>
     </div>
   </section>
 
+  <!-- Was wir machen -->
   <section class="py-12 max-w-content mx-auto px-4">
     <h2 class="text-2xl font-bold text-primary mb-4">Was wir machen</h2>
     <p class="text-primary/80">
       Eltern oder Angehörige ziehen ins Pflegeheim. Die Wohnung muss in zwei bis acht Wochen leer und besenrein
-      an den Vermieter zurück. Wir übernehmen die komplette Vollräumung mit Sortierung, Tiefenreinigung und
-      Vermieter-Übergabe. Bei vorhandenem Pflegegrad rechnen wir direkt mit der Pflegekasse ab.
+      an den Vermieter zurück. Doppelmiete können Sie sich nicht leisten. Erbstücke wollen Sie sichern.
+      Den Rest der Wohnung kennen Sie zu wenig, um in der knappen Zeit selbst zu sortieren.
     </p>
+    <p class="mt-4 text-primary/80">
+      Wir übernehmen die komplette Vollräumung mit Sortierung, Tiefenreinigung und Vermieter-Übergabe.
+      Bei vorhandenem Pflegegrad rechnen wir direkt mit der Pflegekasse ab.
+    </p>
+  </section>
+
+  <!-- Pflegekassen-Akkordeon -->
+  <section class="py-12 bg-white">
+    <div class="max-w-content mx-auto px-4">
+      <h2 class="text-2xl font-bold text-primary mb-6">Wie funktioniert die Kostenübernahme?</h2>
+      <div class="space-y-3">
+        {pflegekassenTöpfe.map((topf) => (
+          <details class="border border-primary/20 rounded-lg p-4 bg-background/30">
+            <summary class="font-bold text-primary cursor-pointer">{topf.paragraph}: {topf.title} ({topf.betrag})</summary>
+            <div class="mt-3 text-primary/80 text-sm">
+              <p><strong>Wer:</strong> {topf.wer}</p>
+              <p class="mt-2">{topf.description}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Termin-Druck -->
+  <section class="py-12 bg-background">
+    <div class="max-w-content mx-auto px-4">
+      <h2 class="text-2xl font-bold text-primary mb-4">Termin-Druck und Vermieter-Übergabe</h2>
+      <p class="text-primary/80">Heimumzüge haben oft enge Fristen. Vermieter erwarten besenreine Übergabe innerhalb von zwei bis vier Wochen. Doppelmiete will niemand zahlen. Wir kennen den Druck.</p>
+      <ul class="mt-4 space-y-2 text-primary/80 list-disc list-inside">
+        <li>Termin-Vereinbarung am gleichen oder nächsten Werktag für das Erstgespräch</li>
+        <li>Vor-Ort-Termin innerhalb einer Woche</li>
+        <li>Vollräumung typisch in zwei bis fünf Tagen je nach Wohnungsgröße und Verschmutzung</li>
+        <li>Vermieter-Übergabe-Protokoll auf Wunsch</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Service-Karten -->
+  <section class="py-12 bg-white">
+    <div class="max-w-content mx-auto px-4">
+      <h2 class="text-2xl font-bold text-primary mb-6">Was wir konkret machen</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {serviceKarten.map((karte) => (
+          <div class="bg-background/30 p-5 rounded-lg border border-primary/10">
+            <h3 class="font-bold text-primary">{karte.title}</h3>
+            <p class="mt-2 text-sm text-primary/80">{karte.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-12 max-w-content mx-auto px-4">
+    <h2 class="text-2xl font-bold text-primary mb-6">Häufige Fragen</h2>
+    <div class="space-y-3">
+      {faqs.map((faq) => (
+        <details class="border border-primary/20 rounded-lg p-4 bg-background/30">
+          <summary class="font-bold text-primary cursor-pointer">{faq.question}</summary>
+          <p class="mt-3 text-primary/80 text-sm">{faq.answer}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="py-16 bg-background">
+    <div class="max-w-2xl mx-auto px-4 text-center">
+      <h2 class="text-3xl font-bold text-primary">Termin steht? Sprechen wir.</h2>
+      <p class="mt-4 text-primary/80">
+        Wenn Sie wenig Zeit haben, ist ein kurzes Telefonat der schnellste Weg. Im kostenlosen Erstgespräch
+        klären wir Pflegekassen-Optionen, Termin-Verfügbarkeit und nächste Schritte.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-3 mt-8 justify-center">
+        <CallCTA client:load />
+        <RueckrufButton client:load sourceCta="rueckruf-heimumzug-final" />
+      </div>
+    </div>
   </section>
 </PageLayout>

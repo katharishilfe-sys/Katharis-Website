@@ -1,37 +1,37 @@
-Assets, Umlaute, React-Islands, Drift-Check
+Logo + Über-uns-Portraits + Service-Pages mit FAQ + CallCTA-Islands
 
-Block 1 - Assets aus main-Branch geholt:
-- katharis-logo.png + favicon-32 + favicon-512 + og-image.png
-- daniel.jpg + kemal.jpg (Initiator-Portraits)
-- 4 Projekt-Bilder (Vorher/Nachher)
+Header + Footer:
+- Katharis-Logo PNG sichtbar (Header 44px, Footer 48px weiß-Variante via brightness-0 invert)
 
-Block 2 - Umlaute fixen (~140 Replacements ueber 21 Files):
-- ae/oe/ue → ä/ö/ü in allen Source-Files
-- Header-Bug-Fix: /über-uns/ zurueck zu /ueber-uns/ (URLs ASCII-only)
-- Drei Replace-Runden, alle bekannten deutschen Woerter erfasst
-- Identifier (sekundaer, traeger, pflegekassenToepfe) bleiben absichtlich ascii
+/ueber-uns:
+- Daniel + Kemal Portrait-Bilder als rechteckige Profile-Karten
+- "Was uns unterscheidet" Sektion mit 3 Punkten (Pflegekassen-Direkt + Diskretion + Antrags-Hilfe)
+- Trust-Indikatoren-Grid (73+ Faelle, §45a, 3 Mio €)
+- Final-CTA mit CallCTA + RueckrufButton
 
-Block 3 - React-Islands hinzugefuegt:
-- src/components/CallCTA.tsx mit GA4-Event call_initiated
-- src/components/StickyMobileBar.tsx (Mobile-Only Bottom-Bar nach Scroll >400px)
-- src/components/LeadFormModal.tsx (2-Feld-Form mit Honeypot, Mock-Submit)
-- src/components/RueckrufButton.tsx (Trigger fuer LeadFormModal-Event)
-- PageLayout.astro: StickyMobileBar + LeadFormModal als client:idle Islands
-- kontakt.astro: RueckrufButton in Form-Sektion
+/service/messie-hilfe (Volltext nach Master 1.5 Tonalitaet warm/meditativ):
+- Was-ist-Messie-Hilfe (3 Absaetze)
+- Pflegekassen-Akkordeon mit allen 4 Toepfen
+- Diskretion + Würde-Block
+- 4 Service-Karten (Sortierung, Tiefenreinigung, Vermieter-Übergabe, Pflegekasse-Direkt)
+- 6 FAQs (Wertgegenstände, Hygiene, Sträubung, Diskretion, Vor-Ort-Kosten, Pflegekassen-Ablehnung)
+- FAQPage Schema.org
+- CallCTA + RueckrufButton in Hero + Final-CTA
 
-Form-Backend Mock fuer jetzt; echtes Supabase + Resend in Etappe 6.5a.
+/service/vor-dem-heimumzug (Persona B, pragmatisch-warm):
+- Was-wir-machen
+- Pflegekassen-Akkordeon
+- Termin-Druck-Block (4 Frist-Punkte)
+- 4 Service-Karten (Erbstücke, Vollräumung, Tiefenreinigung, Vermieter-Übergabe)
+- 7 FAQs
+- FAQPage Schema.org
+- CallCTA + RueckrufButton
 
-Block 4 - Drift-Check + npm scripts:
-- scripts/drift-check.sh (lokal aufrufbar via npm run drift-check)
-- package.json scripts: drift-check + check
-- Drift-Check lokal: OK
+/ (Hauptseite):
+- Hero CTAs jetzt CallCTA + RueckrufButton (statt simple <a>)
+- Final-CTA gleich
 
-Hinweis: GitHub-Actions-Workflows (.github/workflows/ci.yml + drift-check.yml)
-sind LOKAL angelegt aber nicht im Commit, weil Cloudflare-OAuth-Token nur
-"repo"-Scope hat (nicht "workflow"). Daniel muss sie via GitHub-Web-UI
-hochladen oder Token-Scope erweitern. Files liegen unter
-.github/workflows/ aber sind in .gitignore.
-
+Drift-Check lokal: OK
 Build: 16 pages in 3s
 
 Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>

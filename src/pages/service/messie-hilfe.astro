@@ -1,15 +1,64 @@
-﻿---
+---
 import PageLayout from '@layouts/PageLayout.astro';
-import { hooks, kontakt, pflegekassenTöpfe } from '@data/content';
-import { generateLocalBusinessSchema, generateServiceSchema } from '@lib/schema-org';
+import { hooks, pflegekassenTöpfe } from '@data/content';
+import { generateLocalBusinessSchema, generateServiceSchema, generateFAQPageSchema } from '@lib/schema-org';
+import CallCTA from '@components/CallCTA';
+import RueckrufButton from '@components/RueckrufButton';
 
 const localBusinessSchema = generateLocalBusinessSchema();
 const serviceSchema = generateServiceSchema({
   serviceName: 'Messie-Hilfe in Stuttgart und Landkreis Böblingen',
-  serviceDescription:
-    'Spezialist für Entlastungsleistungen bei Verwahrlosung. Para 45a SGB XI anerkannt. Pflegekassen-Direktabrechnung möglich.',
+  serviceDescription: 'Spezialist für Entlastungsleistungen bei Verwahrlosung. Para 45a SGB XI anerkannt. Pflegekassen-Direktabrechnung möglich.',
   serviceUrl: 'https://katharis.de/service/messie-hilfe/',
 });
+
+const faqs = [
+  {
+    question: 'Was ist mit Wertgegenständen, die ich nicht aufheben will, die aber wertvoll sind?',
+    answer: 'Wir verschenken oder geben an soziale Stellen weiter wenn Sie das wünschen. Erlöse aus Verkauf bekommen Sie zugeschrieben. Bei Wert-Gegenständen machen wir Foto-Doku und Wert-Liste für Ihre Unterlagen.',
+  },
+  {
+    question: 'Wie ist es mit der Hygiene wenn die Wohnung sehr verschmutzt ist?',
+    answer: 'Wir kommen mit Atemschutz, Handschuhen, Schuhüberziehern. Bei Verdacht auf Schimmel oder Asbest sprechen wir das an und koordinieren Spezialist-Beseitigung. Sie tragen kein Risiko.',
+  },
+  {
+    question: 'Was ist wenn meine Mutter sich gegen die Hilfe sträubt?',
+    answer: 'Wir kommen nicht ohne Einwilligung des Klienten oder einer Vollmacht. Bei Demenz oder schwerer Depression kann eine gesetzliche Betreuung nötig sein, dafür ist der Pflegestützpunkt oder das Betreuungsgericht zuständig. Wir vermitteln Ihnen die richtigen Stellen.',
+  },
+  {
+    question: 'Wie diskret ist das wirklich?',
+    answer: 'Neutrale Fahrzeuge ohne Werbung. Unauffällige Arbeitskleidung. Keine Sicht-Inhalte nach außen. Tageszeit nach Ihrem Wunsch. Wir tragen die Geschichte nicht weiter, weder im Gespräch mit anderen Klienten noch privat.',
+  },
+  {
+    question: 'Was kostet die Vor-Ort-Begutachtung?',
+    answer: 'Sie kostet nichts. Das Erstgespräch am Telefon ist kostenlos, der Vor-Ort-Termin zur Auftrags-Einschätzung ebenfalls. Erst wenn Sie uns beauftragen, beginnt die kostenpflichtige Arbeit.',
+  },
+  {
+    question: 'Was passiert wenn die Pflegekasse den Antrag ablehnt?',
+    answer: 'Wir besprechen das transparent mit Ihnen, bevor die Arbeit beginnt. Sie haben dann zwei Optionen: Widerspruch (über Pflegestützpunkt oder Anwalt, vermitteln wir gerne) oder Privat-Backup-Vertrag mit transparentem Festpreis oder Stundensatz, 19 Prozent Umsatzsteuer.',
+  },
+];
+
+const faqSchema = generateFAQPageSchema(faqs);
+
+const serviceKarten = [
+  {
+    title: 'Sortierung',
+    text: 'Wir gehen Schritt für Schritt durch die Wohnung und sortieren in drei Kategorien: Erbstücke und Werte, Verschenken oder Sozialkaufhaus, Entsorgung. Sie entscheiden, was in welche Kategorie geht.',
+  },
+  {
+    title: 'Tiefenreinigung',
+    text: 'Böden, Sanitär-Bereiche, Küche, Fenster. Mit professionellen Reinigungs-Mitteln und Schutz-Ausstattung. Bei besonderer Verschmutzung mit Atemschutz und Handschuhen.',
+  },
+  {
+    title: 'Vermieter-Übergabe besenrein',
+    text: 'Wenn die Wohnung leer werden muss, koordinieren wir den Vermieter-Termin. Wir übergeben besenrein mit Übergabe-Protokoll. Bei Pflegekassen-Direktabrechnung sind die Kosten dafür mit abgedeckt.',
+  },
+  {
+    title: 'Pflegekassen-Direkt-Abrechnung',
+    text: 'Bei vorhandenem Pflegegrad rechnen wir direkt mit Ihrer Pflegekasse ab. Sie unterschreiben einen Pflegekassen-Sondervertrag mit Abtretungserklärung, alles weitere läuft über uns. Sie haben keine Vorauslage.',
+  },
+];
 ---
 
 <PageLayout
@@ -18,38 +67,50 @@ const serviceSchema = generateServiceSchema({
 >
   <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
   <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 
+  <!-- Hero -->
   <section class="bg-background py-16 md:py-24">
     <div class="max-w-content mx-auto px-4">
-      <h1 class="text-4xl md:text-5xl font-bold text-primary leading-tight">Messie-Hilfe in Stuttgart und Landkreis Böblingen</h1>
+      <h1 class="text-4xl md:text-5xl font-bold text-primary leading-tight">
+        Messie-Hilfe in Stuttgart und Landkreis Böblingen
+      </h1>
       <p class="mt-4 text-lg text-primary/80">{hooks.master}</p>
       <p class="mt-2 text-sm text-primary/60">{hooks.geltungsbereich}</p>
-      <p class="mt-6 text-primary/80">{hooks.sekundaer}</p>
+      <p class="mt-6 text-primary/80 text-base">{hooks.sekundaer}</p>
       <div class="flex flex-col sm:flex-row gap-3 mt-8">
-        <a href={`tel:${kontakt.telefonHref}`} class="px-6 py-3 rounded-full font-bold text-white bg-accent-dark hover:opacity-90">Jetzt anrufen</a>
-        <a href="/kontakt/" class="px-6 py-3 rounded-full font-bold text-primary border-2 border-primary hover:bg-primary hover:text-white transition-colors">Rückruf anfordern</a>
+        <CallCTA client:load />
+        <RueckrufButton client:load sourceCta="rueckruf-messie-hero" />
       </div>
     </div>
   </section>
 
+  <!-- Was ist Messie-Hilfe -->
   <section class="py-12 max-w-content mx-auto px-4">
     <h2 class="text-2xl font-bold text-primary mb-4">Was ist Messie-Hilfe?</h2>
     <p class="text-primary/80">
       Wenn die Wohnung von jemandem, der Ihnen wichtig ist, über Monate oder Jahre auf der Strecke geblieben ist,
       dann ist das oft kein einzelner Vorfall, sondern Folge einer langen Entwicklung. Demenz, Depression, Sucht,
       Burnout, Vereinsamung, schwere Erkrankungen oder einfach die Erschöpfung des Alters bringen Menschen in
-      Situationen, die sie alleine nicht mehr bewältigen können.
+      Situationen, die sie alleine nicht mehr bewältigen können. Und Sie als Tochter, Sohn, Partnerin oder Partner
+      stehen plötzlich vor einer Wohnung, die nicht mehr die ist, die Sie kennen.
     </p>
     <p class="mt-4 text-primary/80">
-      Sie sind nicht alleine damit. Wir übernehmen die operative Arbeit, ohne Wertung, ohne Sensationalisierung,
-      mit Diskretion: Sortierung, Tiefenreinigung, Vermieter-Übergabe.
+      Sie sind nicht alleine damit. Wir sehen jeden Monat Fälle, die genauso aussehen. Es gibt einen Weg nach vorne,
+      und der beginnt mit einem ruhigen Gespräch.
+    </p>
+    <p class="mt-4 text-primary/80">
+      Wir übernehmen die operative Arbeit, ohne Wertung, ohne Sensationalisierung, mit Diskretion. Sortierung von dem,
+      was bleiben soll. Tiefenreinigung von dem, was sich angesammelt hat. Vermieter-Übergabe wenn die Wohnung leer
+      werden muss. Direkt-Abrechnung mit der Pflegekasse, wenn ein Pflegegrad vorliegt.
     </p>
   </section>
 
+  <!-- Pflegekassen-Akkordeon -->
   <section class="py-12 bg-white">
     <div class="max-w-content mx-auto px-4">
       <h2 class="text-2xl font-bold text-primary mb-6">Wie funktioniert die Kostenübernahme?</h2>
-      <div class="space-y-4">
+      <div class="space-y-3">
         {pflegekassenTöpfe.map((topf) => (
           <details class="border border-primary/20 rounded-lg p-4 bg-background/30">
             <summary class="font-bold text-primary cursor-pointer">{topf.paragraph}: {topf.title} ({topf.betrag})</summary>
@@ -60,19 +121,69 @@ const serviceSchema = generateServiceSchema({
           </details>
         ))}
       </div>
+      <p class="mt-6 text-sm text-primary/70">
+        Im kostenlosen Erstgespräch klären wir gemeinsam mit Ihnen, welche Pflegekassen-Leistungen für Ihre Situation
+        in Frage kommen können. Noch kein Pflegegrad? Wir helfen administrativ beim Antrag, mehr dazu auf
+        <a href="/pflegegrad-antrag/" class="underline text-accent-dark">Pflegegrad-Antrags-Hilfe</a>.
+      </p>
     </div>
   </section>
 
+  <!-- Diskretion und Würde -->
+  <section class="py-12 bg-background">
+    <div class="max-w-content mx-auto px-4">
+      <h2 class="text-2xl font-bold text-primary mb-4">Diskretion und Würde</h2>
+      <p class="text-primary/80">
+        Wir arbeiten so, dass niemand mitbekommen muss, was bei Ihnen oder Ihrer Mutter oder Ihrem Vater passiert.
+        Neutrale Fahrzeuge ohne auffällige Werbung. Unauffällige Kleidung. Wenn Sie es wünschen, arbeiten wir zu
+        Tageszeiten mit wenig Nachbarn-Verkehr.
+      </p>
+      <p class="mt-4 text-primary/80">
+        Erbstücke und persönliche Erinnerungs-Stücke besprechen wir aktiv mit Ihnen vor der Entsorgung.
+        Was Ihnen wichtig ist, bleibt.
+      </p>
+    </div>
+  </section>
+
+  <!-- Service-Karten -->
+  <section class="py-12 bg-white">
+    <div class="max-w-content mx-auto px-4">
+      <h2 class="text-2xl font-bold text-primary mb-6">Was wir konkret machen</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {serviceKarten.map((karte) => (
+          <div class="bg-background/30 p-5 rounded-lg border border-primary/10">
+            <h3 class="font-bold text-primary">{karte.title}</h3>
+            <p class="mt-2 text-sm text-primary/80">{karte.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-12 max-w-content mx-auto px-4">
+    <h2 class="text-2xl font-bold text-primary mb-6">Häufige Fragen</h2>
+    <div class="space-y-3">
+      {faqs.map((faq) => (
+        <details class="border border-primary/20 rounded-lg p-4 bg-background/30">
+          <summary class="font-bold text-primary cursor-pointer">{faq.question}</summary>
+          <p class="mt-3 text-primary/80 text-sm">{faq.answer}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <!-- Final CTA -->
   <section class="py-16 bg-background">
     <div class="max-w-2xl mx-auto px-4 text-center">
       <h2 class="text-3xl font-bold text-primary">Sprechen wir.</h2>
       <p class="mt-4 text-primary/80">
         Im kostenlosen Erstgespräch am Telefon hören wir zu, klären Ihre Pflegekassen-Optionen und vereinbaren
-        wenn Sie wollen einen Vor-Ort-Termin.
+        wenn Sie wollen einen Vor-Ort-Termin. Sie gehen kein Risiko ein. Sie bekommen Klarheit.
       </p>
       <div class="flex flex-col sm:flex-row gap-3 mt-8 justify-center">
-        <a href={`tel:${kontakt.telefonHref}`} class="px-6 py-3 rounded-full font-bold text-white bg-accent-dark hover:opacity-90">Jetzt anrufen</a>
-        <a href="/kontakt/" class="px-6 py-3 rounded-full font-bold text-primary border-2 border-primary hover:bg-primary hover:text-white transition-colors">Rückruf anfordern</a>
+        <CallCTA client:load />
+        <RueckrufButton client:load sourceCta="rueckruf-messie-final" />
       </div>
     </div>
   </section>

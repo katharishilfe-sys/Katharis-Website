@@ -1,7 +1,9 @@
 ﻿---
 import PageLayout from '@layouts/PageLayout.astro';
-import { hooks, services, trustIndikatoren, kontakt } from '@data/content';
+import { hooks, services, trustIndikatoren } from '@data/content';
 import { generateLocalBusinessSchema } from '@lib/schema-org';
+import CallCTA from '@components/CallCTA';
+import RueckrufButton from '@components/RueckrufButton';
 
 const localBusinessSchema = generateLocalBusinessSchema();
 ---
@@ -25,18 +27,8 @@ const localBusinessSchema = generateLocalBusinessSchema();
         {hooks.sekundaer}
       </p>
       <div class="flex flex-col sm:flex-row gap-3 mt-8 justify-center">
-        <a
-          href={`tel:${kontakt.telefonHref}`}
-          class="px-6 py-3 rounded-full font-bold text-white bg-accent-dark hover:opacity-90 transition-opacity"
-        >
-          Jetzt anrufen
-        </a>
-        <a
-          href="/kontakt/"
-          class="px-6 py-3 rounded-full font-bold text-primary border-2 border-primary hover:bg-primary hover:text-white transition-colors"
-        >
-          Rückruf anfordern
-        </a>
+        <CallCTA client:load />
+        <RueckrufButton client:load sourceCta="rueckruf-home-hero" />
       </div>
     </div>
   </section>
@@ -105,18 +97,8 @@ const localBusinessSchema = generateLocalBusinessSchema();
         welche Pflegekassen-Optionen für Sie in Frage kommen und wann wir kommen können.
       </p>
       <div class="flex flex-col sm:flex-row gap-3 mt-8 justify-center">
-        <a
-          href={`tel:${kontakt.telefonHref}`}
-          class="px-6 py-3 rounded-full font-bold text-white bg-accent-dark hover:opacity-90"
-        >
-          Jetzt anrufen
-        </a>
-        <a
-          href="/kontakt/"
-          class="px-6 py-3 rounded-full font-bold text-primary border-2 border-primary hover:bg-primary hover:text-white transition-colors"
-        >
-          Rückruf anfordern
-        </a>
+        <CallCTA client:load />
+        <RueckrufButton client:load sourceCta="rueckruf-home-final" />
       </div>
     </div>
   </section>

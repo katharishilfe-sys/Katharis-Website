@@ -1,42 +1,103 @@
-﻿---
+---
 import PageLayout from '@layouts/PageLayout.astro';
 import { initiatoren, trustIndikatoren, kontakt } from '@data/content';
+import CallCTA from '@components/CallCTA';
+import RueckrufButton from '@components/RueckrufButton';
 ---
 
 <PageLayout
-  title="Ueber Katharis - Initiator Daniel Altenhof | Stuttgart"
+  title="Über Katharis - Initiator Daniel Altenhof | Stuttgart"
   description="Daniel Altenhof und Kemal David Gülcü als Initiatoren von Katharis. Spezialist für Entlastungsleistungen in komplexen Pflegefällen, Stuttgart und LK Böblingen."
 >
+  <!-- Hero -->
   <section class="bg-background py-16">
     <div class="max-w-content mx-auto px-4">
       <h1 class="text-4xl font-bold text-primary">Wer hinter Katharis steht</h1>
       <p class="mt-4 text-lg text-primary/80">
-        Spezialist für Entlastungsleistungen für Pflegebedürftige in komplexen Fällen. Anerkannt nach Paragraph 45a SGB XI für Stadt Stuttgart und Landkreis Böblingen.
+        Spezialist für Entlastungsleistungen für Pflegebedürftige in komplexen Fällen.
+        Anerkannt nach Paragraph 45a SGB XI für Stadt Stuttgart und Landkreis Böblingen.
       </p>
     </div>
   </section>
 
+  <!-- Initiator-Profile mit Portraits -->
   <section class="py-12 max-w-content mx-auto px-4">
     {initiatoren.map((person) => (
-      <div class="mb-12">
-        <h2 class="text-2xl font-bold text-primary">{person.name}, {person.rolle}</h2>
-        <p class="mt-4 text-primary/80">{person.bio}</p>
-      </div>
+      <article class="mb-16 grid grid-cols-1 sm:grid-cols-[160px_1fr] gap-6 items-start">
+        <img
+          src={person.foto}
+          alt={`Portrait ${person.name}`}
+          width="160"
+          height="160"
+          class="rounded-xl object-cover w-40 h-40"
+          loading="lazy"
+        />
+        <div>
+          <h2 class="text-2xl font-bold text-primary">{person.name}</h2>
+          <p class="text-sm text-primary/60 mt-1">{person.rolle}</p>
+          <p class="mt-4 text-primary/80">{person.bio}</p>
+        </div>
+      </article>
     ))}
   </section>
 
+  <!-- Was uns unterscheidet -->
   <section class="py-12 bg-white">
-    <div class="max-w-content mx-auto px-4 text-center">
-      <p class="text-4xl font-bold text-accent-dark">{trustIndikatoren.bilanzZahl}+</p>
-      <p class="mt-2 text-primary/80">{trustIndikatoren.bilanzText}.</p>
-      <p class="mt-1 text-sm text-primary/60">{trustIndikatoren.team}.</p>
+    <div class="max-w-content mx-auto px-4">
+      <h2 class="text-2xl font-bold text-primary mb-6">Was uns unterscheidet</h2>
+      <p class="text-primary/80">
+        Wir sind nicht Generalist. Wir sind Spezialist für die Fälle, vor denen Standard-Anbieter
+        zurückschrecken oder nicht qualifiziert sind: Messie-Wohnungen mit Verwahrlosungs-Hintergrund,
+        Vollräumungen vor dem Pflegeheim-Umzug mit knapper Vermieter-Frist, Klienten ohne
+        Selbstzahler-Fähigkeit.
+      </p>
+      <ol class="mt-6 space-y-4 list-decimal list-inside text-primary/80">
+        <li>
+          <strong>Pflegekassen-Direktabrechnung als Standard</strong> über unsere Anerkennung nach
+          Paragraph 45a SGB XI für Stadt Stuttgart und Landkreis Böblingen.
+        </li>
+        <li>
+          <strong>Diskrete und würdevolle Arbeitsweise</strong> als Markenkern. Neutrale Fahrzeuge,
+          unauffällige Kleidung, Arbeit ohne Wertung.
+        </li>
+        <li>
+          <strong>Administrative Antrags-Hilfe</strong> wenn der Pflegegrad noch fehlt. Inhaltliche
+          Pflegeberatung gibt der Pflegestützpunkt kostenlos, dorthin verweisen wir aktiv.
+        </li>
+      </ol>
     </div>
   </section>
 
-  <section class="py-16 bg-background text-center">
-    <div class="max-w-2xl mx-auto px-4">
+  <!-- Trust-Indikatoren -->
+  <section class="py-12 bg-background">
+    <div class="max-w-content mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+      <div>
+        <p class="text-4xl font-bold text-accent-dark">{trustIndikatoren.bilanzZahl}+</p>
+        <p class="mt-2 text-primary/80 text-sm">erfolgreich abgewickelte Fälle in Stadt Stuttgart und Landkreis Böblingen, 2024 bis heute</p>
+      </div>
+      <div>
+        <p class="text-4xl font-bold text-accent-dark">§45a</p>
+        <p class="mt-2 text-primary/80 text-sm">Anerkannt nach Para 45a SGB XI für Direkt-Abrechnung mit der Pflegekasse</p>
+      </div>
+      <div>
+        <p class="text-4xl font-bold text-accent-dark">3 Mio €</p>
+        <p class="mt-2 text-primary/80 text-sm">Versichert für Sach- und Personenschäden ohne Selbstbeteiligung</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="py-16 bg-white">
+    <div class="max-w-2xl mx-auto px-4 text-center">
       <h2 class="text-3xl font-bold text-primary">Sprechen wir.</h2>
-      <a href={`tel:${kontakt.telefonHref}`} class="inline-block mt-6 px-6 py-3 rounded-full font-bold text-white bg-accent-dark hover:opacity-90">Jetzt anrufen</a>
+      <p class="mt-4 text-primary/80">
+        Wenn Sie unsicher sind, ob Ihre Situation zu uns passt: rufen Sie uns einfach an.
+        Im kostenlosen Erstgespräch finden wir es gemeinsam heraus.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-3 mt-8 justify-center">
+        <CallCTA client:load />
+        <RueckrufButton client:load sourceCta="rueckruf-ueber-uns" />
+      </div>
     </div>
   </section>
 </PageLayout>
