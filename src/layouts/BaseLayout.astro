@@ -40,6 +40,16 @@ const orgSchema = generateOrganizationSchema();
     <link rel="alternate icon" type="image/png" href="/favicon-32.png" />
     <link rel="apple-touch-icon" href="/favicon-512.png" />
 
+    <!-- Performance: Preconnect zu Cloudflare-Insights (Beacon-Latenz minimieren) -->
+    <link rel="preconnect" href="https://static.cloudflareinsights.com" crossorigin />
+    <link rel="dns-prefetch" href="https://static.cloudflareinsights.com" />
+
+    <!-- Theme-Color fuer Mobile-Browser-Chrome (Brand-Primary) -->
+    <meta name="theme-color" content="#1A3C34" />
+
+    <!-- Format-Detection deaktivieren um iOS auto-link von Telefonnummern zu kontrollieren -->
+    <meta name="format-detection" content="telephone=no" />
+
     <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
 
     <!--

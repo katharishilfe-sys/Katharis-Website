@@ -1,5 +1,29 @@
 User-agent: *
 Allow: /
 Disallow: /admin/
+Disallow: /admin/*
+
+# Aggressive AI-Trainings-Crawler blocken (kein Zustimmungs-Mehrwert fuer Klienten)
+User-agent: GPTBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+# AI-Assistenten die Klienten-Anfragen beantworten duerfen lesen (Trust-Signal)
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
 
 Sitemap: https://katharis.de/sitemap-index.xml

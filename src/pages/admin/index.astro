@@ -1,0 +1,229 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+
+/**
+ * Operations-Dashboard fuer Daniel + Kemal + Maxim.
+ *
+ * SCHUTZ:
+ *   - noindex,nofollow per Meta (BaseLayout-Prop)
+ *   - Disallow in robots.txt
+ *   - Cloudflare Access OBLIGATORISCH vor Live-Gang (Daniel-Aktion):
+ *       Cloudflare Dashboard -> Zero Trust -> Access -> Applications
+ *       -> Add application: katharis-v2.pages.dev/admin/*
+ *       -> Policy: Email-Liste daniel/kemal/maxim
+ *
+ * Zweck: zentrale Anlaufstelle fuer alle Operations-Dokumente, AVV-Pakete,
+ * SOPs, UWG-Playbooks. Source-of-Truth bleibt katharis-build/-Ordner lokal,
+ * dieses Dashboard verlinkt nur und gibt eine UeBersicht.
+ */
+
+interface OpsDoc {
+  id: string;
+  titel: string;
+  zweck: string;
+  status: 'live' | 'briefing' | 'skelett' | 'extern-blocker';
+  wer: string;
+  pfad: string;
+}
+
+const operationsDocs: OpsDoc[] = [
+  {
+    id: 'A2',
+    titel: 'USTA-BW-Konformitaet-Doku',
+    zweck: 'Nachweise fuer Anerkennung Para 45a SGB XI durch USTA-BW (Untere Sozialverwaltung BW).',
+    status: 'live',
+    wer: 'Daniel + Maxim',
+    pfad: 'katharis-build/etappe-3/anhang-a/a2-usta-bw-konformitaet.md',
+  },
+  {
+    id: 'A3',
+    titel: 'Abrechnungs-SOP Pflegekassen',
+    zweck: 'Schritt-fuer-Schritt-Anleitung wie ein Pflegekassen-Auftrag von Erstgespraech bis Auszahlung laeuft. Inkl. Rechnungs-Template.',
+    status: 'live',
+    wer: 'Daniel',
+    pfad: 'katharis-build/etappe-3/anhang-a/a3-abrechnungs-sop.md',
+  },
+  {
+    id: 'A4',
+    titel: 'AGB-Set + Anwalts-Briefing',
+    zweck: 'AGB Standard, Pflegekassen-Sondervertrag, Privat-Backup-Vertrag, Vollmachts-Templates, UWG-Bewertung Master-Hook.',
+    status: 'extern-blocker',
+    wer: 'Maxim -> Anwalt (2-4 Wochen)',
+    pfad: 'katharis-build/etappe-3/anhang-a/a4-agb-anwalt-briefing.md',
+  },
+  {
+    id: 'A5',
+    titel: 'Vertretungsmatrix Daniel-Ausfall',
+    zweck: 'Wer macht was wenn Daniel ausfaellt. Backup-Telefon, Email, Pflegekassen-Kontakte.',
+    status: 'live',
+    wer: 'Daniel + Kemal',
+    pfad: 'katharis-build/etappe-3/anhang-a/a5-vertretungsmatrix.md',
+  },
+  {
+    id: 'A8',
+    titel: 'Steuerberater-Sign-off',
+    zweck: 'Para 4 Nr. 16 UStG-Anwendung, Vorsteuer-Behandlung, Year-1-Steuererklaerung, Rechnungs-Template-Sign-off.',
+    status: 'extern-blocker',
+    wer: 'Maxim -> Steuerberater',
+    pfad: 'katharis-build/DANIEL-AKTIONEN.md (Block 3 E)',
+  },
+  {
+    id: 'A9',
+    titel: 'Operations-Handbuch',
+    zweck: 'Konsolidiertes Handbuch fuer den taeglichen Betrieb. Quervewerweise zu allen anderen SOPs.',
+    status: 'skelett',
+    wer: 'Daniel',
+    pfad: 'katharis-build/etappe-3/anhang-a/a9-operations-handbuch-skelett.md',
+  },
+  {
+    id: 'A10',
+    titel: 'BFSG-Auditor-Mandat',
+    zweck: 'Externer WCAG-2.1-AA-Pruefnachweis vor Live-Gang.',
+    status: 'extern-blocker',
+    wer: 'Maxim -> Auditor (2 Wochen Lead)',
+    pfad: 'katharis-build/DANIEL-AKTIONEN.md (Block 3 F)',
+  },
+  {
+    id: 'A11',
+    titel: 'DPIA-Template (Datenschutz-Folgeabschaetzung)',
+    zweck: 'Pflicht-Doku fuer Verarbeitung sensibler Daten (Pflegegrad, Gesundheits-Hintergrund).',
+    status: 'skelett',
+    wer: 'Daniel + Maxim',
+    pfad: 'katharis-build/etappe-3/anhang-a/a11-dpia-template.md',
+  },
+  {
+    id: 'A13',
+    titel: 'UWG-Reaktions-Playbook',
+    zweck: 'Was tun wenn Wettbewerber-Abmahnung kommt. Backup-Hook-B-Switch-SOP fuer 24h-Umstellung.',
+    status: 'live',
+    wer: 'Maxim -> Daniel',
+    pfad: 'katharis-build/etappe-3/anhang-a/a13-uwg-reaktions-playbook.md',
+  },
+  {
+    id: 'A14',
+    titel: 'Pflegegrad-Antrags-SOP + Vollmachts-Templates',
+    zweck: 'Wie wir Pflegegrad-Antraege administrativ helfen ohne Para-7a-Konflikt. Vollmachts-Templates.',
+    status: 'live',
+    wer: 'Daniel + Kemal',
+    pfad: 'katharis-build/etappe-3/anhang-a/a14-pflegegrad-antrags-sop.md',
+  },
+  {
+    id: 'EG',
+    titel: 'Erstgespraech-Master-Skript',
+    zweck: 'Telefon-Skript fuer Daniel + Kemal. Strukturierte Bedarfsklaerung in 8-12 min.',
+    status: 'live',
+    wer: 'Daniel + Kemal',
+    pfad: 'katharis-build/etappe-3/anhang-a/erstgespraech-master-skript.md',
+  },
+  {
+    id: 'AVV',
+    titel: 'AVV-Briefing-Pakete (8 Anbieter)',
+    zweck: 'Auftragsverarbeitungs-Vertrag-Briefings fuer Cloudflare, Supabase, Resend, Mailbox.org, Matelso, GA4, GTM, Clarity.',
+    status: 'briefing',
+    wer: 'Maxim',
+    pfad: 'katharis-build/etappe-6/avv-briefings/',
+  },
+  {
+    id: 'DANIEL',
+    titel: 'Daniel-Aktions-Liste',
+    zweck: 'Konkrete Klick-Anweisungen fuer Tokens, Accounts, Mandate. 5 Bloecke chronologisch.',
+    status: 'live',
+    wer: 'Daniel',
+    pfad: 'katharis-build/DANIEL-AKTIONEN.md',
+  },
+  {
+    id: 'STATUS',
+    titel: 'Build-Status-Bericht',
+    zweck: 'Aktueller Stand des Greenfield-Builds. Welche Etappe wo, welche Bloecke offen.',
+    status: 'live',
+    wer: 'Daniel',
+    pfad: 'katharis-build/STATUS-2026-05-07.md',
+  },
+];
+
+const statusColors: Record<OpsDoc['status'], string> = {
+  live: 'bg-green-100 text-green-800',
+  briefing: 'bg-blue-100 text-blue-800',
+  skelett: 'bg-yellow-100 text-yellow-800',
+  'extern-blocker': 'bg-red-100 text-red-800',
+};
+
+const statusLabels: Record<OpsDoc['status'], string> = {
+  live: 'Live',
+  briefing: 'Briefing',
+  skelett: 'Skelett',
+  'extern-blocker': 'Extern-Blocker',
+};
+
+const grouped = {
+  Live: operationsDocs.filter((d) => d.status === 'live'),
+  Briefing: operationsDocs.filter((d) => d.status === 'briefing'),
+  Skelett: operationsDocs.filter((d) => d.status === 'skelett'),
+  'Extern-Blocker': operationsDocs.filter((d) => d.status === 'extern-blocker'),
+};
+---
+
+<BaseLayout
+  title="Operations-Dashboard | Katharis Intern"
+  description="Internes Dashboard fuer Daniel, Kemal, Maxim."
+  noindex={true}
+>
+  <main id="main" class="bg-background min-h-screen py-12">
+    <div class="max-w-6xl mx-auto px-4">
+      <header class="mb-10 border-b border-primary/20 pb-6">
+        <p class="text-xs uppercase tracking-widest text-primary/60">Intern - nicht oeffentlich</p>
+        <h1 class="text-4xl font-bold text-primary mt-2">Operations-Dashboard</h1>
+        <p class="mt-3 text-primary/80">
+          Source-of-Truth fuer alle Operations-Dokumente, SOPs, Anwalts- und Steuerberater-Briefings,
+          AVV-Pakete und Daniel-Aktions-Listen. Pfade verweisen auf den lokalen
+          <code class="font-mono text-sm bg-white px-1 rounded">katharis-build/</code>-Ordner
+          (nicht oeffentlich gehostet).
+        </p>
+        <div class="mt-4 p-3 bg-yellow-50 border-l-4 border-yellow-500 text-sm">
+          <strong>Sicherheits-Hinweis:</strong> Vor Live-Gang muss Cloudflare Access
+          ueber <code>/admin/*</code> gelegt werden. Dashboard -> Zero Trust ->
+          Access -> Applications -> Add application -> Policy mit Email-Allow-Liste
+          (daniel, kemal, maxim).
+        </div>
+      </header>
+
+      {Object.entries(grouped).map(([gruppe, docs]) => docs.length > 0 && (
+        <section class="mb-10">
+          <h2 class="text-xl font-bold text-primary mb-4 flex items-center gap-3">
+            <span>{gruppe}</span>
+            <span class="text-sm font-normal text-primary/60">({docs.length})</span>
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {docs.map((doc) => (
+              <article class="bg-white p-5 rounded-lg border border-primary/15 shadow-sm">
+                <div class="flex items-start justify-between gap-3">
+                  <div>
+                    <p class="text-xs font-mono text-primary/60">#{doc.id}</p>
+                    <h3 class="text-lg font-bold text-primary mt-1">{doc.titel}</h3>
+                  </div>
+                  <span class={`text-xs px-2 py-1 rounded-full font-bold ${statusColors[doc.status]}`}>
+                    {statusLabels[doc.status]}
+                  </span>
+                </div>
+                <p class="mt-3 text-sm text-primary/80">{doc.zweck}</p>
+                <p class="mt-3 text-xs text-primary/60"><strong>Wer:</strong> {doc.wer}</p>
+                <p class="mt-1 text-xs font-mono text-primary/60 break-all">{doc.pfad}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+      ))}
+
+      <section class="mt-12 p-6 bg-white rounded-lg border border-primary/15">
+        <h2 class="text-lg font-bold text-primary">Externe Tools</h2>
+        <ul class="mt-3 space-y-1 text-sm text-primary/80">
+          <li>Cloudflare Pages: <a href="https://dash.cloudflare.com" class="underline">dash.cloudflare.com</a> -> Workers & Pages -> katharis-v2</li>
+          <li>GitHub Repo: <a href="https://github.com/katharishilfe-sys/Katharis-Website" class="underline">github.com/katharishilfe-sys/Katharis-Website</a></li>
+          <li>Live-Preview: <a href="https://katharis-v2.pages.dev/" class="underline">katharis-v2.pages.dev</a></li>
+          <li>Search Console: <a href="https://search.google.com/search-console" class="underline">search.google.com/search-console</a> (nach Etappe-7-Cutover)</li>
+          <li>Compass Pflegeberatung Klient-Hotline: 0800 101 88 00</li>
+        </ul>
+      </section>
+    </div>
+  </main>
+</BaseLayout>

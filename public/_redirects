@@ -12,3 +12,18 @@
 # Ratgeber-Slug-Patches v1.8
 /ratgeber/pflegekasse-entruempelung/  /ratgeber/pflegekasse-entlastung/  301
 /ratgeber/haushaltsaufloesung-kosten/ /ratgeber/heimumzug-kosten/        301
+
+# Alte SEO-URLs auf Service-Pages (falls Search-Console / Ext-Links sie noch fuehren)
+/sperrmuell-keller/                   /service/messie-hilfe/             301
+/sperrmuell/                          /service/messie-hilfe/             301
+/keller-entruempelung/                /service/messie-hilfe/             301
+/wohnungsaufloesung/                  /service/vor-dem-heimumzug/        301
+/haushaltsaufloesung/                 /service/vor-dem-heimumzug/        301
+/entruempelung-stuttgart/             /service/messie-hilfe/             301
+/entruempelung-boeblingen/            /service/messie-hilfe/             301
+/messi-hilfe/                         /service/messie-hilfe/             301
+/messie/                              /service/messie-hilfe/             301
+/grundreinigung/                      /service/messie-hilfe/             301
+/tatortreinigung/                     /service/messie-hilfe/             301
+/kontakt.html                         /kontakt/                          301
+/impressum.html                       /impressum/                        301
