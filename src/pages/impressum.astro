@@ -1,0 +1,77 @@
+---
+import PageLayout from '@layouts/PageLayout.astro';
+import { traeger, kontakt } from '@data/content';
+---
+
+<PageLayout
+  title="Impressum | Katharis"
+  description="Impressum nach TMG. Cleanit Services LLC, Zweigniederlassung Stuttgart."
+>
+  <article class="prose max-w-content mx-auto px-4 py-12">
+    <h1>Impressum</h1>
+
+    <h2>Anbieter</h2>
+    <p>
+      Cleanit Services LLC<br />
+      1309 Coffeen Avenue STE 1200<br />
+      Sheridan, Wyoming 82801<br />
+      USA
+    </p>
+    <p>vertreten durch ihre deutsche Zweigniederlassung:</p>
+    <p>
+      Cleanit Services LLC, Zweigniederlassung Stuttgart<br />
+      Mittenfeldstraße 87<br />
+      70499 Stuttgart<br />
+      Deutschland
+    </p>
+    <p>
+      Operative Zentrale Boeblingen:<br />
+      {kontakt.adresse.operativeZentrale.strasse}, {kontakt.adresse.operativeZentrale.plz} {kontakt.adresse.operativeZentrale.ort}
+    </p>
+
+    <h2>Geschaeftsfuehrung</h2>
+    <p>{traeger.geschaeftsfuehrung}</p>
+
+    <h2>Kontakt</h2>
+    <p>
+      Telefon: {kontakt.telefonAnzeige}<br />
+      E-Mail: {kontakt.email}<br />
+      Geschaeftszeiten: {kontakt.oeffnungszeiten}
+    </p>
+
+    <h2>Steuerliche Angaben</h2>
+    <p>Steuernummer der Zweigniederlassung Stuttgart: {traeger.steuernummer}<br />
+    zustaendiges Finanzamt: Stuttgart</p>
+    <p>
+      <em>Hinweis: Cleanit Services LLC ist als anerkannter Anbieter zur Unterstuetzung im Alltag nach
+      Para 45a SGB XI von der Umsatzsteuer befreit (Para 4 Nr. 16 UStG). Eine
+      Umsatzsteuer-Identifikations-Nummer ist daher nicht eingetragen.</em>
+    </p>
+
+    <h2>Aufsichtsbehoerde</h2>
+    <p>{traeger.aufsichtsbehoerde}, Anerkennungs-Stelle nach Para 45a SGB XI fuer Stadt Stuttgart und Landkreis Boeblingen.</p>
+
+    <h2>Verantwortlich fuer den Inhalt nach Para 18 Abs. 2 MStV</h2>
+    <p>{traeger.vIsdP}, Anschrift wie oben.</p>
+
+    <h2>Berufshaftpflichtversicherung</h2>
+    <p>{traeger.versicherung}. Geltungsbereich: Bundesrepublik Deutschland.</p>
+
+    <h2>Erklaerung der Barrierefreiheit</h2>
+    <p>Siehe separate Seite: <a href="/barrierefreiheit/">/barrierefreiheit/</a></p>
+
+    <h2>EU-Streitbeilegung</h2>
+    <p>
+      Die Europaeische Kommission stellt eine Plattform zur Online-Streitbeilegung bereit:
+      <a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener">https://ec.europa.eu/consumers/odr/</a>
+    </p>
+    <p>Wir sind nicht bereit oder verpflichtet, an Streitbeilegungs-Verfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+  </article>
+</PageLayout>
+
+<style>
+  .prose h1 { font-size: 2.25rem; font-weight: 700; color: var(--color-primary); margin-bottom: 1.5rem; }
+  .prose h2 { font-size: 1.5rem; font-weight: 700; color: var(--color-primary); margin-top: 2rem; margin-bottom: 0.75rem; }
+  .prose p { color: var(--color-primary); opacity: 0.85; margin-bottom: 1rem; }
+  .prose a { color: var(--color-accent-dark); text-decoration: underline; }
+</style>

@@ -1,0 +1,79 @@
+---
+import PageLayout from '@layouts/PageLayout.astro';
+import { hooks, kontakt, pflegekassenToepfe } from '@data/content';
+import { generateLocalBusinessSchema, generateServiceSchema } from '@lib/schema-org';
+
+const localBusinessSchema = generateLocalBusinessSchema();
+const serviceSchema = generateServiceSchema({
+  serviceName: 'Messie-Hilfe in Stuttgart und Landkreis Boeblingen',
+  serviceDescription:
+    'Spezialist fuer Entlastungsleistungen bei Verwahrlosung. Para 45a SGB XI anerkannt. Pflegekassen-Direktabrechnung moeglich.',
+  serviceUrl: 'https://katharis.de/service/messie-hilfe/',
+});
+---
+
+<PageLayout
+  title="Messie-Hilfe Stuttgart - Pflegekasse zahlt | Katharis"
+  description="Spezialist fuer Messie-Hilfe und Verwahrlosung in Stuttgart und LK Boeblingen. Anerkannt nach Para 45a SGB XI. Bis zu 100 Prozent Kostenuebernahme moeglich. Diskret."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
+
+  <section class="bg-background py-16 md:py-24">
+    <div class="max-w-content mx-auto px-4">
+      <h1 class="text-4xl md:text-5xl font-bold text-primary leading-tight">Messie-Hilfe in Stuttgart und Landkreis Boeblingen</h1>
+      <p class="mt-4 text-lg text-primary/80">{hooks.master}</p>
+      <p class="mt-2 text-sm text-primary/60">{hooks.geltungsbereich}</p>
+      <p class="mt-6 text-primary/80">{hooks.sekundaer}</p>
+      <div class="flex flex-col sm:flex-row gap-3 mt-8">
+        <a href={`tel:${kontakt.telefonHref}`} class="px-6 py-3 rounded-full font-bold text-white bg-accent-dark hover:opacity-90">Jetzt anrufen</a>
+        <a href="/kontakt/" class="px-6 py-3 rounded-full font-bold text-primary border-2 border-primary hover:bg-primary hover:text-white transition-colors">Rueckruf anfordern</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-12 max-w-content mx-auto px-4">
+    <h2 class="text-2xl font-bold text-primary mb-4">Was ist Messie-Hilfe?</h2>
+    <p class="text-primary/80">
+      Wenn die Wohnung von jemandem, der Ihnen wichtig ist, ueber Monate oder Jahre auf der Strecke geblieben ist,
+      dann ist das oft kein einzelner Vorfall, sondern Folge einer langen Entwicklung. Demenz, Depression, Sucht,
+      Burnout, Vereinsamung, schwere Erkrankungen oder einfach die Erschoepfung des Alters bringen Menschen in
+      Situationen, die sie alleine nicht mehr bewaeltigen koennen.
+    </p>
+    <p class="mt-4 text-primary/80">
+      Sie sind nicht alleine damit. Wir uebernehmen die operative Arbeit, ohne Wertung, ohne Sensationalisierung,
+      mit Diskretion: Sortierung, Tiefenreinigung, Vermieter-Uebergabe.
+    </p>
+  </section>
+
+  <section class="py-12 bg-white">
+    <div class="max-w-content mx-auto px-4">
+      <h2 class="text-2xl font-bold text-primary mb-6">Wie funktioniert die Kostenuebernahme?</h2>
+      <div class="space-y-4">
+        {pflegekassenToepfe.map((topf) => (
+          <details class="border border-primary/20 rounded-lg p-4 bg-background/30">
+            <summary class="font-bold text-primary cursor-pointer">{topf.paragraph}: {topf.title} ({topf.betrag})</summary>
+            <div class="mt-3 text-primary/80 text-sm">
+              <p><strong>Wer:</strong> {topf.wer}</p>
+              <p class="mt-2">{topf.description}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 bg-background">
+    <div class="max-w-2xl mx-auto px-4 text-center">
+      <h2 class="text-3xl font-bold text-primary">Sprechen wir.</h2>
+      <p class="mt-4 text-primary/80">
+        Im kostenlosen Erstgespraech am Telefon hoeren wir zu, klaeren Ihre Pflegekassen-Optionen und vereinbaren
+        wenn Sie wollen einen Vor-Ort-Termin.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-3 mt-8 justify-center">
+        <a href={`tel:${kontakt.telefonHref}`} class="px-6 py-3 rounded-full font-bold text-white bg-accent-dark hover:opacity-90">Jetzt anrufen</a>
+        <a href="/kontakt/" class="px-6 py-3 rounded-full font-bold text-primary border-2 border-primary hover:bg-primary hover:text-white transition-colors">Rueckruf anfordern</a>
+      </div>
+    </div>
+  </section>
+</PageLayout>

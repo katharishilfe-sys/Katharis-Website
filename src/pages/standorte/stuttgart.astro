@@ -1,0 +1,54 @@
+---
+import PageLayout from '@layouts/PageLayout.astro';
+import { hooks, kontakt } from '@data/content';
+
+const pflegestuetzpunkte = [
+  { bezirke: 'Mitte, Nord, West, Botnang', adresse: 'Eberhardstraße 33', tel: '0711 216-59100' },
+  { bezirke: 'Bad Cannstatt, Muehlhausen, Muenster', adresse: 'Deckerstraße 35', tel: '0711 216-21341' },
+  { bezirke: 'Vaihingen, Degerloch', adresse: 'Große Falterstraße 2', tel: '0711 216-21301' },
+  { bezirke: 'Moehringen, Plieningen, Birkach, Sillenbuch', adresse: 'Filderhauptstraße 155', tel: '0711 216-21308' },
+  { bezirke: 'Feuerbach, Weilimdorf, Zuffenhausen, Stammheim', adresse: 'Loewen-Markt 1', tel: '0711 216-25798' },
+];
+---
+
+<PageLayout
+  title="Katharis in Stuttgart - Pflegekassen-Entlastung"
+  description="Anerkannt nach Para 45a SGB XI fuer alle Stadtbezirke Stuttgart. Bis zu 100 Prozent Kostenuebernahme moeglich."
+>
+  <section class="bg-background py-16">
+    <div class="max-w-content mx-auto px-4">
+      <h1 class="text-4xl font-bold text-primary">Katharis in Stuttgart</h1>
+      <p class="mt-4 text-lg text-primary/80">{hooks.master}</p>
+      <p class="mt-2 text-sm text-primary/60">Anerkannt nach Para 45a SGB XI fuer alle Stadtbezirke.</p>
+    </div>
+  </section>
+
+  <section class="py-12 max-w-content mx-auto px-4">
+    <h2 class="text-2xl font-bold text-primary mb-6">Pflegestuetzpunkte Stuttgart</h2>
+    <p class="text-primary/80 mb-6">
+      Inhaltliche Pflegeberatung bekommen Sie kostenlos beim Pflegestuetzpunkt in Ihrem Stadtbezirk:
+    </p>
+    <table class="w-full border-collapse">
+      <thead>
+        <tr class="border-b-2 border-primary/20">
+          <th class="text-left py-2 text-primary">Bezirke</th>
+          <th class="text-left py-2 text-primary">Adresse</th>
+          <th class="text-left py-2 text-primary">Telefon</th>
+        </tr>
+      </thead>
+      <tbody>
+        {pflegestuetzpunkte.map((ps) => (
+          <tr class="border-b border-primary/10">
+            <td class="py-3 text-primary/80 text-sm">{ps.bezirke}</td>
+            <td class="py-3 text-primary/80 text-sm">{ps.adresse}</td>
+            <td class="py-3 text-primary/80 text-sm">{ps.tel}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </section>
+
+  <section class="py-16 bg-background text-center">
+    <a href={`tel:${kontakt.telefonHref}`} class="px-6 py-3 rounded-full font-bold text-white bg-accent-dark hover:opacity-90">Jetzt anrufen</a>
+  </section>
+</PageLayout>

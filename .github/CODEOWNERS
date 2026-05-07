@@ -1,0 +1,9 @@
+# Master-Content-Quelle, Maxim ist Pflicht-Reviewer (Drift-Schutz Master Anhang B.1)
+src/data/content.ts @maxim
+src/content/**       @maxim
+
+# Etappe-3-Content (waehrend Workshop-Decisions noch fluide)
+content/**           @maxim
+
+# DSGVO-Dokumente
+dsgvo/**             @maxim

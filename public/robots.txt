@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
-Disallow: /kampagne/
+Disallow: /admin/
 
-Sitemap: https://katharis.de/sitemap.xml
+Sitemap: https://katharis.de/sitemap-index.xml

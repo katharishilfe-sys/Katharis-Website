@@ -1,0 +1,47 @@
+---
+import { kontakt } from '@data/content';
+---
+
+<footer class="bg-primary text-white mt-auto">
+  <div class="max-w-6xl mx-auto px-4 py-16 grid grid-cols-1 md:grid-cols-3 gap-10">
+    <div>
+      <p class="text-xl font-bold">Katharis</p>
+      <ul class="flex flex-col gap-3 mt-5 text-sm text-white/75">
+        <li>{kontakt.adresse.operativeZentrale.strasse}, {kontakt.adresse.operativeZentrale.plz} {kontakt.adresse.operativeZentrale.ort}</li>
+        <li><a href={`tel:${kontakt.telefonHref}`} class="hover:text-white">{kontakt.telefonAnzeige}</a></li>
+        <li><a href={`mailto:${kontakt.email}`} class="hover:text-white">{kontakt.email}</a></li>
+        <li>{kontakt.oeffnungszeiten}</li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="text-xs font-semibold uppercase tracking-widest text-accent">Leistungen</h3>
+      <ul class="flex flex-col gap-3 mt-5 text-sm text-white/75">
+        <li><a href="/service/messie-hilfe/" class="hover:text-white">Messie-Hilfe</a></li>
+        <li><a href="/service/vor-dem-heimumzug/" class="hover:text-white">Vor dem Heimumzug</a></li>
+        <li><a href="/pflegekasse/" class="hover:text-white">Pflegekasse</a></li>
+        <li><a href="/pflegegrad-antrag/" class="hover:text-white">Pflegegrad-Antrag</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="text-xs font-semibold uppercase tracking-widest text-accent">Standorte</h3>
+      <ul class="flex flex-col gap-2 mt-5 text-sm text-white/75">
+        <li><a href="/standorte/stuttgart/" class="hover:text-white">Stuttgart</a></li>
+        <li><a href="/standorte/boeblingen/" class="hover:text-white">Boeblingen</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="border-t border-white/15">
+    <div class="max-w-6xl mx-auto px-4 py-5 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-white/60">
+      <p>&copy; 2026 Katharis. Alle Rechte vorbehalten.</p>
+      <div class="flex gap-4">
+        <a href="/impressum/" class="hover:text-white">Impressum</a>
+        <span class="opacity-40">|</span>
+        <a href="/datenschutz/" class="hover:text-white">Datenschutz</a>
+        <span class="opacity-40">|</span>
+        <a href="/agb/" class="hover:text-white">AGB</a>
+        <span class="opacity-40">|</span>
+        <a href="/barrierefreiheit/" class="hover:text-white">Barrierefreiheit</a>
+      </div>
+    </div>
+  </div>
+</footer>

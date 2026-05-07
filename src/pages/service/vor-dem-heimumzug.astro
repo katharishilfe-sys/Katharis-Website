@@ -1,0 +1,31 @@
+---
+import PageLayout from '@layouts/PageLayout.astro';
+import { hooks, kontakt } from '@data/content';
+---
+
+<PageLayout
+  title="Vollraeumung vor Heimumzug Stuttgart - Pflegekasse zahlt | Katharis"
+  description="Vollraeumung mit Pflegekassen-Direktabrechnung in Stuttgart und LK Boeblingen. Vermieter-Uebergabe besenrein. Para 45a anerkannt."
+>
+  <section class="bg-background py-16 md:py-24">
+    <div class="max-w-content mx-auto px-4">
+      <h1 class="text-4xl md:text-5xl font-bold text-primary">Vollraeumung vor dem Pflegeheim-Umzug</h1>
+      <p class="mt-4 text-lg text-primary/80">{hooks.master}</p>
+      <p class="mt-2 text-sm text-primary/60">{hooks.geltungsbereich}</p>
+      <p class="mt-6 text-primary/80">Pflegegrad liegt vor? Wir rechnen direkt mit der Pflegekasse ab. Vermieter-Termin in wenigen Wochen? Wir koordinieren.</p>
+      <div class="flex flex-col sm:flex-row gap-3 mt-8">
+        <a href={`tel:${kontakt.telefonHref}`} class="px-6 py-3 rounded-full font-bold text-white bg-accent-dark hover:opacity-90">Jetzt anrufen</a>
+        <a href="/kontakt/" class="px-6 py-3 rounded-full font-bold text-primary border-2 border-primary hover:bg-primary hover:text-white transition-colors">Rueckruf anfordern</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-12 max-w-content mx-auto px-4">
+    <h2 class="text-2xl font-bold text-primary mb-4">Was wir machen</h2>
+    <p class="text-primary/80">
+      Eltern oder Angehoerige ziehen ins Pflegeheim. Die Wohnung muss in zwei bis acht Wochen leer und besenrein
+      an den Vermieter zurueck. Wir uebernehmen die komplette Vollraeumung mit Sortierung, Tiefenreinigung und
+      Vermieter-Uebergabe. Bei vorhandenem Pflegegrad rechnen wir direkt mit der Pflegekasse ab.
+    </p>
+  </section>
+</PageLayout>

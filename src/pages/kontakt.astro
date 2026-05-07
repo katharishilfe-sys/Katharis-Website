@@ -1,0 +1,57 @@
+---
+import PageLayout from '@layouts/PageLayout.astro';
+import { kontakt } from '@data/content';
+---
+
+<PageLayout
+  title="Kontakt Katharis Stuttgart - Kostenloses Erstgespraech"
+  description="Telefon 07031 6953604 oder Rueckruf-Form. Kostenloses Erstgespraech zu Pflegekassen-Entlastung in Stuttgart und LK Boeblingen. Mo-Sa 8-20 Uhr."
+>
+  <section class="py-16 max-w-4xl mx-auto px-4">
+    <h1 class="text-4xl font-bold text-primary">Sprechen Sie uns an</h1>
+    <p class="mt-4 text-lg text-primary/80">
+      Im kostenlosen Erstgespraech am Telefon klaeren wir Ihre Situation, Pflegekassen-Optionen
+      und naechste Schritte.
+    </p>
+
+    <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div class="bg-white p-6 rounded-xl">
+        <h2 class="text-xl font-bold text-primary">Jetzt anrufen</h2>
+        <p class="mt-2 text-2xl font-bold text-accent-dark">
+          <a href={`tel:${kontakt.telefonHref}`} class="hover:underline">{kontakt.telefonAnzeige}</a>
+        </p>
+        <p class="mt-2 text-primary/70">{kontakt.oeffnungszeiten}</p>
+        <p class="mt-4 text-sm text-primary/70">
+          Anrufe werden direkt von Daniel oder Kemal entgegengenommen. Ausserhalb der Geschaeftszeiten
+          sprechen Sie auf den Anrufbeantworter, wir rufen binnen 24 Stunden zurueck.
+        </p>
+      </div>
+
+      <div class="bg-white p-6 rounded-xl">
+        <h2 class="text-xl font-bold text-primary">Rueckruf anfordern</h2>
+        <p class="mt-2 text-primary/70">
+          Wir rufen Sie kostenlos zurueck. (Form-Komponente in Etappe 5/6.5a aktiviert.)
+        </p>
+        <p class="mt-4 text-sm text-primary/60">
+          Email: <a href={`mailto:${kontakt.email}`} class="underline">{kontakt.email}</a>
+        </p>
+      </div>
+    </div>
+
+    <div class="mt-12 bg-primary/5 p-6 rounded-xl">
+      <h3 class="font-bold text-primary">Operative Zentrale</h3>
+      <p class="mt-2 text-primary/80">
+        {kontakt.adresse.operativeZentrale.strasse}, {kontakt.adresse.operativeZentrale.plz} {kontakt.adresse.operativeZentrale.ort}
+      </p>
+      <p class="mt-2 text-primary/80">
+        Einsatzgebiet: Stadt Stuttgart, Landkreis Boeblingen. Anerkannt nach Para 45a SGB XI fuer
+        Direkt-Abrechnung mit der Pflegekasse.
+      </p>
+    </div>
+
+    <div class="mt-6 bg-accent/10 p-4 rounded-xl text-sm text-primary/80">
+      <strong>Hinweis:</strong> Bei akuten Pflege-Notfaellen wenden Sie sich bitte an Ihren
+      Pflegestuetzpunkt oder im medizinischen Notfall an 112.
+    </div>
+  </section>
+</PageLayout>

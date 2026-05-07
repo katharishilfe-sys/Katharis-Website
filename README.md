@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Katharis Website v2.0
 
-## Getting Started
+Greenfield-Build auf Astro 5 + Tailwind 4 + React-Islands + Supabase EU-Frankfurt + Cloudflare Pages.
 
-First, run the development server:
+**Marken-Identitaet:** Katharis ist Spezialist fuer Entlastungsleistungen fuer Pflegebeduerftige in Stadt Stuttgart und Landkreis Boeblingen. Anerkannt nach Para 45a SGB XI.
+
+**Strategie-Quelle:** `katharis-build/` (separates Build-Doku-Repo) mit Master v2.0, Workshop-Decisions, Etappe-3-Content, Anhang-A-BLOCKER-SOPs.
+
+## Branches
+
+- `main` - alte Next.js Live-Site (Production-Stand bis Cutover Etappe 7)
+- `astro-v2-greenfield` - neue Astro-5-Implementation (dieser Branch)
+
+## Stack
+
+| Bereich | Tool |
+|---|---|
+| Frontend | Astro 5 + React-Islands |
+| Styling | Tailwind 4 (CSS-First Config) |
+| Hosting | Cloudflare Pages |
+| Backend/DB | Supabase EU-Frankfurt |
+| Email | Resend (Transactional) + Mailbox.org (Inbound) |
+| Call-Tracking | Matelso DE |
+| Cookie-Consent | Klaro |
+| Anti-Spam | Cloudflare Turnstile + Honeypot |
+
+## Lokales Setup
 
 ```bash
+npm install
+cp .env.example .env
+# .env mit echten Werten fuellen (Memory-Pattern: NIE committen)
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Build
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Output landet in `dist/`. Cloudflare Pages baut automatisch beim Push auf den Branch.
 
-## Learn More
+## Brand (Workshop Decisions Daniel 2026-05-07)
 
-To learn more about Next.js, take a look at the following resources:
+- Logo: bestehendes katharis-logo + SVG-Vektor-Variante in Etappe 4
+- Farben: Primary `#1A3C34` + Accent-dark `#C97D2E` fuer CTA (WCAG-AA) + Background `#E8F1F2`
+- Typo: Atkinson Hyperlegible (BFSG + Senioren-Lesbarkeit)
+- Bildsprache: Illustrationen primaer, KEINE echten Einsatz-Fotos
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Drift-Schutz (Master Anhang B)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `.github/CODEOWNERS` schuetzt `src/data/content.ts` mit Maxim-Pflicht-Review
+- `scripts/drift-check.sh` prueft auf verbotene Phrasen vor Commit
+- `.github/workflows/drift-check.yml` server-side bei jedem PR
+- `scripts/drift-audit.ts` monatlicher Cron auf Live-Site

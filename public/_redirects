@@ -1,0 +1,14 @@
+# 301-Map FINAL nach Daniel-Approval 2026-05-06
+
+# Slug-Migrationen v1.7 -> v2.0
+/leistungen/                          /                                  301
+/leistungen/messie-hilfe/             /service/messie-hilfe/             301
+/leistungen/entruempelung/            /service/vor-dem-heimumzug/        301
+/leistungen/grundreinigung/           /service/messie-hilfe/             301
+/service/messihilfe/                  /service/messie-hilfe/             301
+/projekte/                            /service/messie-hilfe/             301
+/kampagne/                            /service/messie-hilfe/             301
+
+# Ratgeber-Slug-Patches v1.8
+/ratgeber/pflegekasse-entruempelung/  /ratgeber/pflegekasse-entlastung/  301
+/ratgeber/haushaltsaufloesung-kosten/ /ratgeber/heimumzug-kosten/        301

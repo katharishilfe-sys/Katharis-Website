@@ -1,0 +1,31 @@
+---
+import PageLayout from '@layouts/PageLayout.astro';
+import { hooks, kontakt } from '@data/content';
+---
+
+<PageLayout
+  title="Katharis in Boeblingen - operative Zentrale"
+  description="Anerkannt nach Para 45a SGB XI fuer den gesamten Landkreis Boeblingen. Operative Zentrale Olgastraße 8."
+>
+  <section class="bg-background py-16">
+    <div class="max-w-content mx-auto px-4">
+      <h1 class="text-4xl font-bold text-primary">Katharis in Boeblingen - operative Zentrale</h1>
+      <p class="mt-4 text-lg text-primary/80">{hooks.master}</p>
+      <p class="mt-2 text-sm text-primary/60">Anerkannt nach Para 45a SGB XI fuer den gesamten Landkreis Boeblingen.</p>
+    </div>
+  </section>
+
+  <section class="py-12 max-w-content mx-auto px-4">
+    <h2 class="text-2xl font-bold text-primary mb-4">Adresse + Erreichbarkeit</h2>
+    <p class="text-primary/80">
+      Operative Zentrale: {kontakt.adresse.operativeZentrale.strasse}, {kontakt.adresse.operativeZentrale.plz} {kontakt.adresse.operativeZentrale.ort}<br />
+      Telefon: {kontakt.telefonAnzeige}<br />
+      Email: {kontakt.email}<br />
+      Geschaeftszeiten: {kontakt.oeffnungszeiten}
+    </p>
+  </section>
+
+  <section class="py-16 bg-background text-center">
+    <a href={`tel:${kontakt.telefonHref}`} class="px-6 py-3 rounded-full font-bold text-white bg-accent-dark hover:opacity-90">Jetzt anrufen</a>
+  </section>
+</PageLayout>

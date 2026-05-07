@@ -1,0 +1,123 @@
+---
+import PageLayout from '@layouts/PageLayout.astro';
+import { hooks, services, trustIndikatoren, kontakt } from '@data/content';
+import { generateLocalBusinessSchema } from '@lib/schema-org';
+
+const localBusinessSchema = generateLocalBusinessSchema();
+---
+
+<PageLayout
+  title="Katharis - Pflegekassen-Entlastung Stuttgart und LK Boeblingen"
+  description="Spezialist fuer Entlastungsleistungen bei komplexen Pflegefaellen. Anerkannt nach Para 45a SGB XI. Bis zu 100 Prozent Kostenuebernahme moeglich. Diskret und wuerdevoll."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
+
+  <!-- Hero -->
+  <section class="bg-background py-16 md:py-24">
+    <div class="max-w-content mx-auto px-4 text-center">
+      <h1 class="text-4xl md:text-5xl font-bold text-primary leading-tight">
+        {hooks.master}
+      </h1>
+      <p class="mt-3 text-base md:text-lg text-primary/70">
+        {hooks.geltungsbereich}
+      </p>
+      <p class="mt-6 text-lg md:text-xl text-primary/80 max-w-2xl mx-auto">
+        {hooks.sekundaer}
+      </p>
+      <div class="flex flex-col sm:flex-row gap-3 mt-8 justify-center">
+        <a
+          href={`tel:${kontakt.telefonHref}`}
+          class="px-6 py-3 rounded-full font-bold text-white bg-accent-dark hover:opacity-90 transition-opacity"
+        >
+          Jetzt anrufen
+        </a>
+        <a
+          href="/kontakt/"
+          class="px-6 py-3 rounded-full font-bold text-primary border-2 border-primary hover:bg-primary hover:text-white transition-colors"
+        >
+          Rueckruf anfordern
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Drei Eingangs-Tueren -->
+  <section class="py-16">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 class="text-3xl font-bold text-primary text-center mb-12">Wie wir Ihnen helfen</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <a
+          href={services.messieHilfe.slug}
+          class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow"
+        >
+          <h3 class="text-xl font-bold text-primary">{services.messieHilfe.karteHeadline}</h3>
+          <p class="mt-3 text-primary/80 text-sm">{services.messieHilfe.karteText}</p>
+          <p class="mt-4 text-accent-dark font-bold text-sm">Mehr ueber Messie-Hilfe &rarr;</p>
+        </a>
+        <a
+          href={services.vorDemHeimumzug.slug}
+          class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow"
+        >
+          <h3 class="text-xl font-bold text-primary">{services.vorDemHeimumzug.karteHeadline}</h3>
+          <p class="mt-3 text-primary/80 text-sm">{services.vorDemHeimumzug.karteText}</p>
+          <p class="mt-4 text-accent-dark font-bold text-sm">Mehr ueber Heimumzug-Vollraeumung &rarr;</p>
+        </a>
+        <a
+          href="/pflegegrad-antrag/"
+          class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow"
+        >
+          <h3 class="text-xl font-bold text-primary">Noch kein Pflegegrad?</h3>
+          <p class="mt-3 text-primary/80 text-sm">
+            Wir helfen Ihnen administrativ beim Antrag bei der Pflegekasse: Formulare ausfuellen,
+            MD-Begutachtung vorbereiten, Botengang. Bei Bewilligung kann die Pflegekasse Ihre Kosten
+            ab Antragsdatum erstatten.
+          </p>
+          <p class="mt-4 text-accent-dark font-bold text-sm">Pflegegrad beantragen &rarr;</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust-Sektion -->
+  <section class="py-16 bg-white">
+    <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+      <div>
+        <p class="text-4xl font-bold text-accent-dark">&sect;45a</p>
+        <p class="mt-2 text-primary/80">Anerkannt nach Para 45a SGB XI fuer Stadt Stuttgart und Landkreis Boeblingen.</p>
+      </div>
+      <div>
+        <p class="text-4xl font-bold text-accent-dark">3 Mio &euro;</p>
+        <p class="mt-2 text-primary/80">Versichert fuer Sach- und Personenschaeden ohne Selbstbeteiligung.</p>
+      </div>
+      <div>
+        <p class="text-4xl font-bold text-accent-dark">{trustIndikatoren.bilanzZahl}+</p>
+        <p class="mt-2 text-primary/80">{trustIndikatoren.bilanzText}.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="py-16 bg-background">
+    <div class="max-w-2xl mx-auto px-4 text-center">
+      <h2 class="text-3xl font-bold text-primary">Bereit fuer das erste Gespraech?</h2>
+      <p class="mt-4 text-primary/80">
+        Erzaehlen Sie uns kurz Ihre Situation. Im kostenlosen Erstgespraech klaeren wir gemeinsam,
+        welche Pflegekassen-Optionen fuer Sie in Frage kommen und wann wir kommen koennen.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-3 mt-8 justify-center">
+        <a
+          href={`tel:${kontakt.telefonHref}`}
+          class="px-6 py-3 rounded-full font-bold text-white bg-accent-dark hover:opacity-90"
+        >
+          Jetzt anrufen
+        </a>
+        <a
+          href="/kontakt/"
+          class="px-6 py-3 rounded-full font-bold text-primary border-2 border-primary hover:bg-primary hover:text-white transition-colors"
+        >
+          Rueckruf anfordern
+        </a>
+      </div>
+    </div>
+  </section>
+</PageLayout>
