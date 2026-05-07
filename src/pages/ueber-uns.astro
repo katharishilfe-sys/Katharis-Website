@@ -3,6 +3,14 @@ import PageLayout from '@layouts/PageLayout.astro';
 import { initiatoren, trustIndikatoren, kontakt } from '@data/content';
 import CallCTA from '@components/CallCTA';
 import RueckrufButton from '@components/RueckrufButton';
+import { Image } from 'astro:assets';
+import danielFoto from '@/assets/daniel.jpg';
+import kemalFoto from '@/assets/kemal.jpg';
+
+const portraits: Record<string, ImageMetadata> = {
+  '/daniel.jpg': danielFoto,
+  '/kemal.jpg': kemalFoto,
+};
 ---
 
 <PageLayout
@@ -24,11 +32,11 @@ import RueckrufButton from '@components/RueckrufButton';
   <section class="py-12 max-w-content mx-auto px-4">
     {initiatoren.map((person) => (
       <article class="mb-16 grid grid-cols-1 sm:grid-cols-[160px_1fr] gap-6 items-start">
-        <img
-          src={person.foto}
+        <Image
+          src={portraits[person.foto]}
           alt={`Portrait ${person.name}`}
-          width="160"
-          height="160"
+          width={160}
+          height={160}
           class="rounded-xl object-cover w-40 h-40"
           loading="lazy"
         />

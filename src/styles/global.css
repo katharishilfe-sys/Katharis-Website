@@ -1,8 +1,12 @@
 @import 'tailwindcss';
 @import '@fontsource/atkinson-hyperlegible/400.css';
 @import '@fontsource/atkinson-hyperlegible/700.css';
-@import '@fontsource/atkinson-hyperlegible/400-italic.css';
-@import '@fontsource/atkinson-hyperlegible/700-italic.css';
+
+/* font-display: swap fuer FOIT-Vermeidung (CLS + LCP) */
+@font-face {
+  font-family: 'Atkinson Hyperlegible';
+  font-display: swap;
+}
 
 /* Brand-Tokens v2.0 (Workshop Decisions Daniel 2026-05-07) */
 :root {
