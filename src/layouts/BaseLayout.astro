@@ -41,6 +41,18 @@ const orgSchema = generateOrganizationSchema();
     <link rel="apple-touch-icon" href="/favicon-512.png" />
 
     <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
+
+    <!--
+      Cloudflare Web Analytics: privacy-friendly, kein Cookie, DSGVO-ohne-Consent.
+      Daniel-Aktion: Cloudflare-Dashboard -> Web Analytics -> Add a site -> katharis-v2.pages.dev
+      -> Token einsetzen statt CLOUDFLARE_BEACON_TOKEN_HIER.
+      Bis dahin laedt das Skript nur als Stub (kein Tracking).
+    -->
+    <script
+      defer
+      src="https://static.cloudflareinsights.com/beacon.min.js"
+      data-cf-beacon='{"token": "CLOUDFLARE_BEACON_TOKEN_HIER"}'
+    ></script>
   </head>
   <body class="min-h-screen flex flex-col">
     <a href="#main" class="skip-link">Zum Hauptinhalt springen</a>

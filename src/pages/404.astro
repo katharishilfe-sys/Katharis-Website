@@ -1,0 +1,54 @@
+---
+import PageLayout from '@layouts/PageLayout.astro';
+import CallCTA from '@components/CallCTA';
+import RueckrufButton from '@components/RueckrufButton';
+---
+
+<PageLayout
+  title="Seite nicht gefunden | Katharis"
+  description="Die angeforderte Seite existiert nicht. Hier finden Sie die wichtigsten Inhalte und Kontakte."
+  noindex={true}
+>
+  <section class="bg-background py-24">
+    <div class="max-w-content mx-auto px-4 text-center">
+      <p class="text-6xl font-bold text-accent-dark">404</p>
+      <h1 class="text-3xl md:text-4xl font-bold text-primary mt-4">Diese Seite gibt es nicht</h1>
+      <p class="mt-4 text-lg text-primary/80">
+        Vielleicht haben wir die Seite umbenannt oder Sie haben sich vertippt. Wir helfen Ihnen weiter.
+      </p>
+    </div>
+  </section>
+
+  <section class="py-12 max-w-content mx-auto px-4">
+    <h2 class="text-2xl font-bold text-primary mb-6">Wonach suchen Sie?</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <a href="/service/messie-hilfe/" class="bg-white p-5 rounded-xl shadow-sm hover:shadow-md transition-shadow border border-primary/10">
+        <h3 class="font-bold text-primary">Messie-Hilfe</h3>
+        <p class="text-sm text-primary/70 mt-2">Verwahrlosungs-Wohnungen sortieren, reinigen, übergeben.</p>
+      </a>
+      <a href="/service/vor-dem-heimumzug/" class="bg-white p-5 rounded-xl shadow-sm hover:shadow-md transition-shadow border border-primary/10">
+        <h3 class="font-bold text-primary">Vollräumung vor Heimumzug</h3>
+        <p class="text-sm text-primary/70 mt-2">Komplette Wohnung leer, Vermieter-Übergabe besenrein.</p>
+      </a>
+      <a href="/pflegekasse/" class="bg-white p-5 rounded-xl shadow-sm hover:shadow-md transition-shadow border border-primary/10">
+        <h3 class="font-bold text-primary">Pflegekasse zahlt</h3>
+        <p class="text-sm text-primary/70 mt-2">Welche Töpfe nach §45a/§45b/§42a/§40 SGB XI Sie nutzen können.</p>
+      </a>
+      <a href="/pflegegrad-antrag/" class="bg-white p-5 rounded-xl shadow-sm hover:shadow-md transition-shadow border border-primary/10">
+        <h3 class="font-bold text-primary">Pflegegrad-Antrags-Hilfe</h3>
+        <p class="text-sm text-primary/70 mt-2">Administrative Hilfe beim Antrag bei der Pflegekasse.</p>
+      </a>
+    </div>
+  </section>
+
+  <section class="py-12 bg-white">
+    <div class="max-w-2xl mx-auto px-4 text-center">
+      <h2 class="text-2xl font-bold text-primary">Direkt sprechen?</h2>
+      <p class="mt-4 text-primary/80">Im kostenlosen Erstgespräch klären wir alles.</p>
+      <div class="flex flex-col sm:flex-row gap-3 mt-6 justify-center">
+        <CallCTA client:load />
+        <RueckrufButton client:load sourceCta="rueckruf-404" />
+      </div>
+    </div>
+  </section>
+</PageLayout>
