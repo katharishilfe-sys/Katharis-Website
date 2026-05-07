@@ -40,10 +40,6 @@ const orgSchema = generateOrganizationSchema();
     <link rel="alternate icon" type="image/png" href="/favicon-32.png" />
     <link rel="apple-touch-icon" href="/favicon-512.png" />
 
-    <!-- Performance: Preconnect zu Cloudflare-Insights (Beacon-Latenz minimieren) -->
-    <link rel="preconnect" href="https://static.cloudflareinsights.com" crossorigin />
-    <link rel="dns-prefetch" href="https://static.cloudflareinsights.com" />
-
     <!-- Theme-Color fuer Mobile-Browser-Chrome (Brand-Primary) -->
     <meta name="theme-color" content="#1A3C34" />
 
@@ -53,16 +49,10 @@ const orgSchema = generateOrganizationSchema();
     <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
 
     <!--
-      Cloudflare Web Analytics: privacy-friendly, kein Cookie, DSGVO-ohne-Consent.
-      Daniel-Aktion: Cloudflare-Dashboard -> Web Analytics -> Add a site -> katharis-v2.pages.dev
-      -> Token einsetzen statt CLOUDFLARE_BEACON_TOKEN_HIER.
-      Bis dahin laedt das Skript nur als Stub (kein Tracking).
+      Cloudflare Web Analytics: kommt automatisch via existierende katharis.de-Site
+      nach Cutover (Etappe 7). Bis dahin reicht der Manual-Snippet nicht
+      (Add-a-site fuer pages.dev-Subdomain wird von Cloudflare blockiert).
     -->
-    <script
-      defer
-      src="https://static.cloudflareinsights.com/beacon.min.js"
-      data-cf-beacon='{"token": "CLOUDFLARE_BEACON_TOKEN_HIER"}'
-    ></script>
   </head>
   <body class="min-h-screen flex flex-col">
     <a href="#main" class="skip-link">Zum Hauptinhalt springen</a>
