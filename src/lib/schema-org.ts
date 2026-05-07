@@ -35,7 +35,6 @@ export function generateLocalBusinessSchema(opts?: { areaServed?: string[] }) {
     telephone: kontakt.telefon,
     email: kontakt.email,
     image: `${SITE_URL}/og-image.png`,
-    priceRange: 'EUR EUR',
     address: {
       '@type': 'PostalAddress',
       streetAddress: kontakt.adresse.operativeZentrale.strasse,
@@ -44,12 +43,18 @@ export function generateLocalBusinessSchema(opts?: { areaServed?: string[] }) {
       addressCountry: 'DE',
     },
     areaServed: opts?.areaServed ?? traeger.para45aGeltungsbereich,
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: 48.6856,
+      longitude: 9.0142,
+    },
     openingHoursSpecification: {
       '@type': 'OpeningHoursSpecification',
       dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
       opens: '08:00',
       closes: '20:00',
     },
+    sameAs: [],
   };
 }
 
