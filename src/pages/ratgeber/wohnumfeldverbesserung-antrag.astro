@@ -1,0 +1,195 @@
+---
+import PageLayout from '@layouts/PageLayout.astro';
+import { generateFAQPageSchema, generateBreadcrumbListSchema } from '@lib/schema-org';
+import CallCTA from '@components/CallCTA';
+import RueckrufButton from '@components/RueckrufButton';
+
+const SITE_URL = 'https://katharis.de';
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Wohnumfeldverbesserung beantragen: bis 4.180 EUR von der Pflegekasse',
+  description: 'Wie Sie Para 40 SGB XI fuer Wohnungsanpassungen nutzen. Antrags-Anleitung, was foerderfaehig ist, was nicht, mit Praxis-Beispielen.',
+  datePublished: '2026-05-07T00:00:00+02:00',
+  dateModified: '2026-05-07T00:00:00+02:00',
+  author: { '@type': 'Person', name: 'Daniel Altenhof', jobTitle: 'Initiator und operativer Leiter Katharis' },
+  image: `${SITE_URL}/og-image.png`,
+  mainEntityOfPage: `${SITE_URL}/ratgeber/wohnumfeldverbesserung-antrag/`,
+  publisher: { '@id': `${SITE_URL}/#organization` },
+};
+
+const faqs = [
+  {
+    question: 'Brauche ich einen bestimmten Pflegegrad?',
+    answer:
+      'Para 40 gilt fuer alle Pflegegrade 1 bis 5. Der Bedarf muss aber pflegebezogen sein, das heisst: die Massnahme muss helfen die Pflege zu Hause zu ermoeglichen oder zu erleichtern.',
+  },
+  {
+    question: 'Brauche ich vorab eine Genehmigung?',
+    answer:
+      'Ja zwingend. Massnahmen die Sie ohne vorherige Genehmigung beauftragen, werden nicht erstattet. Erst Antrag, dann Genehmigung, dann Massnahme. Das Erstgespraech mit der Pflegekasse ist meist binnen einer Woche.',
+  },
+  {
+    question: 'Wie oft kann ich den Para-40-Zuschuss beantragen?',
+    answer:
+      'Der Betrag von bis zu 4.180 Euro ist je Massnahme. Bei einer wesentlichen Veraenderung der Pflege-Situation (z.B. Pflegegrad-Aenderung, neuer Hilfsmittel-Bedarf) ist eine erneute Massnahme moeglich. Es gibt keine starre jaehrliche Obergrenze.',
+  },
+  {
+    question: 'Was sind typische foerderfaehige Massnahmen?',
+    answer:
+      'Bad-Umbau (Dusche statt Wanne, ebenerdiger Zugang), Tuerverbreiterung fuer Rollstuhl, Treppenlift, Rampen, Haltegriffe, Hoehenverstellbare Kueche, Bewegungsmelder/Notrufanlagen. Auch Umzug in pflegegerechtere Wohnung.',
+  },
+  {
+    question: 'Was wird nicht uebernommen?',
+    answer:
+      'Reine Komfort-Verbesserungen ohne Pflege-Bezug, normale Renovierung (neue Tapete, Bodenbelag), Moebel ohne Pflege-Funktion. Auch Smart-Home-Technik nur bei klarem Pflege-Bezug (z.B. Sturz-Sensoren).',
+  },
+];
+
+const faqSchema = generateFAQPageSchema(faqs);
+
+const breadcrumbSchema = generateBreadcrumbListSchema([
+  { name: 'Start', url: 'https://katharis.de/' },
+  { name: 'Ratgeber', url: 'https://katharis.de/ratgeber/' },
+  { name: 'Wohnumfeldverbesserung beantragen', url: 'https://katharis.de/ratgeber/wohnumfeldverbesserung-antrag/' },
+]);
+---
+
+<PageLayout
+  title="Wohnumfeldverbesserung beantragen 2026 | Ratgeber Katharis"
+  description="Pflegekasse zahlt bis 4.180 Euro je Massnahme nach Para 40 SGB XI. Antrags-Anleitung, foerderfaehige Massnahmen, Praxis-Tipps und 5 FAQs."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+  <article class="max-w-content mx-auto px-4 py-12">
+    <p class="text-sm text-primary/60">
+      <a href="/ratgeber/" class="underline">Ratgeber</a> &rsaquo; Wohnumfeldverbesserung beantragen
+    </p>
+    <h1 class="text-4xl font-bold text-primary mt-4">Wohnumfeldverbesserung beantragen: bis 4.180 Euro Pflegekassen-Zuschuss</h1>
+    <p class="text-sm text-primary/60 mt-2">
+      Verfasser: Daniel Altenhof, Initiator und operativer Leiter Katharis · Stand: 2026-05-07
+    </p>
+
+    <p class="mt-8 text-primary/80">
+      Wenn die Wohnung nicht mehr zur Pflege-Situation passt, gibt es einen oft unterschaetzten Topf der
+      Pflegekasse: <strong>Paragraph 40 SGB XI</strong> (Wohnumfeldverbesserung) deckt bis zu 4.180 Euro je
+      Massnahme ab. Dieser Artikel erklaert was foerderfaehig ist, wie der Antrag laeuft und was Sie
+      dabei beachten muessen.
+    </p>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Was ist Paragraph 40 SGB XI genau?</h2>
+    <p class="text-primary/80">
+      Para 40 SGB XI regelt Zuschuesse fuer Massnahmen, die das Wohnumfeld an die Pflege-Situation
+      anpassen. Der Zuschuss betraegt bis zu <strong>4.180 Euro je Massnahme</strong> (Stand 2026,
+      unveraendert seit PUEG-Reform). Bei mehreren Pflegebeduerftigen im selben Haushalt addiert sich der
+      Zuschuss bis zu 16.720 Euro je Wohngruppe.
+    </p>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Foerderfaehige Massnahmen mit Beispielen</h2>
+    <ul class="mt-3 space-y-2 text-primary/80 list-disc list-inside">
+      <li><strong>Bad-Umbau:</strong> Dusche ebenerdig statt Wanne, Haltegriffe, Toiletten-Erhoehung</li>
+      <li><strong>Mobilitaets-Hilfen im Haus:</strong> Treppenlift, Rampen, Aufzug</li>
+      <li><strong>Tuer-Anpassungen:</strong> Tuerverbreiterung fuer Rollstuhl, Schwellenabbau</li>
+      <li><strong>Kueche:</strong> Hoehenverstellbare Arbeitsplatte, unterfahrbarer Herd</li>
+      <li><strong>Sicherheit:</strong> Bewegungsmelder, Notruf-Anlage, Sturz-Sensoren</li>
+      <li><strong>Tueroeffner:</strong> elektrische Tueroeffner, automatische Tuerschliesser</li>
+      <li><strong>Umzug:</strong> Umzugskosten in eine pflegegerechtere Wohnung</li>
+    </ul>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Antrags-Schritte</h2>
+    <ol class="mt-4 space-y-4 text-primary/80 list-decimal list-inside">
+      <li>
+        <strong>Bedarf klaeren:</strong> mit Pflegestuetzpunkt oder Hausarzt sprechen, was konkret
+        notwendig ist. Pflegestuetzpunkte beraten kostenlos.
+      </li>
+      <li>
+        <strong>Kostenvoranschlaege einholen:</strong> 1-3 Kostenvoranschlaege von Handwerkern oder
+        Spezial-Anbietern (z.B. Sanitaerbetrieb fuer Bad-Umbau). Dauer: 2-4 Wochen.
+      </li>
+      <li>
+        <strong>Antrag bei der Pflegekasse:</strong> formloser Antrag mit Beschreibung der Massnahme,
+        Begruendung des Pflege-Bezugs, Kostenvoranschlag, Pflegegrad-Bescheid. Manche Pflegekassen haben
+        eigene Antragsformulare.
+      </li>
+      <li>
+        <strong>Pflegekassen-Pruefung:</strong> Pflegekasse prueft (manchmal mit MD-Hausbesuch).
+        Entscheidung typisch in 4-6 Wochen.
+      </li>
+      <li>
+        <strong>Genehmigung abwarten:</strong> erst nach schriftlicher Genehmigung beauftragen Sie den
+        Handwerker. Vorher beauftragte Massnahmen werden nicht erstattet.
+      </li>
+      <li>
+        <strong>Massnahme durchfuehren + Rechnung einreichen:</strong> Pflegekasse erstattet bis 4.180 Euro
+        gegen Original-Rechnung. Bei Mehrkosten tragen Sie den Differenz-Betrag.
+      </li>
+    </ol>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Praxis-Beispiele</h2>
+    <div class="space-y-4 mt-4">
+      <article class="border border-primary/20 rounded-lg p-4 bg-background/30">
+        <h3 class="font-bold text-primary">Bad-Umbau Stuttgart, Pflegegrad 3</h3>
+        <p class="text-sm text-primary/80 mt-2">
+          Klientin (76) konnte nicht mehr in die Wanne steigen. Bad-Umbau auf ebenerdige Dusche mit
+          Haltegriffen, Kostenvoranschlag 5.800 Euro. Pflegekasse genehmigte 4.180 Euro Zuschuss,
+          Klientin trug 1.620 Euro selbst. Durchfuehrung 2 Wochen, Klientin lebt seitdem
+          weiter selbststaendig in ihrer Wohnung.
+        </p>
+      </article>
+      <article class="border border-primary/20 rounded-lg p-4 bg-background/30">
+        <h3 class="font-bold text-primary">Treppenlift Boeblingen, Pflegegrad 4</h3>
+        <p class="text-sm text-primary/80 mt-2">
+          Witwer (84) konnte die Treppe nicht mehr steigen, sass den ganzen Tag im Erdgeschoss, nahm seit
+          Monaten kein Bad mehr (im Obergeschoss). Treppenlift-Kosten 7.500 Euro. Pflegekasse uebernahm
+          4.180 Euro, Sohn finanzierte den Rest. Lift in 1 Tag installiert.
+        </p>
+      </article>
+    </div>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Wo wir helfen</h2>
+    <p class="text-primary/80">
+      Wir sind <strong>nicht</strong> Pflegekassen-Berater im Sinne von Paragraph 7a SGB XI und planen
+      auch keine Wohnumfeld-Massnahmen. Aber wir sind oft das erste Gespraech, weil unsere Klienten
+      ueber unsere Leistung (Messie-Hilfe, Heimumzug-Vollraeumung) zu uns kommen und dabei feststellen:
+      die Wohnung muss eigentlich angepasst werden, nicht nur geraeumt.
+    </p>
+    <p class="mt-4 text-primary/80">
+      In dem Fall vermitteln wir an Pflegestuetzpunkt oder Compass Pflegeberatung
+      (kostenlos, 0800 101 88 00), wo der Antrag fachlich begleitet wird. Wir koennen die
+      operative Leistung danach uebernehmen, wenn die Massnahme vor- oder nachbereitende
+      Raeumungs- oder Reinigungsarbeiten umfasst.
+    </p>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Haeufige Fragen</h2>
+    <div class="mt-4 space-y-3">
+      {faqs.map((faq) => (
+        <details class="border border-primary/20 rounded-lg p-4 bg-white">
+          <summary class="font-bold text-primary cursor-pointer">{faq.question}</summary>
+          <p class="mt-3 text-primary/80 text-sm">{faq.answer}</p>
+        </details>
+      ))}
+    </div>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Quellen</h2>
+    <ul class="mt-3 space-y-1 text-primary/80 list-disc list-inside text-sm">
+      <li>gesetze-im-internet.de: §40 SGB XI</li>
+      <li>Bundesgesundheitsministerium: Wohnumfeldverbesserung-Erlaeuterungen</li>
+      <li>pflege.de: Aktuelle Betraege 2026</li>
+      <li>Compass Pflegeberatung (0800 101 88 00)</li>
+    </ul>
+  </article>
+
+  <section class="py-16 bg-background text-center">
+    <div class="max-w-2xl mx-auto px-4">
+      <h2 class="text-2xl font-bold text-primary">Brauchen Sie operative Hilfe?</h2>
+      <p class="mt-4 text-primary/80">Wir machen die Raeumung oder Reinigung vor und nach der Massnahme.</p>
+      <div class="flex flex-col sm:flex-row gap-3 mt-6 justify-center">
+        <CallCTA client:load />
+        <RueckrufButton client:load sourceCta="rueckruf-ratgeber-wohnumfeld" />
+      </div>
+    </div>
+  </section>
+</PageLayout>
