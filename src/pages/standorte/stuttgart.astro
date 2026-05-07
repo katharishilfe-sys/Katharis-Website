@@ -7,7 +7,7 @@ import RueckrufButton from '@components/RueckrufButton';
 
 const localBusinessSchema = generateLocalBusinessSchema({ areaServed: ['Stadt Stuttgart'] });
 
-const pflegestuetzpunkte = [
+const pflegestützpunkte = [
   { bezirke: 'Mitte, Nord, West, Botnang', adresse: 'Eberhardstraße 33, 70173 Stuttgart', tel: '0711 216-59100' },
   { bezirke: 'Bad Cannstatt, Mühlhausen, Münster', adresse: 'Deckerstraße 35, 70372 Stuttgart', tel: '0711 216-21341' },
   { bezirke: 'Vaihingen, Degerloch', adresse: 'Große Falterstraße 2, 70597 Stuttgart', tel: '0711 216-21301' },
@@ -58,7 +58,7 @@ const pflegestuetzpunkte = [
             </tr>
           </thead>
           <tbody>
-            {pflegestuetzpunkte.map((ps) => (
+            {pflegestützpunkte.map((ps) => (
               <tr class="border-b border-primary/10">
                 <td class="py-3 pr-4 text-primary/80 text-sm">{ps.bezirke}</td>
                 <td class="py-3 pr-4 text-primary/80 text-sm">{ps.adresse}</td>

@@ -103,7 +103,7 @@ export const pflegekassenTöpfe = [
   {
     paragraph: 'Para 45b',
     title: 'Entlastungsbetrag',
-    betrag: '131 Euro pro Monat (1.572 Euro pro Jahr)',
+    betrag: '131 Euro pro Monat',
     wer: 'Pflegegrad 1 bis 5',
     description:
       'Jeder Mensch mit Pflegegrad 1 bis 5 hat 131 Euro pro Monat Anspruch auf Entlastungsleistungen. Nicht abgerufene Beträge können bis zum 30. Juni des Folgejahres übertragen werden, danach verfallen sie.',

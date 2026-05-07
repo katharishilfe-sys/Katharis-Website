@@ -9,13 +9,13 @@ const SITE_URL = 'https://katharis.de';
 const articleSchema = {
   '@context': 'https://schema.org',
   '@type': 'Article',
-  headline: 'Sterbefall-Wohnungsraeumung: Erbschein, Vollmacht, Vermieter, Pflegekasse',
-  description: 'Was tun nach Sterbefall? Welche Dokumente brauchen Sie, wer darf raeumen, was passiert mit Pflegekassen-Vertragen. Eine Schritt-fuer-Schritt-Anleitung.',
+  headline: 'Sterbefall-Wohnungsräumung: Erbschein, Vollmacht, Vermieter, Pflegekasse',
+  description: 'Was tun nach Sterbefall? Welche Dokumente brauchen Sie, wer darf räumen, was passiert mit Pflegekassen-Vertragen. Eine Schritt-fuer-Schritt-Anleitung.',
   datePublished: '2026-05-07T00:00:00+02:00',
   dateModified: '2026-05-07T00:00:00+02:00',
   author: { '@type': 'Person', name: 'Daniel Altenhof', jobTitle: 'Initiator und operativer Leiter Katharis' },
   image: `${SITE_URL}/og-image.png`,
-  mainEntityOfPage: `${SITE_URL}/ratgeber/sterbefall-wohnungsraeumung/`,
+  mainEntityOfPage: `${SITE_URL}/ratgeber/sterbefall-wohnungsräumung/`,
   publisher: { '@id': `${SITE_URL}/#organization` },
 };
 
@@ -23,32 +23,32 @@ const faqs = [
   {
     question: 'Wie schnell muss die Wohnung leer sein?',
     answer:
-      'Das Mietverhaeltnis endet nicht automatisch mit dem Sterbefall. Erben treten in den Mietvertrag ein und koennen mit Sonderkuendigungsrecht binnen einem Monat zum Monatsende kuendigen (Para 580 BGB). Effektiv haben Sie meist 2-3 Monate Zeit fuer Raeumung und besenreine Uebergabe.',
+      'Das Mietverhältnis endet nicht automatisch mit dem Sterbefall. Erben treten in den Mietvertrag ein und können mit Sonderkündigungsrecht binnen einem Monat zum Monatsende kündigen (Para 580 BGB). Effektiv haben Sie meist 2-3 Monate Zeit für Räumung und besenreine Übergabe.',
   },
   {
-    question: 'Wer darf die Wohnung betreten und raeumen?',
+    question: 'Wer darf die Wohnung betreten und räumen?',
     answer:
-      'Nur Erben oder Bevollmaechtigte mit gueltigem Erbschein bzw. eropaeischem Nachlasszeugnis. Auch der Hauptmieter darf nicht ohne weiteres die Wohnung des Verstorbenen betreten, wenn nicht selbst Erbe.',
+      'Nur Erben oder Bevollmaechtigte mit gueltigem Erbschein bzw. europäischem Nachlasszeugnis. Auch der Hauptmieter darf nicht ohne weiteres die Wohnung des Verstorbenen betreten, wenn nicht selbst Erbe.',
   },
   {
     question: 'Was passiert mit dem Pflegekassen-Vertrag?',
     answer:
-      'Der Pflegekassen-Vertrag endet mit dem Sterbefall. Bereits angefallene Leistungen koennen noch ueber den Para-45a-Anbieter direkt mit der Pflegekasse abgerechnet werden, wenn der Auftrag vor dem Sterbefall begann. Eine Vollraeumung nach Sterbefall geht NICHT mehr ueber Pflegekasse, sondern ueber den Nachlass.',
+      'Der Pflegekassen-Vertrag endet mit dem Sterbefall. Bereits angefallene Leistungen können noch über den Para-45a-Anbieter direkt mit der Pflegekasse abgerechnet werden, wenn der Auftrag vor dem Sterbefall begann. Eine Vollräumung nach Sterbefall geht NICHT mehr über Pflegekasse, sondern über den Nachlass.',
   },
   {
     question: 'Was ist mit Erbengemeinschaften die sich nicht einig sind?',
     answer:
-      'Bei strittigen Erbschaften nehmen wir den Auftrag nicht an. Wir empfehlen Mediation oder Erbrechts-Anwalt. Erst wenn alle Erben einstimmig oder via Mehrheits-Beschluss nach Para 2038 BGB zugestimmt haben, koennen wir taetig werden.',
+      'Bei strittigen Erbschaften nehmen wir den Auftrag nicht an. Wir empfehlen Mediation oder Erbrechts-Anwalt. Erst wenn alle Erben einstimmig oder via Mehrheits-Beschluss nach Para 2038 BGB zugestimmt haben, können wir tätig werden.',
   },
   {
-    question: 'Was machen wir mit unbekannten oder schwer zugaenglichen Wertgegenstaenden?',
+    question: 'Was machen wir mit unbekannten oder schwer zugänglichen WertgegenstänTen?',
     answer:
-      'Wir machen Foto-Doku und Werte-Liste. Bei Fund von Bargeld, Schmuck, Wertpapieren oder anderen Vermoegens-Gegenstaenden schliessen wir den Fund ab und uebergeben in der Anwesenheit der Erben. Schluessel-Verlust und Wertverlust sind ueber unsere Versicherung gedeckt.',
+      'Wir machen Foto-Doku und Werte-Liste. Bei Fund von Bargeld, Schmuck, Wertpapieren oder anderen Vermögens-GegenstänTen schliessen wir den Fund ab und übergeben in der Anwesenheit der Erben. Schlüssel-Verlust und Wertverlust sind über unsere Versicherung gedeckt.',
   },
   {
     question: 'Was tun mit Hausrat den niemand will?',
     answer:
-      'Sortierung in 3 Kategorien: Wert (Verkauf moeglich, Erloes geht an Nachlass), Spende (Caritas-Sozialkaufhaus o.ae.), Entsorgung. Sperrgut melden wir beim Vermieter oder bei der Stadt an, koordinieren Abholung oder fahren selbst zum Wertstoffhof.',
+      'Sortierung in 3 Kategorien: Wert (Verkauf möglich, Erlös geht an Nachlass), Spende (Caritas-Sozialkaufhaus o.ae.), Entsorgung. Sperrgut melden wir beim Vermieter oder bei der Stadt an, koordinieren Abholung oder fahren selbst zum Wertstoffhof.',
   },
 ];
 
@@ -57,13 +57,13 @@ const faqSchema = generateFAQPageSchema(faqs);
 const breadcrumbSchema = generateBreadcrumbListSchema([
   { name: 'Start', url: 'https://katharis.de/' },
   { name: 'Ratgeber', url: 'https://katharis.de/ratgeber/' },
-  { name: 'Sterbefall-Wohnungsraeumung', url: 'https://katharis.de/ratgeber/sterbefall-wohnungsraeumung/' },
+  { name: 'Sterbefall-Wohnungsräumung', url: 'https://katharis.de/ratgeber/sterbefall-wohnungsräumung/' },
 ]);
 ---
 
 <PageLayout
-  title="Sterbefall-Wohnungsraeumung: Was tun? | Ratgeber Katharis"
-  description="Schritt-fuer-Schritt-Anleitung nach Sterbefall: Erbschein, Vollmacht, Vermieter-Frist, Pflegekassen-Klaerung, Hausrat-Sortierung. Mit 6 FAQs."
+  title="Sterbefall-Wohnungsräumung: Was tun? | Ratgeber Katharis"
+  description="Schritt-fuer-Schritt-Anleitung nach Sterbefall: Erbschein, Vollmacht, Vermieter-Frist, Pflegekassen-Klärung, Hausrat-Sortierung. Mit 6 FAQs."
 >
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
@@ -71,79 +71,79 @@ const breadcrumbSchema = generateBreadcrumbListSchema([
 
   <article class="max-w-content mx-auto px-4 py-12">
     <p class="text-sm text-primary/60">
-      <a href="/ratgeber/" class="underline">Ratgeber</a> &rsaquo; Sterbefall-Wohnungsraeumung
+      <a href="/ratgeber/" class="underline">Ratgeber</a> &rsaquo; Sterbefall-Wohnungsräumung
     </p>
-    <h1 class="text-4xl font-bold text-primary mt-4">Sterbefall-Wohnungsraeumung: Was Sie wissen sollten</h1>
+    <h1 class="text-4xl font-bold text-primary mt-4">Sterbefall-Wohnungsräumung: Was Sie wissen sollten</h1>
     <p class="text-sm text-primary/60 mt-2">
       Verfasser: Daniel Altenhof, Initiator und operativer Leiter Katharis · Stand: 2026-05-07
     </p>
 
     <p class="mt-8 text-primary/80">
       Ein Sterbefall ist emotional schwer und gleichzeitig kommen viele praktische Aufgaben auf
-      Angehoerige zu. Eine davon ist die Wohnungsraeumung. Dieser Artikel zeigt was Sie als
+      Angehörige zu. Eine davon ist die Wohnungsräumung. Dieser Artikel zeigt was Sie als
       Hinterbliebene oder Hinterbliebener wissen muessen, in welcher Reihenfolge Sie vorgehen sollten,
       und welche Fallstricke es gibt.
     </p>
 
     <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Schritt 1: Sterbeurkunde besorgen</h2>
     <p class="text-primary/80">
-      Beim zustaendigen Standesamt (Sterbeort), idealerweise direkt mehrere Original-Ausfertigungen
-      (5-10 Stueck), weil viele Stellen Originale verlangen. Kosten typisch 12-15 Euro je Ausfertigung.
+      Beim zustänTigen Standesamt (Sterbeort), idealerweise direkt mehrere Original-Ausfertigungen
+      (5-10 Stück), weil viele Stellen Originale verlangen. Kosten typisch 12-15 Euro je Ausfertigung.
       Krankenhaus oder Hospiz hilft Ihnen oft beim ersten Antrag.
     </p>
 
     <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Schritt 2: Erbschein beantragen</h2>
     <p class="text-primary/80">
       Beim Nachlassgericht des letzten Wohnorts. Voraussetzung um die Wohnung legal zu betreten und zu
-      raeumen. Bei Testaments-Vorhandensein wird das Testament eroeffnet, sonst gilt die gesetzliche
+      räumen. Bei Testaments-Vorhandensein wird das Testament eroeffnet, sonst gilt die gesetzliche
       Erbfolge. Dauer: 4-12 Wochen.
     </p>
     <p class="mt-4 text-primary/80">
-      <strong>Alternative europaeisches Nachlasszeugnis (ENZ):</strong> wenn der Verstorbene Vermoegen
+      <strong>Alternative europäisches Nachlasszeugnis (ENZ):</strong> wenn der Verstorbene Vermögen
       im EU-Ausland hatte. Auch das Nachlassgericht stellt das ENZ aus.
     </p>
     <p class="mt-4 text-primary/80">
       <strong>Bei Erbengemeinschaft:</strong> alle Erben werden auf dem Erbschein eingetragen.
-      Entscheidungen ueber den Nachlass (z.B. Wohnungsraeumung) brauchen einstimmige Zustimmung oder
+      Entscheidungen über den Nachlass (z.B. Wohnungsräumung) brauchen einstimmige Zustimmung oder
       Mehrheits-Beschluss nach Para 2038 BGB.
     </p>
 
     <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Schritt 3: Vermieter informieren</h2>
     <p class="text-primary/80">
-      Sterbeurkunde dem Vermieter vorlegen. Mit der Sterbeurkunde tritt das Sonderkuendigungsrecht nach
-      Para 580 BGB in Kraft: Erben oder Vermieter koennen mit gesetzlicher Frist (1 Monat zum
-      Monatsende) kuendigen.
+      Sterbeurkunde dem Vermieter vorlegen. Mit der Sterbeurkunde tritt das Sonderkündigungsrecht nach
+      Para 580 BGB in Kraft: Erben oder Vermieter können mit gesetzlicher Frist (1 Monat zum
+      Monatsende) kündigen.
     </p>
     <p class="mt-4 text-primary/80">
-      In der Praxis bekommen Erben so meist 2-3 Monate Zeit fuer die Wohnungsraeumung. Vermieter sind
-      oft kooperativ, wenn ein konkreter Raeumungs-Termin geplant ist.
+      In der Praxis bekommen Erben so meist 2-3 Monate Zeit für die Wohnungsräumung. Vermieter sind
+      oft kooperativ, wenn ein konkreter Räumungs-Termin geplant ist.
     </p>
 
     <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Schritt 4: Pflegekassen-Vertrag klaeren</h2>
     <p class="text-primary/80">
       Wenn der Verstorbene einen Pflegegrad hatte und Leistungen einer Pflegekasse erhielt, muss die
-      Pflegekasse ueber den Sterbefall informiert werden (mit Sterbeurkunde). Der Pflegekassen-Vertrag
+      Pflegekasse über den Sterbefall informiert werden (mit Sterbeurkunde). Der Pflegekassen-Vertrag
       endet mit dem Sterbefall. Letzte Leistungen werden noch erstattet, wenn vor dem Sterbefall
       erbracht.
     </p>
     <p class="mt-4 text-primary/80">
-      <strong>Wichtig:</strong> die Wohnungsraeumung NACH dem Sterbefall geht nicht mehr ueber
+      <strong>Wichtig:</strong> die Wohnungsräumung NACH dem Sterbefall geht nicht mehr über
       die Pflegekasse. Kosten dafuer sind Nachlass-Kosten.
     </p>
 
-    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Schritt 5: Wohnung raeumen</h2>
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Schritt 5: Wohnung räumen</h2>
     <p class="text-primary/80">
-      Hier kommen wir bei Bedarf ins Spiel. Bei einer normalen Wohnungsraeumung (kein
-      Verwahrlosungs-Hintergrund) gibt es viele Anbieter. Wenn die Wohnung allerdings ueber Jahre
-      vernachlaessigt wurde (Demenz, schwere Erkrankung, Vereinsamung), uebernehmen wir auch
-      anspruchsvollere Faelle.
+      Hier kommen wir bei Bedarf ins Spiel. Bei einer normalen Wohnungsräumung (kein
+      Verwahrlosungs-Hintergrund) gibt es viele Anbieter. Wenn die Wohnung allerdings über Jahre
+      vernachlaessigt wurde (Demenz, schwere Erkrankung, Vereinsamung), übernehmen wir auch
+      anspruchsvollere Fälle.
     </p>
     <p class="mt-4 text-primary/80">
       <strong>Was wir brauchen vor Auftragsannahme:</strong>
     </p>
     <ul class="mt-3 space-y-1 text-primary/80 list-disc list-inside">
       <li>Sterbeurkunde (Original oder beglaubigte Kopie)</li>
-      <li>Erbschein oder europaeisches Nachlasszeugnis</li>
+      <li>Erbschein oder europäisches Nachlasszeugnis</li>
       <li>Bei Erbengemeinschaft: Vollmacht aller Erben oder Mehrheits-Beschluss</li>
       <li>Identitaets-Nachweis Auftraggeber</li>
     </ul>
@@ -151,36 +151,36 @@ const breadcrumbSchema = generateBreadcrumbListSchema([
     <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Schritt 6: Erbschaft annehmen oder ausschlagen</h2>
     <p class="text-primary/80">
       Erben haben 6 Wochen Zeit, die Erbschaft anzunehmen oder beim Nachlassgericht auszuschlagen
-      (Para 1944 BGB). Wer ausschlaegt, ist auch nicht mehr verpflichtet, die Wohnung zu raeumen.
-      Bei ueberschuldetem Nachlass kann eine Nachlassinsolvenz beantragt werden, dann uebernimmt das
+      (Para 1944 BGB). Wer ausschlaegt, ist auch nicht mehr verpflichtet, die Wohnung zu räumen.
+      Bei überschuldetem Nachlass kann eine Nachlassinsolvenz beantragt werden, dann übernimmt das
       Nachlassgericht die Verwaltung.
     </p>
     <p class="mt-4 text-primary/80">
-      <strong>Wichtig:</strong> wer den Nachlass nicht ausschlaegt, haftet auch fuer Schulden des
+      <strong>Wichtig:</strong> wer den Nachlass nicht ausschlaegt, haftet auch für Schulden des
       Verstorbenen.
     </p>
 
-    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Was wir bei Sterbefall-Auftraegen besonders beachten</h2>
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Was wir bei Sterbefall-Aufträgen besonders beachten</h2>
     <p class="text-primary/80">
-      Sterbefall-Auftraege sind besonders sensibel:
+      Sterbefall-Aufträge sind besonders sensibel:
     </p>
     <ul class="mt-3 space-y-2 text-primary/80 list-disc list-inside">
-      <li>Foto-Doku Pflicht fuer alle Wert-Gegenstaende</li>
-      <li>Werte-Liste mit Unterschrift der Erben vor Beginn der Raeumung</li>
-      <li>Erinnerungs-Stuecke (Fotos, persoenliche Briefe, Schmuck) immer aktiv mit Erben besprechen</li>
-      <li>Bei Auffinden von Bargeld, Wertpapieren, Sparbuechern: Arbeit unterbrechen, Erben kontaktieren</li>
-      <li>Persoenliche Dokumente nicht entsorgen ohne Ruecksprache (auch alte Versicherungs-Unterlagen koennen relevant sein)</li>
+      <li>Foto-Doku Pflicht für alle Wert-GegenstänTe</li>
+      <li>Werte-Liste mit Unterschrift der Erben vor Beginn der Räumung</li>
+      <li>Erinnerungs-Stücke (Fotos, persönliche Briefe, Schmuck) immer aktiv mit Erben besprechen</li>
+      <li>Bei Auffinden von Bargeld, Wertpapieren, Sparbüchern: Arbeit unterbrechen, Erben kontaktieren</li>
+      <li>Persönliche Dokumente nicht entsorgen ohne Ruecksprache (auch alte Versicherungs-Unterlagen können relevant sein)</li>
     </ul>
 
     <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Wo wir auch helfen</h2>
     <p class="text-primary/80">
       Bei extrem verwahrlosten Wohnungen, in denen der Verstorbene unter Verwahrlosungs-Bedingungen
-      gelebt hat (Messie-Wohnung, schwere Demenz mit Selbstvernachlaessigung), uebernehmen wir den
-      kompletten Prozess inkl. Hygiene-Massnahmen. Mehr dazu auf
+      gelebt hat (Messie-Wohnung, schwere Demenz mit Selbstvernachlaessigung), übernehmen wir den
+      kompletten Prozess inkl. Hygiene-Maßnahmen. Mehr dazu auf
       <a href="/service/messie-hilfe/" class="underline text-accent-dark">Messie-Hilfe</a>.
     </p>
 
-    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Haeufige Fragen</h2>
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Häufige Fragen</h2>
     <div class="mt-4 space-y-3">
       {faqs.map((faq) => (
         <details class="border border-primary/20 rounded-lg p-4 bg-white">
@@ -195,7 +195,7 @@ const breadcrumbSchema = generateBreadcrumbListSchema([
       <li>BGB Para 580, 1944, 2038, 2042 (Sterbefall, Erbschaft, Erbengemeinschaft)</li>
       <li>Para 23ff Personenstandsgesetz (Sterbeurkunde)</li>
       <li>Para 2353ff BGB (Erbschein)</li>
-      <li>EuErbVO Art. 62-73 (europaeisches Nachlasszeugnis)</li>
+      <li>EuErbVO Art. 62-73 (europäisches Nachlasszeugnis)</li>
       <li>Bundesnotarkammer: Sterbefall-Checkliste</li>
     </ul>
   </article>
@@ -203,7 +203,7 @@ const breadcrumbSchema = generateBreadcrumbListSchema([
   <section class="py-16 bg-background text-center">
     <div class="max-w-2xl mx-auto px-4">
       <h2 class="text-2xl font-bold text-primary">Brauchen Sie Hilfe nach einem Sterbefall?</h2>
-      <p class="mt-4 text-primary/80">Erstgespraech kostenlos. Wir besprechen die naechsten Schritte ohne Zeitdruck.</p>
+      <p class="mt-4 text-primary/80">Erstgespräch kostenlos. Wir besprechen die nächsten Schritte ohne Zeitdruck.</p>
       <div class="flex flex-col sm:flex-row gap-3 mt-6 justify-center">
         <CallCTA client:load />
         <RueckrufButton client:load sourceCta="rueckruf-ratgeber-sterbefall" />
