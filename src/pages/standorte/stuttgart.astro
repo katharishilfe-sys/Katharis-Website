@@ -1,54 +1,93 @@
-﻿---
+---
 import PageLayout from '@layouts/PageLayout.astro';
-import { hooks, kontakt } from '@data/content';
+import { hooks } from '@data/content';
+import { generateLocalBusinessSchema } from '@lib/schema-org';
+import CallCTA from '@components/CallCTA';
+import RueckrufButton from '@components/RueckrufButton';
+
+const localBusinessSchema = generateLocalBusinessSchema({ areaServed: ['Stadt Stuttgart'] });
 
 const pflegestuetzpunkte = [
-  { bezirke: 'Mitte, Nord, West, Botnang', adresse: 'Eberhardstraße 33', tel: '0711 216-59100' },
-  { bezirke: 'Bad Cannstatt, Mühlhausen, Münster', adresse: 'Deckerstraße 35', tel: '0711 216-21341' },
-  { bezirke: 'Vaihingen, Degerloch', adresse: 'Große Falterstraße 2', tel: '0711 216-21301' },
-  { bezirke: 'Möhringen, Plieningen, Birkach, Sillenbuch', adresse: 'Filderhauptstraße 155', tel: '0711 216-21308' },
-  { bezirke: 'Feuerbach, Weilimdorf, Zuffenhausen, Stammheim', adresse: 'Löwen-Markt 1', tel: '0711 216-25798' },
+  { bezirke: 'Mitte, Nord, West, Botnang', adresse: 'Eberhardstraße 33, 70173 Stuttgart', tel: '0711 216-59100' },
+  { bezirke: 'Bad Cannstatt, Mühlhausen, Münster', adresse: 'Deckerstraße 35, 70372 Stuttgart', tel: '0711 216-21341' },
+  { bezirke: 'Vaihingen, Degerloch', adresse: 'Große Falterstraße 2, 70597 Stuttgart', tel: '0711 216-21301' },
+  { bezirke: 'Möhringen, Plieningen, Birkach, Sillenbuch', adresse: 'Filderhauptstraße 155, 70599 Stuttgart', tel: '0711 216-21308' },
+  { bezirke: 'Feuerbach, Weilimdorf, Zuffenhausen, Stammheim', adresse: 'Löwen-Markt 1, 70499 Stuttgart', tel: '0711 216-25798' },
 ];
 ---
 
 <PageLayout
   title="Katharis in Stuttgart - Pflegekassen-Entlastung"
-  description="Anerkannt nach Para 45a SGB XI für alle Stadtbezirke Stuttgart. Bis zu 100 Prozent Kostenübernahme möglich."
+  description="Anerkannt nach Para 45a SGB XI für alle Stadtbezirke Stuttgart. Bis zu 100 Prozent Kostenübernahme möglich. Pflegestützpunkte je Stadtbezirk."
 >
+  <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
+
   <section class="bg-background py-16">
     <div class="max-w-content mx-auto px-4">
       <h1 class="text-4xl font-bold text-primary">Katharis in Stuttgart</h1>
       <p class="mt-4 text-lg text-primary/80">{hooks.master}</p>
       <p class="mt-2 text-sm text-primary/60">Anerkannt nach Para 45a SGB XI für alle Stadtbezirke.</p>
+      <div class="flex flex-col sm:flex-row gap-3 mt-8">
+        <CallCTA client:load />
+        <RueckrufButton client:load sourceCta="rueckruf-stuttgart-hero" />
+      </div>
     </div>
   </section>
 
   <section class="py-12 max-w-content mx-auto px-4">
-    <h2 class="text-2xl font-bold text-primary mb-6">Pflegestützpunkte Stuttgart</h2>
-    <p class="text-primary/80 mb-6">
-      Inhaltliche Pflegeberatung bekommen Sie kostenlos beim Pflegestützpunkt in Ihrem Stadtbezirk:
+    <h2 class="text-2xl font-bold text-primary mb-4">Was wir in Stuttgart anbieten</h2>
+    <p class="text-primary/80">
+      Wir übernehmen Entlastungsleistungen in komplexen Pflegefällen: Messie-Wohnungen, Verwahrlosung,
+      Vollräumungen vor dem Pflegeheim-Umzug. Diskret, würdevoll, mit Pflegekassen-Direktabrechnung.
     </p>
-    <table class="w-full border-collapse">
-      <thead>
-        <tr class="border-b-2 border-primary/20">
-          <th class="text-left py-2 text-primary">Bezirke</th>
-          <th class="text-left py-2 text-primary">Adresse</th>
-          <th class="text-left py-2 text-primary">Telefon</th>
-        </tr>
-      </thead>
-      <tbody>
-        {pflegestuetzpunkte.map((ps) => (
-          <tr class="border-b border-primary/10">
-            <td class="py-3 text-primary/80 text-sm">{ps.bezirke}</td>
-            <td class="py-3 text-primary/80 text-sm">{ps.adresse}</td>
-            <td class="py-3 text-primary/80 text-sm">{ps.tel}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+  </section>
+
+  <section class="py-12 bg-white">
+    <div class="max-w-content mx-auto px-4">
+      <h2 class="text-2xl font-bold text-primary mb-4">Pflegestützpunkte Stuttgart</h2>
+      <p class="text-primary/80 mb-6">
+        Inhaltliche Pflegeberatung bekommen Sie kostenlos beim Pflegestützpunkt in Ihrem Stadtbezirk:
+      </p>
+      <div class="overflow-x-auto">
+        <table class="w-full border-collapse">
+          <thead>
+            <tr class="border-b-2 border-primary/20">
+              <th class="text-left py-3 pr-4 text-primary text-sm">Bezirke</th>
+              <th class="text-left py-3 pr-4 text-primary text-sm">Adresse</th>
+              <th class="text-left py-3 text-primary text-sm">Telefon</th>
+            </tr>
+          </thead>
+          <tbody>
+            {pflegestuetzpunkte.map((ps) => (
+              <tr class="border-b border-primary/10">
+                <td class="py-3 pr-4 text-primary/80 text-sm">{ps.bezirke}</td>
+                <td class="py-3 pr-4 text-primary/80 text-sm">{ps.adresse}</td>
+                <td class="py-3 text-primary/80 text-sm">
+                  <a href={`tel:${ps.tel.replace(/[\s-]/g, '')}`} class="hover:underline">{ps.tel}</a>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-12 max-w-content mx-auto px-4">
+    <h2 class="text-2xl font-bold text-primary mb-4">Anfahrt</h2>
+    <p class="text-primary/80">
+      Wir kommen aus unserer operativen Zentrale in Böblingen (Olgastraße 8, 71032 Böblingen) zu Ihnen.
+      Stuttgart-Mitte ist über die A81 in 25 bis 30 Minuten erreichbar, je nach Stadtbezirk und Verkehr.
+    </p>
   </section>
 
   <section class="py-16 bg-background text-center">
-    <a href={`tel:${kontakt.telefonHref}`} class="px-6 py-3 rounded-full font-bold text-white bg-accent-dark hover:opacity-90">Jetzt anrufen</a>
+    <div class="max-w-2xl mx-auto px-4">
+      <h2 class="text-3xl font-bold text-primary">Sprechen wir.</h2>
+      <div class="flex flex-col sm:flex-row gap-3 mt-6 justify-center">
+        <CallCTA client:load />
+        <RueckrufButton client:load sourceCta="rueckruf-stuttgart-final" />
+      </div>
+    </div>
   </section>
 </PageLayout>

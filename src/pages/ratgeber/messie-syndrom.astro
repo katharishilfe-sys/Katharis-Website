@@ -1,0 +1,93 @@
+---
+import PageLayout from '@layouts/PageLayout.astro';
+import CallCTA from '@components/CallCTA';
+import RueckrufButton from '@components/RueckrufButton';
+
+const SITE_URL = 'https://katharis.de';
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Messie-Syndrom: Was Angehörige wissen sollten',
+  description: 'Ursachen, Anzeichen und wie Sie als Angehöriger handeln können, ohne Druck und ohne Wertung.',
+  datePublished: '2026-05-07T00:00:00+02:00',
+  dateModified: '2026-05-07T00:00:00+02:00',
+  author: { '@type': 'Person', name: 'Daniel Altenhof', jobTitle: 'Initiator und operativer Leiter Katharis' },
+  image: `${SITE_URL}/og-image.png`,
+  mainEntityOfPage: `${SITE_URL}/ratgeber/messie-syndrom/`,
+  publisher: { '@id': `${SITE_URL}/#organization` },
+};
+---
+
+<PageLayout
+  title="Messie-Syndrom verstehen | Ratgeber Katharis"
+  description="Was ist Messie-Syndrom? Ursachen, Anzeichen, wie Sie als Angehöriger handeln können ohne Druck und Wertung. Mit Hinweisen zu Pflegekassen-Optionen."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+
+  <article class="max-w-content mx-auto px-4 py-12">
+    <p class="text-sm text-primary/60">
+      <a href="/ratgeber/" class="underline">Ratgeber</a> &rsaquo; Messie-Syndrom
+    </p>
+    <h1 class="text-4xl font-bold text-primary mt-4">Messie-Syndrom: Was Angehörige wissen sollten</h1>
+    <p class="text-sm text-primary/60 mt-2">
+      Verfasser: Daniel Altenhof, Initiator und operativer Leiter Katharis · Stand: 2026-05-07
+    </p>
+
+    <p class="mt-8 text-primary/80">
+      Das sogenannte Messie-Syndrom ist keine eigenständige Diagnose, sondern eine umgangssprachliche
+      Bezeichnung für einen Zustand starker Verwahrlosung der Wohnung. Hintergründe sind oft Demenz,
+      Depression, Sucht, Burnout, Vereinsamung oder schwere Erkrankungen. Die betroffene Person merkt häufig
+      nicht, wie weit der Zustand fortgeschritten ist, oder schämt sich, Hilfe anzunehmen.
+    </p>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Anzeichen erkennen</h2>
+    <p class="text-primary/80">
+      Nicht jede unaufgeräumte Wohnung ist ein Messie-Fall. Anzeichen für eine ernste Verwahrlosung:
+    </p>
+    <ul class="mt-3 space-y-1 text-primary/80 list-disc list-inside">
+      <li>Wege durch die Wohnung sind nur noch schmal begehbar</li>
+      <li>Sitz- und Schlafmöglichkeiten sind nicht mehr nutzbar</li>
+      <li>Geruch verändert sich (verdorbene Lebensmittel, Hygiene-Mängel)</li>
+      <li>Post oder Rechnungen liegen ungelesen</li>
+      <li>Vermieter, Nachbarn oder Behörden melden sich</li>
+    </ul>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Was Sie als Angehöriger tun können</h2>
+    <p class="text-primary/80">
+      Druck und Wertung helfen nicht. Was hilft: ein ruhiges Gespräch ohne Vorwürfe, ein Pflegegrad-Antrag
+      bei der Pflegekasse, und im Notfall professionelle Hilfe vor Ort. Für komplexe Fälle gibt es anerkannte
+      Anbieter von Entlastungsleistungen nach Paragraph 45a SGB XI, die diskret arbeiten und mit der
+      Pflegekasse direkt abrechnen können.
+    </p>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Wo Beratung kostet nichts</h2>
+    <p class="text-primary/80">
+      Pflegestützpunkte beraten kostenlos und neutral. Sie helfen bei der Antragsstellung Pflegegrad und
+      vermitteln bei Bedarf an spezialisierte Anbieter. Die Compass Pflegeberatung
+      (0800 101 88 00) ist eine bundesweite kostenlose Anlaufstelle.
+    </p>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Wann Katharis ins Spiel kommt</h2>
+    <p class="text-primary/80">
+      Wenn die operative Aufgabe bewältigt werden muss: Sortierung, Tiefenreinigung, Vermieter-Übergabe.
+      Wir sind anerkannter Anbieter nach Paragraph 45a SGB XI für Stadt Stuttgart und Landkreis Böblingen.
+      Bei vorhandenem Pflegegrad rechnen wir direkt mit Ihrer Pflegekasse ab.
+    </p>
+
+    <p class="mt-8 text-sm text-primary/60">
+      Mehr zu unseren Leistungen auf <a href="/service/messie-hilfe/" class="underline text-accent-dark">Messie-Hilfe Stuttgart</a>.
+      Mehr zu Pflegekassen-Töpfen auf <a href="/pflegekasse/" class="underline text-accent-dark">Pflegekassen-Leistungen</a>.
+    </p>
+  </article>
+
+  <section class="py-16 bg-background text-center">
+    <div class="max-w-2xl mx-auto px-4">
+      <h2 class="text-2xl font-bold text-primary">Brauchen Sie operative Hilfe?</h2>
+      <p class="mt-4 text-primary/80">Im kostenlosen Erstgespräch klären wir Ihre Pflegekassen-Optionen.</p>
+      <div class="flex flex-col sm:flex-row gap-3 mt-6 justify-center">
+        <CallCTA client:load />
+        <RueckrufButton client:load sourceCta="rueckruf-ratgeber-messie" />
+      </div>
+    </div>
+  </section>
+</PageLayout>

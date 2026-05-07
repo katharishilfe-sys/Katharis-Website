@@ -1,0 +1,102 @@
+---
+import PageLayout from '@layouts/PageLayout.astro';
+import CallCTA from '@components/CallCTA';
+import RueckrufButton from '@components/RueckrufButton';
+
+const SITE_URL = 'https://katharis.de';
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Heimumzug und Kosten: Wer zahlt die Wohnungsräumung?',
+  description: 'Vermieter-Frist, Pflegekassen-Direktabrechnung, Vollräumung mit Pflegegrad. Wie Sie keine Doppelmiete zahlen.',
+  datePublished: '2026-05-07T00:00:00+02:00',
+  dateModified: '2026-05-07T00:00:00+02:00',
+  author: { '@type': 'Person', name: 'Daniel Altenhof', jobTitle: 'Initiator und operativer Leiter Katharis' },
+  image: `${SITE_URL}/og-image.png`,
+  mainEntityOfPage: `${SITE_URL}/ratgeber/heimumzug-kosten/`,
+  publisher: { '@id': `${SITE_URL}/#organization` },
+};
+---
+
+<PageLayout
+  title="Heimumzug Kosten 2026 | Ratgeber Katharis"
+  description="Wer zahlt die Wohnungsräumung beim Pflegeheim-Umzug? Pflegekassen-Direktabrechnung mit Pflegegrad. Vermieter-Frist und Doppelmiete vermeiden."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+
+  <article class="max-w-content mx-auto px-4 py-12">
+    <p class="text-sm text-primary/60">
+      <a href="/ratgeber/" class="underline">Ratgeber</a> &rsaquo; Heimumzug und Kosten
+    </p>
+    <h1 class="text-4xl font-bold text-primary mt-4">Heimumzug und Kosten: Wer zahlt die Wohnungsräumung?</h1>
+    <p class="text-sm text-primary/60 mt-2">
+      Verfasser: Daniel Altenhof, Initiator und operativer Leiter Katharis · Stand: 2026-05-07
+    </p>
+
+    <p class="mt-8 text-primary/80">
+      Wenn Eltern oder Angehörige ins Pflegeheim ziehen, beginnt für die Familie eine intensive Phase.
+      Neben der emotionalen Last kommt der praktische Druck: die Wohnung muss in zwei bis acht Wochen
+      leer und besenrein an den Vermieter zurück. Doppelmiete will niemand zahlen.
+      Wer zahlt die Räumung, die Reinigung, die Übergabe?
+    </p>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Vermieter-Frist verstehen</h2>
+    <p class="text-primary/80">
+      Mietverträge haben Kündigungsfristen. Bei Sterbefall wird die Frist oft verkürzt. In Pflegeheim-Umzug-Fällen
+      gilt die normale Kündigungsfrist (typisch drei Monate). Wer schneller raus will, verhandelt mit dem
+      Vermieter, oft erfolgreich. Vermieter sind interessiert an besenreiner und schneller Übergabe.
+    </p>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Pflegekasse zahlt Vollräumung wenn Pflegegrad vorliegt</h2>
+    <p class="text-primary/80">
+      Bei Pflegegrad ab 2 stehen folgende Töpfe zur Verfügung:
+    </p>
+    <ul class="mt-3 space-y-2 text-primary/80 list-disc list-inside">
+      <li><strong>Para 42a Gemeinsamer Jahresbetrag:</strong> bis 3.539 Euro pro Kalenderjahr</li>
+      <li><strong>Para 45b Entlastungsbetrag:</strong> 131 Euro pro Monat, ansparbar</li>
+      <li><strong>Para 45a Abs. 4 Umwandlung:</strong> bis 40 Prozent des Pflegesachleistungs-Budgets</li>
+    </ul>
+    <p class="mt-4 text-primary/80">
+      In Kombination decken diese Töpfe oft die kompletten Räumungs-Kosten. Anerkannte Anbieter wie
+      Katharis rechnen direkt mit der Pflegekasse ab. Sie haben keine Vorauslage. Mehr dazu auf
+      <a href="/pflegekasse/" class="underline text-accent-dark">Pflegekassen-Leistungen</a>.
+    </p>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Was wenn kein Pflegegrad vorliegt?</h2>
+    <p class="text-primary/80">
+      Ohne Pflegegrad keine Pflegekassen-Direktabrechnung. Zwei Wege:
+    </p>
+    <ul class="mt-3 space-y-2 text-primary/80 list-disc list-inside">
+      <li><strong>Pflegegrad-Antrag stellen</strong> und parallel die Räumung als Privat-Auftrag laufen lassen.
+      Bei Bewilligung kann rückwirkend ab Antragsdatum erstattet werden.</li>
+      <li><strong>Privat-Auftrag</strong> mit Festpreis oder Stundensatz, 19 Prozent Umsatzsteuer.</li>
+    </ul>
+    <p class="mt-4 text-primary/80">
+      Mehr zur Antrags-Hilfe auf <a href="/pflegegrad-antrag/" class="underline text-accent-dark">Pflegegrad-Antrags-Hilfe</a>.
+    </p>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Was kostet eine Vollräumung?</h2>
+    <p class="text-primary/80">
+      Pauschal-Aussagen sind schwierig, weil der Aufwand stark vom Wohnungs-Zustand abhängt. Wir bieten
+      kostenlose Vor-Ort-Begutachtung. Im Erstgespräch besprechen wir Pflegekassen-Optionen und transparente
+      Kostenstruktur.
+    </p>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Erbstücke sichern</h2>
+    <p class="text-primary/80">
+      Beim Heimumzug ist nicht nur die Räumung relevant, sondern auch das Sichern von Erbstücken.
+      Foto-Doku, Wert-Listen, Sortierung gemeinsam mit Familie. Was Ihnen wichtig ist, bleibt.
+    </p>
+  </article>
+
+  <section class="py-16 bg-background text-center">
+    <div class="max-w-2xl mx-auto px-4">
+      <h2 class="text-2xl font-bold text-primary">Termin steht? Sprechen wir.</h2>
+      <p class="mt-4 text-primary/80">Wenn Sie wenig Zeit haben, ist ein Telefonat der schnellste Weg.</p>
+      <div class="flex flex-col sm:flex-row gap-3 mt-6 justify-center">
+        <CallCTA client:load />
+        <RueckrufButton client:load sourceCta="rueckruf-ratgeber-heimumzug" />
+      </div>
+    </div>
+  </section>
+</PageLayout>

@@ -1,0 +1,89 @@
+---
+import PageLayout from '@layouts/PageLayout.astro';
+import { pflegekassenTöpfe } from '@data/content';
+import CallCTA from '@components/CallCTA';
+import RueckrufButton from '@components/RueckrufButton';
+
+const SITE_URL = 'https://katharis.de';
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Pflegekasse und Entlastungsleistungen 2026',
+  description: 'Welche Pflegekassen-Töpfe nach Para 45a/45b/42a/40 SGB XI Sie für eine Entlastung nutzen können.',
+  datePublished: '2026-05-07T00:00:00+02:00',
+  dateModified: '2026-05-07T00:00:00+02:00',
+  author: { '@type': 'Person', name: 'Daniel Altenhof', jobTitle: 'Initiator und operativer Leiter Katharis' },
+  image: `${SITE_URL}/og-image.png`,
+  mainEntityOfPage: `${SITE_URL}/ratgeber/pflegekasse-entlastung/`,
+  publisher: { '@id': `${SITE_URL}/#organization` },
+};
+---
+
+<PageLayout
+  title="Pflegekasse und Entlastung 2026 | Ratgeber Katharis"
+  description="Welche Pflegekassen-Töpfe nach Para 45a/45b/42a/40 SGB XI Sie für eine Entlastung nutzen können. 131 Euro pro Monat, bis 3.539 Euro pro Jahr, bis 4.180 Euro je Maßnahme."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+
+  <article class="max-w-content mx-auto px-4 py-12">
+    <p class="text-sm text-primary/60">
+      <a href="/ratgeber/" class="underline">Ratgeber</a> &rsaquo; Pflegekasse und Entlastung
+    </p>
+    <h1 class="text-4xl font-bold text-primary mt-4">Pflegekasse und Entlastungsleistungen 2026</h1>
+    <p class="text-sm text-primary/60 mt-2">
+      Verfasser: Daniel Altenhof, Initiator und operativer Leiter Katharis · Stand: 2026-05-07
+    </p>
+
+    <p class="mt-8 text-primary/80">
+      Wer pflegebedürftige Angehörige hat, weiß: die operative Last kann immens werden. Das deutsche
+      Sozialgesetzbuch XI sieht mehrere Entlastungs-Töpfe vor, die kombinierbar sind. In Kombination
+      können sie bei Pflegegrad ab 2 oft die kompletten Kosten einer Entlastungsleistung decken.
+    </p>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Die vier wichtigsten Töpfe</h2>
+    <div class="space-y-4 mt-4">
+      {pflegekassenTöpfe.map((topf) => (
+        <div class="border border-primary/20 rounded-lg p-4 bg-background/30">
+          <h3 class="font-bold text-primary">{topf.paragraph}: {topf.title}</h3>
+          <p class="text-sm text-primary/70 mt-1"><strong>Höhe:</strong> {topf.betrag} · <strong>Wer:</strong> {topf.wer}</p>
+          <p class="mt-2 text-primary/80 text-sm">{topf.description}</p>
+        </div>
+      ))}
+    </div>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Was bedeutet anerkannter Anbieter nach Paragraph 45a?</h2>
+    <p class="text-primary/80">
+      Para 45a SGB XI regelt die Anerkennung von Anbietern zur Unterstützung im Alltag. Anerkannte Anbieter
+      können Entlastungsleistungen direkt mit der Pflegekasse abrechnen. Sie als Klient müssen die Kosten
+      nicht vorstrecken. Anerkennungen werden je Bundesland und je Region erteilt. Katharis ist anerkannt für
+      Stadt Stuttgart und Landkreis Böblingen.
+    </p>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Was passiert wenn der Pflegegrad fehlt?</h2>
+    <p class="text-primary/80">
+      Ein Pflegegrad-Antrag dauert typisch fünf bis 25 Wochen. In dieser Zeit können Sie bereits
+      Entlastungsleistungen in Anspruch nehmen, die bei Bewilligung rückwirkend ab Antragsdatum erstattet
+      werden können. Mehr dazu auf <a href="/pflegegrad-antrag/" class="underline text-accent-dark">Pflegegrad-Antrags-Hilfe</a>.
+    </p>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Quellen</h2>
+    <ul class="mt-3 space-y-1 text-primary/80 list-disc list-inside text-sm">
+      <li>gesetze-im-internet.de §45a, §45b, §42a, §40 SGB XI</li>
+      <li>Bundesgesundheitsministerium PUEG-Erklärungen</li>
+      <li>pflege.de Beträge 2026</li>
+      <li>pflegekompassmagazin.de Entlastungsbetrag 2026</li>
+      <li>Compass Pflegeberatung</li>
+    </ul>
+  </article>
+
+  <section class="py-16 bg-background text-center">
+    <div class="max-w-2xl mx-auto px-4">
+      <h2 class="text-2xl font-bold text-primary">Im Erstgespräch klären</h2>
+      <p class="mt-4 text-primary/80">Welche Töpfe für Ihre Situation passen, klären wir kostenlos am Telefon.</p>
+      <div class="flex flex-col sm:flex-row gap-3 mt-6 justify-center">
+        <CallCTA client:load />
+        <RueckrufButton client:load sourceCta="rueckruf-ratgeber-pflegekasse" />
+      </div>
+    </div>
+  </section>
+</PageLayout>
