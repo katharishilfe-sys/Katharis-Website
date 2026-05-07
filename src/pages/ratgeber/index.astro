@@ -13,6 +13,16 @@ const articles = [
     excerpt: 'Welche Pflegekassen-Töpfe nach Para 45a/45b/42a/40 SGB XI Sie für eine Entlastung nutzen können.',
   },
   {
+    slug: '/ratgeber/pflegekasse-direktabrechnung/',
+    title: 'Pflegekassen-Direktabrechnung erklärt',
+    excerpt: 'Wie funktioniert Para-45a-Direktabrechnung. Was Sie als Klient tun müssen, was nicht. Mit Vergleichs-Tabelle.',
+  },
+  {
+    slug: '/ratgeber/md-begutachtung-vorbereiten/',
+    title: 'MD-Begutachtung vorbereiten: Pflegetagebuch und Checkliste',
+    excerpt: '14-Tage-Pflegetagebuch, Hilfsmittel-Liste, was zeigen, was sagen. So bereiten Sie sich richtig auf den Termin vor.',
+  },
+  {
     slug: '/ratgeber/heimumzug-kosten/',
     title: 'Heimumzug und Kosten: Wer zahlt die Wohnungsräumung?',
     excerpt: 'Vermieter-Frist, Pflegekassen-Direktabrechnung, Vollräumung mit Pflegegrad. Wie Sie keine Doppelmiete zahlen.',
@@ -35,7 +45,7 @@ const articles = [
   </section>
 
   <section class="py-12 max-w-content mx-auto px-4">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {articles.map((article) => (
         <a href={article.slug} class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow border border-primary/10">
           <h2 class="text-xl font-bold text-primary">{article.title}</h2>

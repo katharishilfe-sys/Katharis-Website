@@ -1,0 +1,188 @@
+---
+import PageLayout from '@layouts/PageLayout.astro';
+import { generateFAQPageSchema, generateBreadcrumbSchema } from '@lib/schema-org';
+import CallCTA from '@components/CallCTA';
+import RueckrufButton from '@components/RueckrufButton';
+
+const SITE_URL = 'https://katharis.de';
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'MD-Begutachtung vorbereiten: 14 Tage Pflegetagebuch + Hausbesuchs-Checkliste',
+  description: 'Wie Sie sich auf den Termin mit dem Medizinischen Dienst vorbereiten. Pflegetagebuch, Hilfsmittel-Liste, was zeigen, was sagen.',
+  datePublished: '2026-05-07T00:00:00+02:00',
+  dateModified: '2026-05-07T00:00:00+02:00',
+  author: { '@type': 'Person', name: 'Daniel Altenhof', jobTitle: 'Initiator und operativer Leiter Katharis' },
+  image: `${SITE_URL}/og-image.png`,
+  mainEntityOfPage: `${SITE_URL}/ratgeber/md-begutachtung-vorbereiten/`,
+  publisher: { '@id': `${SITE_URL}/#organization` },
+};
+
+const faqs = [
+  {
+    question: 'Wie lange dauert die MD-Begutachtung?',
+    answer:
+      'Typisch 45 bis 90 Minuten. Der Gutachter kommt zu Ihnen nach Hause, schaut sich die Wohn-Situation an und fragt strukturiert die sechs Lebensbereiche ab: Mobilität, kognitive Fähigkeiten, Verhalten, Selbstversorgung, Krankheits-Bewältigung, Alltagsleben.',
+  },
+  {
+    question: 'Soll ich beim MD-Termin "schöner" wirken oder die schlechtesten Tage zeigen?',
+    answer:
+      'Zeigen Sie den Alltag wie er ist, an einem typischen Tag. Nicht den besten Moment, aber auch nicht inszenieren. Das Pflegetagebuch deckt den Verlauf über 14 Tage ab und gibt dem Gutachter den Überblick. Schönen Sie nichts: der Gutachter ist geschult, das zu erkennen, und Schönfärberei führt zu zu niedriger Einstufung.',
+  },
+  {
+    question: 'Was wenn die pflegebedürftige Person beim Termin "gut drauf" ist?',
+    answer:
+      'Das passiert oft, weil Anwesenheit von fremden Menschen aktiviert. Sagen Sie dem Gutachter explizit: "Heute ist ein guter Tag, im Tagebuch sehen Sie wie es sonst läuft." Reichen Sie das Pflegetagebuch direkt am Anfang aus. Lassen Sie sich nicht stressen, der Gutachter kennt den Effekt.',
+  },
+  {
+    question: 'Wer sollte beim MD-Termin dabei sein?',
+    answer:
+      'Mindestens eine Person, die den Alltag der pflegebedürftigen Person genau kennt, idealerweise die Hauptpflegeperson. Bei dementen Personen ist Begleitung Pflicht, sonst kommt kein vollständiges Bild zustande. Auch der Hausarzt kann ein Attest für den Gutachter mitgeben.',
+  },
+];
+
+const faqSchema = generateFAQPageSchema(faqs);
+
+const breadcrumbSchema = generateBreadcrumbSchema([
+  { name: 'Start', url: 'https://katharis.de/' },
+  { name: 'Ratgeber', url: 'https://katharis.de/ratgeber/' },
+  { name: 'MD-Begutachtung vorbereiten', url: 'https://katharis.de/ratgeber/md-begutachtung-vorbereiten/' },
+]);
+---
+
+<PageLayout
+  title="MD-Begutachtung vorbereiten | Ratgeber Katharis"
+  description="Pflegetagebuch über 14 Tage, Hilfsmittel-Liste, was zeigen, was sagen. Wie Sie sich auf den Termin mit dem Medizinischen Dienst vorbereiten ohne zu schönfärben."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+  <article class="max-w-content mx-auto px-4 py-12">
+    <p class="text-sm text-primary/60">
+      <a href="/ratgeber/" class="underline">Ratgeber</a> &rsaquo; MD-Begutachtung vorbereiten
+    </p>
+    <h1 class="text-4xl font-bold text-primary mt-4">MD-Begutachtung vorbereiten: Pflegetagebuch und Checkliste</h1>
+    <p class="text-sm text-primary/60 mt-2">
+      Verfasser: Daniel Altenhof, Initiator und operativer Leiter Katharis · Stand: 2026-05-07
+    </p>
+
+    <p class="mt-8 text-primary/80">
+      Der MD-Termin entscheidet darüber, welcher Pflegegrad bewilligt wird. Eine schlecht vorbereitete
+      Begutachtung führt oft zu zu niedriger Einstufung und damit zu weniger Pflegekassen-Leistung. Eine gute
+      Vorbereitung kostet etwa eine Stunde Aufwand verteilt über zwei Wochen, wirkt sich aber spürbar auf den
+      Alltag aus, sobald der Bescheid da ist.
+    </p>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Was der Medizinische Dienst genau prüft</h2>
+    <p class="text-primary/80">
+      Der Gutachter prüft die Selbstständigkeit in sechs Modulen, die unterschiedlich gewichtet werden:
+    </p>
+    <ul class="mt-3 space-y-1 text-primary/80 list-disc list-inside">
+      <li><strong>Mobilität</strong> (10 Prozent): Aufstehen, Treppen, Gehen, Lagewechsel</li>
+      <li><strong>Kognitive und kommunikative Fähigkeiten</strong> (15 Prozent): Orientierung, Erkennen</li>
+      <li><strong>Verhaltensweisen und psychische Problemlagen</strong> (15 Prozent): nächtliche Unruhe, Aggression, Ängste</li>
+      <li><strong>Selbstversorgung</strong> (40 Prozent): Körperpflege, Essen, Anziehen, Toilette</li>
+      <li><strong>Krankheits- und therapiebedingte Anforderungen</strong> (20 Prozent): Medikamenten-Einnahme, Verbandwechsel, Termine</li>
+      <li><strong>Gestaltung des Alltagslebens</strong> (15 Prozent): Tagesstruktur, soziale Kontakte</li>
+    </ul>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Pflegetagebuch über 14 Tage</h2>
+    <p class="text-primary/80">
+      Das wichtigste Instrument. Notieren Sie jeden Tag stichpunktartig, welche Hilfe wann nötig war.
+      Beispiel-Eintrag:
+    </p>
+    <div class="mt-4 p-4 bg-background/50 rounded-lg border border-primary/20 font-mono text-xs text-primary/80">
+      Mo 06.05.<br />
+      07:00 Mutter aufstehen geholfen, alleine zur Toilette nicht mehr<br />
+      07:20 Anziehen vollständig übernommen, Knöpfe gehen nicht mehr<br />
+      08:00 Frühstück: Brot schmieren übernommen, Trinken selbst<br />
+      10:30 Medikamente verteilt und Einnahme kontrolliert<br />
+      14:00 Mittagessen: Schneiden übernommen, Essen selbst<br />
+      19:00 Waschen vollständig übernommen<br />
+      22:00 Bettgang, Stützstrümpfe ausziehen geholfen<br />
+      Nachts: 2x aufgestanden, Toilettengang begleitet<br />
+    </div>
+    <p class="mt-4 text-primary/80">
+      Vorlagen für Pflegetagebücher gibt es kostenlos beim Pflegestützpunkt oder bei der Compass
+      Pflegeberatung (0800 101 88 00). Auch BAGSO und VdK bieten gute Vorlagen.
+    </p>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Was Sie vor dem Termin bereithalten</h2>
+    <ul class="mt-3 space-y-2 text-primary/80 list-disc list-inside">
+      <li><strong>Pflegetagebuch</strong> der letzten 14 Tage (siehe oben)</li>
+      <li><strong>Diagnosen-Liste</strong> mit allen relevanten Ärzten und Befunden</li>
+      <li><strong>Aktuelle Medikamenten-Liste</strong> mit Dosierung und Einnahme-Häufigkeit</li>
+      <li><strong>Hilfsmittel-Liste</strong>: Rollator, Pflegebett, Toilettenstuhl, Sauerstoffgerät, Hörgeräte etc.</li>
+      <li><strong>Vorhandene Atteste oder Krankenhausberichte</strong> der letzten 12 Monate</li>
+      <li><strong>Schwerbehindertenausweis</strong> falls vorhanden</li>
+      <li><strong>Liste der bisherigen Pflegepersonen</strong> mit Stundenzahl pro Woche</li>
+    </ul>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Was Sie nicht tun sollten</h2>
+    <p class="text-primary/80">
+      <strong>Nicht aufräumen.</strong> Der Gutachter soll den Alltag sehen, nicht eine inszenierte Wohnung.
+      Wenn der Boden voller Wäsche liegt weil Bücken nicht mehr geht, lassen Sie es so.
+    </p>
+    <p class="mt-3 text-primary/80">
+      <strong>Nicht für die Person sprechen.</strong> Lassen Sie die pflegebedürftige Person die Fragen
+      selbst beantworten, auch wenn sie unvollständig oder verwirrt antwortet. Das ist Teil des
+      Gutachter-Bilds. Ergänzen Sie nur, wo nötig.
+    </p>
+    <p class="mt-3 text-primary/80">
+      <strong>Keine "Aktivierungs-Tabletten" geben.</strong> Manche Familien geben am MD-Tag eine
+      Aktivierungs-Dosis Medikament damit die Person "wacher wirkt". Das verzerrt das Bild und führt
+      regelmäßig zu zu niedriger Einstufung.
+    </p>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Was nach dem Termin passiert</h2>
+    <p class="text-primary/80">
+      Der Gutachter erstellt sein Gutachten, die Pflegekasse entscheidet. Das dauert typisch fünf bis 25
+      Wochen ab Antragsdatum. Sobald der Bescheid da ist, gilt der Pflegegrad <strong>rückwirkend ab
+      Antragsdatum</strong>. Das heißt: Leistungen die Sie in der Wartezeit beanspruchen, werden bei
+      Bewilligung erstattet.
+    </p>
+    <p class="mt-3 text-primary/80">
+      Bei Ablehnung haben Sie einen Monat Zeit für einen <strong>Widerspruch</strong>. Den begleiten wir
+      nicht selbst, vermitteln aber an Pflegestützpunkt oder Sozialrechts-Anwalt.
+    </p>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Wo wir helfen</h2>
+    <p class="text-primary/80">
+      Wir leisten administrative Antrags-Hilfe: Formulare ausfüllen, MD-Termin koordinieren, Pflegetagebuch
+      strukturieren. Inhaltliche Pflegeberatung im Sinne von Paragraph 7a SGB XI ist Aufgabe der
+      Pflegestützpunkte. Mehr dazu auf <a href="/pflegegrad-antrag/" class="underline text-accent-dark">Pflegegrad-Antrags-Hilfe</a>.
+    </p>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Häufige Fragen</h2>
+    <div class="mt-4 space-y-3">
+      {faqs.map((faq) => (
+        <details class="border border-primary/20 rounded-lg p-4 bg-white">
+          <summary class="font-bold text-primary cursor-pointer">{faq.question}</summary>
+          <p class="mt-3 text-primary/80 text-sm">{faq.answer}</p>
+        </details>
+      ))}
+    </div>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Quellen</h2>
+    <ul class="mt-3 space-y-1 text-primary/80 list-disc list-inside text-sm">
+      <li>Medizinischer Dienst Bund - Begutachtungs-Richtlinien 2026</li>
+      <li>Bundesgesundheitsministerium - Pflegegrade und Begutachtung</li>
+      <li>BAGSO - Vorlagen Pflegetagebuch</li>
+      <li>VdK Sozialverband - Beratungs-Materialien</li>
+      <li>Compass Pflegeberatung (0800 101 88 00)</li>
+    </ul>
+  </article>
+
+  <section class="py-16 bg-background text-center">
+    <div class="max-w-2xl mx-auto px-4">
+      <h2 class="text-2xl font-bold text-primary">Brauchen Sie Hilfe beim Antrag?</h2>
+      <p class="mt-4 text-primary/80">Wir helfen administrativ. Erstgespräch kostenlos.</p>
+      <div class="flex flex-col sm:flex-row gap-3 mt-6 justify-center">
+        <CallCTA client:load />
+        <RueckrufButton client:load sourceCta="rueckruf-ratgeber-md" />
+      </div>
+    </div>
+  </section>
+</PageLayout>

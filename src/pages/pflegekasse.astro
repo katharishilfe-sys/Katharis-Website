@@ -89,21 +89,39 @@ const faqSchema = generateFAQPageSchema(faqs);
     </p>
   </section>
 
-  <!-- Akkordeon -->
+  <!-- Vergleichs-Tabelle 4 Toepfe -->
   <section class="py-12 bg-white">
     <div class="max-w-content mx-auto px-4">
-      <h2 class="text-2xl font-bold text-primary mb-6">Welche Pflegekassen-Töpfe sind für Entlastung relevant?</h2>
-      <div class="space-y-4">
-        {pflegekassenTöpfe.map((topf) => (
-          <details class="border border-primary/20 rounded-lg p-4 bg-background/30">
-            <summary class="font-bold text-primary cursor-pointer">{topf.paragraph}: {topf.title} ({topf.betrag})</summary>
-            <div class="mt-3 text-primary/80 text-sm">
-              <p><strong>Wer:</strong> {topf.wer}</p>
-              <p class="mt-2">{topf.description}</p>
-            </div>
-          </details>
-        ))}
+      <h2 class="text-2xl font-bold text-primary mb-6">Pflegekassen-Töpfe für Entlastung im Vergleich (Beträge 2026)</h2>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm border-collapse">
+          <thead>
+            <tr class="bg-primary text-white text-left">
+              <th class="p-3 font-bold border border-primary/30">Paragraph</th>
+              <th class="p-3 font-bold border border-primary/30">Topf</th>
+              <th class="p-3 font-bold border border-primary/30">Höhe</th>
+              <th class="p-3 font-bold border border-primary/30">Pflegegrad</th>
+              <th class="p-3 font-bold border border-primary/30">Wofür einsetzbar</th>
+            </tr>
+          </thead>
+          <tbody>
+            {pflegekassenTöpfe.map((topf, idx) => (
+              <tr class={idx % 2 === 0 ? 'bg-background/30' : 'bg-white'}>
+                <td class="p-3 border border-primary/20 font-bold text-primary">{topf.paragraph}</td>
+                <td class="p-3 border border-primary/20 text-primary/80">{topf.title}</td>
+                <td class="p-3 border border-primary/20 font-bold text-accent-dark">{topf.betrag}</td>
+                <td class="p-3 border border-primary/20 text-primary/80 text-xs">{topf.wer}</td>
+                <td class="p-3 border border-primary/20 text-primary/80 text-xs">{topf.description}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
+
+      <p class="mt-6 text-sm text-primary/70">
+        Töpfe sind kumulierbar. Welche in Ihrer Situation greifen, klären wir kostenlos im Erstgespräch.
+      </p>
     </div>
   </section>
 

@@ -1,25 +1,97 @@
-﻿---
+---
 import PageLayout from '@layouts/PageLayout.astro';
-import { kontakt } from '@data/content';
+import { hooks, kontakt } from '@data/content';
+import { generateLocalBusinessSchema, generateBreadcrumbSchema } from '@lib/schema-org';
+import CallCTA from '@components/CallCTA';
+import RueckrufButton from '@components/RueckrufButton';
+
+const localBusinessSchema = generateLocalBusinessSchema({ areaServed: ['Sindelfingen', 'Landkreis Böblingen'] });
+const breadcrumbSchema = generateBreadcrumbSchema([
+  { name: 'Start', url: 'https://katharis.de/' },
+  { name: 'Standorte', url: 'https://katharis.de/standorte/stuttgart/' },
+  { name: 'Sindelfingen', url: 'https://katharis.de/standorte/sindelfingen/' },
+]);
 ---
 
 <PageLayout
-  title="Katharis in Sindelfingen"
-  description="Operative Bedienung Sindelfingen aus Böblingen. Para 45a-Anerkennung in Klärung."
-  noindex={true}
+  title="Entlastungsleistungen Sindelfingen | Katharis"
+  description="Spezialist für Entlastungsleistungen in Sindelfingen. Anerkannt nach Para 45a SGB XI für den Landkreis Böblingen. Pflegekassen-Direktabrechnung."
 >
-  <section class="bg-background py-16 max-w-content mx-auto px-4">
-    <h1 class="text-4xl font-bold text-primary">Katharis in Sindelfingen</h1>
-    <div class="mt-6 p-4 bg-accent/10 rounded-xl text-sm text-primary/80">
-      <strong>Hinweis:</strong> Wir sind operativ in Sindelfingen tätig. Die formelle Anerkennung nach
-      Para 45a SGB XI für den Landkreis Böblingen umfasst auch Sindelfingen; eine spezifische
-      Bescheid-Validierung steht noch aus. Im kostenlosen Erstgespräch klären wir Ihre Pflegekassen-Optionen
-      individuell.
+  <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+  <!-- Hero -->
+  <section class="bg-background py-16">
+    <div class="max-w-content mx-auto px-4">
+      <p class="text-sm text-primary/60">
+        <a href="/" class="underline">Start</a> &rsaquo; <a href="/standorte/stuttgart/" class="underline">Standorte</a> &rsaquo; Sindelfingen
+      </p>
+      <h1 class="text-4xl font-bold text-primary mt-4">Entlastungsleistungen in Sindelfingen</h1>
+      <p class="mt-4 text-lg text-primary/80">{hooks.master}</p>
+      <p class="mt-2 text-sm text-primary/60">
+        Anerkannt nach Paragraph 45a SGB XI für den gesamten Landkreis Böblingen, Sindelfingen eingeschlossen.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-3 mt-8">
+        <CallCTA client:load />
+        <RueckrufButton client:load sourceCta="rueckruf-sindelfingen-hero" />
+      </div>
     </div>
-    <p class="mt-6 text-primary/80">
-      Anfahrt aus unserer Zentrale Böblingen: 8-12 Minuten. Komplexe Entlastungsleistungen wie Messie-Hilfe und
-      Heimumzug-Vollräumungen sind unser Schwerpunkt.
+  </section>
+
+  <!-- Was wir in Sindelfingen anbieten -->
+  <section class="py-12 max-w-content mx-auto px-4">
+    <h2 class="text-2xl font-bold text-primary mb-4">Was wir in Sindelfingen leisten</h2>
+    <p class="text-primary/80">
+      Wir sind spezialisiert auf komplexe Entlastungsleistungen für Pflegebedürftige: Messie-Hilfe in stark
+      verwahrlosten Wohnungen, Vollräumungen vor dem Pflegeheim-Umzug mit knapper Vermieter-Frist, sowie
+      Tiefenreinigungen die normale Reinigungsdienste nicht übernehmen. In Sindelfingen sind wir regelmäßig
+      tätig, von Mercedes-Werk-Stadt-Süd bis Maichingen.
     </p>
-    <a href={`tel:${kontakt.telefonHref}`} class="inline-block mt-8 px-6 py-3 rounded-full font-bold text-white bg-accent-dark hover:opacity-90">Jetzt anrufen</a>
+    <p class="mt-4 text-primary/80">
+      Anfahrt aus unserer Zentrale Böblingen: typisch 8 bis 12 Minuten. Wir kommen kostenlos zur
+      Vor-Ort-Begehung, transparente Kostenabklärung vor Auftragsbeginn.
+    </p>
+  </section>
+
+  <!-- Pflegekassen-Direktabrechnung -->
+  <section class="py-12 bg-white">
+    <div class="max-w-content mx-auto px-4">
+      <h2 class="text-2xl font-bold text-primary mb-4">Pflegekassen-Direktabrechnung in Sindelfingen</h2>
+      <p class="text-primary/80">
+        Sindelfingen gehört zum Landkreis Böblingen. Unsere Anerkennung nach Paragraph 45a SGB XI für den
+        Landkreis Böblingen umfasst auch Sindelfingen vollumfänglich. Das bedeutet: bei vorhandenem Pflegegrad
+        ab 1 können Sie unsere Leistung direkt mit Ihrer Pflegekasse abrechnen, ohne Vorkasse.
+      </p>
+      <p class="mt-4 text-primary/80">
+        Welche Pflegekassen-Töpfe für Ihre Situation greifen, klären wir kostenlos im Erstgespräch
+        am Telefon. Mehr zum Hintergrund auf <a href="/pflegekasse/" class="underline text-accent-dark">Pflegekassen-Leistungen</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- Beratung vor Ort -->
+  <section class="py-12 max-w-content mx-auto px-4">
+    <h2 class="text-2xl font-bold text-primary mb-4">Kostenlose Pflegeberatung in Sindelfingen</h2>
+    <p class="text-primary/80">
+      Inhaltliche Beratung zu Pflegegraden und Leistungs-Ansprüchen ist nicht unsere Aufgabe. Dafür gibt
+      es den <strong>Pflegestützpunkt Landkreis Böblingen</strong> in Böblingen, der für alle Gemeinden im
+      Landkreis kostenlos berät. Wir helfen Ihnen gerne, den richtigen Kontakt herzustellen.
+    </p>
+    <p class="mt-4 text-primary/80">
+      Bundesweit ist die <strong>Compass Pflegeberatung</strong> kostenlos erreichbar:
+      0800 101 88 00. Compass-Berater kommen auf Wunsch auch zum Hausbesuch in Sindelfingen.
+    </p>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="py-16 bg-background text-center">
+    <div class="max-w-2xl mx-auto px-4">
+      <h2 class="text-3xl font-bold text-primary">Sprechen wir.</h2>
+      <p class="mt-4 text-primary/80">Im kostenlosen Erstgespräch klären wir Ihre Pflegekassen-Optionen.</p>
+      <div class="flex flex-col sm:flex-row gap-3 mt-8 justify-center">
+        <CallCTA client:load />
+        <RueckrufButton client:load sourceCta="rueckruf-sindelfingen-final" />
+      </div>
+    </div>
   </section>
 </PageLayout>

@@ -1,0 +1,204 @@
+---
+import PageLayout from '@layouts/PageLayout.astro';
+import { generateFAQPageSchema, generateBreadcrumbSchema } from '@lib/schema-org';
+import CallCTA from '@components/CallCTA';
+import RueckrufButton from '@components/RueckrufButton';
+
+const SITE_URL = 'https://katharis.de';
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Pflegekassen-Direktabrechnung erklärt: Was Para 45a bedeutet',
+  description: 'Wie funktioniert die Direktabrechnung mit der Pflegekasse durch anerkannte Anbieter nach Paragraph 45a SGB XI. Was Sie als Klient tun müssen, was nicht.',
+  datePublished: '2026-05-07T00:00:00+02:00',
+  dateModified: '2026-05-07T00:00:00+02:00',
+  author: { '@type': 'Person', name: 'Daniel Altenhof', jobTitle: 'Initiator und operativer Leiter Katharis' },
+  image: `${SITE_URL}/og-image.png`,
+  mainEntityOfPage: `${SITE_URL}/ratgeber/pflegekasse-direktabrechnung/`,
+  publisher: { '@id': `${SITE_URL}/#organization` },
+};
+
+const faqs = [
+  {
+    question: 'Muss ich Vorkasse leisten?',
+    answer:
+      'Nein. Bei Direktabrechnung über Paragraph 45a SGB XI rechnen wir die Leistung direkt mit Ihrer Pflegekasse ab. Sie müssen nichts vorstrecken und auch keine Rechnung weiterleiten.',
+  },
+  {
+    question: 'Was muss ich der Pflegekasse melden?',
+    answer:
+      'In der Regel nichts vorab. Manche Pflegekassen wollen eine kurze schriftliche Anmeldung des Leistungs-Bedarfs. Im Erstgespräch klären wir, ob Ihre Pflegekasse das verlangt, und helfen beim Formular.',
+  },
+  {
+    question: 'Was passiert bei Restbudgets aus dem Vorjahr?',
+    answer:
+      'Restbudgets aus Para 45b (Entlastungsbetrag) können wir mit nutzen, sie verfallen sonst am 30. Juni des Folgejahres. Im Erstgespräch fragen wir nach allen Restbudgets damit nichts ungenutzt verfällt.',
+  },
+  {
+    question: 'Was wenn ich mehrere Anbieter nutze?',
+    answer:
+      'Das geht. Pflegekassen-Töpfe sind nicht an einen Anbieter gebunden. Wir koordinieren mit anderen Anbietern wo nötig (zum Beispiel ambulanter Pflegedienst plus Katharis-Entlastung), so dass keine Doppel-Abrechnung passiert.',
+  },
+  {
+    question: 'Was wenn meine Pflegekasse die Direktabrechnung verweigert?',
+    answer:
+      'Sehr selten. Wenn das passiert, ist meist ein Formular nicht eingegangen oder die Pflegekasse will eine spezifische Bestätigung. Wir klären das direkt mit der Sachbearbeitung. In seltenen Fällen läuft die Erstattung dann über Sie als Klient mit nachträglicher Pflegekassen-Erstattung.',
+  },
+];
+
+const faqSchema = generateFAQPageSchema(faqs);
+
+const breadcrumbSchema = generateBreadcrumbSchema([
+  { name: 'Start', url: 'https://katharis.de/' },
+  { name: 'Ratgeber', url: 'https://katharis.de/ratgeber/' },
+  { name: 'Pflegekassen-Direktabrechnung', url: 'https://katharis.de/ratgeber/pflegekasse-direktabrechnung/' },
+]);
+---
+
+<PageLayout
+  title="Pflegekassen-Direktabrechnung erklärt | Ratgeber Katharis"
+  description="Wie funktioniert die Pflegekassen-Direktabrechnung durch Para-45a-Anbieter. Was Sie als Klient tun müssen und was nicht. Mit Beispielen und Vergleich."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+  <article class="max-w-content mx-auto px-4 py-12">
+    <p class="text-sm text-primary/60">
+      <a href="/ratgeber/" class="underline">Ratgeber</a> &rsaquo; Pflegekassen-Direktabrechnung
+    </p>
+    <h1 class="text-4xl font-bold text-primary mt-4">Pflegekassen-Direktabrechnung erklärt</h1>
+    <p class="text-sm text-primary/60 mt-2">
+      Verfasser: Daniel Altenhof, Initiator und operativer Leiter Katharis · Stand: 2026-05-07
+    </p>
+
+    <p class="mt-8 text-primary/80">
+      Direktabrechnung mit der Pflegekasse ist für viele Klienten der entscheidende Vorteil bei der Wahl
+      eines anerkannten Anbieters. Statt Rechnungen vorzustrecken und nachträglich Erstattung bei der
+      Pflegekasse zu beantragen, läuft die Abrechnung direkt zwischen Anbieter und Kasse. Dieser Artikel
+      erklärt wie das technisch funktioniert und was Sie als Klient dafür tun müssen.
+    </p>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Was ist ein anerkannter Anbieter nach Paragraph 45a?</h2>
+    <p class="text-primary/80">
+      Paragraph 45a SGB XI regelt seit 2017 die Anerkennung von "Angeboten zur Unterstützung im Alltag".
+      Anerkennende Stelle ist in Baden-Württemberg die Untere Sozialverwaltung (USTA-BW), die nach Prüfung
+      eines Konzepts und der Qualifikations-Nachweise die Anerkennung für ein konkretes Gebiet erteilt.
+    </p>
+    <p class="mt-4 text-primary/80">
+      Katharis ist nach Paragraph 45a SGB XI anerkannt für <strong>Stadt Stuttgart und Landkreis
+      Böblingen</strong>. Mit dieser Anerkennung sind wir berechtigt, Entlastungsleistungen direkt mit
+      gesetzlichen Pflegekassen abzurechnen.
+    </p>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">So läuft die Direktabrechnung in der Praxis</h2>
+    <ol class="mt-4 space-y-4 text-primary/80 list-decimal list-inside">
+      <li>
+        <strong>Erstgespräch und Auftragserteilung:</strong> wir klären welche Leistung Sie brauchen und
+        welche Pflegekassen-Töpfe greifen. Sie unterschreiben einen Pflegekassen-Sondervertrag und eine
+        Abtretungserklärung.
+      </li>
+      <li>
+        <strong>Leistungserbringung:</strong> wir machen die Arbeit (Messie-Hilfe, Heimumzug-Vollräumung etc.).
+      </li>
+      <li>
+        <strong>Rechnung an Pflegekasse:</strong> wir senden die Rechnung mit Leistungs-Nachweis und
+        Abtretungserklärung direkt an Ihre Pflegekasse. Sie bekommen eine Kopie zur Information.
+      </li>
+      <li>
+        <strong>Pflegekassen-Prüfung:</strong> die Pflegekasse prüft (typisch 4 bis 8 Wochen) und überweist den
+        Betrag an uns. Sie müssen nichts tun.
+      </li>
+      <li>
+        <strong>Bei Restbeträgen:</strong> wenn die Töpfe nicht reichen und ein Restbetrag auf Sie zukommt,
+        besprechen wir das transparent vor Auftragsbeginn. Es gibt keine versteckten Nachforderungen.
+      </li>
+    </ol>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Vergleich: Direktabrechnung vs. Erstattungsverfahren</h2>
+    <div class="overflow-x-auto mt-4">
+      <table class="w-full text-sm border-collapse">
+        <thead>
+          <tr class="bg-primary text-white">
+            <th class="p-3 text-left border border-primary/30">Aspekt</th>
+            <th class="p-3 text-left border border-primary/30">Direktabrechnung (Para 45a)</th>
+            <th class="p-3 text-left border border-primary/30">Erstattungsverfahren (selbst)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="bg-background/30">
+            <td class="p-3 border border-primary/20 font-bold text-primary">Vorkasse durch Klient</td>
+            <td class="p-3 border border-primary/20 text-primary/80">Nein</td>
+            <td class="p-3 border border-primary/20 text-primary/80">Ja, vollständig</td>
+          </tr>
+          <tr>
+            <td class="p-3 border border-primary/20 font-bold text-primary">Wer kommuniziert mit Kasse</td>
+            <td class="p-3 border border-primary/20 text-primary/80">Anbieter</td>
+            <td class="p-3 border border-primary/20 text-primary/80">Klient selbst</td>
+          </tr>
+          <tr class="bg-background/30">
+            <td class="p-3 border border-primary/20 font-bold text-primary">Risiko bei Ablehnung</td>
+            <td class="p-3 border border-primary/20 text-primary/80">Anbieter trägt mit</td>
+            <td class="p-3 border border-primary/20 text-primary/80">Klient trägt allein</td>
+          </tr>
+          <tr>
+            <td class="p-3 border border-primary/20 font-bold text-primary">Aufwand für Klient</td>
+            <td class="p-3 border border-primary/20 text-primary/80">Niedrig</td>
+            <td class="p-3 border border-primary/20 text-primary/80">Hoch (Formulare, Belege, Fristen)</td>
+          </tr>
+          <tr class="bg-background/30">
+            <td class="p-3 border border-primary/20 font-bold text-primary">Voraussetzung</td>
+            <td class="p-3 border border-primary/20 text-primary/80">Anbieter mit Para-45a-Anerkennung</td>
+            <td class="p-3 border border-primary/20 text-primary/80">Jeder Anbieter</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Was Sie unterschreiben müssen</h2>
+    <p class="text-primary/80">
+      Direktabrechnung erfordert eine schriftliche Abtretungserklärung. Damit treten Sie Ihren
+      Anspruch auf Erstattung gegenüber der Pflegekasse an uns ab, und wir können direkt abrechnen. Das
+      Dokument ist 1 Seite, in einfacher Sprache, und wird im Erstgespräch erklärt. Die Abtretung gilt nur
+      für die konkrete Leistung, nicht für andere Anbieter oder Töpfe.
+    </p>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Wenn Direktabrechnung nicht möglich ist</h2>
+    <p class="text-primary/80">
+      In wenigen Fällen geht Direktabrechnung nicht: bei privaten Pflege-Pflichtversicherungen, bei
+      Standorten außerhalb unserer Anerkennung (also außerhalb Stadt Stuttgart und Landkreis Böblingen),
+      oder wenn die Pflegekasse einen formellen Ausschluss kommuniziert. In dem Fall arbeiten wir auf
+      Privat-Backup-Vertrag, mit transparentem Festpreis oder Stundensatz und 19 Prozent Umsatzsteuer.
+    </p>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Häufige Fragen</h2>
+    <div class="mt-4 space-y-3">
+      {faqs.map((faq) => (
+        <details class="border border-primary/20 rounded-lg p-4 bg-white">
+          <summary class="font-bold text-primary cursor-pointer">{faq.question}</summary>
+          <p class="mt-3 text-primary/80 text-sm">{faq.answer}</p>
+        </details>
+      ))}
+    </div>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Quellen</h2>
+    <ul class="mt-3 space-y-1 text-primary/80 list-disc list-inside text-sm">
+      <li>gesetze-im-internet.de: §45a SGB XI</li>
+      <li>Untere Sozialverwaltung Baden-Württemberg (USTA-BW): Anerkennungs-Kriterien</li>
+      <li>GKV-Spitzenverband: Empfehlungen zur Direktabrechnung</li>
+      <li>Compass Pflegeberatung (0800 101 88 00)</li>
+    </ul>
+  </article>
+
+  <section class="py-16 bg-background text-center">
+    <div class="max-w-2xl mx-auto px-4">
+      <h2 class="text-2xl font-bold text-primary">Bereit für Direktabrechnung?</h2>
+      <p class="mt-4 text-primary/80">Im Erstgespräch klären wir Ihre Pflegekassen-Optionen kostenlos.</p>
+      <div class="flex flex-col sm:flex-row gap-3 mt-6 justify-center">
+        <CallCTA client:load />
+        <RueckrufButton client:load sourceCta="rueckruf-ratgeber-direktabrechnung" />
+      </div>
+    </div>
+  </section>
+</PageLayout>

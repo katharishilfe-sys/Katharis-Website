@@ -1,19 +1,99 @@
-﻿---
+---
 import PageLayout from '@layouts/PageLayout.astro';
-import { kontakt } from '@data/content';
+import { hooks, kontakt } from '@data/content';
+import { generateLocalBusinessSchema, generateBreadcrumbSchema } from '@lib/schema-org';
+import CallCTA from '@components/CallCTA';
+import RueckrufButton from '@components/RueckrufButton';
+
+const localBusinessSchema = generateLocalBusinessSchema({ areaServed: ['Herrenberg', 'Landkreis Böblingen'] });
+const breadcrumbSchema = generateBreadcrumbSchema([
+  { name: 'Start', url: 'https://katharis.de/' },
+  { name: 'Standorte', url: 'https://katharis.de/standorte/stuttgart/' },
+  { name: 'Herrenberg', url: 'https://katharis.de/standorte/herrenberg/' },
+]);
 ---
 
 <PageLayout
-  title="Katharis in Herrenberg"
-  description="Operative Bedienung Herrenberg aus Böblingen. Para 45a-Anerkennung in Klärung."
-  noindex={true}
+  title="Entlastungsleistungen Herrenberg | Katharis"
+  description="Spezialist für Entlastungsleistungen in Herrenberg. Anerkannt nach Para 45a SGB XI für den Landkreis Böblingen. Pflegekassen-Direktabrechnung."
 >
-  <section class="bg-background py-16 max-w-content mx-auto px-4">
-    <h1 class="text-4xl font-bold text-primary">Katharis in Herrenberg</h1>
-    <div class="mt-6 p-4 bg-accent/10 rounded-xl text-sm text-primary/80">
-      <strong>Hinweis:</strong> Wir sind operativ in Herrenberg tätig. Die formelle Anerkennung nach Para 45a SGB XI
-      für den Landkreis Böblingen umfasst auch Herrenberg; eine spezifische Bescheid-Validierung steht noch aus.
+  <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+  <!-- Hero -->
+  <section class="bg-background py-16">
+    <div class="max-w-content mx-auto px-4">
+      <p class="text-sm text-primary/60">
+        <a href="/" class="underline">Start</a> &rsaquo; <a href="/standorte/stuttgart/" class="underline">Standorte</a> &rsaquo; Herrenberg
+      </p>
+      <h1 class="text-4xl font-bold text-primary mt-4">Entlastungsleistungen in Herrenberg</h1>
+      <p class="mt-4 text-lg text-primary/80">{hooks.master}</p>
+      <p class="mt-2 text-sm text-primary/60">
+        Anerkannt nach Paragraph 45a SGB XI für den gesamten Landkreis Böblingen, Herrenberg eingeschlossen.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-3 mt-8">
+        <CallCTA client:load />
+        <RueckrufButton client:load sourceCta="rueckruf-herrenberg-hero" />
+      </div>
     </div>
-    <a href={`tel:${kontakt.telefonHref}`} class="inline-block mt-8 px-6 py-3 rounded-full font-bold text-white bg-accent-dark hover:opacity-90">Jetzt anrufen</a>
+  </section>
+
+  <!-- Was wir in Herrenberg anbieten -->
+  <section class="py-12 max-w-content mx-auto px-4">
+    <h2 class="text-2xl font-bold text-primary mb-4">Was wir in Herrenberg leisten</h2>
+    <p class="text-primary/80">
+      Herrenberg liegt am südlichen Rand des Landkreises Böblingen. Die Stadt hat einen historischen
+      Fachwerk-Kern und mehrere Stadtteile mit eigenem Charakter. Wir sind in Herrenberg regelmäßig im
+      Einsatz, mit Schwerpunkt auf komplexen Entlastungsleistungen: Messie-Hilfe, Heimumzug-Vollräumungen,
+      Tiefenreinigung von Wohnungen die normale Reinigungsdienste nicht übernehmen.
+    </p>
+    <p class="mt-4 text-primary/80">
+      Anfahrt aus unserer Zentrale Böblingen: typisch 20 bis 28 Minuten. Vor-Ort-Begehung kostenlos,
+      Kostenrahmen besprechen wir transparent vor Auftragsbeginn. Auch Stadtteile wie Kuppingen, Mönchberg
+      und Affstätt sind im Einzugsgebiet.
+    </p>
+  </section>
+
+  <!-- Pflegekassen-Direktabrechnung -->
+  <section class="py-12 bg-white">
+    <div class="max-w-content mx-auto px-4">
+      <h2 class="text-2xl font-bold text-primary mb-4">Pflegekassen-Direktabrechnung in Herrenberg</h2>
+      <p class="text-primary/80">
+        Herrenberg gehört zum Landkreis Böblingen. Unsere Anerkennung nach Paragraph 45a SGB XI deckt
+        Herrenberg ab. Bei vorhandenem Pflegegrad ab 1 rechnen wir die Leistung direkt mit Ihrer Pflegekasse
+        ab, ohne Vorkasse durch Sie.
+      </p>
+      <p class="mt-4 text-primary/80">
+        Welche Pflegekassen-Töpfe in Ihrer Situation greifen, klären wir kostenlos im Erstgespräch
+        am Telefon. Mehr zum Hintergrund auf <a href="/pflegekasse/" class="underline text-accent-dark">Pflegekassen-Leistungen</a>
+        und <a href="/pflegegrad-antrag/" class="underline text-accent-dark">Pflegegrad-Antrag</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- Beratung vor Ort -->
+  <section class="py-12 max-w-content mx-auto px-4">
+    <h2 class="text-2xl font-bold text-primary mb-4">Kostenlose Pflegeberatung in Herrenberg</h2>
+    <p class="text-primary/80">
+      Für inhaltliche Pflegeberatung verweisen wir an den <strong>Pflegestützpunkt Landkreis Böblingen</strong>
+      in Böblingen. Der Pflegestützpunkt berät kostenlos und neutral, auch für Herrenberger Klienten.
+      Wir vermitteln Ihnen gerne den Kontakt.
+    </p>
+    <p class="mt-4 text-primary/80">
+      Bundesweit ist die <strong>Compass Pflegeberatung</strong> kostenlos erreichbar:
+      0800 101 88 00. Hausbesuche in Herrenberg sind möglich.
+    </p>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="py-16 bg-background text-center">
+    <div class="max-w-2xl mx-auto px-4">
+      <h2 class="text-3xl font-bold text-primary">Sprechen wir.</h2>
+      <p class="mt-4 text-primary/80">Im kostenlosen Erstgespräch klären wir Ihre Pflegekassen-Optionen.</p>
+      <div class="flex flex-col sm:flex-row gap-3 mt-8 justify-center">
+        <CallCTA client:load />
+        <RueckrufButton client:load sourceCta="rueckruf-herrenberg-final" />
+      </div>
+    </div>
   </section>
 </PageLayout>
