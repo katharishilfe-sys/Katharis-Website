@@ -1,6 +1,6 @@
 ---
 import PageLayout from '@layouts/PageLayout.astro';
-import { generateFAQPageSchema, generateBreadcrumbSchema } from '@lib/schema-org';
+import { generateFAQPageSchema, generateBreadcrumbListSchema } from '@lib/schema-org';
 import CallCTA from '@components/CallCTA';
 import RueckrufButton from '@components/RueckrufButton';
 
@@ -44,7 +44,7 @@ const faqs = [
 
 const faqSchema = generateFAQPageSchema(faqs);
 
-const breadcrumbSchema = generateBreadcrumbSchema([
+const breadcrumbSchema = generateBreadcrumbListSchema([
   { name: 'Start', url: 'https://katharis.de/' },
   { name: 'Ratgeber', url: 'https://katharis.de/ratgeber/' },
   { name: 'MD-Begutachtung vorbereiten', url: 'https://katharis.de/ratgeber/md-begutachtung-vorbereiten/' },

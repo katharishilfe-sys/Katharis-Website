@@ -1,12 +1,12 @@
 ---
 import PageLayout from '@layouts/PageLayout.astro';
 import { hooks, kontakt } from '@data/content';
-import { generateLocalBusinessSchema, generateBreadcrumbSchema } from '@lib/schema-org';
+import { generateLocalBusinessSchema, generateBreadcrumbListSchema } from '@lib/schema-org';
 import CallCTA from '@components/CallCTA';
 import RueckrufButton from '@components/RueckrufButton';
 
 const localBusinessSchema = generateLocalBusinessSchema({ areaServed: ['Leonberg', 'Landkreis Böblingen'] });
-const breadcrumbSchema = generateBreadcrumbSchema([
+const breadcrumbSchema = generateBreadcrumbListSchema([
   { name: 'Start', url: 'https://katharis.de/' },
   { name: 'Standorte', url: 'https://katharis.de/standorte/stuttgart/' },
   { name: 'Leonberg', url: 'https://katharis.de/standorte/leonberg/' },
