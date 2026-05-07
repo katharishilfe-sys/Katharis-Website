@@ -15,11 +15,7 @@ export default defineConfig({
   integrations: [
     react(),
     sitemap({
-      filter: (page) =>
-        !page.includes('/admin/') &&
-        !page.includes('/standorte/sindelfingen/') &&
-        !page.includes('/standorte/leonberg/') &&
-        !page.includes('/standorte/herrenberg/'),
+      filter: (page) => !page.includes('/admin/'),
       changefreq: 'weekly',
       priority: 0.7,
       lastmod: new Date(),
