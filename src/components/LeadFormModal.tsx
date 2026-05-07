@@ -1,0 +1,184 @@
+import { useEffect, useState } from 'react';
+import { X } from 'lucide-react';
+
+export default function LeadFormModal() {
+  const [open, setOpen] = useState(false);
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [honeypot, setHoneypot] = useState('');
+  const [sourceCta, setSourceCta] = useState('rueckruf');
+  const [submitting, setSubmitting] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    const onOpen = (e: Event) => {
+      const detail = (e as CustomEvent).detail;
+      setSourceCta(detail?.sourceCta ?? 'rueckruf');
+      setOpen(true);
+      setSuccess(false);
+      setError('');
+    };
+    document.addEventListener('open-lead-form-modal', onOpen);
+    return () => document.removeEventListener('open-lead-form-modal', onOpen);
+  }, []);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && open) setOpen(false);
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [open]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (honeypot) return;
+    setSubmitting(true);
+    setError('');
+
+    try {
+      // TODO Etappe 6.5a: echter POST /api/lead an Supabase + Resend
+      // Aktuell Mock-Submit fuer UX-Test
+      await new Promise((resolve) => setTimeout(resolve, 800));
+      console.info('[Mock-Lead-Submit]', { name, phone, sourceCta, source_page: window.location.pathname });
+
+      setSuccess(true);
+      setName('');
+      setPhone('');
+
+      if (typeof window !== 'undefined' && (window as unknown as { dataLayer?: unknown[] }).dataLayer) {
+        (window as unknown as { dataLayer: unknown[] }).dataLayer.push({
+          event: 'form_submit_success',
+          source_cta: sourceCta,
+          source_page: window.location.pathname,
+        });
+      }
+    } catch (err) {
+      setError((err as Error).message || 'Unbekannter Fehler');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  if (!open) return null;
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
+      onClick={() => setOpen(false)}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="lead-form-title"
+    >
+      <div
+        className="bg-white rounded-xl max-w-md w-full p-6 relative shadow-xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          onClick={() => setOpen(false)}
+          className="absolute top-3 right-3 text-gray-500 hover:text-gray-900"
+          aria-label="Schließen"
+        >
+          <X size={24} aria-hidden="true" />
+        </button>
+
+        {success ? (
+          <div className="py-8 text-center">
+            <h2 id="lead-form-title" className="text-2xl font-bold text-primary">
+              Danke für Ihre Anfrage!
+            </h2>
+            <p className="mt-3 text-primary/80">Wir melden uns innerhalb von 24 Stunden bei Ihnen.</p>
+            <p className="text-sm mt-3 text-primary/60">
+              Bei akuter Eile rufen Sie uns gerne direkt an: 07031/6953604
+            </p>
+            <button
+              onClick={() => setOpen(false)}
+              className="mt-6 px-6 py-2 bg-primary text-white rounded-full font-bold"
+            >
+              Schließen
+            </button>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <h2 id="lead-form-title" className="text-2xl font-bold text-primary">
+              Rückruf anfordern
+            </h2>
+            <p className="text-sm text-primary/70">Wir rufen Sie kostenlos zurück.</p>
+
+            <div>
+              <label htmlFor="lead-name" className="block text-sm font-medium text-primary">
+                Name <span aria-label="Pflichtfeld">*</span>
+              </label>
+              <input
+                id="lead-name"
+                type="text"
+                required
+                maxLength={200}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="lead-phone" className="block text-sm font-medium text-primary">
+                Telefonnummer <span aria-label="Pflichtfeld">*</span>
+              </label>
+              <input
+                id="lead-phone"
+                type="tel"
+                required
+                minLength={5}
+                maxLength={30}
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                placeholder="z. B. 0711 1234567"
+              />
+            </div>
+
+            {/* Honeypot */}
+            <input
+              type="text"
+              name="website"
+              tabIndex={-1}
+              autoComplete="off"
+              value={honeypot}
+              onChange={(e) => setHoneypot(e.target.value)}
+              style={{ position: 'absolute', left: '-9999px', opacity: 0 }}
+              aria-hidden="true"
+            />
+
+            <p className="text-xs text-primary/60">
+              Mit Absenden bestätigen Sie, dass Katharis Ihre Angaben (Name, Telefonnummer) zur
+              Bearbeitung Ihrer Rückruf-Anfrage verarbeiten darf. Speicherdauer 6 Monate. Mehr in der{' '}
+              <a href="/datenschutz/" className="underline">
+                Datenschutzerklärung
+              </a>
+              .
+            </p>
+
+            {error && (
+              <p className="text-sm text-red-600" role="alert">
+                {error}
+              </p>
+            )}
+
+            <button
+              type="submit"
+              disabled={submitting}
+              className="w-full py-3 bg-accent-dark text-white font-bold rounded-full hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {submitting ? 'Wird gesendet…' : 'Rückruf anfordern'}
+            </button>
+
+            <p className="text-xs text-primary/50 text-center mt-2">
+              Hinweis: Form-Backend wird in Etappe 6.5a (Supabase + Resend) aktiviert. Aktuell Mock-Submit.
+            </p>
+          </form>
+        )}
+      </div>
+    </div>
+  );
+}

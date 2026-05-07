@@ -31,3 +31,8 @@ pnpm-debug.log*
 
 # Build-Artefakte
 *.tsbuildinfo
+
+# GitHub-Workflows brauchen "workflow"-Token-Scope zum Pushen.
+# Aktueller Token hat nur "repo"-Scope. Workflows lokal entwickelt,
+# Daniel muss sie via Web-UI-Upload oder mit aktualisiertem Token-Scope adden.
+.github/workflows/

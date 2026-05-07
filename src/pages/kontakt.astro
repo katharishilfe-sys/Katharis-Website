@@ -1,17 +1,18 @@
 ---
 import PageLayout from '@layouts/PageLayout.astro';
 import { kontakt } from '@data/content';
+import RueckrufButton from '@components/RueckrufButton';
 ---
 
 <PageLayout
-  title="Kontakt Katharis Stuttgart - Kostenloses Erstgespraech"
-  description="Telefon 07031 6953604 oder Rueckruf-Form. Kostenloses Erstgespraech zu Pflegekassen-Entlastung in Stuttgart und LK Boeblingen. Mo-Sa 8-20 Uhr."
+  title="Kontakt Katharis Stuttgart - Kostenloses Erstgespräch"
+  description="Telefon 07031 6953604 oder Rückruf-Form. Kostenloses Erstgespräch zu Pflegekassen-Entlastung in Stuttgart und LK Böblingen. Mo-Sa 8-20 Uhr."
 >
   <section class="py-16 max-w-4xl mx-auto px-4">
     <h1 class="text-4xl font-bold text-primary">Sprechen Sie uns an</h1>
     <p class="mt-4 text-lg text-primary/80">
-      Im kostenlosen Erstgespraech am Telefon klaeren wir Ihre Situation, Pflegekassen-Optionen
-      und naechste Schritte.
+      Im kostenlosen Erstgespräch am Telefon klären wir Ihre Situation, Pflegekassen-Optionen
+      und nächste Schritte.
     </p>
 
     <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -22,18 +23,21 @@ import { kontakt } from '@data/content';
         </p>
         <p class="mt-2 text-primary/70">{kontakt.oeffnungszeiten}</p>
         <p class="mt-4 text-sm text-primary/70">
-          Anrufe werden direkt von Daniel oder Kemal entgegengenommen. Ausserhalb der Geschaeftszeiten
-          sprechen Sie auf den Anrufbeantworter, wir rufen binnen 24 Stunden zurueck.
+          Anrufe werden direkt von Daniel oder Kemal entgegengenommen. Außerhalb der Geschäftszeiten
+          sprechen Sie auf den Anrufbeantworter, wir rufen binnen 24 Stunden zurück.
         </p>
       </div>
 
       <div class="bg-white p-6 rounded-xl">
-        <h2 class="text-xl font-bold text-primary">Rueckruf anfordern</h2>
+        <h2 class="text-xl font-bold text-primary">Rückruf anfordern</h2>
         <p class="mt-2 text-primary/70">
-          Wir rufen Sie kostenlos zurueck. (Form-Komponente in Etappe 5/6.5a aktiviert.)
+          Geben Sie uns Ihren Namen und eine Telefonnummer, wir rufen kostenlos zurück.
         </p>
-        <p class="mt-4 text-sm text-primary/60">
-          Email: <a href={`mailto:${kontakt.email}`} class="underline">{kontakt.email}</a>
+        <div class="mt-6">
+          <RueckrufButton client:load variant="primary" sourceCta="rueckruf-kontakt-page" fullWidth={true} />
+        </div>
+        <p class="mt-4 text-xs text-primary/50">
+          Oder per Email: <a href={`mailto:${kontakt.email}`} class="underline">{kontakt.email}</a>
         </p>
       </div>
     </div>
@@ -44,14 +48,14 @@ import { kontakt } from '@data/content';
         {kontakt.adresse.operativeZentrale.strasse}, {kontakt.adresse.operativeZentrale.plz} {kontakt.adresse.operativeZentrale.ort}
       </p>
       <p class="mt-2 text-primary/80">
-        Einsatzgebiet: Stadt Stuttgart, Landkreis Boeblingen. Anerkannt nach Para 45a SGB XI fuer
+        Einsatzgebiet: Stadt Stuttgart, Landkreis Böblingen. Anerkannt nach Para 45a SGB XI für
         Direkt-Abrechnung mit der Pflegekasse.
       </p>
     </div>
 
     <div class="mt-6 bg-accent/10 p-4 rounded-xl text-sm text-primary/80">
-      <strong>Hinweis:</strong> Bei akuten Pflege-Notfaellen wenden Sie sich bitte an Ihren
-      Pflegestuetzpunkt oder im medizinischen Notfall an 112.
+      <strong>Hinweis:</strong> Bei akuten Pflege-Notfällen wenden Sie sich bitte an Ihren
+      Pflegestützpunkt oder im medizinischen Notfall an 112.
     </div>
   </section>
 </PageLayout>

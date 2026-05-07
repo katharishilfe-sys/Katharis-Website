@@ -1,0 +1,37 @@
+Assets, Umlaute, React-Islands, Drift-Check
+
+Block 1 - Assets aus main-Branch geholt:
+- katharis-logo.png + favicon-32 + favicon-512 + og-image.png
+- daniel.jpg + kemal.jpg (Initiator-Portraits)
+- 4 Projekt-Bilder (Vorher/Nachher)
+
+Block 2 - Umlaute fixen (~140 Replacements ueber 21 Files):
+- ae/oe/ue → ä/ö/ü in allen Source-Files
+- Header-Bug-Fix: /über-uns/ zurueck zu /ueber-uns/ (URLs ASCII-only)
+- Drei Replace-Runden, alle bekannten deutschen Woerter erfasst
+- Identifier (sekundaer, traeger, pflegekassenToepfe) bleiben absichtlich ascii
+
+Block 3 - React-Islands hinzugefuegt:
+- src/components/CallCTA.tsx mit GA4-Event call_initiated
+- src/components/StickyMobileBar.tsx (Mobile-Only Bottom-Bar nach Scroll >400px)
+- src/components/LeadFormModal.tsx (2-Feld-Form mit Honeypot, Mock-Submit)
+- src/components/RueckrufButton.tsx (Trigger fuer LeadFormModal-Event)
+- PageLayout.astro: StickyMobileBar + LeadFormModal als client:idle Islands
+- kontakt.astro: RueckrufButton in Form-Sektion
+
+Form-Backend Mock fuer jetzt; echtes Supabase + Resend in Etappe 6.5a.
+
+Block 4 - Drift-Check + npm scripts:
+- scripts/drift-check.sh (lokal aufrufbar via npm run drift-check)
+- package.json scripts: drift-check + check
+- Drift-Check lokal: OK
+
+Hinweis: GitHub-Actions-Workflows (.github/workflows/ci.yml + drift-check.yml)
+sind LOKAL angelegt aber nicht im Commit, weil Cloudflare-OAuth-Token nur
+"repo"-Scope hat (nicht "workflow"). Daniel muss sie via GitHub-Web-UI
+hochladen oder Token-Scope erweitern. Files liegen unter
+.github/workflows/ aber sind in .gitignore.
+
+Build: 16 pages in 3s
+
+Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>

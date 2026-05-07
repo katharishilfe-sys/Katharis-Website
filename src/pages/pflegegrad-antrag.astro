@@ -1,17 +1,17 @@
----
+﻿---
 import PageLayout from '@layouts/PageLayout.astro';
 import { hooks, kontakt } from '@data/content';
 import { generateHowToSchema } from '@lib/schema-org';
 
 const howToSchema = generateHowToSchema({
   name: 'Pflegegrad beantragen mit administrativer Hilfe',
-  description: 'Schritt-fuer-Schritt-Anleitung Pflegegrad-Antrag mit administrativer Hilfe von Katharis.',
+  description: 'Schritt-für-Schritt-Anleitung Pflegegrad-Antrag mit administrativer Hilfe von Katharis.',
   steps: [
     { name: 'Antrag stellen', text: 'Formloser Anruf bei der Pflegekasse reicht. Antragsdatum ist der Tag des Anrufs.' },
     { name: 'MD-Termin abwarten', text: 'Der Medizinische Dienst meldet sich innerhalb von ein bis vier Wochen.' },
     { name: 'Begutachtung vorbereiten', text: 'Pflegetagebuch, Hilfsmittel-Liste, Symptom-Doku - wir helfen Ihnen administrativ.' },
     { name: 'MD-Gutachten + Pflegekassen-Entscheidung', text: 'Entscheidung typisch in 5 bis 25 Wochen.' },
-    { name: 'Bei Bewilligung', text: 'Pflegegrad gilt rueckwirkend ab Antragsdatum. Leistungen koennen rueckwirkend erstattet werden.' },
+    { name: 'Bei Bewilligung', text: 'Pflegegrad gilt rückwirkend ab Antragsdatum. Leistungen können rückwirkend erstattet werden.' },
   ],
 });
 
@@ -20,13 +20,13 @@ const steps = [
   { num: 2, title: 'MD-Termin abwarten', body: 'Der Medizinische Dienst meldet sich innerhalb von ein bis vier Wochen mit einem Termin.' },
   { num: 3, title: 'Begutachtung vorbereiten', body: 'Pflegetagebuch, Hilfsmittel-Liste, Symptom-Dokumentation. Wir helfen Ihnen administrativ.' },
   { num: 4, title: 'MD-Gutachten + Bescheid', body: 'Wartezeit typisch 5 bis 25 Wochen ab Antrag.' },
-  { num: 5, title: 'Bei Bewilligung', body: 'Pflegegrad gilt rueckwirkend ab Antragsdatum. Leistungen rueckwirkend erstattbar.' },
+  { num: 5, title: 'Bei Bewilligung', body: 'Pflegegrad gilt rückwirkend ab Antragsdatum. Leistungen rückwirkend erstattbar.' },
 ];
 ---
 
 <PageLayout
   title="Pflegegrad-Antrag mit Profi-Hilfe Stuttgart | Katharis"
-  description="Wir helfen Ihnen administrativ beim Pflegegrad-Antrag. Formulare ausfuellen, Begutachtung vorbereiten, Botengang. Bei Bewilligung rueckwirkende Erstattung moeglich."
+  description="Wir helfen Ihnen administrativ beim Pflegegrad-Antrag. Formulare ausfüllen, Begutachtung vorbereiten, Botengang. Bei Bewilligung rückwirkende Erstattung möglich."
 >
   <script type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
 
@@ -37,13 +37,13 @@ const steps = [
       <p class="mt-2 text-sm text-primary/60">{hooks.geltungsbereich}</p>
       <div class="flex flex-col sm:flex-row gap-3 mt-8">
         <a href={`tel:${kontakt.telefonHref}`} class="px-6 py-3 rounded-full font-bold text-white bg-accent-dark hover:opacity-90">Jetzt anrufen</a>
-        <a href="/kontakt/" class="px-6 py-3 rounded-full font-bold text-primary border-2 border-primary hover:bg-primary hover:text-white transition-colors">Rueckruf anfordern</a>
+        <a href="/kontakt/" class="px-6 py-3 rounded-full font-bold text-primary border-2 border-primary hover:bg-primary hover:text-white transition-colors">Rückruf anfordern</a>
       </div>
     </div>
   </section>
 
   <section class="py-12 max-w-content mx-auto px-4">
-    <h2 class="text-2xl font-bold text-primary mb-6">Schritt-fuer-Schritt-Antrag</h2>
+    <h2 class="text-2xl font-bold text-primary mb-6">Schritt-für-Schritt-Antrag</h2>
     <ol class="space-y-6">
       {steps.map((step) => (
         <li class="flex gap-4">
@@ -60,20 +60,20 @@ const steps = [
   <section class="py-12 bg-white">
     <div class="max-w-content mx-auto px-4">
       <h2 class="text-2xl font-bold text-primary mb-4">Wie wir Ihnen helfen</h2>
-      <p class="font-bold text-primary mt-4">Was wir fuer Sie tun (administrative Antrags-Hilfe):</p>
+      <p class="font-bold text-primary mt-4">Was wir für Sie tun (administrative Antrags-Hilfe):</p>
       <ul class="mt-2 space-y-1 text-primary/80 list-disc list-inside">
-        <li>Wir helfen Ihnen beim Ausfuellen des Pflegekassen-Antragsformulars.</li>
+        <li>Wir helfen Ihnen beim Ausfüllen des Pflegekassen-Antragsformulars.</li>
         <li>Wir bereiten den MD-Begutachtungs-Termin mit Ihnen vor.</li>
-        <li>Bei schriftlicher Bevollmaechtigung uebernehmen wir den Botengang bei der Pflegekasse.</li>
+        <li>Bei schriftlicher Bevollmächtigung übernehmen wir den Botengang bei der Pflegekasse.</li>
       </ul>
       <p class="font-bold text-primary mt-4">Was wir nicht tun:</p>
       <ul class="mt-2 space-y-1 text-primary/80 list-disc list-inside">
-        <li>Wir geben keine Beratung zu Leistungs-Anspruechen oder Anspruchs-Hoehe (Para 7a SGB XI).</li>
-        <li>Wir begleiten keine Widersprueche gegen abgelehnte Bescheide (juristische Vertretung).</li>
+        <li>Wir geben keine Beratung zu Leistungs-Ansprüchen oder Anspruchs-Höhe (Para 7a SGB XI).</li>
+        <li>Wir begleiten keine Widersprüche gegen abgelehnte Bescheide (juristische Vertretung).</li>
       </ul>
       <p class="mt-4 text-sm text-primary/70">
-        <strong>Inhaltliche Pflegeberatung</strong> bekommen Sie kostenlos beim Pflegestuetzpunkt in Ihrem Stadtbezirk.
-        <strong>Bei Widerspruch</strong> vermitteln wir an Pflegestuetzpunkt oder Sozialrechts-Anwalt.
+        <strong>Inhaltliche Pflegeberatung</strong> bekommen Sie kostenlos beim Pflegestützpunkt in Ihrem Stadtbezirk.
+        <strong>Bei Widerspruch</strong> vermitteln wir an Pflegestützpunkt oder Sozialrechts-Anwalt.
       </p>
     </div>
   </section>

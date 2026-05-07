@@ -1,18 +1,18 @@
----
+﻿---
 import PageLayout from '@layouts/PageLayout.astro';
-import { hooks, pflegekassenToepfe, kontakt } from '@data/content';
+import { hooks, pflegekassenTöpfe, kontakt } from '@data/content';
 import { generateFAQPageSchema } from '@lib/schema-org';
 
 const faqs = [
   {
     question: 'Was ist der Unterschied zwischen Entlastungsbetrag und Gemeinsamem Jahresbetrag?',
     answer:
-      'Der Entlastungsbetrag (Para 45b, 131 Euro pro Monat) gilt fuer alle Pflegegrade 1 bis 5 und ist explizit fuer Entlastungsleistungen anerkannter Anbieter. Der Gemeinsame Jahresbetrag (Para 42a, bis 3.539 Euro pro Jahr) gilt nur ab Pflegegrad 2 und ist eigentlich fuer Verhinderungs- und Kurzzeitpflege, kann aber flexibel auch fuer Entlastungsleistungen eingesetzt werden.',
+      'Der Entlastungsbetrag (Para 45b, 131 Euro pro Monat) gilt für alle Pflegegrade 1 bis 5 und ist explizit für Entlastungsleistungen anerkannter Anbieter. Der Gemeinsame Jahresbetrag (Para 42a, bis 3.539 Euro pro Jahr) gilt nur ab Pflegegrad 2 und ist eigentlich für Verhinderungs- und Kurzzeitpflege, kann aber flexibel auch für Entlastungsleistungen eingesetzt werden.',
   },
   {
-    question: 'Wann verfaellt mein Entlastungsbetrag?',
+    question: 'Wann verfällt mein Entlastungsbetrag?',
     answer:
-      'Der Entlastungsbetrag eines Kalenderjahres kann ins Folgejahr uebertragen werden, verfaellt dann aber am 30. Juni des Folgejahres.',
+      'Der Entlastungsbetrag eines Kalenderjahres kann ins Folgejahr übertragen werden, verfällt dann aber am 30. Juni des Folgejahres.',
   },
 ];
 const faqSchema = generateFAQPageSchema(faqs);
@@ -20,13 +20,13 @@ const faqSchema = generateFAQPageSchema(faqs);
 
 <PageLayout
   title="Pflegekasse zahlt Entlastung - 131 EUR pro Monat 2026 | Katharis"
-  description="Wie Pflegekassen-Toepfe nach Para 45a/45b/42a/40 SGB XI Ihre Entlastungs-Kosten decken. Anerkannter Anbieter Stuttgart und LK Boeblingen. Aktuelle Beträge 2026."
+  description="Wie Pflegekassen-Töpfe nach Para 45a/45b/42a/40 SGB XI Ihre Entlastungs-Kosten decken. Anerkannter Anbieter Stuttgart und LK Böblingen. Aktuelle Beträge 2026."
 >
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 
   <section class="bg-background py-16">
     <div class="max-w-content mx-auto px-4">
-      <h1 class="text-4xl font-bold text-primary">Pflegekassen-Leistungen fuer Entlastung: Was Ihnen zusteht</h1>
+      <h1 class="text-4xl font-bold text-primary">Pflegekassen-Leistungen für Entlastung: Was Ihnen zusteht</h1>
       <p class="mt-4 text-lg text-primary/80">{hooks.master}</p>
       <p class="mt-2 text-sm text-primary/60">{hooks.geltungsbereich}</p>
     </div>
@@ -35,15 +35,15 @@ const faqSchema = generateFAQPageSchema(faqs);
   <section class="py-12 max-w-content mx-auto px-4">
     <p class="text-primary/80">
       <strong>Verfasser:</strong> Daniel Altenhof, Initiator und operativer Leiter Katharis. <strong>Stand:</strong> 2026-05-06.
-      Fachliche Pruefung gegen Gesetzestext und sechs Fachquellen verifiziert.
+      Fachliche Prüfung gegen Gesetzestext und sechs Fachquellen verifiziert.
     </p>
   </section>
 
   <section class="py-12 bg-white">
     <div class="max-w-content mx-auto px-4">
-      <h2 class="text-2xl font-bold text-primary mb-6">Welche Pflegekassen-Toepfe sind fuer Entlastung relevant?</h2>
+      <h2 class="text-2xl font-bold text-primary mb-6">Welche Pflegekassen-Töpfe sind für Entlastung relevant?</h2>
       <div class="space-y-4">
-        {pflegekassenToepfe.map((topf) => (
+        {pflegekassenTöpfe.map((topf) => (
           <details class="border border-primary/20 rounded-lg p-4 bg-background/30">
             <summary class="font-bold text-primary cursor-pointer">{topf.paragraph}: {topf.title} ({topf.betrag})</summary>
             <div class="mt-3 text-primary/80 text-sm">
@@ -59,20 +59,20 @@ const faqSchema = generateFAQPageSchema(faqs);
   <section class="py-12 max-w-content mx-auto px-4">
     <h2 class="text-2xl font-bold text-primary mb-4">Para 7a-Abgrenzung</h2>
     <p class="text-primary/80">
-      Wir helfen Ihnen administrativ beim Antrag und uebernehmen die operative Entlastungsleistung. Wir leisten
+      Wir helfen Ihnen administrativ beim Antrag und übernehmen die operative Entlastungsleistung. Wir leisten
       <strong>keine Pflegeberatung im Sinne von Paragraph 7a SGB XI</strong>. Das ist Aufgabe der
-      Pflegestuetzpunkte und qualifizierter Pflegeberater. Bei Beratungs-Bedarf vermitteln wir an Ihren
-      Pflegestuetzpunkt oder die Compass Pflegeberatung (kostenlos, Telefon 0800 101 88 00).
+      Pflegestützpunkte und qualifizierter Pflegeberater. Bei Beratungs-Bedarf vermitteln wir an Ihren
+      Pflegestützpunkt oder die Compass Pflegeberatung (kostenlos, Telefon 0800 101 88 00).
     </p>
   </section>
 
   <section class="py-16 bg-background text-center">
     <div class="max-w-2xl mx-auto px-4">
-      <h2 class="text-3xl font-bold text-primary">Kostenloses Erstgespraech</h2>
-      <p class="mt-4 text-primary/80">Wir klaeren mit Ihnen welche Toepfe fuer Ihre Situation in Frage kommen.</p>
+      <h2 class="text-3xl font-bold text-primary">Kostenloses Erstgespräch</h2>
+      <p class="mt-4 text-primary/80">Wir klären mit Ihnen welche Töpfe für Ihre Situation in Frage kommen.</p>
       <div class="flex flex-col sm:flex-row gap-3 mt-8 justify-center">
         <a href={`tel:${kontakt.telefonHref}`} class="px-6 py-3 rounded-full font-bold text-white bg-accent-dark hover:opacity-90">Jetzt anrufen</a>
-        <a href="/kontakt/" class="px-6 py-3 rounded-full font-bold text-primary border-2 border-primary hover:bg-primary hover:text-white transition-colors">Rueckruf anfordern</a>
+        <a href="/kontakt/" class="px-6 py-3 rounded-full font-bold text-primary border-2 border-primary hover:bg-primary hover:text-white transition-colors">Rückruf anfordern</a>
       </div>
     </div>
   </section>

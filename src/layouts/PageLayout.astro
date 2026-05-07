@@ -2,6 +2,8 @@
 import BaseLayout from './BaseLayout.astro';
 import Header from '@components/Header.astro';
 import Footer from '@components/Footer.astro';
+import StickyMobileBar from '@components/StickyMobileBar';
+import LeadFormModal from '@components/LeadFormModal';
 
 export interface Props {
   title: string;
@@ -9,15 +11,18 @@ export interface Props {
   canonical?: string;
   ogImage?: string;
   noindex?: boolean;
+  hideStickyBar?: boolean;
 }
 
-const props = Astro.props;
+const { hideStickyBar = false, ...baseProps } = Astro.props;
 ---
 
-<BaseLayout {...props}>
+<BaseLayout {...baseProps}>
   <Header />
   <main id="main" class="flex-1">
     <slot />
   </main>
   <Footer />
+  {!hideStickyBar && <StickyMobileBar client:idle />}
+  <LeadFormModal client:idle />
 </BaseLayout>

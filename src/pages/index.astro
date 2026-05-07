@@ -1,4 +1,4 @@
----
+﻿---
 import PageLayout from '@layouts/PageLayout.astro';
 import { hooks, services, trustIndikatoren, kontakt } from '@data/content';
 import { generateLocalBusinessSchema } from '@lib/schema-org';
@@ -7,8 +7,8 @@ const localBusinessSchema = generateLocalBusinessSchema();
 ---
 
 <PageLayout
-  title="Katharis - Pflegekassen-Entlastung Stuttgart und LK Boeblingen"
-  description="Spezialist fuer Entlastungsleistungen bei komplexen Pflegefaellen. Anerkannt nach Para 45a SGB XI. Bis zu 100 Prozent Kostenuebernahme moeglich. Diskret und wuerdevoll."
+  title="Katharis - Pflegekassen-Entlastung Stuttgart und LK Böblingen"
+  description="Spezialist für Entlastungsleistungen bei komplexen Pflegefällen. Anerkannt nach Para 45a SGB XI. Bis zu 100 Prozent Kostenübernahme möglich. Diskret und würdevoll."
 >
   <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
 
@@ -35,13 +35,13 @@ const localBusinessSchema = generateLocalBusinessSchema();
           href="/kontakt/"
           class="px-6 py-3 rounded-full font-bold text-primary border-2 border-primary hover:bg-primary hover:text-white transition-colors"
         >
-          Rueckruf anfordern
+          Rückruf anfordern
         </a>
       </div>
     </div>
   </section>
 
-  <!-- Drei Eingangs-Tueren -->
+  <!-- Drei Eingangs-Türen -->
   <section class="py-16">
     <div class="max-w-6xl mx-auto px-4">
       <h2 class="text-3xl font-bold text-primary text-center mb-12">Wie wir Ihnen helfen</h2>
@@ -52,7 +52,7 @@ const localBusinessSchema = generateLocalBusinessSchema();
         >
           <h3 class="text-xl font-bold text-primary">{services.messieHilfe.karteHeadline}</h3>
           <p class="mt-3 text-primary/80 text-sm">{services.messieHilfe.karteText}</p>
-          <p class="mt-4 text-accent-dark font-bold text-sm">Mehr ueber Messie-Hilfe &rarr;</p>
+          <p class="mt-4 text-accent-dark font-bold text-sm">Mehr über Messie-Hilfe &rarr;</p>
         </a>
         <a
           href={services.vorDemHeimumzug.slug}
@@ -60,7 +60,7 @@ const localBusinessSchema = generateLocalBusinessSchema();
         >
           <h3 class="text-xl font-bold text-primary">{services.vorDemHeimumzug.karteHeadline}</h3>
           <p class="mt-3 text-primary/80 text-sm">{services.vorDemHeimumzug.karteText}</p>
-          <p class="mt-4 text-accent-dark font-bold text-sm">Mehr ueber Heimumzug-Vollraeumung &rarr;</p>
+          <p class="mt-4 text-accent-dark font-bold text-sm">Mehr über Heimumzug-Vollräumung &rarr;</p>
         </a>
         <a
           href="/pflegegrad-antrag/"
@@ -68,7 +68,7 @@ const localBusinessSchema = generateLocalBusinessSchema();
         >
           <h3 class="text-xl font-bold text-primary">Noch kein Pflegegrad?</h3>
           <p class="mt-3 text-primary/80 text-sm">
-            Wir helfen Ihnen administrativ beim Antrag bei der Pflegekasse: Formulare ausfuellen,
+            Wir helfen Ihnen administrativ beim Antrag bei der Pflegekasse: Formulare ausfüllen,
             MD-Begutachtung vorbereiten, Botengang. Bei Bewilligung kann die Pflegekasse Ihre Kosten
             ab Antragsdatum erstatten.
           </p>
@@ -83,11 +83,11 @@ const localBusinessSchema = generateLocalBusinessSchema();
     <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
       <div>
         <p class="text-4xl font-bold text-accent-dark">&sect;45a</p>
-        <p class="mt-2 text-primary/80">Anerkannt nach Para 45a SGB XI fuer Stadt Stuttgart und Landkreis Boeblingen.</p>
+        <p class="mt-2 text-primary/80">Anerkannt nach Para 45a SGB XI für Stadt Stuttgart und Landkreis Böblingen.</p>
       </div>
       <div>
         <p class="text-4xl font-bold text-accent-dark">3 Mio &euro;</p>
-        <p class="mt-2 text-primary/80">Versichert fuer Sach- und Personenschaeden ohne Selbstbeteiligung.</p>
+        <p class="mt-2 text-primary/80">Versichert für Sach- und Personenschäden ohne Selbstbeteiligung.</p>
       </div>
       <div>
         <p class="text-4xl font-bold text-accent-dark">{trustIndikatoren.bilanzZahl}+</p>
@@ -99,10 +99,10 @@ const localBusinessSchema = generateLocalBusinessSchema();
   <!-- Final CTA -->
   <section class="py-16 bg-background">
     <div class="max-w-2xl mx-auto px-4 text-center">
-      <h2 class="text-3xl font-bold text-primary">Bereit fuer das erste Gespraech?</h2>
+      <h2 class="text-3xl font-bold text-primary">Bereit für das erste Gespräch?</h2>
       <p class="mt-4 text-primary/80">
-        Erzaehlen Sie uns kurz Ihre Situation. Im kostenlosen Erstgespraech klaeren wir gemeinsam,
-        welche Pflegekassen-Optionen fuer Sie in Frage kommen und wann wir kommen koennen.
+        Erzählen Sie uns kurz Ihre Situation. Im kostenlosen Erstgespräch klären wir gemeinsam,
+        welche Pflegekassen-Optionen für Sie in Frage kommen und wann wir kommen können.
       </p>
       <div class="flex flex-col sm:flex-row gap-3 mt-8 justify-center">
         <a
@@ -115,7 +115,7 @@ const localBusinessSchema = generateLocalBusinessSchema();
           href="/kontakt/"
           class="px-6 py-3 rounded-full font-bold text-primary border-2 border-primary hover:bg-primary hover:text-white transition-colors"
         >
-          Rueckruf anfordern
+          Rückruf anfordern
         </a>
       </div>
     </div>

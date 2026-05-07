@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Schema.org JSON-LD-Generatoren (Master v2.0 Etappe 7 Aufgabe 6)
  */
 
@@ -62,7 +62,7 @@ export function generateServiceSchema(opts: {
     '@context': 'https://schema.org',
     '@type': 'Service',
     name: opts.serviceName,
-    serviceType: 'Entlastungsleistungen fuer Pflegebeduerftige',
+    serviceType: 'Entlastungsleistungen für Pflegebedürftige',
     description: opts.serviceDescription,
     url: opts.serviceUrl,
     provider: {

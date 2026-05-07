@@ -1,8 +1,8 @@
-# Katharis Website v2.0
+﻿# Katharis Website v2.0
 
 Greenfield-Build auf Astro 5 + Tailwind 4 + React-Islands + Supabase EU-Frankfurt + Cloudflare Pages.
 
-**Marken-Identitaet:** Katharis ist Spezialist fuer Entlastungsleistungen fuer Pflegebeduerftige in Stadt Stuttgart und Landkreis Boeblingen. Anerkannt nach Para 45a SGB XI.
+**Marken-Identitaet:** Katharis ist Spezialist für Entlastungsleistungen für Pflegebedürftige in Stadt Stuttgart und Landkreis Böblingen. Anerkannt nach Para 45a SGB XI.
 
 **Strategie-Quelle:** `katharis-build/` (separates Build-Doku-Repo) mit Master v2.0, Workshop-Decisions, Etappe-3-Content, Anhang-A-BLOCKER-SOPs.
 
@@ -44,13 +44,13 @@ Output landet in `dist/`. Cloudflare Pages baut automatisch beim Push auf den Br
 ## Brand (Workshop Decisions Daniel 2026-05-07)
 
 - Logo: bestehendes katharis-logo + SVG-Vektor-Variante in Etappe 4
-- Farben: Primary `#1A3C34` + Accent-dark `#C97D2E` fuer CTA (WCAG-AA) + Background `#E8F1F2`
+- Farben: Primary `#1A3C34` + Accent-dark `#C97D2E` für CTA (WCAG-AA) + Background `#E8F1F2`
 - Typo: Atkinson Hyperlegible (BFSG + Senioren-Lesbarkeit)
 - Bildsprache: Illustrationen primaer, KEINE echten Einsatz-Fotos
 
 ## Drift-Schutz (Master Anhang B)
 
 - `.github/CODEOWNERS` schuetzt `src/data/content.ts` mit Maxim-Pflicht-Review
-- `scripts/drift-check.sh` prueft auf verbotene Phrasen vor Commit
+- `scripts/drift-check.sh` prüft auf verbotene Phrasen vor Commit
 - `.github/workflows/drift-check.yml` server-side bei jedem PR
 - `scripts/drift-audit.ts` monatlicher Cron auf Live-Site
