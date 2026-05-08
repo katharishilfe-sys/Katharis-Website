@@ -1,0 +1,41 @@
+ name: Drift Check (PR)
+
+  on:
+    pull_request:
+      branches: [main, astro-v2-greenfield]
+
+  jobs:
+    forbidden-phrases:
+      name: Forbidden Phrases in PR Diff
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v4
+          with:
+            fetch-depth: 0
+
+        - name: Check PR diff for forbidden phrases
+          run: |
+            set -euo pipefail
+            PHRASES=(
+              "garantiert"
+              "100%-Garantie"
+              "niemand erfährt"
+              "First-Class"
+              "Best-in-Class"
+              "Premium"
+              "Wir prüfen Ihre Ansprüche"
+              "Anspruchsprüfung"
+              "Sperrmüll"
+            )
+            BASE_SHA="${{ github.event.pull_request.base.sha }}"
+            DIFF_FILES=$(git diff --name-only "$BASE_SHA"...HEAD | grep -E '\.(tsx?|md|astro)$' || true)
+            [ -z "$DIFF_FILES" ] && exit 0
+            FAIL=0
+            for phrase in "${PHRASES[@]}"; do
+              if echo "$DIFF_FILES" | xargs grep -l "$phrase" 2>/dev/null; then
+                echo "FAIL: Verbotene Phrase '$phrase' in PR-Diff gefunden"
+                FAIL=1
+              fi
+            done
+            exit $FAIL
