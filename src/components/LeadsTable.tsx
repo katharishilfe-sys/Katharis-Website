@@ -72,6 +72,24 @@ export default function LeadsTable() {
     }
   }
 
+  async function updateLeadStatus(id: string, status: string) {
+    const stored = typeof localStorage !== 'undefined' ? localStorage.getItem('katharis_admin_token') : null;
+    const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+    if (stored) headers['Authorization'] = `Bearer ${stored}`;
+
+    setLeads((prev) => prev.map((l) => (l.id === id ? { ...l, status } : l)));
+
+    const res = await fetch(`/api/leads/${id}`, {
+      method: 'PATCH',
+      headers,
+      body: JSON.stringify({ status }),
+    });
+    if (!res.ok) {
+      alert('Status-Update fehlgeschlagen, lade Liste neu');
+      void loadLeads();
+    }
+  }
+
   async function cleanupTestData() {
     if (!confirm('Alle Lead-Zeilen mit Namen TEST/WAIT-TEST/FINAL-TEST/etc. unwiderruflich loeschen?')) return;
     const stored = typeof localStorage !== 'undefined' ? localStorage.getItem('katharis_admin_token') : null;
@@ -147,13 +165,21 @@ export default function LeadsTable() {
               <td className="px-3 py-2 text-primary/70">{lead.source_cta}</td>
               <td className="px-3 py-2 text-primary/70 font-mono text-xs">{lead.source_page}</td>
               <td className="px-3 py-2">
-                <span
-                  className={`text-xs px-2 py-1 rounded-full font-bold ${
+                <select
+                  value={lead.status}
+                  onChange={(e) => updateLeadStatus(lead.id, e.target.value)}
+                  className={`text-xs px-2 py-1 rounded-full font-bold border-0 cursor-pointer ${
                     STATUS_COLORS[lead.status] || 'bg-gray-100 text-gray-700'
                   }`}
+                  aria-label={`Status fuer ${lead.name}`}
                 >
-                  {lead.status}
-                </span>
+                  <option value="neu">neu</option>
+                  <option value="angerufen">angerufen</option>
+                  <option value="termin">termin</option>
+                  <option value="auftrag">auftrag</option>
+                  <option value="abgeschlossen">abgeschlossen</option>
+                  <option value="abgesagt">abgesagt</option>
+                </select>
               </td>
               <td className="px-3 py-2 text-xs text-primary/80 font-mono">
                 {lead.gclid && <div title={lead.gclid}>gclid: {lead.gclid.slice(0, 8)}…</div>}
