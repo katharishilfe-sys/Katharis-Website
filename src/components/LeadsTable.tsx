@@ -112,7 +112,7 @@ export default function LeadsTable() {
               <td className="px-3 py-2 text-xs text-primary/50 font-mono">
                 {lead.gclid && <div title={lead.gclid}>gclid: {lead.gclid.slice(0, 8)}…</div>}
                 {lead.wbraid && <div title={lead.wbraid}>wbraid: {lead.wbraid.slice(0, 8)}…</div>}
-                {!lead.gclid && !lead.wbraid && <span>—</span>}
+                {!lead.gclid && !lead.wbraid && <span>-</span>}
               </td>
             </tr>
           ))}
