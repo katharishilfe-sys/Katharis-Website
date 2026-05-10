@@ -1,0 +1,31 @@
+name: Pre-Launch QA
+
+on:
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: "Base URL to test against (default https://katharis-v2.pages.dev)"
+        required: false
+        default: "https://katharis-v2.pages.dev"
+
+jobs:
+  qa:
+    name: Pre-Launch QA Self-Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Pre-Launch QA
+        env:
+          BASE_URL: ${{ github.event.inputs.base_url }}
+        run: npx tsx scripts/pre-launch-qa.ts
