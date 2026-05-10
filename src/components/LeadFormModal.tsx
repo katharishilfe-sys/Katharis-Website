@@ -38,10 +38,28 @@ export default function LeadFormModal() {
     setError('');
 
     try {
-      // TODO Etappe 6.5a: echter POST /api/lead an Supabase + Resend
-      // Aktuell Mock-Submit fuer UX-Test
-      await new Promise((resolve) => setTimeout(resolve, 800));
-      console.info('[Mock-Lead-Submit]', { name, phone, sourceCta, source_page: window.location.pathname });
+      const gclid = readCookie('__gclid');
+      const wbraid = readCookie('__wbraid');
+
+      const res = await fetch('/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name,
+          phone,
+          source_cta: sourceCta,
+          source_page: window.location.pathname,
+          gclid,
+          wbraid,
+          honeypot,
+        }),
+      });
+
+      const data = (await res.json().catch(() => ({}))) as { success?: boolean; error?: string };
+
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || 'Anfrage konnte nicht gesendet werden.');
+      }
 
       setSuccess(true);
       setName('');
@@ -60,6 +78,12 @@ export default function LeadFormModal() {
       setSubmitting(false);
     }
   };
+
+  function readCookie(name: string): string | undefined {
+    if (typeof document === 'undefined') return undefined;
+    const match = document.cookie.match(new RegExp('(^|; )' + name + '=([^;]*)'));
+    return match ? decodeURIComponent(match[2]) : undefined;
+  }
 
   if (!open) return null;
 
@@ -173,9 +197,6 @@ export default function LeadFormModal() {
               {submitting ? 'Wird gesendet…' : 'Rückruf anfordern'}
             </button>
 
-            <p className="text-xs text-primary/50 text-center mt-2">
-              Hinweis: Form-Backend wird in Etappe 6.5a (Supabase + Resend) aktiviert. Aktuell Mock-Submit.
-            </p>
           </form>
         )}
       </div>
