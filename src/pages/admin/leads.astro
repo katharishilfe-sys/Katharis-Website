@@ -1,0 +1,65 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import LeadsTable from '@components/LeadsTable.tsx';
+
+/**
+ * Lead-Inbox fuer Daniel + Kemal.
+ *
+ * SCHUTZ:
+ *   - noindex,nofollow
+ *   - Cloudflare Access OBLIGATORISCH vor Live-Gang ueber /admin/*
+ *   - Read-Only v1.0 (Status-Update via Supabase-Studio direkt)
+ *
+ * Datenfluss: Site-Form -> POST /api/lead -> Supabase leads-Tabelle ->
+ *             GET /api/leads (service-role) -> diese Tabelle.
+ */
+---
+
+<BaseLayout
+  title="Lead-Inbox | Katharis Intern"
+  description="Eingehende Anfragen aus dem Site-Form."
+  noindex={true}
+>
+  <main id="main" class="bg-background min-h-screen py-12">
+    <div class="max-w-7xl mx-auto px-4">
+      <header class="mb-8 border-b border-primary/20 pb-6">
+        <p class="text-xs uppercase tracking-widest text-primary/60">Intern - nicht öffentlich</p>
+        <h1 class="text-3xl font-bold text-primary mt-2">Lead-Inbox</h1>
+        <p class="mt-3 text-primary/80">
+          Alle Form-Submits aus katharis-v2.pages.dev. Sortiert nach Datum (neueste zuerst).
+          Status-Updates derzeit direkt im Supabase-Studio (Tabellen-Editor).
+        </p>
+        <div class="mt-4 flex gap-3 flex-wrap">
+          <a
+            href="/admin/"
+            class="text-sm px-3 py-1.5 bg-white border border-primary/20 rounded-full text-primary hover:bg-primary/5"
+          >
+            ← Operations-Dashboard
+          </a>
+          <a
+            href="https://supabase.com/dashboard"
+            class="text-sm px-3 py-1.5 bg-white border border-primary/20 rounded-full text-primary hover:bg-primary/5"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Supabase-Studio öffnen
+          </a>
+        </div>
+      </header>
+
+      <LeadsTable client:load />
+
+      <section class="mt-10 p-5 bg-white rounded-lg border border-primary/15 text-sm text-primary/80">
+        <h2 class="font-bold text-primary mb-2">Status-Workflow</h2>
+        <ul class="space-y-1">
+          <li><strong>neu:</strong> Eingegangen, noch nicht bearbeitet.</li>
+          <li><strong>angerufen:</strong> Erstkontakt versucht oder erfolgt.</li>
+          <li><strong>termin:</strong> Vor-Ort-Termin vereinbart.</li>
+          <li><strong>auftrag:</strong> Auftrag erteilt, in Bearbeitung.</li>
+          <li><strong>abgeschlossen:</strong> Auftrag erfolgreich abgeschlossen.</li>
+          <li><strong>abgesagt:</strong> Lead wurde abgesagt oder hat sich nicht mehr gemeldet.</li>
+        </ul>
+      </section>
+    </div>
+  </main>
+</BaseLayout>
