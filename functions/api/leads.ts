@@ -1,6 +1,7 @@
 interface Env {
   PUBLIC_SUPABASE_URL: string;
   SUPABASE_SERVICE_ROLE_KEY: string;
+  ADMIN_LEADS_TOKEN?: string;
 }
 
 interface PagesContext {
@@ -16,7 +17,18 @@ function jsonError(message: string, status: number): Response {
 }
 
 export const onRequestGet = async (context: PagesContext): Promise<Response> => {
-  const { env } = context;
+  const { env, request } = context;
+
+  if (env.ADMIN_LEADS_TOKEN) {
+    const authHeader = request.headers.get('Authorization') || '';
+    const expected = `Bearer ${env.ADMIN_LEADS_TOKEN}`;
+    if (authHeader !== expected) {
+      return new Response(JSON.stringify({ success: false, error: 'Unauthorized' }), {
+        status: 401,
+        headers: { 'Content-Type': 'application/json', 'WWW-Authenticate': 'Bearer' },
+      });
+    }
+  }
 
   const supabaseUrl = env.PUBLIC_SUPABASE_URL;
   const serviceRoleKey = env.SUPABASE_SERVICE_ROLE_KEY;

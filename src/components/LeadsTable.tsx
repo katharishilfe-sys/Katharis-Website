@@ -39,17 +39,54 @@ export default function LeadsTable() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch('/api/leads')
-      .then(async (res) => {
-        const data = (await res.json()) as { success: boolean; data?: Lead[]; error?: string };
-        if (!res.ok || !data.success) {
-          throw new Error(data.error || 'Anfrage fehlgeschlagen');
-        }
-        setLeads(data.data || []);
-      })
-      .catch((err) => setError((err as Error).message))
-      .finally(() => setLoading(false));
+    void loadLeads();
   }, []);
+
+  async function loadLeads(retry = false) {
+    setLoading(true);
+    setError(null);
+    try {
+      const headers: Record<string, string> = {};
+      const stored = typeof localStorage !== 'undefined' ? localStorage.getItem('katharis_admin_token') : null;
+      if (stored) headers['Authorization'] = `Bearer ${stored}`;
+
+      const res = await fetch('/api/leads', { headers });
+      if (res.status === 401) {
+        if (typeof localStorage !== 'undefined') localStorage.removeItem('katharis_admin_token');
+        const token = typeof window !== 'undefined' ? window.prompt('Admin-Token erforderlich:') : null;
+        if (token) {
+          localStorage.setItem('katharis_admin_token', token);
+          if (!retry) return loadLeads(true);
+        }
+        throw new Error('Authentifizierung erforderlich');
+      }
+      const data = (await res.json()) as { success: boolean; data?: Lead[]; error?: string };
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || 'Anfrage fehlgeschlagen');
+      }
+      setLeads(data.data || []);
+    } catch (err) {
+      setError((err as Error).message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function cleanupTestData() {
+    if (!confirm('Alle Lead-Zeilen mit Namen TEST/WAIT-TEST/FINAL-TEST/etc. unwiderruflich loeschen?')) return;
+    const stored = typeof localStorage !== 'undefined' ? localStorage.getItem('katharis_admin_token') : null;
+    const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+    if (stored) headers['Authorization'] = `Bearer ${stored}`;
+
+    const res = await fetch('/api/leads/cleanup-test-data', { method: 'POST', headers });
+    const data = (await res.json().catch(() => ({}))) as { success?: boolean; deleted?: number; error?: string };
+    if (!res.ok || !data.success) {
+      alert('Cleanup fehlgeschlagen: ' + (data.error || 'unbekannt'));
+      return;
+    }
+    alert(`${data.deleted ?? 0} Test-Zeilen geloescht.`);
+    void loadLeads();
+  }
 
   if (loading) {
     return <p className="text-primary/80">Leads werden geladen…</p>;
@@ -73,6 +110,15 @@ export default function LeadsTable() {
   }
 
   return (
+    <div className="space-y-3">
+      <div className="flex justify-end">
+        <button
+          onClick={cleanupTestData}
+          className="text-xs px-3 py-1.5 bg-white border border-primary/20 rounded-full text-primary/80 hover:bg-primary/5"
+        >
+          Test-Daten loeschen
+        </button>
+      </div>
     <div className="overflow-x-auto bg-white rounded-lg border border-primary/15 shadow-sm">
       <table className="w-full text-sm">
         <thead className="bg-primary/5 text-left">
@@ -118,6 +164,7 @@ export default function LeadsTable() {
           ))}
         </tbody>
       </table>
+    </div>
     </div>
   );
 }
