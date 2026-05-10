@@ -118,6 +118,13 @@ const RULES: Rule[] = [
     scopes: ['src'],
   },
   {
+    name: 'BFSG-Kontrast-Verstoss',
+    description: 'WCAG 2.1 AA Normal-Text braucht 4.5:1. text-primary/50 (3.0:1) und text-primary/60 (3.6:1) auf hellem Background failen. Statt /50 und /60 immer /70 oder hoeher verwenden.',
+    patterns: [/\btext-primary\/(50|60)\b/, /\btext-primary\/(50|60)\s/],
+    severity: 'fail',
+    scopes: ['src'],
+  },
+  {
     name: 'ASCII-Umlaut-Vermeidung in user-facing Texten',
     description: 'Master-Regel: echte Umlaute auf user-facing Pages. Haeufige Tippmuster wie "koennen", "moeglich", "fuer", "Massnahme" etc. ersetzen durch echte Umlaute. Nur in src/pages/ relevant.',
     patterns: [

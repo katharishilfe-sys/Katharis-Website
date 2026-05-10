@@ -113,7 +113,7 @@ export default function LeadFormModal() {
               Danke für Ihre Anfrage!
             </h2>
             <p className="mt-3 text-primary/80">Wir melden uns innerhalb von 24 Stunden bei Ihnen.</p>
-            <p className="text-sm mt-3 text-primary/60">
+            <p className="text-sm mt-3 text-primary/80">
               Bei akuter Eile rufen Sie uns gerne direkt an: 07031/6953604
             </p>
             <button
@@ -174,7 +174,7 @@ export default function LeadFormModal() {
               aria-hidden="true"
             />
 
-            <p className="text-xs text-primary/60">
+            <p className="text-xs text-primary/80">
               Mit Absenden bestätigen Sie, dass Katharis Ihre Angaben (Name, Telefonnummer) zur
               Bearbeitung Ihrer Rückruf-Anfrage verarbeiten darf. Speicherdauer 6 Monate. Mehr in der{' '}
               <a href="/datenschutz/" className="underline">

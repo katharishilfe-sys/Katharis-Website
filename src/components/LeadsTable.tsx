@@ -52,7 +52,7 @@ export default function LeadsTable() {
   }, []);
 
   if (loading) {
-    return <p className="text-primary/60">Leads werden geladen…</p>;
+    return <p className="text-primary/80">Leads werden geladen…</p>;
   }
 
   if (error) {
@@ -109,7 +109,7 @@ export default function LeadsTable() {
                   {lead.status}
                 </span>
               </td>
-              <td className="px-3 py-2 text-xs text-primary/50 font-mono">
+              <td className="px-3 py-2 text-xs text-primary/80 font-mono">
                 {lead.gclid && <div title={lead.gclid}>gclid: {lead.gclid.slice(0, 8)}…</div>}
                 {lead.wbraid && <div title={lead.wbraid}>wbraid: {lead.wbraid.slice(0, 8)}…</div>}
                 {!lead.gclid && !lead.wbraid && <span>-</span>}
