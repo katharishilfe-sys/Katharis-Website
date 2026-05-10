@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Phone, MessageSquare } from 'lucide-react';
+import { pushEvent, getCurrentPage } from '@lib/tracking';
 
 const DEFAULT_HREF = '07031-6953604';
 
@@ -13,13 +14,7 @@ export default function StickyMobileBar() {
   }, []);
 
   const handleCall = () => {
-    if (typeof window !== 'undefined' && (window as unknown as { dataLayer?: unknown[] }).dataLayer) {
-      (window as unknown as { dataLayer: unknown[] }).dataLayer.push({
-        event: 'call_initiated',
-        source_page: window.location.pathname,
-        source_cta: 'anruf-sticky',
-      });
-    }
+    pushEvent({ event: 'call_initiated', source_cta: 'anruf-sticky', source_page: getCurrentPage() });
   };
 
   const handleRueckruf = () => {

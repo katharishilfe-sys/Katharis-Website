@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Phone } from 'lucide-react';
+import { pushEvent, getCurrentPage } from '@lib/tracking';
 
 interface Props {
   variant?: 'primary' | 'secondary';
@@ -23,13 +24,7 @@ export default function CallCTA({ variant = 'primary', fullWidth = false, label 
   }, []);
 
   const handleClick = () => {
-    if (typeof window !== 'undefined' && (window as unknown as { dataLayer?: unknown[] }).dataLayer) {
-      (window as unknown as { dataLayer: unknown[] }).dataLayer.push({
-        event: 'call_initiated',
-        source_page: window.location.pathname,
-        source_cta: 'anruf',
-      });
-    }
+    pushEvent({ event: 'call_initiated', source_cta: 'anruf', source_page: getCurrentPage() });
   };
 
   const baseClasses = 'inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-bold transition-opacity hover:opacity-90';

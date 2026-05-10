@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { X } from 'lucide-react';
+import { pushEvent, getCurrentPage } from '@lib/tracking';
 
 export default function LeadFormModal() {
   const [open, setOpen] = useState(false);
@@ -65,13 +66,7 @@ export default function LeadFormModal() {
       setName('');
       setPhone('');
 
-      if (typeof window !== 'undefined' && (window as unknown as { dataLayer?: unknown[] }).dataLayer) {
-        (window as unknown as { dataLayer: unknown[] }).dataLayer.push({
-          event: 'form_submit_success',
-          source_cta: sourceCta,
-          source_page: window.location.pathname,
-        });
-      }
+      pushEvent({ event: 'form_submit_success', source_cta: sourceCta, source_page: getCurrentPage() });
     } catch (err) {
       setError((err as Error).message || 'Unbekannter Fehler');
     } finally {
