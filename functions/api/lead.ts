@@ -69,8 +69,12 @@ export const onRequestPost = async (context: PagesContext): Promise<Response> =>
   const serviceRoleKey = env.SUPABASE_SERVICE_ROLE_KEY;
 
   if (!supabaseUrl || !serviceRoleKey) {
-    console.error('Supabase-Env-Variables fehlen');
-    return jsonError('Backend nicht konfiguriert', 500);
+    const missing: string[] = [];
+    if (!supabaseUrl) missing.push('PUBLIC_SUPABASE_URL');
+    if (!serviceRoleKey) missing.push('SUPABASE_SERVICE_ROLE_KEY');
+    const allKeys = Object.keys(env as Record<string, unknown>).sort().join(',');
+    console.error('Supabase-Env-Variables fehlen:', missing.join(','), 'available:', allKeys);
+    return jsonError(`Env-Vars fehlen: ${missing.join(',')} | available: ${allKeys}`, 500);
   }
 
   const insertRes = await fetch(`${supabaseUrl}/rest/v1/leads`, {
