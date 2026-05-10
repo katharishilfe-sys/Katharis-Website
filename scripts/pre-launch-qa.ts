@@ -171,6 +171,41 @@ async function testContentSamples() {
   }
 }
 
+async function testJsonLdSchemas() {
+  console.log(`\n[5/5] Schema.org JSON-LD-Validitaet auf 7 Pages...`);
+  const pagesToCheck = [
+    '/',
+    '/service/messie-hilfe/',
+    '/service/vor-dem-heimumzug/',
+    '/pflegekasse/',
+    '/pflegegrad-antrag/',
+    '/ueber-uns/',
+    '/ratgeber/messie-syndrom/',
+  ];
+  for (const path of pagesToCheck) {
+    const { status, text } = await fetchText(`${BASE_URL}${path}`);
+    if (status !== 200) {
+      fail(`schema ${path}`, `page returned ${status}`);
+      continue;
+    }
+    const matches = [...text.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)];
+    if (matches.length === 0) {
+      fail(`schema ${path}`, 'kein JSON-LD-Block gefunden');
+      continue;
+    }
+    let allParsed = true;
+    for (let i = 0; i < matches.length; i++) {
+      try {
+        JSON.parse(matches[i][1]);
+      } catch (e) {
+        fail(`schema ${path} block#${i + 1}`, `JSON-Parse-Fehler: ${(e as Error).message}`);
+        allParsed = false;
+      }
+    }
+    if (allParsed) pass(`schema ${path} (${matches.length} blocks)`);
+  }
+}
+
 async function main() {
   console.log(`Pre-Launch-QA gegen ${BASE_URL}\n${'='.repeat(60)}`);
 
@@ -178,6 +213,7 @@ async function main() {
   await testRobots();
   await testRedirects();
   await testContentSamples();
+  await testJsonLdSchemas();
 
   const passed = results.filter((r) => r.status === 'pass').length;
   const failed = results.filter((r) => r.status === 'fail');
