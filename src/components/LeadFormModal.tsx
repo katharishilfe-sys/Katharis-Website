@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { X } from 'lucide-react';
 import { pushEvent, getCurrentPage } from '@lib/tracking';
 
@@ -11,6 +11,8 @@ export default function LeadFormModal() {
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
+  const nameInputRef = useRef<HTMLInputElement | null>(null);
+  const closeButtonRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
     const onOpen = (e: Event) => {
@@ -23,6 +25,18 @@ export default function LeadFormModal() {
     document.addEventListener('open-lead-form-modal', onOpen);
     return () => document.removeEventListener('open-lead-form-modal', onOpen);
   }, []);
+
+  // Scroll-Lock + Auto-Focus beim Oeffnen
+  useEffect(() => {
+    if (!open) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const focusTarget = success ? closeButtonRef.current : nameInputRef.current;
+    focusTarget?.focus();
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [open, success]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -68,7 +82,14 @@ export default function LeadFormModal() {
 
       pushEvent({ event: 'form_submit_success', source_cta: sourceCta, source_page: getCurrentPage() });
     } catch (err) {
-      setError((err as Error).message || 'Unbekannter Fehler');
+      const message = (err as Error).message || 'Unbekannter Fehler';
+      setError(message);
+      pushEvent({
+        event: 'form_submit_error',
+        source_cta: sourceCta,
+        source_page: getCurrentPage(),
+        error: message,
+      });
     } finally {
       setSubmitting(false);
     }
@@ -95,6 +116,7 @@ export default function LeadFormModal() {
         onClick={(e) => e.stopPropagation()}
       >
         <button
+          ref={closeButtonRef}
           onClick={() => setOpen(false)}
           className="absolute top-3 right-3 text-gray-500 hover:text-gray-900"
           aria-label="Schließen"
@@ -130,6 +152,7 @@ export default function LeadFormModal() {
                 Name <span aria-label="Pflichtfeld">*</span>
               </label>
               <input
+                ref={nameInputRef}
                 id="lead-name"
                 type="text"
                 required
