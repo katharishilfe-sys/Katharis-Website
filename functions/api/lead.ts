@@ -61,6 +61,14 @@ export const onRequestPost = async (context: PagesContext): Promise<Response> =>
     return jsonError('source_cta ungültig', 400);
   }
 
+  // DB-Constraint erlaubt nur ('anruf','rueckruf') als source_cta.
+  // Detail-Variante (z.B. "rueckruf-pflegekasse-final") wird in source_page kodiert.
+  const sourceCtaBase = source_cta.startsWith('rueckruf') ? 'rueckruf' : 'anruf';
+  const sourceCtaDetail = source_cta !== sourceCtaBase ? source_cta : null;
+  const sourcePageWithCta = sourceCtaDetail
+    ? `${source_page}#cta=${sourceCtaDetail}`
+    : source_page;
+
   if (source_page.length < 1 || source_page.length > 200) {
     return jsonError('source_page-Länge ungültig', 400);
   }
@@ -84,8 +92,8 @@ export const onRequestPost = async (context: PagesContext): Promise<Response> =>
     body: JSON.stringify({
       name,
       phone,
-      source_cta,
-      source_page,
+      source_cta: sourceCtaBase,
+      source_page: sourcePageWithCta,
       gclid: gclid || null,
       wbraid: wbraid || null,
     }),
@@ -94,10 +102,7 @@ export const onRequestPost = async (context: PagesContext): Promise<Response> =>
   if (!insertRes.ok) {
     const errText = await insertRes.text();
     console.error('Supabase-Insert-Fehler:', insertRes.status, errText);
-    return new Response(
-      JSON.stringify({ success: false, error: 'Speichern fehlgeschlagen', detail: errText.slice(0, 300), status: insertRes.status }),
-      { status: 500, headers: { 'Content-Type': 'application/json' } },
-    );
+    return jsonError('Speichern fehlgeschlagen', 500);
   }
 
   if (env.RESEND_API_KEY) {
