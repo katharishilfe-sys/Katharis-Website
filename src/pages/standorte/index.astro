@@ -1,0 +1,115 @@
+---
+import PageLayout from '@layouts/PageLayout.astro';
+import CallCTA from '@components/CallCTA';
+import RueckrufButton from '@components/RueckrufButton';
+import { hooks } from '@data/content';
+
+const standorte = [
+  {
+    slug: '/standorte/boeblingen/',
+    stadt: 'Böblingen',
+    badge: 'Operative Zentrale',
+    text: 'Operative Zentrale von Katharis. Anerkannt nach Para 45a SGB XI für den gesamten Landkreis Böblingen. Olgastraße 8, 71032 Böblingen.',
+  },
+  {
+    slug: '/standorte/stuttgart/',
+    stadt: 'Stuttgart',
+    badge: 'Para 45a anerkannt',
+    text: 'Para 45a SGB XI anerkannt für die Stadt Stuttgart. Wir kommen aus Böblingen in alle Stadtbezirke - Mitte, Bad Cannstatt, Vaihingen, Möhringen, Feuerbach.',
+  },
+  {
+    slug: '/standorte/sindelfingen/',
+    stadt: 'Sindelfingen',
+    badge: 'Landkreis Böblingen',
+    text: 'Sindelfingen liegt im Landkreis Böblingen und ist somit Teil unseres anerkannten Geltungsbereichs nach Para 45a SGB XI. Anfahrt 10 Minuten von Böblingen.',
+  },
+  {
+    slug: '/standorte/leonberg/',
+    stadt: 'Leonberg',
+    badge: 'Landkreis Böblingen',
+    text: 'Leonberg gehört zum Landkreis Böblingen. Para 45a SGB XI Direktabrechnung mit Pflegekasse möglich. Anfahrt 15 Minuten.',
+  },
+  {
+    slug: '/standorte/herrenberg/',
+    stadt: 'Herrenberg',
+    badge: 'Landkreis Böblingen',
+    text: 'Herrenberg im südlichen Landkreis Böblingen. Para 45a SGB XI anerkannt, Direkt-Abrechnung mit der Pflegekasse möglich.',
+  },
+];
+---
+
+<PageLayout
+  title="Einsatzgebiete in Stuttgart und Landkreis Böblingen | Katharis"
+  description="Katharis arbeitet im Geltungsbereich Stadt Stuttgart und Landkreis Böblingen. Anerkannt nach Para 45a SGB XI für Direkt-Abrechnung mit der Pflegekasse."
+>
+  <!-- Hero -->
+  <section class="bg-background py-16">
+    <div class="max-w-content mx-auto px-4">
+      <h1 class="text-4xl font-bold text-primary">Einsatzgebiete</h1>
+      <p class="mt-4 text-lg text-primary/80">{hooks.master}</p>
+      <p class="mt-2 text-base text-primary/80">
+        Katharis ist nach Para 45a SGB XI anerkannt für <strong>Stadt Stuttgart</strong> und den
+        gesamten <strong>Landkreis Böblingen</strong>. Das bedeutet: Direkt-Abrechnung mit der
+        Pflegekasse möglich, kein Vorschuss durch den Klienten nötig.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-3 mt-8">
+        <CallCTA client:load />
+        <RueckrufButton client:load sourceCta="rueckruf-standorte-overview" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Standorte-Grid -->
+  <section class="py-12 max-w-content mx-auto px-4">
+    <h2 class="text-2xl font-bold text-primary mb-6">Unsere Einsatzorte</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {standorte.map((s) => (
+        <a
+          href={s.slug}
+          class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow border border-primary/10 flex flex-col"
+        >
+          <span class="inline-block self-start px-3 py-1 bg-accent/10 text-accent-dark text-xs font-bold rounded-full mb-3">
+            {s.badge}
+          </span>
+          <h3 class="text-xl font-bold text-primary">{s.stadt}</h3>
+          <p class="mt-3 text-primary/80 text-sm flex-grow">{s.text}</p>
+          <p class="mt-4 text-accent-dark font-bold text-sm">Mehr zu {s.stadt} &rarr;</p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- Geltungsbereich-Erklärung -->
+  <section class="py-12 bg-white">
+    <div class="max-w-content mx-auto px-4">
+      <h2 class="text-2xl font-bold text-primary mb-4">Was bedeutet Para-45a-Anerkennung?</h2>
+      <p class="text-primary/80">
+        Para 45a SGB XI ist die gesetzliche Grundlage für anerkannte Angebote zur Unterstützung
+        im Alltag. Mit dieser Anerkennung darf Katharis seine Leistungen direkt mit der Pflegekasse
+        abrechnen - der Klient muss nicht in Vorleistung gehen. Die Anerkennung erfolgt durch die
+        Untere Sozialverwaltung Baden-Württemberg (USTA-BW) und ist ortsgebunden:
+        Stadt Stuttgart und Landkreis Böblingen.
+      </p>
+      <p class="mt-4 text-primary/80">
+        <strong>Was außerhalb dieses Gebiets passiert:</strong> Wir können dort grundsätzlich
+        eingesetzt werden, aber nicht über Para 45a abrechnen. Der Klient müsste die Rechnung
+        privat tragen oder über andere SGB-XI-Töpfe (zB §40 Wohnumfeldverbesserung) zurückholen.
+        Klären Sie das mit uns telefonisch.
+      </p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-12 max-w-content mx-auto px-4">
+    <div class="bg-primary text-white p-8 rounded-xl text-center">
+      <h2 class="text-2xl font-bold">Nicht sicher, ob Ihr Ort dabei ist?</h2>
+      <p class="mt-3 text-white/90">
+        Rufen Sie uns an, wir klären das in 5 Minuten - inklusive Pflegekassen-Status.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-3 mt-6 justify-center">
+        <CallCTA client:load variant="primary" />
+        <RueckrufButton client:load sourceCta="rueckruf-standorte-cta" />
+      </div>
+    </div>
+  </section>
+</PageLayout>
