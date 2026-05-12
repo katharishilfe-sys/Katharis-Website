@@ -1,12 +1,6 @@
-interface Env {
-  PUBLIC_SUPABASE_URL: string;
-  SUPABASE_SERVICE_ROLE_KEY: string;
-  ADMIN_LEADS_TOKEN?: string;
-}
-
 interface PagesContext {
   request: Request;
-  env: Env;
+  env: Record<string, string | undefined>;
   params: Record<string, string>;
 }
 
@@ -32,10 +26,18 @@ function jsonError(message: string, status: number): Response {
   });
 }
 
-function checkAuth(env: Env, request: Request): Response | null {
-  if (!env.ADMIN_LEADS_TOKEN) return null;
+function readEnv(env: Record<string, string | undefined>, name: string): string | undefined {
+  if (env[name]) return (env[name] as string).trim() || undefined;
+  const match = Object.keys(env).find((k) => k.trim() === name);
+  if (match && env[match]) return (env[match] as string).trim() || undefined;
+  return undefined;
+}
+
+function checkAuth(env: Record<string, string | undefined>, request: Request): Response | null {
+  const adminToken = readEnv(env, 'ADMIN_LEADS_TOKEN');
+  if (!adminToken) return null;
   const authHeader = request.headers.get('Authorization') || '';
-  if (authHeader !== `Bearer ${env.ADMIN_LEADS_TOKEN}`) {
+  if (authHeader !== `Bearer ${adminToken}`) {
     return new Response(JSON.stringify({ success: false, error: 'Unauthorized' }), {
       status: 401,
       headers: { 'Content-Type': 'application/json' },
@@ -80,8 +82,8 @@ export const onRequestPatch = async (context: PagesContext): Promise<Response> =
 
   if (Object.keys(update).length === 0) return jsonError('Keine Felder zum Update', 400);
 
-  const supabaseUrl = env.PUBLIC_SUPABASE_URL;
-  const serviceRoleKey = env.SUPABASE_SERVICE_ROLE_KEY;
+  const supabaseUrl = readEnv(env, 'PUBLIC_SUPABASE_URL');
+  const serviceRoleKey = readEnv(env, 'SUPABASE_SERVICE_ROLE_KEY');
   if (!supabaseUrl || !serviceRoleKey) return jsonError('Backend nicht konfiguriert', 500);
 
   const res = await fetch(`${supabaseUrl}/rest/v1/leads?id=eq.${id}`, {

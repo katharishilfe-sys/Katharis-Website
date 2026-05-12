@@ -1,12 +1,6 @@
-interface Env {
-  PUBLIC_SUPABASE_URL: string;
-  SUPABASE_SERVICE_ROLE_KEY: string;
-  ADMIN_LEADS_TOKEN?: string;
-}
-
 interface PagesContext {
   request: Request;
-  env: Env;
+  env: Record<string, string | undefined>;
 }
 
 function jsonError(message: string, status: number): Response {
@@ -16,12 +10,20 @@ function jsonError(message: string, status: number): Response {
   });
 }
 
+function readEnv(env: Record<string, string | undefined>, name: string): string | undefined {
+  if (env[name]) return (env[name] as string).trim() || undefined;
+  const match = Object.keys(env).find((k) => k.trim() === name);
+  if (match && env[match]) return (env[match] as string).trim() || undefined;
+  return undefined;
+}
+
 export const onRequestGet = async (context: PagesContext): Promise<Response> => {
   const { env, request } = context;
 
-  if (env.ADMIN_LEADS_TOKEN) {
+  const adminToken = readEnv(env, 'ADMIN_LEADS_TOKEN');
+  if (adminToken) {
     const authHeader = request.headers.get('Authorization') || '';
-    const expected = `Bearer ${env.ADMIN_LEADS_TOKEN}`;
+    const expected = `Bearer ${adminToken}`;
     if (authHeader !== expected) {
       return new Response(JSON.stringify({ success: false, error: 'Unauthorized' }), {
         status: 401,
@@ -30,8 +32,8 @@ export const onRequestGet = async (context: PagesContext): Promise<Response> => 
     }
   }
 
-  const supabaseUrl = env.PUBLIC_SUPABASE_URL;
-  const serviceRoleKey = env.SUPABASE_SERVICE_ROLE_KEY;
+  const supabaseUrl = readEnv(env, 'PUBLIC_SUPABASE_URL');
+  const serviceRoleKey = readEnv(env, 'SUPABASE_SERVICE_ROLE_KEY');
 
   if (!supabaseUrl || !serviceRoleKey) {
     return jsonError('Backend nicht konfiguriert', 500);
