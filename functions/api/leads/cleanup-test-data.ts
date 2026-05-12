@@ -23,7 +23,7 @@ const EXACT_PATTERNS = [
   'DIAG-FINAL',
 ];
 
-const PREFIX_PATTERNS = ['E2E-', 'TEST-', 'WAKEUP-', 'DIAG-'];
+const PREFIX_PATTERNS = ['E2E-', 'TEST-', 'WAKEUP-', 'DIAG-', 'SMOKE-TEST-', 'SMOKE-'];
 
 export const onRequestPost = async (context: PagesContext): Promise<Response> => {
   const { env, request } = context;
