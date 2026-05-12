@@ -4,6 +4,8 @@ import CallCTA from '@components/CallCTA';
 import RueckrufButton from '@components/RueckrufButton';
 import { hooks } from '@data/content';
 
+const SITE_URL = 'https://katharis.de';
+
 const standorte = [
   {
     slug: '/standorte/boeblingen/',
@@ -36,12 +38,27 @@ const standorte = [
     text: 'Herrenberg im südlichen Landkreis Böblingen. Para 45a SGB XI anerkannt, Direkt-Abrechnung mit der Pflegekasse möglich.',
   },
 ];
+
+const collectionSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Einsatzgebiete von Katharis',
+  url: `${SITE_URL}/standorte/`,
+  description: 'Übersicht der 5 Städte, in denen Katharis nach Para 45a SGB XI für die Pflegekasse direkt abrechnet.',
+  hasPart: standorte.map((s) => ({
+    '@type': 'Place',
+    name: s.stadt,
+    url: `${SITE_URL}${s.slug}`,
+  })),
+};
 ---
 
 <PageLayout
   title="Einsatzgebiete in Stuttgart und Landkreis Böblingen | Katharis"
   description="Katharis arbeitet im Geltungsbereich Stadt Stuttgart und Landkreis Böblingen. Anerkannt nach Para 45a SGB XI für Direkt-Abrechnung mit der Pflegekasse."
 >
+  <script type="application/ld+json" set:html={JSON.stringify(collectionSchema)} />
+
   <!-- Hero -->
   <section class="bg-background py-16">
     <div class="max-w-content mx-auto px-4">

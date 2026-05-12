@@ -94,7 +94,10 @@ export const onRequestPost = async (context: PagesContext): Promise<Response> =>
   if (!insertRes.ok) {
     const errText = await insertRes.text();
     console.error('Supabase-Insert-Fehler:', insertRes.status, errText);
-    return jsonError('Speichern fehlgeschlagen', 500);
+    return new Response(
+      JSON.stringify({ success: false, error: 'Speichern fehlgeschlagen', detail: errText.slice(0, 300), status: insertRes.status }),
+      { status: 500, headers: { 'Content-Type': 'application/json' } },
+    );
   }
 
   if (env.RESEND_API_KEY) {
