@@ -20,7 +20,7 @@ interface LeadBody {
   honeypot?: string;
 }
 
-const ALLOWED_CTA = new Set(['anruf', 'rueckruf']);
+const CTA_PATTERN = /^(anruf|rueckruf)(-[a-z0-9äöüß-]{1,40})?$/i;
 
 function jsonError(message: string, status: number): Response {
   return new Response(JSON.stringify({ success: false, error: message }), {
@@ -57,7 +57,7 @@ export const onRequestPost = async (context: PagesContext): Promise<Response> =>
     return jsonError('Telefon-Länge ungültig', 400);
   }
 
-  if (!ALLOWED_CTA.has(source_cta)) {
+  if (source_cta.length > 50 || !CTA_PATTERN.test(source_cta)) {
     return jsonError('source_cta ungültig', 400);
   }
 
