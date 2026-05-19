@@ -1,14 +1,18 @@
 /**
- * Klaro Cookie-Consent Konfiguration (Stub).
+ * Klaro Cookie-Consent Konfiguration.
  *
  * Maxim-Marken-Regel 1.7: Cleanit-Name nicht in user-facing.
  * Master-Etappe-6: Cookie-Consent vor allen Tracking-Skripten.
  *
- * Stub-Status (2026-05-07): Klaro-NPM-Paket noch nicht installiert.
- * Aktivierung sobald Daniel folgende IDs liefert:
- *   - GA4 Measurement-ID (G-XXXXXXXXXX)
- *   - GTM Container-ID (GTM-XXXXXXX) - optional
- *   - Microsoft Clarity Project-ID (xxxxxxxxxx) - optional
+ * Aktivierung erfolgt automatisch sobald in Cloudflare-Pages (Production)
+ * mindestens eine der folgenden Env-Vars gesetzt ist:
+ *   - PUBLIC_GA4_MEASUREMENT_ID  (Format: G-XXXXXXXXXX)
+ *   - PUBLIC_GTM_CONTAINER_ID    (Format: GTM-XXXXXXX)
+ *   - PUBLIC_CLARITY_PROJECT_ID  (Format: xxxxxxxxxx)
+ *
+ * CookieConsent.astro liest die Env-Vars beim Build, injiziert Klaro via CDN
+ * (kein npm install notwendig) und wraps die Tracking-Scripts mit
+ * type="text/plain" + data-name -> Klaro aktiviert sie nach Consent.
  */
 
 export interface KlaroService {
@@ -140,26 +144,20 @@ export const klaroConfig = {
 };
 
 /**
- * Aktivierungs-Schritte:
+ * Aktivierungs-Schritte (Stand 2026-05-13):
  *
- * 1. npm install klaro
- * 2. Klaro-CSS importieren in src/styles/global.css:
- *      @import 'klaro/dist/klaro.css';
- * 3. Klaro-Bootstrap als Astro-Komponente unter src/components/CookieConsent.astro:
- *      <script>
- *        import { klaroConfig } from '@lib/klaro-config';
- *        import * as Klaro from 'klaro';
- *        window.klaro = Klaro;
- *        window.klaroConfig = klaroConfig;
- *        Klaro.setup(klaroConfig);
- *      </script>
- *      <div id="klaro"></div>
- * 4. CookieConsent-Komponente in PageLayout.astro vor StickyMobileBar einbinden.
- * 5. GA4/GTM/Clarity-Snippets in BaseLayout.astro mit data-name Attribut versehen
- *    (Klaro liest data-name und blockt das Skript bis Consent gegeben ist).
+ * 1. Cloudflare-Pages > katharis-v2 > Settings > Environment-Variables (Production):
+ *    - PUBLIC_GA4_MEASUREMENT_ID = G-XXXXXXXXXX (sobald GA4-Property angelegt)
+ *    - PUBLIC_GTM_CONTAINER_ID   = GTM-XXXXXXX (optional, wenn Tag-Manager genutzt)
+ *    - PUBLIC_CLARITY_PROJECT_ID = xxxxxxxxxx (optional, Clarity-Heatmaps)
  *
- * Warum erst spaeter aktivieren:
- * - Solange noch kein GA4 / GTM Account aktiv ist, gibt es nichts zu blocken.
- * - Cloudflare Web Analytics ist privacy-friendly ohne Cookie und braucht keinen Consent.
- * - Vorher unnoetig den User mit einem Cookie-Banner zu konfrontieren = schlechte UX.
+ * 2. Naechster Build deployed automatisch:
+ *    - CookieConsent.astro rendert Klaro-Banner + blocked Scripts
+ *    - Klaro wird via jsdelivr-CDN geladen (kein npm-Install noetig)
+ *    - User-Consent via Banner -> Scripts werden aktiviert
+ *
+ * 3. Ohne Env-Vars:
+ *    - CookieConsent rendert NICHTS
+ *    - Cloudflare Web Analytics laeuft ohne Cookie (no consent needed)
+ *    - Keine User-Konfrontation mit unnoetigem Banner
  */

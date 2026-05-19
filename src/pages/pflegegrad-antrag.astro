@@ -1,7 +1,7 @@
 ﻿---
 import PageLayout from '@layouts/PageLayout.astro';
 import { hooks } from '@data/content';
-import { generateHowToSchema, generateFAQPageSchema } from '@lib/schema-org';
+import { generateHowToSchema, generateFAQPageSchema, generateBreadcrumbListSchema } from '@lib/schema-org';
 import CallCTA from '@components/CallCTA';
 import RueckrufButton from '@components/RueckrufButton';
 
@@ -69,14 +69,20 @@ const steps = [
   { num: 4, title: 'MD-Gutachten + Bescheid', body: 'Wartezeit typisch 5 bis 25 Wochen ab Antrag.' },
   { num: 5, title: 'Bei Bewilligung', body: 'Pflegegrad gilt rückwirkend ab Antragsdatum. Leistungen rückwirkend erstattbar.' },
 ];
+
+const breadcrumbSchema = generateBreadcrumbListSchema([
+  { name: 'Start', url: 'https://katharis.de/' },
+  { name: 'Pflegegrad-Antrag', url: 'https://katharis.de/pflegegrad-antrag/' },
+]);
 ---
 
 <PageLayout
   title="Pflegegrad-Antrag mit Profi-Hilfe Stuttgart | Katharis"
   description="Wir helfen Ihnen administrativ beim Pflegegrad-Antrag. Formulare ausfüllen, Begutachtung vorbereiten, Botengang. Bei Bewilligung rückwirkende Erstattung möglich."
 >
-  <script type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
-  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 
   <!-- Hero -->
   <section class="bg-background py-16">

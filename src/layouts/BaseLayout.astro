@@ -50,7 +50,7 @@ const orgSchema = generateOrganizationSchema();
     <!-- Consent-Mode-V2 Default-Deny (vor jeglichem Tracking-Skript laden) -->
     <script is:inline set:html={CONSENT_MODE_BOOTSTRAP} />
 
-    <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
 
     <!--
       Cloudflare Web Analytics: kommt automatisch via existierende katharis.de-Site

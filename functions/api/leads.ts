@@ -1,3 +1,5 @@
+import { readEnv, checkAdminAuth } from '../_lib/auth';
+
 interface PagesContext {
   request: Request;
   env: Record<string, string | undefined>;
@@ -10,27 +12,11 @@ function jsonError(message: string, status: number): Response {
   });
 }
 
-function readEnv(env: Record<string, string | undefined>, name: string): string | undefined {
-  if (env[name]) return (env[name] as string).trim() || undefined;
-  const match = Object.keys(env).find((k) => k.trim() === name);
-  if (match && env[match]) return (env[match] as string).trim() || undefined;
-  return undefined;
-}
-
 export const onRequestGet = async (context: PagesContext): Promise<Response> => {
   const { env, request } = context;
 
-  const adminToken = readEnv(env, 'ADMIN_LEADS_TOKEN');
-  if (adminToken) {
-    const authHeader = request.headers.get('Authorization') || '';
-    const expected = `Bearer ${adminToken}`;
-    if (authHeader !== expected) {
-      return new Response(JSON.stringify({ success: false, error: 'Unauthorized' }), {
-        status: 401,
-        headers: { 'Content-Type': 'application/json', 'WWW-Authenticate': 'Bearer' },
-      });
-    }
-  }
+  const authFail = checkAdminAuth(env, request, 'GET /api/leads');
+  if (authFail) return authFail;
 
   const supabaseUrl = readEnv(env, 'PUBLIC_SUPABASE_URL');
   const serviceRoleKey = readEnv(env, 'SUPABASE_SERVICE_ROLE_KEY');

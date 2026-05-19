@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type SyntheticEvent } from 'react';
 import { X } from 'lucide-react';
 import { pushEvent, getCurrentPage } from '@lib/tracking';
 
@@ -46,7 +46,7 @@ export default function LeadFormModal() {
     return () => document.removeEventListener('keydown', onKey);
   }, [open]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (honeypot) return;
     setSubmitting(true);

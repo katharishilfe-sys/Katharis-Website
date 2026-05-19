@@ -24,11 +24,17 @@ jobs:
         run: npm ci
 
       - name: Astro check (TypeScript + Astro errors)
-        run: npx astro check
-        continue-on-error: true
+        run: npm run check
+
+      - name: Drift-Audit (Master Anhang B.2)
+        run: npm run drift-audit
 
       - name: Build
         run: npm run build
 
-      - name: Drift-Check (Master Anhang B.2)
+      - name: Pre-Launch-QA (local mode, against dist/)
+        run: npm run qa:local
+
+      - name: Legacy Drift-Check (bash)
         run: bash scripts/drift-check.sh
+        continue-on-error: true

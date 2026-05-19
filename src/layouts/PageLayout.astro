@@ -4,6 +4,7 @@ import Header from '@components/Header.astro';
 import Footer from '@components/Footer.astro';
 import StickyMobileBar from '@components/StickyMobileBar';
 import LeadFormModal from '@components/LeadFormModal';
+import CookieConsent from '@components/CookieConsent.astro';
 
 export interface Props {
   title: string;
@@ -25,4 +26,5 @@ const { hideStickyBar = false, ...baseProps } = Astro.props;
   <Footer />
   {!hideStickyBar && <StickyMobileBar client:idle />}
   <LeadFormModal client:idle />
+  <CookieConsent />
 </BaseLayout>

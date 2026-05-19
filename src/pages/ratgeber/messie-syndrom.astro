@@ -1,5 +1,6 @@
 ---
 import PageLayout from '@layouts/PageLayout.astro';
+import { generateBreadcrumbListSchema } from '@lib/schema-org';
 import CallCTA from '@components/CallCTA';
 import RueckrufButton from '@components/RueckrufButton';
 
@@ -16,13 +17,19 @@ const articleSchema = {
   mainEntityOfPage: `${SITE_URL}/ratgeber/messie-syndrom/`,
   publisher: { '@id': `${SITE_URL}/#organization` },
 };
+const breadcrumbSchema = generateBreadcrumbListSchema([
+  { name: 'Start', url: 'https://katharis.de/' },
+  { name: 'Ratgeber', url: 'https://katharis.de/ratgeber/' },
+  { name: 'Messie-Syndrom', url: 'https://katharis.de/ratgeber/messie-syndrom/' },
+]);
 ---
 
 <PageLayout
   title="Messie-Syndrom verstehen | Ratgeber Katharis"
   description="Was ist Messie-Syndrom? Ursachen, Anzeichen, wie Sie als Angehöriger handeln können ohne Druck und Wertung. Mit Hinweisen zu Pflegekassen-Optionen."
 >
-  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 
   <article class="max-w-content mx-auto px-4 py-12">
     <p class="text-sm text-primary/80">

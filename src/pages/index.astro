@@ -1,18 +1,20 @@
 ﻿---
 import PageLayout from '@layouts/PageLayout.astro';
 import { hooks, services, trustIndikatoren } from '@data/content';
-import { generateLocalBusinessSchema } from '@lib/schema-org';
+import { generateLocalBusinessSchema, generateWebSiteSchema } from '@lib/schema-org';
 import CallCTA from '@components/CallCTA';
 import RueckrufButton from '@components/RueckrufButton';
 
 const localBusinessSchema = generateLocalBusinessSchema();
+const webSiteSchema = generateWebSiteSchema();
 ---
 
 <PageLayout
   title="Katharis - Pflegekassen-Entlastung Stuttgart und LK Böblingen"
   description="Spezialist für Entlastungsleistungen bei komplexen Pflegefällen. Anerkannt nach Para 45a SGB XI. Bis zu 100 Prozent Kostenübernahme möglich. Diskret und würdevoll."
 >
-  <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(webSiteSchema)} />
 
   <!-- Hero -->
   <section class="bg-background py-16 md:py-24">

@@ -1,11 +1,16 @@
 ---
 import PageLayout from '@layouts/PageLayout.astro';
 import { hooks } from '@data/content';
-import { generateLocalBusinessSchema } from '@lib/schema-org';
+import { generateLocalBusinessSchema, generateBreadcrumbListSchema } from '@lib/schema-org';
 import CallCTA from '@components/CallCTA';
 import RueckrufButton from '@components/RueckrufButton';
 
 const localBusinessSchema = generateLocalBusinessSchema({ areaServed: ['Stadt Stuttgart'] });
+const breadcrumbSchema = generateBreadcrumbListSchema([
+  { name: 'Start', url: 'https://katharis.de/' },
+  { name: 'Standorte', url: 'https://katharis.de/standorte/' },
+  { name: 'Stuttgart', url: 'https://katharis.de/standorte/stuttgart/' },
+]);
 
 const pflegestützpunkte = [
   { bezirke: 'Mitte, Nord, West, Botnang', adresse: 'Eberhardstraße 33, 70173 Stuttgart', tel: '0711 216-59100' },
@@ -20,11 +25,15 @@ const pflegestützpunkte = [
   title="Katharis in Stuttgart - Pflegekassen-Entlastung"
   description="Anerkannt nach Para 45a SGB XI für alle Stadtbezirke Stuttgart. Bis zu 100 Prozent Kostenübernahme möglich. Pflegestützpunkte je Stadtbezirk."
 >
-  <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 
   <section class="bg-background py-16">
     <div class="max-w-content mx-auto px-4">
-      <h1 class="text-4xl font-bold text-primary">Katharis in Stuttgart</h1>
+      <p class="text-sm text-primary/80">
+        <a href="/" class="underline">Start</a> &rsaquo; <a href="/standorte/" class="underline">Standorte</a> &rsaquo; Stuttgart
+      </p>
+      <h1 class="text-4xl font-bold text-primary mt-4">Katharis in Stuttgart</h1>
       <p class="mt-4 text-lg text-primary/80">{hooks.master}</p>
       <p class="mt-2 text-sm text-primary/80">Anerkannt nach Para 45a SGB XI für alle Stadtbezirke.</p>
       <div class="flex flex-col sm:flex-row gap-3 mt-8">

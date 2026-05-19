@@ -1,7 +1,7 @@
 ---
 import PageLayout from '@layouts/PageLayout.astro';
 import { hooks, pflegekassenTöpfe } from '@data/content';
-import { generateFAQPageSchema } from '@lib/schema-org';
+import { generateFAQPageSchema, generateBreadcrumbListSchema } from '@lib/schema-org';
 import CallCTA from '@components/CallCTA';
 import RueckrufButton from '@components/RueckrufButton';
 
@@ -43,13 +43,33 @@ const faqs = [
   },
 ];
 const faqSchema = generateFAQPageSchema(faqs);
+const breadcrumbSchema = generateBreadcrumbListSchema([
+  { name: 'Start', url: 'https://katharis.de/' },
+  { name: 'Pflegekasse', url: 'https://katharis.de/pflegekasse/' },
+]);
+const SITE_URL = 'https://katharis.de';
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Pflegekassen-Leistungen für Entlastung: Was Ihnen zusteht',
+  description:
+    'Wie Pflegekassen-Töpfe nach §45a/45b/42a/40 SGB XI Ihre Entlastungs-Kosten decken. Anerkannter Anbieter Stuttgart und LK Böblingen. Aktuelle Beträge 2026.',
+  datePublished: '2026-05-06T00:00:00+02:00',
+  dateModified: '2026-05-06T00:00:00+02:00',
+  author: { '@type': 'Person', name: 'Daniel Altenhof', jobTitle: 'Initiator und operativer Leiter Katharis' },
+  image: `${SITE_URL}/og-image.png`,
+  mainEntityOfPage: `${SITE_URL}/pflegekasse/`,
+  publisher: { '@id': `${SITE_URL}/#organization` },
+};
 ---
 
 <PageLayout
   title="Pflegekasse zahlt Entlastung - 131 EUR pro Monat 2026 | Katharis"
   description="Wie Pflegekassen-Töpfe nach Para 45a/45b/42a/40 SGB XI Ihre Entlastungs-Kosten decken. Anerkannter Anbieter Stuttgart und LK Böblingen. Aktuelle Beträge 2026."
 >
-  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
 
   <!-- Hero -->
   <section class="bg-background py-16">

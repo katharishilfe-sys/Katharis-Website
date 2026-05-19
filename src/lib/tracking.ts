@@ -30,7 +30,7 @@ window.gtag('consent', 'default', {
 `.trim();
 
 export type TrackingEvent =
-  | { event: 'call_initiated'; source_cta: string; source_page: string }
+  | { event: 'call_initiated'; source_cta: string; source_page: string; matelso_pool?: string }
   | { event: 'form_submit_success'; source_cta: string; source_page: string }
   | { event: 'form_submit_error'; source_cta: string; source_page: string; error: string }
   | { event: 'modal_opened'; source_cta: string; source_page: string }

@@ -6,6 +6,19 @@ import { kontakt, traeger } from '@data/content';
 
 const SITE_URL = 'https://katharis.de';
 
+export function generateWebSiteSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': `${SITE_URL}/#website`,
+    url: SITE_URL,
+    name: 'Katharis',
+    description: 'Entlastungsleistungen für komplexe Pflegefälle nach §45a SGB XI',
+    publisher: { '@id': `${SITE_URL}/#organization` },
+    inLanguage: 'de-DE',
+  };
+}
+
 export function generateOrganizationSchema() {
   return {
     '@context': 'https://schema.org',
@@ -13,7 +26,7 @@ export function generateOrganizationSchema() {
     '@id': `${SITE_URL}/#organization`,
     name: 'Katharis',
     url: SITE_URL,
-    logo: `${SITE_URL}/katharis-logo.svg`,
+    logo: `${SITE_URL}/katharis-logo.png`,
     contactPoint: {
       '@type': 'ContactPoint',
       telephone: kontakt.telefon,

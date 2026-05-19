@@ -1,3 +1,5 @@
+import { readEnv, checkAdminAuth } from '../../_lib/auth';
+
 interface PagesContext {
   request: Request;
   env: Record<string, string | undefined>;
@@ -26,32 +28,12 @@ function jsonError(message: string, status: number): Response {
   });
 }
 
-function readEnv(env: Record<string, string | undefined>, name: string): string | undefined {
-  if (env[name]) return (env[name] as string).trim() || undefined;
-  const match = Object.keys(env).find((k) => k.trim() === name);
-  if (match && env[match]) return (env[match] as string).trim() || undefined;
-  return undefined;
-}
-
-function checkAuth(env: Record<string, string | undefined>, request: Request): Response | null {
-  const adminToken = readEnv(env, 'ADMIN_LEADS_TOKEN');
-  if (!adminToken) return null;
-  const authHeader = request.headers.get('Authorization') || '';
-  if (authHeader !== `Bearer ${adminToken}`) {
-    return new Response(JSON.stringify({ success: false, error: 'Unauthorized' }), {
-      status: 401,
-      headers: { 'Content-Type': 'application/json' },
-    });
-  }
-  return null;
-}
-
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 export const onRequestPatch = async (context: PagesContext): Promise<Response> => {
   const { env, request, params } = context;
 
-  const authFail = checkAuth(env, request);
+  const authFail = checkAdminAuth(env, request, 'PATCH /api/leads/[id]');
   if (authFail) return authFail;
 
   const id = params.id;

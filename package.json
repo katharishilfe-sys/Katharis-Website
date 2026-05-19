@@ -11,7 +11,11 @@
     "preview": "astro preview",
     "astro": "astro",
     "drift-check": "bash scripts/drift-check.sh",
-    "check": "astro check"
+    "drift-audit": "npx tsx scripts/drift-audit.ts",
+    "qa": "npx tsx scripts/pre-launch-qa.ts",
+    "qa:local": "npx tsx scripts/pre-launch-qa.ts --local-only",
+    "check": "astro check",
+    "verify": "npm run check && npm run drift-audit && npm run build && npm run qa:local"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.9",

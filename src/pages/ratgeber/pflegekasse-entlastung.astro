@@ -1,6 +1,7 @@
 ---
 import PageLayout from '@layouts/PageLayout.astro';
 import { pflegekassenTöpfe } from '@data/content';
+import { generateBreadcrumbListSchema } from '@lib/schema-org';
 import CallCTA from '@components/CallCTA';
 import RueckrufButton from '@components/RueckrufButton';
 
@@ -17,13 +18,19 @@ const articleSchema = {
   mainEntityOfPage: `${SITE_URL}/ratgeber/pflegekasse-entlastung/`,
   publisher: { '@id': `${SITE_URL}/#organization` },
 };
+const breadcrumbSchema = generateBreadcrumbListSchema([
+  { name: 'Start', url: 'https://katharis.de/' },
+  { name: 'Ratgeber', url: 'https://katharis.de/ratgeber/' },
+  { name: 'Pflegekasse-Entlastung', url: 'https://katharis.de/ratgeber/pflegekasse-entlastung/' },
+]);
 ---
 
 <PageLayout
   title="Pflegekasse und Entlastung 2026 | Ratgeber Katharis"
   description="Welche Pflegekassen-Töpfe nach Para 45a/45b/42a/40 SGB XI Sie für eine Entlastung nutzen können. 131 Euro pro Monat, bis 3.539 Euro pro Jahr, bis 4.180 Euro je Maßnahme."
 >
-  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 
   <article class="max-w-content mx-auto px-4 py-12">
     <p class="text-sm text-primary/80">

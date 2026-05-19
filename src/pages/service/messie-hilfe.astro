@@ -1,7 +1,7 @@
 ---
 import PageLayout from '@layouts/PageLayout.astro';
 import { hooks, pflegekassenTöpfe } from '@data/content';
-import { generateLocalBusinessSchema, generateServiceSchema, generateFAQPageSchema } from '@lib/schema-org';
+import { generateLocalBusinessSchema, generateServiceSchema, generateFAQPageSchema, generateBreadcrumbListSchema } from '@lib/schema-org';
 import CallCTA from '@components/CallCTA';
 import RueckrufButton from '@components/RueckrufButton';
 
@@ -11,6 +11,10 @@ const serviceSchema = generateServiceSchema({
   serviceDescription: 'Spezialist für Entlastungsleistungen bei Verwahrlosung. Para 45a SGB XI anerkannt. Pflegekassen-Direktabrechnung möglich.',
   serviceUrl: 'https://katharis.de/service/messie-hilfe/',
 });
+const breadcrumbSchema = generateBreadcrumbListSchema([
+  { name: 'Start', url: 'https://katharis.de/' },
+  { name: 'Messie-Hilfe', url: 'https://katharis.de/service/messie-hilfe/' },
+]);
 
 const faqs = [
   {
@@ -85,9 +89,10 @@ const serviceKarten = [
   title="Messie-Hilfe Stuttgart - Pflegekasse zahlt | Katharis"
   description="Spezialist für Messie-Hilfe und Verwahrlosung in Stuttgart und LK Böblingen. Anerkannt nach Para 45a SGB XI. Bis zu 100 Prozent Kostenübernahme möglich. Diskret."
 >
-  <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
-  <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
-  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 
   <!-- Hero -->
   <section class="bg-background py-16 md:py-24">

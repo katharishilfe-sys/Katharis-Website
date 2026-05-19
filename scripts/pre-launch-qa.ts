@@ -1,14 +1,22 @@
 /**
  * Pre-Launch-QA-Self-Test (Etappe 9 DoD-Vorbereiter).
  *
- * Prueft gegen die Live-Preview https://katharis-v2.pages.dev:
+ * Prueft gegen die Live-Preview https://katharis-v2.pages.dev (Tests 1-8)
+ * plus lokale Static-Checks (Tests 9-10, kein Netzwerk):
  *   1. Alle URLs aus sitemap-0.xml liefern 200
- *   2. Alle 301-Redirects aus public/_redirects funktionieren
- *   3. robots.txt ist gut formatiert
- *   4. Stichprobe: Hauptseite + 2 Service-Pages haben h1, korrekte Umlaute, keine Master-Drift-Phrasen
+ *   2. robots.txt ist gut formatiert (Disallow /admin, GPTBot block, ClaudeBot allow)
+ *   3. Alle 301-Redirects aus public/_redirects funktionieren
+ *   4. Content-Stichproben: h1 + Umlaute + keine Master-Drift-Phrasen
+ *   5. JSON-LD-Blocks parsen valide
+ *   6. JSON-LD @id-Konsistenz cross-page (gleiche @id muss gleiches Objekt sein)
+ *   7. Internal-Link 404-Sweep (jeder interne href auf Sitemap-Pages -> 200/301)
+ *   8. Sitemap-vs-Pages-Konsistenz (jede .astro muss in Sitemap stehen)
+ *   9. _redirects-Targets existieren als Page oder Chain-Redirect (lokal)
+ *  10. dist/-HTML-Smoke: title, meta-description, canonical, OG-Tags, JSON-LD (lokal)
  *
  * Ausfuehrung lokal: npx tsx scripts/pre-launch-qa.ts
  *   Optional: BASE_URL=https://katharis.de tsx scripts/pre-launch-qa.ts
+ *   Schneller Lokal-Modus (nur 9+10): LOCAL_ONLY=1 npx tsx scripts/pre-launch-qa.ts
  *
  * Exit-Codes:
  *   0 = alles OK
@@ -73,7 +81,7 @@ function parseRedirects(): RedirectRule[] {
 }
 
 async function testSitemapUrls() {
-  console.log(`\n[1/4] Sitemap-URLs gegen ${BASE_URL}...`);
+  console.log(`\n[1/10] Sitemap-URLs gegen ${BASE_URL}...`);
   const { status, text } = await fetchText(SITEMAP_URL);
   if (status !== 200) {
     fail('sitemap-fetch', `${SITEMAP_URL} returned ${status}`);
@@ -95,7 +103,7 @@ async function testSitemapUrls() {
 }
 
 async function testRobots() {
-  console.log(`\n[2/4] robots.txt...`);
+  console.log(`\n[2/10] robots.txt...`);
   const { status, text } = await fetchText(ROBOTS_URL);
   if (status !== 200) {
     fail('robots-fetch', `returned ${status}`);
@@ -111,7 +119,7 @@ async function testRobots() {
 }
 
 async function testRedirects() {
-  console.log(`\n[3/4] 301-Redirects aus public/_redirects...`);
+  console.log(`\n[3/10] 301-Redirects aus public/_redirects...`);
   const rules = parseRedirects();
   console.log(`  Gefunden: ${rules.length} Rules`);
 
@@ -136,7 +144,7 @@ async function testRedirects() {
 }
 
 async function testContentSamples() {
-  console.log(`\n[4/4] Content-Stichproben (h1 + Umlaute + Master-Phrasen)...`);
+  console.log(`\n[4/10] Content-Stichproben (h1 + Umlaute + Master-Phrasen)...`);
   const samples = [
     { url: '/', expectH1: true, mustContain: ['Pflegekasse', 'Stuttgart'], mustNotContain: ['garantiert', 'niemand erfaehrt'] },
     { url: '/service/messie-hilfe/', expectH1: true, mustContain: ['Messie', 'für', 'können'] },
@@ -172,7 +180,7 @@ async function testContentSamples() {
 }
 
 async function testJsonLdSchemas() {
-  console.log(`\n[5/5] Schema.org JSON-LD-Validitaet auf 7 Pages...`);
+  console.log(`\n[5/10] Schema.org JSON-LD-Validitaet auf 7 Pages...`);
   const pagesToCheck = [
     '/',
     '/service/messie-hilfe/',
@@ -206,14 +214,256 @@ async function testJsonLdSchemas() {
   }
 }
 
-async function main() {
-  console.log(`Pre-Launch-QA gegen ${BASE_URL}\n${'='.repeat(60)}`);
+async function testJsonLdIdConsistency() {
+  console.log(`\n[6/10] JSON-LD @id-Konsistenz (gleiche @id muss identische Properties haben)...`);
+  const pagesToCheck = [
+    '/',
+    '/service/messie-hilfe/',
+    '/service/vor-dem-heimumzug/',
+    '/pflegekasse/',
+    '/ueber-uns/',
+    '/kontakt/',
+    '/standorte/stuttgart/',
+    '/standorte/boeblingen/',
+  ];
 
-  await testSitemapUrls();
-  await testRobots();
-  await testRedirects();
-  await testContentSamples();
-  await testJsonLdSchemas();
+  const idToSignature = new Map<string, { signature: string; firstSeenOn: string }>();
+
+  for (const path of pagesToCheck) {
+    const { status, text } = await fetchText(`${BASE_URL}${path}`);
+    if (status !== 200) continue;
+    const matches = [...text.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)];
+    for (const match of matches) {
+      let parsed: unknown;
+      try {
+        parsed = JSON.parse(match[1]);
+      } catch {
+        continue;
+      }
+      const nodes: Record<string, unknown>[] = [];
+      if (Array.isArray(parsed)) nodes.push(...(parsed as Record<string, unknown>[]));
+      else if (parsed && typeof parsed === 'object') nodes.push(parsed as Record<string, unknown>);
+
+      for (const node of nodes) {
+        const id = node['@id'];
+        if (typeof id !== 'string' || !id.includes('#')) continue;
+        const signature = JSON.stringify({ type: node['@type'], name: node.name });
+        const prev = idToSignature.get(id);
+        if (!prev) {
+          idToSignature.set(id, { signature, firstSeenOn: path });
+        } else if (prev.signature !== signature) {
+          fail(
+            `jsonld-id-consistency ${id}`,
+            `Drift zwischen ${prev.firstSeenOn} und ${path}: ${prev.signature} vs ${signature}`,
+          );
+        }
+      }
+    }
+  }
+  if (idToSignature.size > 0) pass(`jsonld-id-consistency (${idToSignature.size} unique @ids consistent)`);
+}
+
+async function testInternalLinks() {
+  console.log(`\n[7/10] Internal-Link 404-Sweep (alle Sitemap-Seiten -> jeder interne Link 200)...`);
+  const { text: sitemapText } = await fetchText(SITEMAP_URL);
+  const pages = extractSitemapUrls(sitemapText);
+
+  const collected = new Set<string>();
+  for (const url of pages) {
+    const { text } = await fetchText(url);
+    const hrefs = [...text.matchAll(/href="(\/[^"#?]*?)"/g)].map((m) => m[1]);
+    for (const href of hrefs) {
+      if (
+        href.startsWith('/_astro/') ||
+        href.endsWith('.xml') ||
+        href.endsWith('.png') ||
+        href.endsWith('.jpg') ||
+        href.endsWith('.svg') ||
+        href.endsWith('.ico') ||
+        href.endsWith('.webp') ||
+        href.endsWith('.css') ||
+        href.endsWith('.js') ||
+        href === '/'
+      ) continue;
+      collected.add(href);
+    }
+  }
+  console.log(`  Gefunden: ${collected.size} unique interne Links zum Pruefen`);
+
+  for (const link of collected) {
+    const { status } = await fetchText(`${BASE_URL}${link}`);
+    if (status === 200 || status === 301) {
+      pass(`internal-link ${link}`);
+    } else {
+      fail(`internal-link ${link}`, `returned ${status}`);
+    }
+  }
+}
+
+async function testSitemapVsRoutes() {
+  console.log(`\n[8/10] Sitemap-vs-Pages-Konsistenz (jede .astro-Page muss in Sitemap stehen, ausser /admin/)...`);
+  const fs = await import('node:fs');
+  const pagesDir = join(dirname(fileURLToPath(import.meta.url)), '..', 'src', 'pages');
+
+  function walk(dir: string, prefix = ''): string[] {
+    const out: string[] = [];
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const full = join(dir, entry.name);
+      if (entry.isDirectory()) {
+        out.push(...walk(full, `${prefix}/${entry.name}`));
+      } else if (entry.name.endsWith('.astro')) {
+        const slug = entry.name === 'index.astro' ? '' : entry.name.replace(/\.astro$/, '');
+        const route = `${prefix}/${slug}`.replace(/\/+/g, '/');
+        out.push(route.endsWith('/') || route === '/' ? route : `${route}/`);
+      }
+    }
+    return out;
+  }
+
+  const routes = walk(pagesDir).filter(
+    (r) =>
+      !r.startsWith('/admin/') &&
+      r !== '/admin/' &&
+      r !== '/404/' &&
+      !r.endsWith('/404/'),
+  );
+
+  const { text: sitemapText } = await fetchText(SITEMAP_URL);
+  const sitemapUrls = new Set(
+    extractSitemapUrls(sitemapText).map((u) => u.replace(BASE_URL, '') || '/'),
+  );
+
+  for (const route of routes) {
+    const normalized = route === '/' ? '/' : route;
+    if (sitemapUrls.has(normalized)) {
+      pass(`sitemap-has ${normalized}`);
+    } else {
+      fail(`sitemap-has ${normalized}`, 'Page existiert aber fehlt in sitemap-0.xml');
+    }
+  }
+}
+
+async function collectPageRoutes(): Promise<Set<string>> {
+  const fs = await import('node:fs');
+  const pagesDir = join(dirname(fileURLToPath(import.meta.url)), '..', 'src', 'pages');
+  const out = new Set<string>();
+  function walk(dir: string, prefix = '') {
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const full = join(dir, entry.name);
+      if (entry.isDirectory()) {
+        walk(full, `${prefix}/${entry.name}`);
+      } else if (entry.name.endsWith('.astro')) {
+        const slug = entry.name === 'index.astro' ? '' : entry.name.replace(/\.astro$/, '');
+        const route = `${prefix}/${slug}`.replace(/\/+/g, '/');
+        out.add(route.endsWith('/') || route === '/' ? route : `${route}/`);
+      }
+    }
+  }
+  walk(pagesDir);
+  return out;
+}
+
+async function testRedirectsTargetsExist() {
+  console.log(`\n[9/10] _redirects-Targets existieren als Page oder Chain-Redirect (lokal)...`);
+  const rules = parseRedirects();
+  const pageRoutes = await collectPageRoutes();
+  const redirectSources = new Set(rules.map((r) => r.from));
+
+  for (const rule of rules) {
+    if (rule.to.startsWith('http://') || rule.to.startsWith('https://')) {
+      pass(`redirect-target ${rule.from} -> ${rule.to} (extern)`);
+      continue;
+    }
+    if (pageRoutes.has(rule.to) || redirectSources.has(rule.to)) {
+      pass(`redirect-target ${rule.from} -> ${rule.to}`);
+    } else {
+      fail(`redirect-target ${rule.from}`, `Target ${rule.to} ist weder vorhandene Page noch Chain-Redirect`);
+    }
+  }
+}
+
+async function testDistHtmlSmoke() {
+  console.log(`\n[10/10] dist/-HTML-Smoke (lokal)...`);
+  const fs = await import('node:fs');
+  const path = await import('node:path');
+  const distDir = path.join(dirname(fileURLToPath(import.meta.url)), '..', 'dist');
+
+  if (!fs.existsSync(distDir)) {
+    fail('dist-smoke', 'dist/ nicht vorhanden. Vorher `npm run build` laufen lassen.');
+    return;
+  }
+
+  const htmlFiles: string[] = [];
+  function walk(dir: string) {
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const full = path.join(dir, entry.name);
+      if (entry.isDirectory()) walk(full);
+      else if (entry.name === 'index.html') htmlFiles.push(full);
+    }
+  }
+  walk(distDir);
+
+  for (const file of htmlFiles) {
+    const route = file.replace(distDir, '').replace(/\\/g, '/').replace(/\/index\.html$/, '/') || '/';
+    if (route.startsWith('/admin/')) continue;
+    const html = fs.readFileSync(file, 'utf-8');
+
+    const titleMatch = html.match(/<title[^>]*>([^<]*)<\/title>/);
+    if (!titleMatch || titleMatch[1].trim().length < 10) {
+      fail(`dist-title ${route}`, titleMatch ? `Title zu kurz: "${titleMatch[1].trim()}"` : 'kein <title>');
+    } else if (titleMatch[1].length > 70) {
+      fail(`dist-title ${route}`, `Title zu lang (${titleMatch[1].length} chars): "${titleMatch[1]}"`);
+    } else {
+      pass(`dist-title ${route}`);
+    }
+
+    const descMatch = html.match(/<meta\s+name=["']description["']\s+content=["']([^"']*)["']/);
+    if (!descMatch || descMatch[1].trim().length < 30) {
+      fail(`dist-meta-description ${route}`, descMatch ? `zu kurz (${descMatch[1].length})` : 'fehlt');
+    } else if (descMatch[1].length > 200) {
+      fail(`dist-meta-description ${route}`, `zu lang (${descMatch[1].length})`);
+    } else {
+      pass(`dist-meta-description ${route}`);
+    }
+
+    if (/<link\s+rel=["']canonical["']\s+href=["'][^"']+["']/.test(html)) pass(`dist-canonical ${route}`);
+    else fail(`dist-canonical ${route}`, 'canonical-Tag fehlt');
+
+    if (/<meta\s+property=["']og:title["']/.test(html)) pass(`dist-og-title ${route}`);
+    else fail(`dist-og-title ${route}`, 'og:title fehlt');
+
+    if (/<meta\s+property=["']og:image["']/.test(html)) pass(`dist-og-image ${route}`);
+    else fail(`dist-og-image ${route}`, 'og:image fehlt');
+
+    const jsonLdBlocks = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)];
+    if (jsonLdBlocks.length === 0) {
+      fail(`dist-jsonld ${route}`, 'kein JSON-LD-Block');
+    } else {
+      let allParsed = true;
+      for (const [, body] of jsonLdBlocks) {
+        try { JSON.parse(body); } catch (e) { allParsed = false; fail(`dist-jsonld ${route}`, `Parse-Fehler: ${(e as Error).message}`); break; }
+      }
+      if (allParsed) pass(`dist-jsonld ${route} (${jsonLdBlocks.length} blocks)`);
+    }
+  }
+}
+
+async function main() {
+  const localOnly = process.env.LOCAL_ONLY === '1' || process.argv.includes('--local-only');
+  console.log(`Pre-Launch-QA ${localOnly ? '(LOCAL_ONLY)' : `gegen ${BASE_URL}`}\n${'='.repeat(60)}`);
+
+  if (!localOnly) {
+    await testSitemapUrls();
+    await testRobots();
+    await testRedirects();
+    await testContentSamples();
+    await testJsonLdSchemas();
+    await testJsonLdIdConsistency();
+    await testInternalLinks();
+    await testSitemapVsRoutes();
+  }
+  await testRedirectsTargetsExist();
+  await testDistHtmlSmoke();
 
   const passed = results.filter((r) => r.status === 'pass').length;
   const failed = results.filter((r) => r.status === 'fail');

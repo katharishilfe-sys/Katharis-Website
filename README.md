@@ -19,7 +19,7 @@ Greenfield-Build auf Astro 5 + Tailwind 4 + React-Islands + Supabase EU-Frankfur
 | Styling | Tailwind 4 (CSS-First Config) |
 | Hosting | Cloudflare Pages |
 | Backend/DB | Supabase EU-Frankfurt |
-| Email | Resend (Transactional) + Mailbox.org (Inbound) |
+| Email | Resend (Transactional) + ALL-INKL.com (Inbound info@katharis.de) |
 | Call-Tracking | Matelso DE |
 | Cookie-Consent | Klaro |
 | Anti-Spam | Cloudflare Turnstile + Honeypot |

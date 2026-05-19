@@ -1,6 +1,8 @@
 ---
 import { kontakt } from '@data/content';
 import { Phone, Menu, X } from 'lucide-react';
+import { Image } from 'astro:assets';
+import logo from '@/assets/katharis-logo.png';
 
 const navLinks = [
   { href: '/service/messie-hilfe/', label: 'Messie-Hilfe' },
@@ -17,7 +19,7 @@ const navLinks = [
 <header class="bg-white shadow-sm sticky top-0 z-50">
   <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
     <a href="/" class="flex items-center gap-2" aria-label="Katharis Startseite">
-      <img src="/katharis-logo.png" alt="" width="44" height="44" aria-hidden="true" />
+      <Image src={logo} alt="" width={44} height={44} aria-hidden="true" loading="eager" />
       <span class="text-xl font-bold text-primary">Katharis</span>
     </a>
 
@@ -45,7 +47,7 @@ const navLinks = [
       aria-controls="mobile-nav"
     >
       <Menu size={24} aria-hidden="true" id="menu-icon-open" />
-      <X size={24} aria-hidden="true" id="menu-icon-close" class="hidden" />
+      <X size={24} aria-hidden="true" id="menu-icon-close" className="hidden" />
     </button>
   </div>
 

@@ -1,23 +1,32 @@
 ---
 import PageLayout from '@layouts/PageLayout.astro';
 import { hooks, kontakt } from '@data/content';
-import { generateLocalBusinessSchema } from '@lib/schema-org';
+import { generateLocalBusinessSchema, generateBreadcrumbListSchema } from '@lib/schema-org';
 import CallCTA from '@components/CallCTA';
 import RueckrufButton from '@components/RueckrufButton';
 
 const localBusinessSchema = generateLocalBusinessSchema({ areaServed: ['Landkreis Böblingen'] });
+const breadcrumbSchema = generateBreadcrumbListSchema([
+  { name: 'Start', url: 'https://katharis.de/' },
+  { name: 'Standorte', url: 'https://katharis.de/standorte/' },
+  { name: 'Böblingen', url: 'https://katharis.de/standorte/boeblingen/' },
+]);
 ---
 
 <PageLayout
   title="Katharis in Böblingen - operative Zentrale"
   description="Anerkannt nach Para 45a SGB XI für den gesamten Landkreis Böblingen. Operative Zentrale Olgastraße 8."
 >
-  <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 
   <!-- Hero -->
   <section class="bg-background py-16">
     <div class="max-w-content mx-auto px-4">
-      <h1 class="text-4xl font-bold text-primary">Katharis in Böblingen - operative Zentrale</h1>
+      <p class="text-sm text-primary/80">
+        <a href="/" class="underline">Start</a> &rsaquo; <a href="/standorte/" class="underline">Standorte</a> &rsaquo; Böblingen
+      </p>
+      <h1 class="text-4xl font-bold text-primary mt-4">Katharis in Böblingen - operative Zentrale</h1>
       <p class="mt-4 text-lg text-primary/80">{hooks.master}</p>
       <p class="mt-2 text-sm text-primary/80">Anerkannt nach Para 45a SGB XI für den gesamten Landkreis Böblingen.</p>
       <div class="flex flex-col sm:flex-row gap-3 mt-8">
