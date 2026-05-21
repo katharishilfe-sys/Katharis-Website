@@ -1,5 +1,8 @@
 # 301-Map FINAL nach Daniel-Approval 2026-05-06
 
+# www -> apex (Canonical-URL nach Cutover Etappe 7)
+https://www.katharis.de/*             https://katharis.de/:splat         301
+
 # Slug-Migrationen v1.7 -> v2.0
 /leistungen/                          /                                  301
 /leistungen/messie-hilfe/             /service/messie-hilfe/             301
