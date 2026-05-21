@@ -20,7 +20,7 @@ Greenfield-Build auf Astro 5 + Tailwind 4 + React-Islands + Supabase EU-Frankfur
 | Hosting | Cloudflare Pages |
 | Backend/DB | Supabase EU-Frankfurt |
 | Email | Resend (Transactional) + ALL-INKL.com (Inbound info@katharis.de) |
-| Call-Tracking | Matelso DE |
+| Call-Tracking | Google Ads Built-in Call Conversion (kein Drittanbieter) |
 | Cookie-Consent | Klaro |
 | Anti-Spam | Cloudflare Turnstile + Honeypot |
 
