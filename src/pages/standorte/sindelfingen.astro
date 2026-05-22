@@ -1,11 +1,37 @@
 ---
 import PageLayout from '@layouts/PageLayout.astro';
 import { hooks } from '@data/content';
-import { generateLocalBusinessSchema, generateBreadcrumbListSchema } from '@lib/schema-org';
+import { generateLocalBusinessSchema, generateFAQPageSchema, generateBreadcrumbListSchema } from '@lib/schema-org';
 import CallCTA from '@components/CallCTA';
 import RueckrufButton from '@components/RueckrufButton';
 
 const localBusinessSchema = generateLocalBusinessSchema({ areaServed: ['Sindelfingen', 'Landkreis Böblingen'] });
+
+const faqs = [
+  {
+    question: 'Kommen Sie wirklich nach Sindelfingen?',
+    answer:
+      'Ja, regelmäßig. Sindelfingen liegt direkt neben unserer operativen Zentrale in der Olgastraße 8 in Böblingen. Anfahrt zu Klienten in Sindelfingen typisch 8 bis 12 Minuten.',
+  },
+  {
+    question: 'Welche Pflegestützpunkte sind in Sindelfingen zuständig?',
+    answer:
+      'Der Pflegestützpunkt Landkreis Böblingen in Böblingen ist auch für Sindelfingen zuständig, neutral und kostenfrei. Bundesweit ist die Compass Pflegeberatung unter 0800 101 88 00 erreichbar, auch mit Hausbesuch in Sindelfingen.',
+  },
+  {
+    question: 'Wie schnell können Sie nach Sindelfingen kommen?',
+    answer:
+      'Vor-Ort-Termin innerhalb von 3 bis 7 Tagen. Bei Vermieter-Druck oder akuter Verwahrlosung priorisieren wir. Erstgespräch am Telefon noch am gleichen oder nächsten Werktag.',
+  },
+  {
+    question: 'Bedienen Sie auch Maichingen?',
+    answer:
+      'Ja, Maichingen ist Sindelfinger Stadtteil und damit Teil unseres Anerkennungs-Gebiets. Anfahrt aus Böblingen typisch 10 bis 14 Minuten.',
+  },
+];
+
+const faqSchema = generateFAQPageSchema(faqs);
+
 const breadcrumbSchema = generateBreadcrumbListSchema([
   { name: 'Start', url: 'https://katharis.de/' },
   { name: 'Standorte', url: 'https://katharis.de/standorte/' },
@@ -14,10 +40,11 @@ const breadcrumbSchema = generateBreadcrumbListSchema([
 ---
 
 <PageLayout
-  title="Entlastungsleistungen Sindelfingen | Katharis"
-  description="Spezialist für Entlastungsleistungen in Sindelfingen. Anerkannt nach Para 45a SGB XI für den Landkreis Böblingen. Pflegekassen-Direktabrechnung."
+  title="Messie-Hilfe und Vollräumung Sindelfingen | Katharis"
+  description="Anerkannter Anbieter für Entlastungsleistungen in Sindelfingen. §45a SGB XI für den Landkreis Böblingen. Pflegekassen-Direktabrechnung, Vor-Ort-Termin in 3-7 Tagen ab Olgastraße Böblingen."
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 
   <!-- Hero -->
@@ -29,7 +56,8 @@ const breadcrumbSchema = generateBreadcrumbListSchema([
       <h1 class="text-4xl font-bold text-primary mt-4">Entlastungsleistungen in Sindelfingen</h1>
       <p class="mt-4 text-lg text-primary/80">{hooks.master}</p>
       <p class="mt-2 text-sm text-primary/80">
-        Anerkannt nach Paragraph 45a SGB XI für den gesamten Landkreis Böblingen, Sindelfingen eingeschlossen.
+        Anerkannt nach Paragraph 45a SGB XI für den gesamten Landkreis Böblingen, Sindelfingen
+        eingeschlossen. Operative Zentrale Böblingen Olgastraße 8, nur 8 bis 12 Minuten entfernt.
       </p>
       <div class="flex flex-col sm:flex-row gap-3 mt-8">
         <CallCTA client:load />
@@ -38,49 +66,88 @@ const breadcrumbSchema = generateBreadcrumbListSchema([
     </div>
   </section>
 
-  <!-- Was wir in Sindelfingen anbieten -->
+  <!-- Was wir in Sindelfingen leisten -->
   <section class="py-12 max-w-content mx-auto px-4">
     <h2 class="text-2xl font-bold text-primary mb-4">Was wir in Sindelfingen leisten</h2>
     <p class="text-primary/80">
-      Wir sind spezialisiert auf komplexe Entlastungsleistungen für Pflegebedürftige: Messie-Hilfe in stark
-      verwahrlosten Wohnungen, Vollräumungen vor dem Pflegeheim-Umzug mit knapper Vermieter-Frist, sowie
-      Tiefenreinigungen die normale Reinigungsdienste nicht übernehmen. In Sindelfingen sind wir regelmäßig
-      tätig, von Mercedes-Werk-Stadt-Süd bis Maichingen.
+      Wir sind in Sindelfingen regelmäßig im Einsatz, mit Schwerpunkt auf komplexen
+      Entlastungsleistungen für Pflegebedürftige:
     </p>
+    <ul class="mt-3 space-y-2 text-primary/80 list-disc list-inside">
+      <li><strong>Messie-Hilfe</strong> bei Verwahrlosung der Wohnung, mit Tiefenreinigung und diskreter Vor-Ort-Begehung</li>
+      <li><strong>Vollräumung vor dem Pflegeheim-Umzug</strong> mit Erbstück-Sicherung und besenreiner Vermieter-Übergabe</li>
+      <li><strong>Pflegekassen-Direktabrechnung</strong> bei vorhandenem Pflegegrad, ohne Vorkasse durch die Familie</li>
+      <li><strong>Hygiene- und Geruchsbeseitigung</strong>, vor denen Standard-Reinigungsdienste zurückschrecken</li>
+    </ul>
     <p class="mt-4 text-primary/80">
-      Anfahrt aus unserer Zentrale Böblingen: typisch 8 bis 12 Minuten. Wir kommen kostenlos zur
-      Vor-Ort-Begehung, transparente Kostenabklärung vor Auftragsbeginn.
+      In Sindelfingen sind wir in der Innenstadt rund um die Goldberg-Allee, in Wohngebieten Richtung
+      Maichingen und in der Mercedes-Werk-Stadt-Süd regelmäßig tätig. Anfahrt aus unserer Zentrale
+      Böblingen 8 bis 12 Minuten, in eiligen Fällen auch schneller.
     </p>
   </section>
 
-  <!-- Pflegekassen-Direktabrechnung -->
+  <!-- Stadtteile + Anfahrt -->
   <section class="py-12 bg-white">
     <div class="max-w-content mx-auto px-4">
-      <h2 class="text-2xl font-bold text-primary mb-4">Pflegekassen-Direktabrechnung in Sindelfingen</h2>
-      <p class="text-primary/80">
-        Sindelfingen gehört zum Landkreis Böblingen. Unsere Anerkennung nach Paragraph 45a SGB XI für den
-        Landkreis Böblingen umfasst auch Sindelfingen vollumfänglich. Das bedeutet: bei vorhandenem Pflegegrad
-        ab 1 können Sie unsere Leistung direkt mit Ihrer Pflegekasse abrechnen, ohne Vorkasse.
-      </p>
+      <h2 class="text-2xl font-bold text-primary mb-4">Stadtteile und Anfahrtszeiten</h2>
+      <ul class="mt-3 space-y-1 text-primary/80 list-disc list-inside">
+        <li>Sindelfingen Mitte (Goldberg, Hinterweil, Königsknoll): 8 bis 10 Minuten ab Böblingen</li>
+        <li>Maichingen: 10 bis 14 Minuten ab Böblingen</li>
+        <li>Werk-Stadt-Süd und Industrie-Gürtel: 8 bis 12 Minuten</li>
+        <li>Anbindung Richtung Stuttgart über A8 / Stadt Stuttgart: 25 bis 30 Minuten</li>
+      </ul>
       <p class="mt-4 text-primary/80">
-        Welche Pflegekassen-Töpfe für Ihre Situation greifen, klären wir kostenlos im Erstgespräch
-        am Telefon. Mehr zum Hintergrund auf <a href="/pflegekasse/" class="underline text-accent-dark">Pflegekassen-Leistungen</a>.
+        Pflegekassen-Direktabrechnung greift in allen Sindelfinger Stadtteilen vollumfänglich. Auch in
+        Maichingen rechnen wir nach Paragraph 45a SGB XI direkt mit der Pflegekasse ab.
       </p>
     </div>
   </section>
 
-  <!-- Beratung vor Ort -->
+  <!-- Pflegekassen-Direktabrechnung -->
   <section class="py-12 max-w-content mx-auto px-4">
-    <h2 class="text-2xl font-bold text-primary mb-4">Kostenlose Pflegeberatung in Sindelfingen</h2>
+    <h2 class="text-2xl font-bold text-primary mb-4">Pflegekassen-Direktabrechnung in Sindelfingen</h2>
     <p class="text-primary/80">
-      Inhaltliche Beratung zu Pflegegraden und Leistungs-Ansprüchen ist nicht unsere Aufgabe. Dafür gibt
-      es den <strong>Pflegestützpunkt Landkreis Böblingen</strong> in Böblingen, der für alle Gemeinden im
-      Landkreis kostenlos berät. Wir helfen Ihnen gerne, den richtigen Kontakt herzustellen.
+      Sindelfingen gehört zum Landkreis Böblingen. Unsere Anerkennung nach Paragraph 45a SGB XI für
+      den Landkreis Böblingen umfasst Sindelfingen vollumfänglich. Bei vorhandenem Pflegegrad ab 1
+      können Sie unsere Leistung direkt mit Ihrer Pflegekasse abrechnen, ohne Vorkasse.
     </p>
     <p class="mt-4 text-primary/80">
-      Bundesweit ist die <strong>Compass Pflegeberatung</strong> kostenlos erreichbar:
-      0800 101 88 00. Compass-Berater kommen auf Wunsch auch zum Hausbesuch in Sindelfingen.
+      Welche Töpfe in Ihrer Situation greifen, klären wir kostenlos im Erstgespräch. Hintergrund auf
+      <a href="/pflegekasse/" class="underline text-accent-dark">Pflegekassen-Übersicht</a> und im
+      <a href="/ratgeber/pflegekasse-entlastung/" class="underline text-accent-dark">Ratgeber Pflegekasse und Entlastung</a>.
     </p>
+  </section>
+
+  <!-- Beratung vor Ort -->
+  <section class="py-12 bg-white">
+    <div class="max-w-content mx-auto px-4">
+      <h2 class="text-2xl font-bold text-primary mb-4">Kostenlose Pflegeberatung in Sindelfingen</h2>
+      <p class="text-primary/80">
+        Inhaltliche Pflegekassen-Beratung ist nicht unsere Aufgabe. Dafür gibt es kostenlose und
+        neutrale Anlaufstellen:
+      </p>
+      <ul class="mt-3 space-y-1 text-primary/80 list-disc list-inside">
+        <li><strong>Pflegestützpunkt Landkreis Böblingen</strong> in Böblingen, zuständig für ganz Sindelfingen</li>
+        <li><strong>Compass Pflegeberatung</strong> bundesweit unter 0800 101 88 00, auch mit Hausbesuch</li>
+        <li>Ihre Hausärztin oder Ihr Hausarzt als erste Anlaufstelle für medizinische Klärung</li>
+      </ul>
+      <p class="mt-4 text-primary/80">
+        Wir vermitteln Ihnen gerne den richtigen Kontakt.
+      </p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-12 max-w-content mx-auto px-4">
+    <h2 class="text-2xl font-bold text-primary mb-6">Häufige Fragen aus Sindelfingen</h2>
+    <div class="space-y-3">
+      {faqs.map((faq) => (
+        <details class="border border-primary/20 rounded-lg p-4 bg-background/30">
+          <summary class="font-bold text-primary cursor-pointer">{faq.question}</summary>
+          <p class="mt-3 text-primary/80 text-sm">{faq.answer}</p>
+        </details>
+      ))}
+    </div>
   </section>
 
   <!-- Final CTA -->

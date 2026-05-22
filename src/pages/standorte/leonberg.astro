@@ -1,11 +1,37 @@
 ---
 import PageLayout from '@layouts/PageLayout.astro';
 import { hooks } from '@data/content';
-import { generateLocalBusinessSchema, generateBreadcrumbListSchema } from '@lib/schema-org';
+import { generateLocalBusinessSchema, generateFAQPageSchema, generateBreadcrumbListSchema } from '@lib/schema-org';
 import CallCTA from '@components/CallCTA';
 import RueckrufButton from '@components/RueckrufButton';
 
 const localBusinessSchema = generateLocalBusinessSchema({ areaServed: ['Leonberg', 'Landkreis Böblingen'] });
+
+const faqs = [
+  {
+    question: 'Kommen Sie wirklich nach Leonberg?',
+    answer:
+      'Ja, regelmäßig. Anfahrt aus unserer operativen Zentrale Böblingen Olgastraße 8 typisch 18 bis 25 Minuten, je nach Verkehrslage auf der A8 und Strecke durch das Heckengäu.',
+  },
+  {
+    question: 'Welche Pflegestützpunkte sind für Leonberg zuständig?',
+    answer:
+      'Der Pflegestützpunkt Landkreis Böblingen in Böblingen ist auch für Leonberger Klienten zuständig, neutral und kostenfrei. Bundesweit ist die Compass Pflegeberatung unter 0800 101 88 00 erreichbar, auch mit Hausbesuch in Leonberg.',
+  },
+  {
+    question: 'Bedienen Sie auch Eltingen und Höfingen?',
+    answer:
+      'Ja, alle Leonberger Stadtteile sind Teil unseres Anerkennungs-Gebiets. Eltingen, Höfingen, Ramtel, Warmbronn und Gebersheim erreichen wir aus Böblingen typisch in 20 bis 28 Minuten.',
+  },
+  {
+    question: 'Wie schnell können Sie nach Leonberg kommen?',
+    answer:
+      'Vor-Ort-Termin innerhalb von 3 bis 7 Tagen. Bei Vermieter-Druck oder akuter Verwahrlosung priorisieren wir. Erstgespräch am Telefon noch am gleichen oder nächsten Werktag.',
+  },
+];
+
+const faqSchema = generateFAQPageSchema(faqs);
+
 const breadcrumbSchema = generateBreadcrumbListSchema([
   { name: 'Start', url: 'https://katharis.de/' },
   { name: 'Standorte', url: 'https://katharis.de/standorte/' },
@@ -14,10 +40,11 @@ const breadcrumbSchema = generateBreadcrumbListSchema([
 ---
 
 <PageLayout
-  title="Entlastungsleistungen Leonberg | Katharis"
-  description="Spezialist für Entlastungsleistungen in Leonberg. Anerkannt nach Para 45a SGB XI für den Landkreis Böblingen. Pflegekassen-Direktabrechnung."
+  title="Messie-Hilfe und Vollräumung Leonberg | Katharis"
+  description="Anerkannter Anbieter für Entlastungsleistungen in Leonberg. §45a SGB XI für den Landkreis Böblingen. Pflegekassen-Direktabrechnung, Vor-Ort-Termin in 3-7 Tagen ab Böblingen."
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 
   <!-- Hero -->
@@ -29,7 +56,8 @@ const breadcrumbSchema = generateBreadcrumbListSchema([
       <h1 class="text-4xl font-bold text-primary mt-4">Entlastungsleistungen in Leonberg</h1>
       <p class="mt-4 text-lg text-primary/80">{hooks.master}</p>
       <p class="mt-2 text-sm text-primary/80">
-        Anerkannt nach Paragraph 45a SGB XI für den gesamten Landkreis Böblingen, Leonberg eingeschlossen.
+        Anerkannt nach Paragraph 45a SGB XI für den gesamten Landkreis Böblingen, Leonberg
+        eingeschlossen. Operative Zentrale Böblingen, Anfahrt typisch 18 bis 25 Minuten.
       </p>
       <div class="flex flex-col sm:flex-row gap-3 mt-8">
         <CallCTA client:load />
@@ -38,51 +66,91 @@ const breadcrumbSchema = generateBreadcrumbListSchema([
     </div>
   </section>
 
-  <!-- Was wir in Leonberg anbieten -->
+  <!-- Was wir in Leonberg leisten -->
   <section class="py-12 max-w-content mx-auto px-4">
     <h2 class="text-2xl font-bold text-primary mb-4">Was wir in Leonberg leisten</h2>
     <p class="text-primary/80">
-      Leonberg liegt am westlichen Rand von Stuttgart, mit guter Anbindung Richtung Böblingen. Wir sind
-      regelmäßig in Leonberg im Einsatz, von der Altstadt um das Pomeranzengarten-Schloss bis Eltingen
-      und Höfingen. Schwerpunkt sind komplexe Entlastungsleistungen, vor denen Standard-Anbieter
-      zurückschrecken: Messie-Wohnungen, Vollräumungen vor knapper Heimumzug-Frist, Tiefenreinigung mit
-      Hygieneschulung.
+      Leonberg liegt am westlichen Rand des Stuttgarter Ballungsraums, mit Anbindung über die A8
+      nach Stuttgart-West und über die B295 ins Heckengäu. Wir sind in Leonberg regelmäßig im
+      Einsatz mit Schwerpunkt auf komplexen Entlastungsleistungen:
     </p>
+    <ul class="mt-3 space-y-2 text-primary/80 list-disc list-inside">
+      <li><strong>Messie-Hilfe</strong> bei Verwahrlosung der Wohnung, mit Tiefenreinigung und diskreter Vor-Ort-Begehung</li>
+      <li><strong>Vollräumung vor dem Pflegeheim-Umzug</strong> mit Erbstück-Sicherung und besenreiner Vermieter-Übergabe</li>
+      <li><strong>Pflegekassen-Direktabrechnung</strong> bei vorhandenem Pflegegrad, ohne Vorkasse durch die Familie</li>
+      <li><strong>Hygiene- und Geruchsbeseitigung</strong>, vor denen Standard-Reinigungsdienste zurückschrecken</li>
+    </ul>
     <p class="mt-4 text-primary/80">
-      Anfahrt aus unserer Zentrale Böblingen: typisch 18 bis 25 Minuten. Vor-Ort-Begehung kostenlos,
-      Kostenrahmen besprechen wir transparent vor Auftragsbeginn.
+      In Leonberg arbeiten wir regelmäßig in der historischen Altstadt um den Marktplatz und den
+      Pomeranzengarten, in Eltingen, in den Wohngebieten Richtung Höfingen sowie in Warmbronn und
+      Gebersheim. Anfahrt aus Böblingen typisch 18 bis 25 Minuten je nach A8-Verkehr.
     </p>
   </section>
 
-  <!-- Pflegekassen-Direktabrechnung -->
+  <!-- Stadtteile + Anfahrt -->
   <section class="py-12 bg-white">
     <div class="max-w-content mx-auto px-4">
-      <h2 class="text-2xl font-bold text-primary mb-4">Pflegekassen-Direktabrechnung in Leonberg</h2>
-      <p class="text-primary/80">
-        Leonberg gehört zum Landkreis Böblingen. Unsere Anerkennung nach Paragraph 45a SGB XI deckt auch
-        Leonberg ab. Bei vorhandenem Pflegegrad ab 1 rechnen wir die Leistung direkt mit Ihrer Pflegekasse
-        ab, Sie müssen die Kosten nicht vorstrecken.
-      </p>
+      <h2 class="text-2xl font-bold text-primary mb-4">Stadtteile und Anfahrtszeiten</h2>
+      <ul class="mt-3 space-y-1 text-primary/80 list-disc list-inside">
+        <li>Leonberg Mitte und Altstadt: 18 bis 22 Minuten ab Böblingen</li>
+        <li>Eltingen: 18 bis 22 Minuten</li>
+        <li>Höfingen: 20 bis 25 Minuten</li>
+        <li>Ramtel: 20 bis 25 Minuten</li>
+        <li>Warmbronn und Gebersheim: 22 bis 28 Minuten</li>
+        <li>Anbindung Stuttgart-West über A8: zusätzlich 10 bis 20 Minuten</li>
+      </ul>
       <p class="mt-4 text-primary/80">
-        Welche Pflegekassen-Töpfe für Ihre Situation greifen, besprechen wir kostenlos am Telefon im
-        Erstgespräch. Mehr zum Hintergrund auf <a href="/pflegekasse/" class="underline text-accent-dark">Pflegekassen-Leistungen</a>
-        und <a href="/pflegegrad-antrag/" class="underline text-accent-dark">Pflegegrad-Antrag</a>.
+        Pflegekassen-Direktabrechnung greift in allen Leonberger Stadtteilen. Auch in den nördlichen
+        Teilbezirken Höfingen und Ramtel rechnen wir nach Paragraph 45a SGB XI direkt mit der
+        Pflegekasse ab.
       </p>
     </div>
   </section>
 
-  <!-- Beratung vor Ort -->
+  <!-- Pflegekassen-Direktabrechnung -->
   <section class="py-12 max-w-content mx-auto px-4">
-    <h2 class="text-2xl font-bold text-primary mb-4">Kostenlose Pflegeberatung in Leonberg</h2>
+    <h2 class="text-2xl font-bold text-primary mb-4">Pflegekassen-Direktabrechnung in Leonberg</h2>
     <p class="text-primary/80">
-      Für inhaltliche Pflegekassen-Beratung verweisen wir gerne an den <strong>Pflegestützpunkt Landkreis
-      Böblingen</strong> in Böblingen. Der Pflegestützpunkt berät kostenlos und neutral, auch für Klienten
-      aus Leonberg. Wir vermitteln Ihnen den richtigen Kontakt.
+      Leonberg gehört zum Landkreis Böblingen. Unsere Anerkennung nach Paragraph 45a SGB XI deckt
+      Leonberg vollständig ab. Bei vorhandenem Pflegegrad ab 1 rechnen wir die Leistung direkt mit
+      Ihrer Pflegekasse ab, Sie strecken nichts vor.
     </p>
     <p class="mt-4 text-primary/80">
-      Bundesweit ist die <strong>Compass Pflegeberatung</strong> kostenlos erreichbar:
-      0800 101 88 00. Compass-Berater bieten auch Hausbesuche in Leonberg an.
+      Welche Töpfe für Ihre Situation passen, klären wir kostenlos am Telefon. Hintergrund auf
+      <a href="/pflegekasse/" class="underline text-accent-dark">Pflegekassen-Übersicht</a> und im
+      <a href="/ratgeber/pflegekasse-entlastung/" class="underline text-accent-dark">Ratgeber Pflegekasse und Entlastung</a>.
     </p>
+  </section>
+
+  <!-- Beratung vor Ort -->
+  <section class="py-12 bg-white">
+    <div class="max-w-content mx-auto px-4">
+      <h2 class="text-2xl font-bold text-primary mb-4">Kostenlose Pflegeberatung in Leonberg</h2>
+      <p class="text-primary/80">
+        Inhaltliche Pflegekassen-Beratung erhalten Sie kostenlos und neutral bei:
+      </p>
+      <ul class="mt-3 space-y-1 text-primary/80 list-disc list-inside">
+        <li><strong>Pflegestützpunkt Landkreis Böblingen</strong> in Böblingen, zuständig für ganz Leonberg</li>
+        <li><strong>Compass Pflegeberatung</strong> bundesweit unter 0800 101 88 00, auch mit Hausbesuch in Leonberg</li>
+        <li>Ihre Hausärztin oder Ihr Hausarzt als erste Anlaufstelle</li>
+      </ul>
+      <p class="mt-4 text-primary/80">
+        Wir vermitteln Ihnen gerne den richtigen Kontakt.
+      </p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-12 max-w-content mx-auto px-4">
+    <h2 class="text-2xl font-bold text-primary mb-6">Häufige Fragen aus Leonberg</h2>
+    <div class="space-y-3">
+      {faqs.map((faq) => (
+        <details class="border border-primary/20 rounded-lg p-4 bg-background/30">
+          <summary class="font-bold text-primary cursor-pointer">{faq.question}</summary>
+          <p class="mt-3 text-primary/80 text-sm">{faq.answer}</p>
+        </details>
+      ))}
+    </div>
   </section>
 
   <!-- Final CTA -->
