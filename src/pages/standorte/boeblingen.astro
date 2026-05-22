@@ -14,8 +14,8 @@ const breadcrumbSchema = generateBreadcrumbListSchema([
 ---
 
 <PageLayout
-  title="Katharis in Böblingen - operative Zentrale"
-  description="Anerkannt nach Para 45a SGB XI für den gesamten Landkreis Böblingen. Operative Zentrale Olgastraße 8."
+  title="Katharis Böblingen: operative Zentrale Olgastraße 8 | Katharis"
+  description="Operative Zentrale in der Olgastraße 8 Böblingen. Anerkannt nach Para 45a SGB XI für den gesamten Landkreis Böblingen. Pflegekassen-Direktabrechnung, Vor-Ort-Begehung kostenlos."
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
@@ -26,9 +26,12 @@ const breadcrumbSchema = generateBreadcrumbListSchema([
       <p class="text-sm text-primary/80">
         <a href="/" class="underline">Start</a> &rsaquo; <a href="/standorte/" class="underline">Standorte</a> &rsaquo; Böblingen
       </p>
-      <h1 class="text-4xl font-bold text-primary mt-4">Katharis in Böblingen - operative Zentrale</h1>
+      <h1 class="text-4xl font-bold text-primary mt-4">Katharis in Böblingen: operative Zentrale</h1>
       <p class="mt-4 text-lg text-primary/80">{hooks.master}</p>
-      <p class="mt-2 text-sm text-primary/80">Anerkannt nach Para 45a SGB XI für den gesamten Landkreis Böblingen.</p>
+      <p class="mt-2 text-sm text-primary/80">
+        Anerkannt nach Paragraph 45a SGB XI für den gesamten Landkreis Böblingen. Olgastraße 8 in Böblingen
+        ist unsere operative Zentrale, von hier aus organisieren wir alle Einsätze.
+      </p>
       <div class="flex flex-col sm:flex-row gap-3 mt-8">
         <CallCTA client:load />
         <RueckrufButton client:load sourceCta="rueckruf-boeblingen-hero" />
@@ -36,13 +39,24 @@ const breadcrumbSchema = generateBreadcrumbListSchema([
     </div>
   </section>
 
-  <!-- Was wir in Böblingen anbieten -->
+  <!-- Was wir in Böblingen leisten -->
   <section class="py-12 max-w-content mx-auto px-4">
-    <h2 class="text-2xl font-bold text-primary mb-4">Was wir in Böblingen anbieten</h2>
+    <h2 class="text-2xl font-bold text-primary mb-4">Was wir in Böblingen leisten</h2>
     <p class="text-primary/80">
-      Böblingen ist unsere operative Zentrale. Von hier aus bedienen wir Stadt Stuttgart und den gesamten
-      Landkreis Böblingen mit komplexen Entlastungsleistungen: Messie-Hilfe, Vollräumungen vor dem Heimumzug,
-      Vermieter-Übergabe besenrein.
+      Böblingen ist unsere operative Zentrale. Von hier aus bedienen wir die Stadt Böblingen, den
+      gesamten Landkreis Böblingen sowie die Stadt Stuttgart mit komplexen Entlastungsleistungen für
+      Pflegebedürftige. Schwerpunkte:
+    </p>
+    <ul class="mt-3 space-y-2 text-primary/80 list-disc list-inside">
+      <li><strong>Messie-Hilfe</strong> bei Verwahrlosung der Wohnung, mit diskreter Vor-Ort-Begehung und Tiefenreinigung</li>
+      <li><strong>Vollräumung vor dem Pflegeheim-Umzug</strong>, mit Erbstück-Sicherung und besenreiner Vermieter-Übergabe</li>
+      <li><strong>Pflegekassen-Direktabrechnung</strong> bei vorhandenem Pflegegrad, ohne Vorkasse durch die Familie</li>
+      <li><strong>Hygiene- und Geruchsbeseitigung</strong> in Fällen, vor denen normale Reinigungsdienste zurückschrecken</li>
+    </ul>
+    <p class="mt-4 text-primary/80">
+      In Böblingen selbst sind wir regelmäßig in allen Stadtteilen tätig: Stadtmitte, Hulb,
+      Diezenhalde, Tannenberg, Rauher Kapf, Dagersheim und Darmsheim. Anfahrt zu Klienten in Böblingen
+      typisch unter 10 Minuten ab Olgastraße.
     </p>
   </section>
 
@@ -52,7 +66,7 @@ const breadcrumbSchema = generateBreadcrumbListSchema([
       <h2 class="text-2xl font-bold text-primary mb-4">Adresse und Erreichbarkeit</h2>
       <div class="bg-background/50 p-6 rounded-xl">
         <p class="text-primary/80">
-          <strong>Operative Zentrale:</strong><br />
+          <strong>Operative Zentrale Böblingen:</strong><br />
           {kontakt.adresse.operativeZentrale.strasse}<br />
           {kontakt.adresse.operativeZentrale.plz} {kontakt.adresse.operativeZentrale.ort}
         </p>
@@ -61,21 +75,64 @@ const breadcrumbSchema = generateBreadcrumbListSchema([
           <strong>Email:</strong> <a href={`mailto:${kontakt.email}`} class="hover:underline text-accent-dark">{kontakt.email}</a><br />
           <strong>Geschäftszeiten:</strong> {kontakt.oeffnungszeiten}
         </p>
+        <p class="text-primary/80 mt-4 text-sm">
+          Persönliche Termine in der Olgastraße nur nach Vereinbarung. Wir kommen für die unverbindliche
+          Begehung zu Ihnen, das ist meistens niedrigschwelliger.
+        </p>
       </div>
     </div>
   </section>
 
-  <!-- Einzugsgebiet -->
+  <!-- Pflegekassen-Direktabrechnung -->
   <section class="py-12 max-w-content mx-auto px-4">
-    <h2 class="text-2xl font-bold text-primary mb-4">Einzugsgebiet Landkreis Böblingen</h2>
+    <h2 class="text-2xl font-bold text-primary mb-4">Pflegekassen-Direktabrechnung in Böblingen</h2>
     <p class="text-primary/80">
-      Wir bedienen alle Gemeinden im Landkreis Böblingen, darunter Sindelfingen, Leonberg, Herrenberg,
-      Weil der Stadt, Holzgerlingen, Schönaich und weitere. Anfahrt aus Böblingen typisch 5 bis 25 Minuten.
+      Für den Landkreis Böblingen haben wir die Anerkennung nach Paragraph 45a SGB XI. Bei vorhandenem
+      Pflegegrad ab 1 rechnen wir unsere Entlastungsleistung direkt mit Ihrer Pflegekasse ab. Sie strecken
+      nichts vor.
     </p>
     <p class="mt-4 text-primary/80">
-      Pflegekassen-Direkt-Abrechnung greift im Landkreis Böblingen vollumfänglich. Bei Sub-Standorten wie
-      Sindelfingen, Leonberg oder Herrenberg klären wir die Bescheid-Spezifika gegebenenfalls vor
-      Auftragsbeginn mit Ihrer Pflegekasse.
+      Welche Töpfe in Ihrer konkreten Situation greifen, klären wir kostenlos am Telefon. Hintergrund-Erklärung
+      auf <a href="/pflegekasse/" class="underline text-accent-dark">Pflegekassen-Übersicht</a> und im Ratgeber
+      <a href="/ratgeber/pflegekasse-entlastung/" class="underline text-accent-dark">Pflegekasse und Entlastung</a>.
+    </p>
+  </section>
+
+  <!-- Einzugsgebiet -->
+  <section class="py-12 bg-white">
+    <div class="max-w-content mx-auto px-4">
+      <h2 class="text-2xl font-bold text-primary mb-4">Einzugsgebiet Landkreis Böblingen</h2>
+      <p class="text-primary/80">
+        Aus der Olgastraße 8 bedienen wir alle Gemeinden im Landkreis Böblingen. Typische Anfahrtszeiten:
+      </p>
+      <ul class="mt-3 space-y-1 text-primary/80 list-disc list-inside">
+        <li>Sindelfingen: 8 bis 12 Minuten</li>
+        <li>Holzgerlingen, Schönaich: 10 bis 15 Minuten</li>
+        <li>Leonberg: 18 bis 25 Minuten</li>
+        <li>Herrenberg: 20 bis 28 Minuten</li>
+        <li>Weil der Stadt, Deckenpfronn: 25 bis 35 Minuten</li>
+        <li>Stadt Stuttgart über A81: 25 bis 30 Minuten je nach Stadtbezirk und Verkehr</li>
+      </ul>
+      <p class="mt-4 text-primary/80">
+        Für Klienten in Sindelfingen, Leonberg und Herrenberg gibt es eigene Standort-Seiten mit
+        lokalen Details. Pflegekassen-Direktabrechnung greift im gesamten Landkreis Böblingen.
+      </p>
+    </div>
+  </section>
+
+  <!-- Pflegestützpunkt -->
+  <section class="py-12 max-w-content mx-auto px-4">
+    <h2 class="text-2xl font-bold text-primary mb-4">Kostenlose Pflegeberatung in Böblingen</h2>
+    <p class="text-primary/80">
+      Inhaltliche Pflegeberatung ist kostenlos und unabhängig:
+    </p>
+    <ul class="mt-3 space-y-1 text-primary/80 list-disc list-inside">
+      <li><strong>Pflegestützpunkt Landkreis Böblingen</strong> in Böblingen, neutral und kostenfrei</li>
+      <li><strong>Compass Pflegeberatung</strong> bundesweit unter 0800 101 88 00, auch mit Hausbesuch</li>
+      <li><strong>Hausärztin oder Hausarzt</strong> als erste Anlaufstelle für medizinische Klärung</li>
+    </ul>
+    <p class="mt-4 text-primary/80">
+      Wir helfen Ihnen gerne, den passenden Beratungs-Kontakt herzustellen.
     </p>
   </section>
 
@@ -83,6 +140,7 @@ const breadcrumbSchema = generateBreadcrumbListSchema([
   <section class="py-16 bg-background text-center">
     <div class="max-w-2xl mx-auto px-4">
       <h2 class="text-3xl font-bold text-primary">Sprechen wir.</h2>
+      <p class="mt-4 text-primary/80">Im kostenlosen Erstgespräch klären wir Ihre Pflegekassen-Optionen.</p>
       <div class="flex flex-col sm:flex-row gap-3 mt-6 justify-center">
         <CallCTA client:load />
         <RueckrufButton client:load sourceCta="rueckruf-boeblingen-final" />

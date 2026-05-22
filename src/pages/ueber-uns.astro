@@ -15,6 +15,40 @@ const portraits: Record<string, ImageMetadata> = {
 
 const SITE_URL = 'https://katharis.de';
 
+const personKnowsAbout: Record<string, string[]> = {
+  'Daniel Altenhof': [
+    'Pflegekassen-Direktabrechnung nach §45a SGB XI',
+    '§42a Gemeinsamer Jahresbetrag SGB XI',
+    '§45b Entlastungsbetrag SGB XI',
+    'Pflegegrad-Antragsverfahren',
+    'Koordination mit Pflegestützpunkten in Stuttgart und Böblingen',
+  ],
+  'Kemal David Gülcü': [
+    'Operative Durchführung von Entlastungsleistungen',
+    'Vor-Ort-Begehung und Auftragsplanung',
+    'Hygiene- und Sicherheits-Standards bei Verwahrlosung',
+    'Sortierung, Tiefenreinigung, Vermieter-Übergabe',
+    'Team-Koordination im Spezialisten-Einsatz',
+  ],
+};
+
+const personVerantwortung: Record<string, string[]> = {
+  'Daniel Altenhof': [
+    'Erstgespräche am Telefon, Pflegekassen-Klärung',
+    'Vor-Ort-Begehung und Auftrags-Einschätzung',
+    'Pflegekassen-Direktabrechnung und Vertrags-Unterlagen',
+    'Kontakt zu Pflegestützpunkten und Sozialdiensten',
+    'Daten- und Diskretionsstandards',
+  ],
+  'Kemal David Gülcü': [
+    'Operative Leitung beim Vor-Ort-Einsatz',
+    'Koordination des Spezialisten-Teams',
+    'Qualitätssicherung Sortierung und Tiefenreinigung',
+    'Vermieter-Übergabe und Übergabe-Protokoll',
+    'Würdigungs- und Diskretions-Standards im Einsatz',
+  ],
+};
+
 const personSchemas = initiatoren.map((person) => ({
   '@context': 'https://schema.org',
   '@type': 'Person',
@@ -24,6 +58,19 @@ const personSchemas = initiatoren.map((person) => ({
   description: person.bio,
   image: `${SITE_URL}${person.foto}`,
   worksFor: { '@id': `${SITE_URL}/#organization` },
+  knowsAbout: personKnowsAbout[person.name] ?? [],
+  knowsLanguage: ['de'],
+  workLocation: {
+    '@type': 'Place',
+    name: 'Operative Zentrale Böblingen',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'Olgastraße 8',
+      addressLocality: 'Böblingen',
+      postalCode: '71032',
+      addressCountry: 'DE',
+    },
+  },
 }));
 
 const breadcrumbSchema = generateBreadcrumbListSchema([
@@ -33,8 +80,8 @@ const breadcrumbSchema = generateBreadcrumbListSchema([
 ---
 
 <PageLayout
-  title="Über Katharis - Initiator Daniel Altenhof | Stuttgart"
-  description="Daniel Altenhof und Kemal David Gülcü als Initiatoren von Katharis. Spezialist für Entlastungsleistungen in komplexen Pflegefällen, Stuttgart und LK Böblingen."
+  title="Über Katharis: Daniel Altenhof und Kemal David Gülcü | Stuttgart Böblingen"
+  description="Wer hinter Katharis steht: Daniel Altenhof und Kemal David Gülcü als Initiatoren und operative Leiter. Spezialist für Entlastungsleistungen in komplexen Pflegefällen. Anerkannt nach §45a SGB XI für Stuttgart und LK Böblingen."
 >
   {personSchemas.map((schema) => (
     <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
@@ -44,7 +91,10 @@ const breadcrumbSchema = generateBreadcrumbListSchema([
   <!-- Hero -->
   <section class="bg-background py-16">
     <div class="max-w-content mx-auto px-4">
-      <h1 class="text-4xl font-bold text-primary">Wer hinter Katharis steht</h1>
+      <p class="text-sm text-primary/80">
+        <a href="/" class="underline">Start</a> &rsaquo; Über uns
+      </p>
+      <h1 class="text-4xl font-bold text-primary mt-4">Wer hinter Katharis steht</h1>
       <p class="mt-4 text-lg text-primary/80">
         Spezialist für Entlastungsleistungen für Pflegebedürftige in komplexen Fällen.
         Anerkannt nach Paragraph 45a SGB XI für Stadt Stuttgart und Landkreis Böblingen.
@@ -52,25 +102,37 @@ const breadcrumbSchema = generateBreadcrumbListSchema([
     </div>
   </section>
 
-  <!-- Initiator-Profile mit Portraits -->
+  <!-- Initiator-Profile mit Verantwortungs-Bereichen -->
   <section class="py-12 max-w-content mx-auto px-4">
     {initiatoren.map((person) => (
-      <article class="mb-16 grid grid-cols-1 sm:grid-cols-[160px_1fr] gap-6 items-start">
+      <article class="mb-16 grid grid-cols-1 sm:grid-cols-[200px_1fr] gap-8 items-start">
         <Image
           src={portraits[person.foto]}
-          alt={`Portrait ${person.name}`}
-          width={160}
-          height={160}
-          class="rounded-xl object-cover w-40 h-40"
+          alt={`Portrait ${person.name}, ${person.rolle} bei Katharis`}
+          width={200}
+          height={200}
+          class="rounded-xl object-cover w-48 h-48"
           loading="lazy"
         />
         <div>
           <h2 class="text-2xl font-bold text-primary">{person.name}</h2>
-          <p class="text-sm text-primary/80 mt-1">{person.rolle}</p>
+          <p class="text-sm text-primary/70 mt-1">{person.rolle}</p>
           <p class="mt-4 text-primary/80">{person.bio}</p>
+          <h3 class="text-sm font-bold text-primary mt-6 mb-2">Was {person.name.split(' ')[0]} verantwortet</h3>
+          <ul class="space-y-1 text-sm text-primary/80 list-disc list-inside">
+            {personVerantwortung[person.name]?.map((item) => <li>{item}</li>)}
+          </ul>
+          <h3 class="text-sm font-bold text-primary mt-5 mb-2">Themen, in denen {person.name.split(' ')[0]} sich auskennt</h3>
+          <ul class="space-y-1 text-sm text-primary/80 list-disc list-inside">
+            {personKnowsAbout[person.name]?.map((item) => <li>{item}</li>)}
+          </ul>
         </div>
       </article>
     ))}
+    <p class="text-sm text-primary/70 mt-4">
+      Hinzu kommen sechs Spezialistinnen und Spezialisten im operativen Team, alle für die Arbeit
+      bei Verwahrlosung und Pflegefall vor Ort geschult.
+    </p>
   </section>
 
   <!-- Was uns unterscheidet -->
@@ -86,7 +148,7 @@ const breadcrumbSchema = generateBreadcrumbListSchema([
       <ol class="mt-6 space-y-4 list-decimal list-inside text-primary/80">
         <li>
           <strong>Pflegekassen-Direktabrechnung als Standard</strong> über unsere Anerkennung nach
-          Paragraph 45a SGB XI für Stadt Stuttgart und Landkreis Böblingen.
+          Paragraph 45a SGB XI für Stadt Stuttgart und Landkreis Böblingen. Sie strecken nichts vor.
         </li>
         <li>
           <strong>Diskrete und würdevolle Arbeitsweise</strong> als Markenkern. Neutrale Fahrzeuge,
@@ -96,12 +158,53 @@ const breadcrumbSchema = generateBreadcrumbListSchema([
           <strong>Administrative Antrags-Hilfe</strong> wenn der Pflegegrad noch fehlt. Inhaltliche
           Pflegeberatung gibt der Pflegestützpunkt kostenlos, dorthin verweisen wir aktiv.
         </li>
+        <li>
+          <strong>Erbstück-Sicherung als eigene Etappe</strong>: Sortierung mit Foto-Doku und Wertliste,
+          gemeinsam mit Familie wo gewünscht. Was bleiben soll, bleibt.
+        </li>
       </ol>
     </div>
   </section>
 
-  <!-- Trust-Indikatoren -->
+  <!-- Qualifikationen -->
   <section class="py-12 bg-background">
+    <div class="max-w-content mx-auto px-4">
+      <h2 class="text-2xl font-bold text-primary mb-6">Unsere Qualifikationen</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-white p-5 rounded-xl border border-primary/10">
+          <h3 class="font-bold text-primary">Paragraph 45a SGB XI Anerkennung</h3>
+          <p class="mt-2 text-sm text-primary/80">
+            Anerkannter Anbieter für Angebote zur Unterstützung im Alltag in Stadt Stuttgart und
+            Landkreis Böblingen. Voraussetzung für Pflegekassen-Direktabrechnung.
+          </p>
+        </div>
+        <div class="bg-white p-5 rounded-xl border border-primary/10">
+          <h3 class="font-bold text-primary">3 Mio Euro Berufshaftpflicht</h3>
+          <p class="mt-2 text-sm text-primary/80">
+            Sach- und Personenschäden ohne Selbstbeteiligung. Versicherer: andsafe AG.
+            Geltungsbereich Deutschland.
+          </p>
+        </div>
+        <div class="bg-white p-5 rounded-xl border border-primary/10">
+          <h3 class="font-bold text-primary">Hygiene- und Erste-Hilfe-Schulung</h3>
+          <p class="mt-2 text-sm text-primary/80">
+            Alle Vor-Ort-Mitarbeitenden mit aktueller Hygiene-Schulung und Erste-Hilfe-Auffrischung.
+            Hepatitis- und Tetanus-Impfschutz bei den Einsatz-Verantwortlichen aktuell.
+          </p>
+        </div>
+        <div class="bg-white p-5 rounded-xl border border-primary/10">
+          <h3 class="font-bold text-primary">Datenschutz nach DSGVO</h3>
+          <p class="mt-2 text-sm text-primary/80">
+            Vertragliche und technische Datenschutz-Standards für besonders schützenswerte
+            Klient-Daten. Auftragsverarbeitung mit Pflegekassen und Pflegestützpunkten klar geregelt.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust-Indikatoren -->
+  <section class="py-12 bg-white">
     <div class="max-w-content mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
       <div>
         <p class="text-4xl font-bold text-accent-dark">{trustIndikatoren.bilanzZahl}+</p>
@@ -115,6 +218,22 @@ const breadcrumbSchema = generateBreadcrumbListSchema([
         <p class="text-4xl font-bold text-accent-dark">3 Mio €</p>
         <p class="mt-2 text-primary/80 text-sm">Versichert für Sach- und Personenschäden ohne Selbstbeteiligung</p>
       </div>
+    </div>
+  </section>
+
+  <!-- Mission -->
+  <section class="py-12 bg-background">
+    <div class="max-w-content mx-auto px-4">
+      <h2 class="text-2xl font-bold text-primary mb-4">Wofür wir stehen</h2>
+      <p class="text-primary/80">
+        Wir nehmen Pflegefälle ernst, in denen die Wohnung nicht mehr trägt. Wir kommen ohne Wertung,
+        sortieren Erbstücke vor Müll, übergeben besenrein an den Vermieter. Und wir nutzen die
+        Pflegekassen-Töpfe, für die unsere Klientinnen und Klienten Beiträge gezahlt haben.
+      </p>
+      <p class="mt-4 text-primary/80">
+        Hinter Katharis steht der Anspruch, dass Würde nicht von Wohnungs-Zustand abhängt und dass
+        Pflege-Last nicht Ihre Familie ruinieren muss. Das ist der Kern.
+      </p>
     </div>
   </section>
 

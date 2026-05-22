@@ -1,23 +1,103 @@
 ---
 import PageLayout from '@layouts/PageLayout.astro';
 import { pflegekassenTöpfe } from '@data/content';
-import { generateBreadcrumbListSchema } from '@lib/schema-org';
+import { generateFAQPageSchema, generateHowToSchema, generateBreadcrumbListSchema, PERSON_DANIEL, PERSON_KEMAL } from '@lib/schema-org';
 import CallCTA from '@components/CallCTA';
 import RueckrufButton from '@components/RueckrufButton';
 
 const SITE_URL = 'https://katharis.de';
+
 const articleSchema = {
   '@context': 'https://schema.org',
   '@type': 'Article',
-  headline: 'Pflegekasse und Entlastungsleistungen 2026',
-  description: 'Welche Pflegekassen-Töpfe nach Para 45a/45b/42a/40 SGB XI Sie für eine Entlastung nutzen können.',
+  headline: 'Pflegekasse und Entlastungsleistungen 2026: Alle Töpfe im Überblick',
+  description:
+    'Welche Pflegekassen-Töpfe nach Paragraph 45a, 45b, 42a und 40 SGB XI Sie für Entlastungsleistungen kombinieren können. Voraussetzungen, Beträge, Antrags-Schritte 2026.',
   datePublished: '2026-05-07T00:00:00+02:00',
-  dateModified: '2026-05-07T00:00:00+02:00',
-  author: { '@type': 'Person', name: 'Daniel Altenhof', jobTitle: 'Initiator und operativer Leiter Katharis' },
+  dateModified: '2026-05-22T00:00:00+02:00',
+  author: PERSON_DANIEL,
+  reviewedBy: PERSON_KEMAL,
   image: `${SITE_URL}/og-image.png`,
   mainEntityOfPage: `${SITE_URL}/ratgeber/pflegekasse-entlastung/`,
   publisher: { '@id': `${SITE_URL}/#organization` },
 };
+
+const faqs = [
+  {
+    question: 'Brauche ich für Entlastungsleistungen einen Pflegegrad?',
+    answer:
+      'Ja. Der Entlastungsbetrag nach Paragraph 45b beginnt bei Pflegegrad 1. Die größeren Töpfe (Paragraph 42a Gemeinsamer Jahresbetrag, Paragraph 45a Absatz 4 Umwandlung) beginnen bei Pflegegrad 2. Ohne Pflegegrad gibt es keine Pflegekassen-Erstattung. Wir helfen aber beim Pflegegrad-Antrag, bei Bewilligung greifen die Töpfe rückwirkend ab Antragsdatum.',
+  },
+  {
+    question: 'Was bedeutet "anerkannter Anbieter nach Paragraph 45a SGB XI"?',
+    answer:
+      'Paragraph 45a regelt die Anerkennung von Anbietern für Angebote zur Unterstützung im Alltag. Nur anerkannte Anbieter können Entlastungsleistungen direkt mit der Pflegekasse abrechnen. Sie müssen die Kosten dann nicht vorstrecken. Katharis ist anerkannt für Stadt Stuttgart und Landkreis Böblingen.',
+  },
+  {
+    question: 'Welche Töpfe kann ich kombinieren?',
+    answer:
+      'Bei Pflegegrad 2 oder höher kombinieren wir typischerweise Paragraph 45b (131 Euro pro Monat), Paragraph 42a (bis 3.539 Euro pro Jahr) und Paragraph 45a Absatz 4 (bis 40 Prozent der Sachleistungen). In Einzelfällen kommt Paragraph 40 (bis 4.180 Euro Wohnumfeldverbesserung) dazu. Welche Kombination in Ihrer Situation greift, klären wir kostenlos im Erstgespräch.',
+  },
+  {
+    question: 'Wieso heißt es "bis zu 100 Prozent Kostenübernahme"?',
+    answer:
+      'Weil bei günstiger Topf-Kombination die Pflegekassen-Mittel die Kosten der Entlastungsleistung vollständig decken können. Die Aussage ist mit Disclaimer zu lesen: abhängig von Pflegegrad, freier Topf-Verfügbarkeit und Pflegekassen-Entscheidung im Einzelfall. Eine Garantie gibt es nicht.',
+  },
+  {
+    question: 'Was passiert mit nicht abgerufenen Beträgen?',
+    answer:
+      'Der Paragraph 45b Entlastungsbetrag wandert nicht abgerufen ins Folgejahr und verfällt am 30. Juni dieses Folgejahres endgültig. Der Paragraph 42a Gemeinsame Jahresbetrag ist ein Kalenderjahres-Topf, nicht abgerufene Anteile verfallen am 31. Dezember. Wir empfehlen, anstehende Entlastungsleistungen in der ersten Jahreshälfte zu organisieren, damit beide Töpfe optimal genutzt werden können.',
+  },
+  {
+    question: 'Wie funktioniert die Direktabrechnung in der Praxis?',
+    answer:
+      'Sie unterschreiben eine Abtretungserklärung. Wir rechnen unsere Leistung danach direkt mit Ihrer Pflegekasse ab. Sie sehen die Abrechnung als Information auf Ihrer Pflegekassen-Übersicht, müssen aber nichts vorstrecken. Differenz-Beträge über die Pflegekassen-Töpfe hinaus rechnen wir separat mit Ihnen ab und sprechen sie vor Auftragsbeginn klar an.',
+  },
+  {
+    question: 'Was tun, wenn die Pflegekasse den Antrag ablehnt?',
+    answer:
+      'Bei Ablehnung steht Ihnen das Widerspruchsverfahren offen, Frist vier Wochen nach Bescheid-Zustellung. Wir unterstützen mit Dokumentation des Bedarfs und mit fachlichen Bezügen zur Anerkennung. Der Pflegestützpunkt oder Compass Pflegeberatung kann beim Widerspruch ebenfalls helfen, kostenlos und unabhängig.',
+  },
+];
+
+const howToSchema = generateHowToSchema({
+  name: 'Pflegekassen-Entlastungsleistung beantragen',
+  description:
+    'In sieben Schritten von der ersten Sorge bis zur Direktabrechnung mit der Pflegekasse.',
+  steps: [
+    {
+      name: 'Pflegegrad prüfen',
+      text: 'Liegt bereits ein Pflegegrad vor? Wenn nein, Pflegegrad-Antrag bei der Pflegekasse stellen (formlos schriftlich). Bewilligung kann rückwirkend ab Antragsdatum gelten.',
+    },
+    {
+      name: 'Beratung einholen',
+      text: 'Kostenloses Erstgespräch beim Pflegestützpunkt, bei Compass Pflegeberatung (0800 101 88 00) oder direkt bei einem anerkannten Anbieter. Geklärt wird, welche Töpfe für Ihre Situation greifen.',
+    },
+    {
+      name: 'Anbieter wählen',
+      text: 'Nur ein nach Paragraph 45a SGB XI anerkannter Anbieter kann direkt mit der Pflegekasse abrechnen. Anerkennung gilt regional, deshalb gezielt im Landkreis oder in der Stadt suchen.',
+    },
+    {
+      name: 'Vor-Ort-Termin',
+      text: 'Unverbindliche Begehung der Wohnung mit dem Anbieter. Hier wird der Umfang der Leistung konkretisiert, Diskretion und Würdigung sind selbstverständlich.',
+    },
+    {
+      name: 'Abtretungserklärung',
+      text: 'Sie unterzeichnen die Abtretungserklärung, mit der die Pflegekassen-Mittel direkt an den Anbieter fließen. Differenz-Beträge werden vor Auftragsbeginn schriftlich vereinbart.',
+    },
+    {
+      name: 'Durchführung',
+      text: 'Der Anbieter führt die Leistung durch, dokumentiert Beginn, Umfang und Abschluss. Bei mehreren Tagen wird etappenweise gearbeitet.',
+    },
+    {
+      name: 'Direktabrechnung',
+      text: 'Der Anbieter rechnet direkt mit der Pflegekasse ab. Sie erhalten zur Information eine Abrechnungs-Kopie und sehen die Belastung auf Ihrer Pflegekassen-Übersicht.',
+    },
+  ],
+});
+
+const faqSchema = generateFAQPageSchema(faqs);
+
 const breadcrumbSchema = generateBreadcrumbListSchema([
   { name: 'Start', url: 'https://katharis.de/' },
   { name: 'Ratgeber', url: 'https://katharis.de/ratgeber/' },
@@ -26,10 +106,12 @@ const breadcrumbSchema = generateBreadcrumbListSchema([
 ---
 
 <PageLayout
-  title="Pflegekasse und Entlastung 2026 | Ratgeber Katharis"
-  description="Welche Pflegekassen-Töpfe nach Para 45a/45b/42a/40 SGB XI Sie für eine Entlastung nutzen können. 131 Euro pro Monat, bis 3.539 Euro pro Jahr, bis 4.180 Euro je Maßnahme."
+  title="Pflegekasse und Entlastung 2026: Alle Töpfe | Katharis"
+  description="Welche Pflegekassen-Töpfe Sie nach SGB XI für Entlastungsleistungen kombinieren können. §45b 131 Euro/Monat, §42a bis 3.539 Euro/Jahr, §45a Abs. 4 Umwandlung, §40 bis 4.180 Euro. Beantragung Schritt für Schritt."
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 
   <article class="max-w-content mx-auto px-4 py-12">
@@ -38,16 +120,19 @@ const breadcrumbSchema = generateBreadcrumbListSchema([
     </p>
     <h1 class="text-4xl font-bold text-primary mt-4">Pflegekasse und Entlastungsleistungen 2026</h1>
     <p class="text-sm text-primary/80 mt-2">
-      Verfasser: Daniel Altenhof, Initiator und operativer Leiter Katharis · Stand: 2026-05-07
+      Verfasser: Daniel Altenhof · Fachlich gegengelesen von Kemal David Gülcü · Stand: 2026-05-22
     </p>
 
     <p class="mt-8 text-primary/80">
-      Wer pflegebedürftige Angehörige hat, weiß: die operative Last kann immens werden. Das deutsche
-      Sozialgesetzbuch XI sieht mehrere Entlastungs-Töpfe vor, die kombinierbar sind. In Kombination
-      können sie bei Pflegegrad ab 2 oft die kompletten Kosten einer Entlastungsleistung decken.
+      Pflegende Angehörige tragen oft eine operative Last, die mit der Zeit immer schwerer wird. Das
+      Sozialgesetzbuch XI sieht für solche Situationen mehrere Entlastungs-Töpfe vor, die in Kombination
+      genutzt werden können. Bei Pflegegrad ab 2 lassen sich Entlastungsleistungen wie Messie-Hilfe,
+      Tiefenreinigung oder Vollräumung vor dem Heimumzug in vielen Fällen vollständig über die
+      Pflegekasse finanzieren. Dieser Ratgeber erklärt, welche Töpfe es 2026 gibt, wie sie zusammenspielen
+      und wie der Antrag in der Praxis abläuft.
     </p>
 
-    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Die vier wichtigsten Töpfe</h2>
+    <h2 class="text-2xl font-bold text-primary mt-10 mb-3">Die vier wichtigsten Töpfe nach SGB XI</h2>
     <div class="space-y-4 mt-4">
       {pflegekassenTöpfe.map((topf) => (
         <div class="border border-primary/20 rounded-lg p-4 bg-background/30">
@@ -58,28 +143,118 @@ const breadcrumbSchema = generateBreadcrumbListSchema([
       ))}
     </div>
 
-    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Was bedeutet anerkannter Anbieter nach Paragraph 45a?</h2>
+    <h2 class="text-2xl font-bold text-primary mt-10 mb-3">Beispiel-Rechnung Pflegegrad 3</h2>
     <p class="text-primary/80">
-      Para 45a SGB XI regelt die Anerkennung von Anbietern zur Unterstützung im Alltag. Anerkannte Anbieter
-      können Entlastungsleistungen direkt mit der Pflegekasse abrechnen. Sie als Klient müssen die Kosten
-      nicht vorstrecken. Anerkennungen werden je Bundesland und je Region erteilt. Katharis ist anerkannt für
-      Stadt Stuttgart und Landkreis Böblingen.
+      Eine Klientin mit Pflegegrad 3, die seit Januar 2026 keine Entlastungsleistungen abgerufen hat,
+      bringt diese Töpfe in einer Messie-Räumung im Mai 2026 mit ein:
+    </p>
+    <ul class="mt-3 space-y-2 text-primary/80 list-disc list-inside">
+      <li>
+        <strong>Paragraph 45b:</strong> 131 Euro pro Monat ab Januar = 655 Euro angesammelt bis Mai,
+        verfügbar ohne Antrag.
+      </li>
+      <li>
+        <strong>Paragraph 42a Gemeinsamer Jahresbetrag:</strong> bis 3.539 Euro pro Kalenderjahr,
+        Pflegegrad 3 unverbraucht.
+      </li>
+      <li>
+        <strong>Paragraph 45a Absatz 4 Umwandlung:</strong> Pflegegrad 3 Sachleistungs-Budget
+        1.497 Euro pro Monat, davon bis 40 Prozent umwandelbar in Entlastung, also bis 598 Euro
+        pro Monat.
+      </li>
+    </ul>
+    <p class="mt-4 text-primary/80">
+      In Summe ergibt sich in dieser Situation oft eine Pflegekassen-Deckung deutlich über 4.000 Euro
+      pro Jahr, abhängig von vorhandenem Restbetrag und Pflegekassen-Entscheidung im Einzelfall.
     </p>
 
-    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Was passiert wenn der Pflegegrad fehlt?</h2>
+    <h2 class="text-2xl font-bold text-primary mt-10 mb-3">Was Paragraph 45a-Anerkennung bedeutet</h2>
     <p class="text-primary/80">
-      Ein Pflegegrad-Antrag dauert typisch fünf bis 25 Wochen. In dieser Zeit können Sie bereits
-      Entlastungsleistungen in Anspruch nehmen, die bei Bewilligung rückwirkend ab Antragsdatum erstattet
-      werden können. Mehr dazu auf <a href="/pflegegrad-antrag/" class="underline text-accent-dark">Pflegegrad-Antrags-Hilfe</a>.
+      Nur ein nach Paragraph 45a SGB XI anerkannter Anbieter kann Entlastungsleistungen direkt mit der
+      Pflegekasse abrechnen. Anerkennungen werden regional erteilt, häufig auf Stadt- oder Landkreis-Ebene.
+      Katharis ist anerkannt für Stadt Stuttgart und Landkreis Böblingen. Außerhalb dieses
+      Geltungsbereichs können wir nicht abrechnen, in Einzelfällen bei Heim-Übergaben aber kooperieren.
     </p>
 
-    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Quellen</h2>
+    <h2 class="text-2xl font-bold text-primary mt-10 mb-3">In sieben Schritten zur Entlastungsleistung</h2>
+    <ol class="mt-4 space-y-4 text-primary/80 list-decimal list-inside">
+      <li>
+        <strong>Pflegegrad prüfen:</strong> Liegt bereits ein Pflegegrad vor? Wenn nein, Pflegegrad-Antrag
+        bei der Pflegekasse stellen, formlos schriftlich, mit Bewilligung rückwirkend ab Antragsdatum.
+        Siehe auch <a href="/pflegegrad-antrag/" class="underline text-accent-dark">Pflegegrad-Antrag</a>.
+      </li>
+      <li>
+        <strong>Beratung einholen:</strong> kostenloses Erstgespräch beim Pflegestützpunkt, bei Compass
+        Pflegeberatung (0800 101 88 00) oder direkt bei einem anerkannten Anbieter.
+      </li>
+      <li>
+        <strong>Anbieter wählen:</strong> nur ein nach Paragraph 45a SGB XI anerkannter Anbieter kann
+        direkt abrechnen. Anerkennung regional prüfen.
+      </li>
+      <li>
+        <strong>Vor-Ort-Termin:</strong> unverbindliche Begehung. Umfang der Leistung wird hier
+        konkretisiert.
+      </li>
+      <li>
+        <strong>Abtretungserklärung unterschreiben:</strong> ermöglicht die Direktabrechnung mit der
+        Pflegekasse. Differenz-Beträge werden vorab schriftlich vereinbart.
+      </li>
+      <li>
+        <strong>Durchführung:</strong> der Anbieter führt die Leistung durch, dokumentiert sie. Bei
+        mehreren Tagen etappenweise.
+      </li>
+      <li>
+        <strong>Direktabrechnung:</strong> der Anbieter rechnet direkt mit der Pflegekasse ab. Sie
+        erhalten Abrechnungs-Kopie zur Information.
+      </li>
+    </ol>
+
+    <h2 class="text-2xl font-bold text-primary mt-10 mb-3">Wenn kein Pflegegrad vorliegt</h2>
+    <p class="text-primary/80">
+      Ein Pflegegrad-Antrag dauert typisch fünf bis 25 Wochen. In dieser Wartezeit können bereits
+      Entlastungsleistungen privat erbracht werden, die bei späterer Bewilligung rückwirkend ab
+      Antragsdatum mit der Pflegekasse abgerechnet werden können. Voraussetzung: die Leistung wurde
+      von einem nach Paragraph 45a anerkannten Anbieter erbracht und es liegt eine entsprechende
+      Dokumentation vor. Wir besprechen das Risiko und die Optionen offen im Erstgespräch.
+    </p>
+
+    <h2 class="text-2xl font-bold text-primary mt-10 mb-3">Was nicht aus der Pflegekasse zahlbar ist</h2>
+    <ul class="mt-3 space-y-1 text-primary/80 list-disc list-inside">
+      <li>Reine Wohnungs-Renovierung ohne Pflege-Bezug (Tapeten, Maler)</li>
+      <li>Neumöbel oder Komfort-Ausstattung</li>
+      <li>Räumungen ohne Pflege-Anlass, zum Beispiel ein normaler Umzug</li>
+      <li>Leistungen, die nicht von einem anerkannten Anbieter erbracht werden</li>
+    </ul>
+    <p class="mt-4 text-primary/80">
+      In diesen Fällen rechnen wir privat ab, sprechen das aber transparent vor Auftragsbeginn an.
+    </p>
+
+    <h2 class="text-2xl font-bold text-primary mt-10 mb-3">Häufige Fragen</h2>
+    <div class="mt-4 space-y-3">
+      {faqs.map((faq) => (
+        <details class="border border-primary/20 rounded-lg p-4 bg-white">
+          <summary class="font-bold text-primary cursor-pointer">{faq.question}</summary>
+          <p class="mt-3 text-primary/80 text-sm">{faq.answer}</p>
+        </details>
+      ))}
+    </div>
+
+    <h2 class="text-2xl font-bold text-primary mt-10 mb-3">Verwandte Themen</h2>
+    <ul class="mt-3 space-y-1 text-primary/80 list-disc list-inside">
+      <li><a href="/pflegekasse/" class="underline text-accent-dark">Pflegekassen-Übersicht</a> mit allen Topf-Erklärungen</li>
+      <li><a href="/pflegegrad-antrag/" class="underline text-accent-dark">Pflegegrad-Antrag</a> Schritt-für-Schritt</li>
+      <li><a href="/ratgeber/md-begutachtung-vorbereiten/" class="underline text-accent-dark">MD-Begutachtung vorbereiten</a></li>
+      <li><a href="/ratgeber/pflegekasse-direktabrechnung/" class="underline text-accent-dark">Direktabrechnung mit der Pflegekasse</a></li>
+      <li><a href="/ratgeber/wohnumfeldverbesserung-antrag/" class="underline text-accent-dark">Paragraph 40 Wohnumfeldverbesserung beantragen</a></li>
+    </ul>
+
+    <h2 class="text-2xl font-bold text-primary mt-10 mb-3">Quellen</h2>
     <ul class="mt-3 space-y-1 text-primary/80 list-disc list-inside text-sm">
-      <li>gesetze-im-internet.de §45a, §45b, §42a, §40 SGB XI</li>
-      <li>Bundesgesundheitsministerium PUEG-Erklärungen</li>
-      <li>pflege.de Beträge 2026</li>
-      <li>pflegekompassmagazin.de Entlastungsbetrag 2026</li>
-      <li>Compass Pflegeberatung</li>
+      <li>gesetze-im-internet.de: §40, §42a, §45a, §45b SGB XI</li>
+      <li>Bundesgesundheitsministerium: PUEG-Erläuterungen, Pflege-Leistungen 2026</li>
+      <li>pflege.de: Aktuelle Beträge 2026</li>
+      <li>pflegekompassmagazin.de: Entlastungsbetrag 2026</li>
+      <li>Compass Pflegeberatung (0800 101 88 00)</li>
     </ul>
   </article>
 

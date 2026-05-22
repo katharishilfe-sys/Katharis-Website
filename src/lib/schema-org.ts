@@ -6,6 +6,22 @@ import { kontakt, traeger } from '@data/content';
 
 const SITE_URL = 'https://katharis.de';
 
+export const PERSON_DANIEL = {
+  '@type': 'Person',
+  '@id': `${SITE_URL}/ueber-uns/#daniel`,
+  name: 'Daniel Altenhof',
+  jobTitle: 'Initiator und operativer Leiter Katharis',
+  url: `${SITE_URL}/ueber-uns/`,
+};
+
+export const PERSON_KEMAL = {
+  '@type': 'Person',
+  '@id': `${SITE_URL}/ueber-uns/#kemal`,
+  name: 'Kemal David Gülcü',
+  jobTitle: 'Initiator und operativer Leiter Katharis',
+  url: `${SITE_URL}/ueber-uns/`,
+};
+
 export function generateWebSiteSchema() {
   return {
     '@context': 'https://schema.org',

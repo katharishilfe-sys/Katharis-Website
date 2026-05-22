@@ -1,22 +1,66 @@
 ---
 import PageLayout from '@layouts/PageLayout.astro';
-import { generateBreadcrumbListSchema } from '@lib/schema-org';
+import { generateFAQPageSchema, generateBreadcrumbListSchema, PERSON_DANIEL, PERSON_KEMAL } from '@lib/schema-org';
 import CallCTA from '@components/CallCTA';
 import RueckrufButton from '@components/RueckrufButton';
 
 const SITE_URL = 'https://katharis.de';
+
 const articleSchema = {
   '@context': 'https://schema.org',
   '@type': 'Article',
   headline: 'Messie-Syndrom: Was Angehörige wissen sollten',
-  description: 'Ursachen, Anzeichen und wie Sie als Angehöriger handeln können, ohne Druck und ohne Wertung.',
+  description:
+    'Ursachen, Anzeichen, Gesprächsführung und konkrete Schritte für Angehörige. Mit Hinweisen zu Pflegekassen-Töpfen und professioneller Hilfe vor Ort.',
   datePublished: '2026-05-07T00:00:00+02:00',
-  dateModified: '2026-05-07T00:00:00+02:00',
-  author: { '@type': 'Person', name: 'Daniel Altenhof', jobTitle: 'Initiator und operativer Leiter Katharis' },
+  dateModified: '2026-05-22T00:00:00+02:00',
+  author: PERSON_DANIEL,
+  reviewedBy: PERSON_KEMAL,
   image: `${SITE_URL}/og-image.png`,
   mainEntityOfPage: `${SITE_URL}/ratgeber/messie-syndrom/`,
   publisher: { '@id': `${SITE_URL}/#organization` },
 };
+
+const faqs = [
+  {
+    question: 'Ist Messie-Syndrom eine offizielle Diagnose?',
+    answer:
+      'Der Begriff Messie-Syndrom ist umgangssprachlich. Im internationalen Diagnosesystem ICD-11 gibt es seit 2022 die Diagnose Pathologisches Horten (Hoarding Disorder). Im Alltag bezeichnet Messie-Syndrom aber häufig auch Verwahrlosung im Zuge von Demenz, schwerer Depression, Sucht oder Burnout, ohne dass Horten im engeren Sinn vorliegt.',
+  },
+  {
+    question: 'Was unterscheidet einen Messie-Fall von einer einfach unaufgeräumten Wohnung?',
+    answer:
+      'Drei Anhaltspunkte: Erstens, die Wege durch die Wohnung sind dauerhaft nur noch schmal begehbar. Zweitens, Sitz-, Schlaf- oder Kochmöglichkeiten sind nicht mehr funktionsfähig. Drittens, Hygiene-Mängel sind sichtbar oder geruchlich wahrnehmbar (verdorbene Lebensmittel, fehlende Bad-Nutzung). Sobald zwei der drei Punkte zutreffen, sprechen wir nicht mehr von Unordnung.',
+  },
+  {
+    question: 'Wie spreche ich meinen Angehörigen darauf an?',
+    answer:
+      'Ohne Wertung, ohne Druck, ohne Vergleich mit anderen. Sätze wie "Ich mache mir Sorgen um Dich" funktionieren besser als "So kann das nicht weitergehen". Bieten Sie konkret Hilfe an, nicht Kritik. Ein Erstgespräch mit dem Pflegestützpunkt oder mit einem anerkannten Anbieter ist niedrigschwellig und unverbindlich.',
+  },
+  {
+    question: 'Kann ich meinen Angehörigen zur Räumung zwingen?',
+    answer:
+      'Solange Ihr Angehöriger geschäftsfähig ist, nein. Ausnahme ist eine richterlich bestellte Betreuung mit dem Aufgabenkreis Wohnungsangelegenheiten. Bei akuter Selbst- oder Fremdgefährdung kann das Ordnungsamt eingreifen. In der Praxis ist es fast immer besser, Vertrauen aufzubauen, als juristische Wege zu gehen.',
+  },
+  {
+    question: 'Was tun, wenn der Vermieter mit Kündigung droht?',
+    answer:
+      'Sofort handeln. Eine fristlose Kündigung wegen vertragswidrigen Gebrauchs (zum Beispiel Geruchsbelästigung, Schädlingsbefall, Brandlast) ist möglich. Holen Sie schnellstmöglich ein Erstgespräch mit einem anerkannten Anbieter und mit dem Pflegestützpunkt ein. Eine dokumentierte Räumungsplanung wendet eine Kündigung in vielen Fällen ab.',
+  },
+  {
+    question: 'Zahlt die Pflegekasse die Räumung einer Messie-Wohnung?',
+    answer:
+      'Bei vorhandenem Pflegegrad ja, ganz oder teilweise. Konkret greifen Paragraph 45b Entlastungsbetrag (131 Euro pro Monat ab Pflegegrad 1), Paragraph 42a Gemeinsamer Jahresbetrag (bis 3.539 Euro pro Jahr ab Pflegegrad 2) und Paragraph 45a Absatz 4 Umwandlung von Pflegesachleistungen (ab Pflegegrad 2). Voraussetzung ist die Beauftragung eines nach Paragraph 45a SGB XI anerkannten Anbieters.',
+  },
+  {
+    question: 'Wie schnell kann eine professionelle Räumung erfolgen?',
+    answer:
+      'Vor-Ort-Termin meist innerhalb von 3 bis 7 Tagen, je nach Auslastung. Die Räumung selbst dauert je nach Wohnungsgröße und Verwahrlosungsgrad ein bis fünf Arbeitstage. Bei drohender Wohnungskündigung priorisieren wir.',
+  },
+];
+
+const faqSchema = generateFAQPageSchema(faqs);
+
 const breadcrumbSchema = generateBreadcrumbListSchema([
   { name: 'Start', url: 'https://katharis.de/' },
   { name: 'Ratgeber', url: 'https://katharis.de/ratgeber/' },
@@ -25,10 +69,11 @@ const breadcrumbSchema = generateBreadcrumbListSchema([
 ---
 
 <PageLayout
-  title="Messie-Syndrom verstehen | Ratgeber Katharis"
-  description="Was ist Messie-Syndrom? Ursachen, Anzeichen, wie Sie als Angehöriger handeln können ohne Druck und Wertung. Mit Hinweisen zu Pflegekassen-Optionen."
+  title="Messie-Syndrom: Ratgeber für Angehörige | Katharis"
+  description="Ursachen, Anzeichen und konkrete Schritte bei Messie-Syndrom. Wie Sie Angehörige unterstützen, welche Pflegekassen-Töpfe greifen, wann professionelle Hilfe sinnvoll ist."
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 
   <article class="max-w-content mx-auto px-4 py-12">
@@ -37,54 +82,210 @@ const breadcrumbSchema = generateBreadcrumbListSchema([
     </p>
     <h1 class="text-4xl font-bold text-primary mt-4">Messie-Syndrom: Was Angehörige wissen sollten</h1>
     <p class="text-sm text-primary/80 mt-2">
-      Verfasser: Daniel Altenhof, Initiator und operativer Leiter Katharis · Stand: 2026-05-07
+      Verfasser: Daniel Altenhof · Fachlich gegengelesen von Kemal David Gülcü · Stand: 2026-05-22
     </p>
 
     <p class="mt-8 text-primary/80">
-      Das sogenannte Messie-Syndrom ist keine eigenständige Diagnose, sondern eine umgangssprachliche
-      Bezeichnung für einen Zustand starker Verwahrlosung der Wohnung. Hintergründe sind oft Demenz,
-      Depression, Sucht, Burnout, Vereinsamung oder schwere Erkrankungen. Die betroffene Person merkt häufig
-      nicht, wie weit der Zustand fortgeschritten ist, oder schämt sich, Hilfe anzunehmen.
+      Das sogenannte Messie-Syndrom ist keine eigenständige Krankheit, sondern eine umgangssprachliche
+      Bezeichnung für einen Zustand, in dem die Wohnung über Monate oder Jahre dem Zugriff der Bewohnerin
+      oder des Bewohners entglitten ist. Hinter dem Bild der überfüllten Wohnung steckt fast immer eine
+      andere Ursache: Demenz, schwere Depression, Sucht, Trauma, Vereinsamung oder schwere körperliche
+      Erkrankungen. Dieser Ratgeber erklärt, wie Sie als Angehöriger Anzeichen erkennen, das Gespräch
+      führen und welche Pflegekassen-Optionen es gibt.
     </p>
 
-    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Anzeichen erkennen</h2>
+    <h2 class="text-2xl font-bold text-primary mt-10 mb-3">Wovon wir sprechen</h2>
     <p class="text-primary/80">
-      Nicht jede unaufgeräumte Wohnung ist ein Messie-Fall. Anzeichen für eine ernste Verwahrlosung:
+      Im internationalen Diagnose-System ICD-11 gibt es seit 2022 die Diagnose <strong>Pathologisches
+      Horten</strong> (englisch Hoarding Disorder). Sie beschreibt die Unfähigkeit, sich von Gegenständen
+      zu trennen, verbunden mit ausgeprägter Anhäufung und deutlicher Einschränkung der Lebensqualität.
+      Im Alltag wird Messie-Syndrom aber breiter verwendet: oft auch für Verwahrlosung im Zuge von
+      Demenz oder schwerer Depression, ohne dass Horten im engeren psychiatrischen Sinn vorliegt.
+    </p>
+    <p class="mt-4 text-primary/80">
+      Für die Praxis am wichtigsten: die Diagnose-Frage ist sekundär. Entscheidend ist, ob die Wohnung
+      noch sicher und würdig bewohnbar ist und ob die Person Hilfe annehmen kann.
+    </p>
+
+    <h2 class="text-2xl font-bold text-primary mt-10 mb-3">Anzeichen, die Sie ernst nehmen sollten</h2>
+    <p class="text-primary/80">
+      Nicht jede unaufgeräumte Wohnung ist ein Messie-Fall. Folgende Anzeichen deuten auf eine ernste
+      Situation hin:
     </p>
     <ul class="mt-3 space-y-1 text-primary/80 list-disc list-inside">
-      <li>Wege durch die Wohnung sind nur noch schmal begehbar</li>
-      <li>Sitz- und Schlafmöglichkeiten sind nicht mehr nutzbar</li>
-      <li>Geruch verändert sich (verdorbene Lebensmittel, Hygiene-Mängel)</li>
-      <li>Post oder Rechnungen liegen ungelesen</li>
-      <li>Vermieter, Nachbarn oder Behörden melden sich</li>
+      <li>Wege durch die Wohnung sind dauerhaft schmal, Türen lassen sich nicht mehr weit öffnen</li>
+      <li>Sitzmöbel, Bett oder Kochstelle sind unter Gegenständen begraben oder nicht mehr nutzbar</li>
+      <li>Geruch verändert sich, verdorbene Lebensmittel, Hygiene-Probleme im Bad</li>
+      <li>Post oder Rechnungen liegen ungelesen, Behörden- oder Vermieterpost wird vermieden</li>
+      <li>Vermieter, Nachbarn oder Sozialdienst melden sich</li>
+      <li>Schädlinge sind sichtbar (Schaben, Motten, Mäuse)</li>
+      <li>Ihr Angehöriger zieht sich aus dem sozialen Leben zurück, lässt Sie nicht mehr in die Wohnung</li>
+    </ul>
+    <p class="mt-4 text-primary/80">
+      Wenn drei oder mehr dieser Punkte zutreffen, ist die Situation typischerweise nicht mehr ohne
+      externe Hilfe lösbar.
+    </p>
+
+    <h2 class="text-2xl font-bold text-primary mt-10 mb-3">Was steckt dahinter</h2>
+    <p class="text-primary/80">
+      Hinter einer messie-typischen Wohnung steht meist eine längere Geschichte. Häufige Hintergründe:
+    </p>
+    <ul class="mt-3 space-y-2 text-primary/80 list-disc list-inside">
+      <li>
+        <strong>Demenz oder kognitive Einschränkung:</strong> die Person verliert die Übersicht und kann
+        nicht mehr entscheiden, was weg darf.
+      </li>
+      <li>
+        <strong>Schwere Depression oder Burnout:</strong> Antrieb fehlt für selbst kleinste Aufräum-Schritte.
+        Der Berg wird täglich größer und damit das Vermeidungsverhalten stärker.
+      </li>
+      <li>
+        <strong>Trauerverarbeitung:</strong> nach Tod eines Partners oder nahen Angehörigen sind Gegenstände
+        emotional aufgeladen und können nicht weggegeben werden.
+      </li>
+      <li>
+        <strong>Sucht:</strong> Alkohol oder Medikamenten-Abhängigkeit binden Ressourcen, Wohnung wird
+        vernachlässigt.
+      </li>
+      <li>
+        <strong>Körperliche Erkrankung oder Mobilitätsverlust:</strong> physisch nicht mehr in der Lage,
+        die Wohnung zu führen, Hilfe wurde aber nie organisiert.
+      </li>
+      <li>
+        <strong>Pathologisches Horten:</strong> psychiatrisches Krankheitsbild im engeren Sinn, oft
+        beginnt bereits in der Jugend, verschlimmert sich im Alter.
+      </li>
+    </ul>
+    <p class="mt-4 text-primary/80">
+      Welcher Hintergrund vorliegt, ist für das weitere Vorgehen wichtig: bei Demenz braucht es eine
+      andere Begleitung als bei Depression oder Horten.
+    </p>
+
+    <h2 class="text-2xl font-bold text-primary mt-10 mb-3">Wie Sie als Angehöriger handeln</h2>
+    <p class="text-primary/80">
+      Druck, Vorwürfe und große Aufräum-Aktionen ohne Vorbereitung verschlimmern die Lage. Was in der
+      Praxis funktioniert:
+    </p>
+    <ol class="mt-4 space-y-4 text-primary/80 list-decimal list-inside">
+      <li>
+        <strong>Ruhiges Gespräch suchen:</strong> nicht über die Wohnung sprechen, sondern über die
+        Sorge um die Person. Sätze wie "Ich mache mir Sorgen um Dich" sind tragfähiger als
+        "So kann das nicht weitergehen".
+      </li>
+      <li>
+        <strong>Medizinische Abklärung anstoßen:</strong> Hausarzt-Termin. Bei Verdacht auf Demenz
+        Geriatrie- oder Gedächtnis-Sprechstunde, bei Verdacht auf Depression psychiatrische
+        Erstabklärung. Diese Klärung läuft parallel zur operativen Räumungsplanung.
+      </li>
+      <li>
+        <strong>Pflegegrad-Antrag stellen:</strong> bei der Pflegekasse einen Pflegegrad beantragen.
+        Bei Bewilligung greifen Pflegekassen-Töpfe rückwirkend ab Antragsdatum. Mehr dazu in unserem
+        <a href="/pflegegrad-antrag/" class="underline text-accent-dark">Pflegegrad-Antrag-Ratgeber</a>.
+      </li>
+      <li>
+        <strong>Erstgespräch mit Pflegestützpunkt oder anerkanntem Anbieter:</strong> kostenlos und
+        unverbindlich. Hier wird geklärt, welche Töpfe greifen und welche Schritte realistisch sind.
+      </li>
+      <li>
+        <strong>Vor-Ort-Termin organisieren:</strong> ein anerkannter Anbieter kommt zur unverbindlichen
+        Begehung, mit Wertschätzung und ohne Wertung. Klient und Angehörige entscheiden anschließend
+        gemeinsam.
+      </li>
+      <li>
+        <strong>Schritt für Schritt durchführen:</strong> bei akzeptierten Klienten arbeiten wir
+        meist in mehreren Etappen, mit Sortierung gemeinsam mit dem Klienten oder den Angehörigen,
+        nicht über deren Kopf hinweg.
+      </li>
+    </ol>
+
+    <h2 class="text-2xl font-bold text-primary mt-10 mb-3">Pflegekassen-Optionen im Überblick</h2>
+    <p class="text-primary/80">
+      Bei vorhandenem Pflegegrad kombinieren wir mehrere Töpfe nach SGB XI:
+    </p>
+    <ul class="mt-3 space-y-2 text-primary/80 list-disc list-inside">
+      <li>
+        <strong>Paragraph 45b Entlastungsbetrag:</strong> 131 Euro pro Monat, Pflegegrad 1 bis 5,
+        nicht abgerufen kann bis 30. Juni des Folgejahres übertragen werden.
+      </li>
+      <li>
+        <strong>Paragraph 42a Gemeinsamer Jahresbetrag:</strong> bis 3.539 Euro pro Jahr,
+        Pflegegrad 2 bis 5, seit 1. Juli 2025.
+      </li>
+      <li>
+        <strong>Paragraph 45a Absatz 4 Umwandlung Pflegesachleistungen:</strong> bis 40 Prozent
+        des Sachleistungsbudgets, Pflegegrad 2 bis 5.
+      </li>
+      <li>
+        <strong>Paragraph 40 Wohnumfeldverbessernde Maßnahmen:</strong> bis 4.180 Euro je Maßnahme,
+        bei pflegebezogenen Wohnungsanpassungen. Details in unserem
+        <a href="/ratgeber/wohnumfeldverbesserung-antrag/" class="underline text-accent-dark">Paragraph 40 Antrags-Ratgeber</a>.
+      </li>
+    </ul>
+    <p class="mt-4 text-primary/80">
+      Welche Töpfe in Ihrer konkreten Situation greifen, klären wir kostenlos im Erstgespräch.
+      Hintergrund-Erklärung zu allen Töpfen auf unserer
+      <a href="/pflegekasse/" class="underline text-accent-dark">Pflegekassen-Seite</a>.
+    </p>
+
+    <h2 class="text-2xl font-bold text-primary mt-10 mb-3">Wann professionelle Hilfe nötig ist</h2>
+    <p class="text-primary/80">
+      Eine Messie-Wohnung selbst zu räumen ist in 9 von 10 Fällen keine gute Idee. Gründe:
+    </p>
+    <ul class="mt-3 space-y-1 text-primary/80 list-disc list-inside">
+      <li>Gesundheits-Risiko durch Schimmel, Schädlinge, biologische Belastung</li>
+      <li>Emotionale Überforderung führt zu Beziehungs-Krisen mit dem Angehörigen</li>
+      <li>Ohne Sortier-Erfahrung gehen wichtige Dokumente, Wertsachen oder Erinnerungsstücke verloren</li>
+      <li>Vermieter-Übergabe besenrein ist mit privaten Mitteln meist nicht erreichbar</li>
+      <li>Ohne anerkannten Anbieter keine Pflegekassen-Direktabrechnung</li>
     </ul>
 
-    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Was Sie als Angehöriger tun können</h2>
+    <h2 class="text-2xl font-bold text-primary mt-10 mb-3">Wann Katharis ins Spiel kommt</h2>
     <p class="text-primary/80">
-      Druck und Wertung helfen nicht. Was hilft: ein ruhiges Gespräch ohne Vorwürfe, ein Pflegegrad-Antrag
-      bei der Pflegekasse, und im Notfall professionelle Hilfe vor Ort. Für komplexe Fälle gibt es anerkannte
-      Anbieter von Entlastungsleistungen nach Paragraph 45a SGB XI, die diskret arbeiten und mit der
-      Pflegekasse direkt abrechnen können.
+      Wir sind anerkannter Anbieter nach Paragraph 45a SGB XI für Stadt Stuttgart und Landkreis
+      Böblingen. Wir übernehmen Sortierung, Tiefenreinigung und Vermieter-Übergabe in komplexen
+      Pflegefällen. Diskret, würdevoll, mit Direktabrechnung an die Pflegekasse bei vorhandenem
+      Pflegegrad. Mehr zu unserer operativen Leistung auf
+      <a href="/service/messie-hilfe/" class="underline text-accent-dark">Messie-Hilfe</a>.
     </p>
 
-    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Wo Beratung kostet nichts</h2>
+    <h2 class="text-2xl font-bold text-primary mt-10 mb-3">Wo Beratung kostenlos ist</h2>
     <p class="text-primary/80">
-      Pflegestützpunkte beraten kostenlos und neutral. Sie helfen bei der Antragsstellung Pflegegrad und
-      vermitteln bei Bedarf an spezialisierte Anbieter. Die Compass Pflegeberatung
-      (0800 101 88 00) ist eine bundesweite kostenlose Anlaufstelle.
+      Inhaltliche Pflegeberatung ist immer kostenlos:
     </p>
+    <ul class="mt-3 space-y-1 text-primary/80 list-disc list-inside">
+      <li>
+        <strong>Pflegestützpunkte</strong> in Stadt und Landkreis: neutral, kostenlos, helfen bei
+        Antragsstellung. Stuttgart hat fünf Pflegestützpunkte aufgeteilt nach Stadtbezirken
+        (siehe unsere <a href="/standorte/stuttgart/" class="underline text-accent-dark">Stuttgart-Seite</a>).
+      </li>
+      <li>
+        <strong>Compass Pflegeberatung:</strong> bundesweit kostenlos unter 0800 101 88 00, auch
+        Hausbesuche möglich.
+      </li>
+      <li>
+        <strong>Hausärztin oder Hausarzt:</strong> erste Anlaufstelle für medizinische Abklärung
+        und Pflegegrad-Antrag.
+      </li>
+    </ul>
 
-    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Wann Katharis ins Spiel kommt</h2>
-    <p class="text-primary/80">
-      Wenn die operative Aufgabe bewältigt werden muss: Sortierung, Tiefenreinigung, Vermieter-Übergabe.
-      Wir sind anerkannter Anbieter nach Paragraph 45a SGB XI für Stadt Stuttgart und Landkreis Böblingen.
-      Bei vorhandenem Pflegegrad rechnen wir direkt mit Ihrer Pflegekasse ab.
-    </p>
+    <h2 class="text-2xl font-bold text-primary mt-10 mb-3">Häufige Fragen</h2>
+    <div class="mt-4 space-y-3">
+      {faqs.map((faq) => (
+        <details class="border border-primary/20 rounded-lg p-4 bg-white">
+          <summary class="font-bold text-primary cursor-pointer">{faq.question}</summary>
+          <p class="mt-3 text-primary/80 text-sm">{faq.answer}</p>
+        </details>
+      ))}
+    </div>
 
-    <p class="mt-8 text-sm text-primary/80">
-      Mehr zu unseren Leistungen auf <a href="/service/messie-hilfe/" class="underline text-accent-dark">Messie-Hilfe Stuttgart</a>.
-      Mehr zu Pflegekassen-Töpfen auf <a href="/pflegekasse/" class="underline text-accent-dark">Pflegekassen-Leistungen</a>.
-    </p>
+    <h2 class="text-2xl font-bold text-primary mt-10 mb-3">Quellen</h2>
+    <ul class="mt-3 space-y-1 text-primary/80 list-disc list-inside text-sm">
+      <li>gesetze-im-internet.de: §40, §42a, §45a, §45b SGB XI</li>
+      <li>WHO ICD-11: 6B24 Hoarding Disorder (seit 2022)</li>
+      <li>Bundesgesundheitsministerium: Pflege-Leistungen aktuell 2026</li>
+      <li>Compass Pflegeberatung (0800 101 88 00)</li>
+      <li>Deutsche Alzheimer Gesellschaft: Vernachlässigung im häuslichen Umfeld</li>
+    </ul>
   </article>
 
   <section class="py-16 bg-background text-center">

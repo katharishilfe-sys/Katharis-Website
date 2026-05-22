@@ -1,22 +1,66 @@
 ---
 import PageLayout from '@layouts/PageLayout.astro';
-import { generateBreadcrumbListSchema } from '@lib/schema-org';
+import { generateFAQPageSchema, generateBreadcrumbListSchema, PERSON_DANIEL, PERSON_KEMAL } from '@lib/schema-org';
 import CallCTA from '@components/CallCTA';
 import RueckrufButton from '@components/RueckrufButton';
 
 const SITE_URL = 'https://katharis.de';
+
 const articleSchema = {
   '@context': 'https://schema.org',
   '@type': 'Article',
-  headline: 'Heimumzug und Kosten: Wer zahlt die Wohnungsräumung?',
-  description: 'Vermieter-Frist, Pflegekassen-Direktabrechnung, Vollräumung mit Pflegegrad. Wie Sie keine Doppelmiete zahlen.',
+  headline: 'Heimumzug und Kosten 2026: Wer zahlt die Wohnungsräumung?',
+  description:
+    'Vermieter-Frist, Pflegekassen-Direktabrechnung, Kostenfaktoren bei Vollräumung vor dem Pflegeheim-Umzug. Wie Sie Doppelmiete vermeiden und Erbstücke sichern.',
   datePublished: '2026-05-07T00:00:00+02:00',
-  dateModified: '2026-05-07T00:00:00+02:00',
-  author: { '@type': 'Person', name: 'Daniel Altenhof', jobTitle: 'Initiator und operativer Leiter Katharis' },
+  dateModified: '2026-05-22T00:00:00+02:00',
+  author: PERSON_DANIEL,
+  reviewedBy: PERSON_KEMAL,
   image: `${SITE_URL}/og-image.png`,
   mainEntityOfPage: `${SITE_URL}/ratgeber/heimumzug-kosten/`,
   publisher: { '@id': `${SITE_URL}/#organization` },
 };
+
+const faqs = [
+  {
+    question: 'Wer zahlt die Wohnungsräumung beim Pflegeheim-Umzug?',
+    answer:
+      'Bei vorhandenem Pflegegrad zahlt in den meisten Fällen die Pflegekasse, ganz oder teilweise. Konkret greifen Paragraph 42a Gemeinsamer Jahresbetrag (bis 3.539 Euro pro Jahr ab Pflegegrad 2), Paragraph 45b Entlastungsbetrag (131 Euro pro Monat ab Pflegegrad 1) und Paragraph 45a Absatz 4 Umwandlung (ab Pflegegrad 2). Voraussetzung ist ein nach Paragraph 45a SGB XI anerkannter Anbieter.',
+  },
+  {
+    question: 'Was kostet eine Vollräumung?',
+    answer:
+      'Pauschal-Aussagen sind schwierig, weil der Aufwand stark variiert. Bestimmend sind: Wohnungsgröße in Quadratmetern, Stockwerk und Aufzug, Möbel-Menge und Sperrgut-Anteil, Verschmutzungsgrad, Erbstück-Sortier-Aufwand und gewünschte Endreinigung. Wir machen die Begehung kostenlos und besprechen den Kostenrahmen transparent vor Auftragsbeginn.',
+  },
+  {
+    question: 'Wie schnell kann eine Vollräumung erfolgen?',
+    answer:
+      'Vor-Ort-Termin innerhalb von 3 bis 7 Tagen. Die Räumung selbst dauert je nach Wohnungsgröße ein bis fünf Arbeitstage. Bei Vermieter-Druck oder absehbarer Doppelmiete priorisieren wir.',
+  },
+  {
+    question: 'Welche Kündigungsfrist gilt für die Wohnung?',
+    answer:
+      'Bei normalem Heimumzug gilt die vertragliche Kündigungsfrist, in den meisten Mietverträgen drei Monate zum Monatsende. Bei Sterbefall können Erben das Mietverhältnis mit einer Sonderkündigungsfrist von einem Monat zum Monatsende kündigen (BGB §564). Mit Vermietern lässt sich oft eine schnellere besenreine Übergabe vereinbaren.',
+  },
+  {
+    question: 'Was passiert mit Erbstücken und Wertsachen?',
+    answer:
+      'Wir arbeiten mit Foto-Dokumentation und Wert-Listen. Erbstücke werden gemeinsam mit der Familie identifiziert und gesichert. Dokumente, Schmuck, Bargeld und persönliche Erinnerungen werden separat verpackt und übergeben. Was Ihnen wichtig ist, bleibt erhalten.',
+  },
+  {
+    question: 'Was tun, wenn die Wohnung verwahrlost ist?',
+    answer:
+      'Bei deutlicher Verwahrlosung handelt es sich um eine Messie-Hilfe-Situation. Tiefenreinigung, Geruchsbeseitigung und besondere Schutz-Ausrüstung sind dann nötig. Auch das ist Teil unserer Paragraph 45a-Anerkennung und kann über die Pflegekasse abgerechnet werden. Siehe auch unseren Ratgeber zu <a href="/ratgeber/messie-syndrom/">Messie-Syndrom</a>.',
+  },
+  {
+    question: 'Brauche ich einen Festpreis vorab?',
+    answer:
+      'Ja. Wir nennen vor Auftragsbeginn entweder einen Festpreis oder einen klaren Kostenrahmen mit Obergrenze. Bei Pflegekassen-Direktabrechnung wird der über die Töpfe gedeckte Anteil und der gegebenenfalls verbleibende private Differenz-Betrag schriftlich vor Beginn vereinbart. Keine Überraschungen.',
+  },
+];
+
+const faqSchema = generateFAQPageSchema(faqs);
+
 const breadcrumbSchema = generateBreadcrumbListSchema([
   { name: 'Start', url: 'https://katharis.de/' },
   { name: 'Ratgeber', url: 'https://katharis.de/ratgeber/' },
@@ -25,10 +69,11 @@ const breadcrumbSchema = generateBreadcrumbListSchema([
 ---
 
 <PageLayout
-  title="Heimumzug Kosten 2026 | Ratgeber Katharis"
-  description="Wer zahlt die Wohnungsräumung beim Pflegeheim-Umzug? Pflegekassen-Direktabrechnung mit Pflegegrad. Vermieter-Frist und Doppelmiete vermeiden."
+  title="Heimumzug Kosten 2026: Wer zahlt die Räumung? | Katharis"
+  description="Kosten und Pflegekassen-Optionen bei Vollräumung vor dem Pflegeheim-Umzug. Vermieter-Frist, Direktabrechnung mit der Pflegekasse, Erbstücke sichern. Mit FAQ und Praxis-Tipps."
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 
   <article class="max-w-content mx-auto px-4 py-12">
@@ -37,69 +82,141 @@ const breadcrumbSchema = generateBreadcrumbListSchema([
     </p>
     <h1 class="text-4xl font-bold text-primary mt-4">Heimumzug und Kosten: Wer zahlt die Wohnungsräumung?</h1>
     <p class="text-sm text-primary/80 mt-2">
-      Verfasser: Daniel Altenhof, Initiator und operativer Leiter Katharis · Stand: 2026-05-07
+      Verfasser: Daniel Altenhof · Fachlich gegengelesen von Kemal David Gülcü · Stand: 2026-05-22
     </p>
 
     <p class="mt-8 text-primary/80">
-      Wenn Eltern oder Angehörige ins Pflegeheim ziehen, beginnt für die Familie eine intensive Phase.
-      Neben der emotionalen Last kommt der praktische Druck: die Wohnung muss in zwei bis acht Wochen
-      leer und besenrein an den Vermieter zurück. Doppelmiete will niemand zahlen.
-      Wer zahlt die Räumung, die Reinigung, die Übergabe?
+      Wenn Eltern oder ein Angehöriger ins Pflegeheim ziehen, beginnt für die Familie eine intensive
+      Phase. Neben der emotionalen Last kommt der praktische Druck: die Wohnung muss innerhalb der
+      Kündigungsfrist leer und besenrein an den Vermieter zurück, sonst entsteht Doppelmiete. Dieser
+      Ratgeber erklärt, welche Kosten realistisch sind, wer sie übernehmen kann und wie Sie Doppelmiete
+      vermeiden.
     </p>
 
-    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Vermieter-Frist verstehen</h2>
+    <h2 class="text-2xl font-bold text-primary mt-10 mb-3">Vermieter-Frist und Doppelmiete</h2>
     <p class="text-primary/80">
-      Mietverträge haben Kündigungsfristen. Bei Sterbefall wird die Frist oft verkürzt. In Pflegeheim-Umzug-Fällen
-      gilt die normale Kündigungsfrist (typisch drei Monate). Wer schneller raus will, verhandelt mit dem
-      Vermieter, oft erfolgreich. Vermieter sind interessiert an besenreiner und schneller Übergabe.
+      Bei einem regulären Heimumzug gilt die vertragliche Kündigungsfrist, in den meisten Mietverträgen
+      drei Monate zum Monatsende. Bei Sterbefall können Erben das Mietverhältnis mit einer Sonderkündigungsfrist
+      von einem Monat zum Monatsende kündigen (BGB Paragraph 564). In der Praxis lässt sich mit
+      Vermietern oft eine schnellere Übergabe vereinbaren, weil eine besenreine zügige Übergabe in ihrem
+      eigenen Interesse ist. Eine professionelle Vollräumung mit zugesagtem Übergabe-Termin ist ein
+      starkes Argument in dieser Verhandlung.
     </p>
 
-    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Pflegekasse zahlt Vollräumung wenn Pflegegrad vorliegt</h2>
+    <h2 class="text-2xl font-bold text-primary mt-10 mb-3">Pflegekasse zahlt bei vorhandenem Pflegegrad</h2>
     <p class="text-primary/80">
-      Bei Pflegegrad ab 2 stehen folgende Töpfe zur Verfügung:
+      Wenn ein Pflegegrad vorliegt (in den meisten Heim-Umzug-Fällen ist das der Fall), greifen mehrere
+      Töpfe nach SGB XI:
     </p>
     <ul class="mt-3 space-y-2 text-primary/80 list-disc list-inside">
-      <li><strong>Para 42a Gemeinsamer Jahresbetrag:</strong> bis 3.539 Euro pro Kalenderjahr</li>
-      <li><strong>Para 45b Entlastungsbetrag:</strong> 131 Euro pro Monat, ansparbar</li>
-      <li><strong>Para 45a Abs. 4 Umwandlung:</strong> bis 40 Prozent des Pflegesachleistungs-Budgets</li>
+      <li><strong>Paragraph 42a Gemeinsamer Jahresbetrag:</strong> bis 3.539 Euro pro Kalenderjahr ab Pflegegrad 2</li>
+      <li><strong>Paragraph 45b Entlastungsbetrag:</strong> 131 Euro pro Monat ab Pflegegrad 1, ansparbar mit Verfall am 30. Juni des Folgejahres</li>
+      <li><strong>Paragraph 45a Absatz 4 Umwandlung Pflegesachleistungen:</strong> bis 40 Prozent des monatlichen Sachleistungs-Budgets ab Pflegegrad 2</li>
     </ul>
     <p class="mt-4 text-primary/80">
-      In Kombination decken diese Töpfe oft die kompletten Räumungs-Kosten. Anerkannte Anbieter wie
-      Katharis rechnen direkt mit der Pflegekasse ab. Sie haben keine Vorauslage. Mehr dazu auf
-      <a href="/pflegekasse/" class="underline text-accent-dark">Pflegekassen-Leistungen</a>.
+      In Kombination decken diese Töpfe oft die kompletten Räumungs-Kosten. Voraussetzung ist die
+      Beauftragung eines nach Paragraph 45a SGB XI anerkannten Anbieters. Katharis ist anerkannt für
+      Stadt Stuttgart und Landkreis Böblingen und rechnet direkt mit Ihrer Pflegekasse ab. Sie strecken
+      nichts vor. Mehr Hintergrund auf
+      <a href="/ratgeber/pflegekasse-entlastung/" class="underline text-accent-dark">Pflegekasse und Entlastung</a>
+      und <a href="/pflegekasse/" class="underline text-accent-dark">Pflegekassen-Übersicht</a>.
     </p>
 
-    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Was wenn kein Pflegegrad vorliegt?</h2>
+    <h2 class="text-2xl font-bold text-primary mt-10 mb-3">Kostenfaktoren einer Vollräumung</h2>
     <p class="text-primary/80">
-      Ohne Pflegegrad keine Pflegekassen-Direktabrechnung. Zwei Wege:
+      Pauschalpreise wären unseriös, weil der Aufwand stark schwankt. Die wichtigsten Kostenfaktoren:
     </p>
     <ul class="mt-3 space-y-2 text-primary/80 list-disc list-inside">
-      <li><strong>Pflegegrad-Antrag stellen</strong> und parallel die Räumung als Privat-Auftrag laufen lassen.
-      Bei Bewilligung kann rückwirkend ab Antragsdatum erstattet werden.</li>
-      <li><strong>Privat-Auftrag</strong> mit Festpreis oder Stundensatz, 19 Prozent Umsatzsteuer.</li>
+      <li><strong>Wohnungsgröße:</strong> Quadratmeter und Zimmeranzahl bestimmen Sortier- und Transport-Aufwand</li>
+      <li><strong>Stockwerk und Aufzug:</strong> ohne Aufzug schlägt jedes Stockwerk auf den Arbeitsaufwand durch</li>
+      <li><strong>Möbel-Menge und Sperrgut-Anteil:</strong> Schränke, Polstermöbel, Elektrogeräte erfordern Demontage und gegebenenfalls Sondermüll-Entsorgung</li>
+      <li><strong>Verschmutzungsgrad:</strong> bei Verwahrlosung sind Tiefenreinigung, Geruchsbeseitigung und Schutzausrüstung nötig</li>
+      <li><strong>Erbstück-Sortierung:</strong> wenn Familie eingebunden ist und gemeinsam sortiert wird, dauert es länger als reine Räumung, ist aber emotional wertvoller</li>
+      <li><strong>Endreinigung:</strong> besenrein für Vermieter, oder feucht-gewischt für direkte Wiedervermietung</li>
+      <li><strong>Termin-Druck:</strong> bei Vermieter-Frist können Sonder-Slots nötig sein</li>
     </ul>
     <p class="mt-4 text-primary/80">
-      Mehr zur Antrags-Hilfe auf <a href="/pflegegrad-antrag/" class="underline text-accent-dark">Pflegegrad-Antrags-Hilfe</a>.
+      Wir machen die Vor-Ort-Begehung kostenlos und sprechen den Kostenrahmen schriftlich vor Auftragsbeginn
+      durch. Bei Pflegekassen-Direktabrechnung wird zudem geklärt, welcher Anteil über die Töpfe gedeckt
+      ist und welcher Differenz-Betrag (falls vorhanden) privat zu tragen ist.
     </p>
 
-    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Was kostet eine Vollräumung?</h2>
+    <h2 class="text-2xl font-bold text-primary mt-10 mb-3">Wenn kein Pflegegrad vorliegt</h2>
     <p class="text-primary/80">
-      Pauschal-Aussagen sind schwierig, weil der Aufwand stark vom Wohnungs-Zustand abhängt. Wir bieten
-      kostenlose Vor-Ort-Begutachtung. Im Erstgespräch besprechen wir Pflegekassen-Optionen und transparente
-      Kostenstruktur.
+      Ohne Pflegegrad gibt es keine Pflegekassen-Direktabrechnung. Zwei Wege sind in der Praxis sinnvoll:
+    </p>
+    <ul class="mt-3 space-y-2 text-primary/80 list-disc list-inside">
+      <li>
+        <strong>Pflegegrad-Antrag stellen</strong> und parallel die Räumung beauftragen. Bei späterer
+        Bewilligung kann rückwirkend ab Antragsdatum mit der Pflegekasse abgerechnet werden,
+        Voraussetzung ist die Beauftragung eines anerkannten Anbieters und sauberer Dokumentation.
+      </li>
+      <li>
+        <strong>Privat-Auftrag</strong> mit Festpreis oder klarem Stundensatz. Bei begründetem Anlass
+        sind Teile der Räumung steuerlich als haushaltsnahe Dienstleistung absetzbar.
+      </li>
+    </ul>
+    <p class="mt-4 text-primary/80">
+      Hilfe beim Antrag: <a href="/pflegegrad-antrag/" class="underline text-accent-dark">Pflegegrad beantragen</a>
+      und <a href="/ratgeber/md-begutachtung-vorbereiten/" class="underline text-accent-dark">MD-Begutachtung vorbereiten</a>.
     </p>
 
-    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Erbstücke sichern</h2>
+    <h2 class="text-2xl font-bold text-primary mt-10 mb-3">Erbstücke und Wertsachen sichern</h2>
     <p class="text-primary/80">
-      Beim Heimumzug ist nicht nur die Räumung relevant, sondern auch das Sichern von Erbstücken.
-      Foto-Doku, Wert-Listen, Sortierung gemeinsam mit Familie. Was Ihnen wichtig ist, bleibt.
+      Beim Heimumzug geht es nicht nur darum, dass die Wohnung leer wird. Genauso wichtig: was bleibt
+      erhalten? Wir arbeiten mit:
     </p>
+    <ul class="mt-3 space-y-1 text-primary/80 list-disc list-inside">
+      <li>Foto-Dokumentation von Räumen und einzelnen Gegenständen vor der Sortierung</li>
+      <li>Wert-Listen für Schmuck, Bargeld, wichtige Dokumente</li>
+      <li>Sortierung gemeinsam mit Familie, wo gewünscht</li>
+      <li>Separater Verpackungs- und Beschriftungs-Schritt für Erbstücke</li>
+      <li>Übergabe-Protokoll mit Quittierung durch Sie als Auftraggeber</li>
+    </ul>
+    <p class="mt-4 text-primary/80">
+      Was Ihnen wichtig ist, bleibt. Was weg darf, bestimmen Sie und die Familie, nicht wir.
+    </p>
+
+    <h2 class="text-2xl font-bold text-primary mt-10 mb-3">Sterbefall statt Heimumzug</h2>
+    <p class="text-primary/80">
+      Wenn der Heimumzug nicht stattfindet, weil der Angehörige verstorben ist, gelten besondere Fristen
+      und ein anderer rechtlicher Rahmen. Pflegekassen-Töpfe enden mit dem Sterbetag, nicht aufgebrauchte
+      Beträge des laufenden Monats werden nicht erstattet. Details dazu im Ratgeber
+      <a href="/ratgeber/sterbefall-wohnungsraeumung/" class="underline text-accent-dark">Sterbefall und Wohnungsräumung</a>.
+    </p>
+
+    <h2 class="text-2xl font-bold text-primary mt-10 mb-3">Häufige Fragen</h2>
+    <div class="mt-4 space-y-3">
+      {faqs.map((faq) => (
+        <details class="border border-primary/20 rounded-lg p-4 bg-white">
+          <summary class="font-bold text-primary cursor-pointer">{faq.question}</summary>
+          <p class="mt-3 text-primary/80 text-sm" set:html={faq.answer} />
+        </details>
+      ))}
+    </div>
+
+    <h2 class="text-2xl font-bold text-primary mt-10 mb-3">Verwandte Themen</h2>
+    <ul class="mt-3 space-y-1 text-primary/80 list-disc list-inside">
+      <li><a href="/service/vor-dem-heimumzug/" class="underline text-accent-dark">Service: Vollräumung vor dem Heimumzug</a></li>
+      <li><a href="/ratgeber/pflegekasse-entlastung/" class="underline text-accent-dark">Pflegekasse und Entlastung 2026</a></li>
+      <li><a href="/ratgeber/pflegekasse-direktabrechnung/" class="underline text-accent-dark">Direktabrechnung mit der Pflegekasse</a></li>
+      <li><a href="/ratgeber/sterbefall-wohnungsraeumung/" class="underline text-accent-dark">Sterbefall und Wohnungsräumung</a></li>
+      <li><a href="/ratgeber/messie-syndrom/" class="underline text-accent-dark">Messie-Syndrom: Ratgeber für Angehörige</a></li>
+    </ul>
+
+    <h2 class="text-2xl font-bold text-primary mt-10 mb-3">Quellen</h2>
+    <ul class="mt-3 space-y-1 text-primary/80 list-disc list-inside text-sm">
+      <li>gesetze-im-internet.de: §40, §42a, §45a, §45b SGB XI</li>
+      <li>BGB §564 (Sonderkündigungsrecht der Erben)</li>
+      <li>Bundesgesundheitsministerium: Pflege-Leistungen 2026</li>
+      <li>Compass Pflegeberatung (0800 101 88 00)</li>
+    </ul>
   </article>
 
   <section class="py-16 bg-background text-center">
     <div class="max-w-2xl mx-auto px-4">
       <h2 class="text-2xl font-bold text-primary">Termin steht? Sprechen wir.</h2>
-      <p class="mt-4 text-primary/80">Wenn Sie wenig Zeit haben, ist ein Telefonat der schnellste Weg.</p>
+      <p class="mt-4 text-primary/80">Wenn die Zeit drückt, ist ein Telefonat der schnellste Weg.</p>
       <div class="flex flex-col sm:flex-row gap-3 mt-6 justify-center">
         <CallCTA client:load />
         <RueckrufButton client:load sourceCta="rueckruf-ratgeber-heimumzug" />

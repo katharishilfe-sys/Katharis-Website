@@ -1,7 +1,7 @@
 ---
 import PageLayout from '@layouts/PageLayout.astro';
 import { hooks, pflegekassenTöpfe } from '@data/content';
-import { generateFAQPageSchema, generateBreadcrumbListSchema } from '@lib/schema-org';
+import { generateFAQPageSchema, generateBreadcrumbListSchema, PERSON_DANIEL, PERSON_KEMAL } from '@lib/schema-org';
 import CallCTA from '@components/CallCTA';
 import RueckrufButton from '@components/RueckrufButton';
 
@@ -56,7 +56,8 @@ const articleSchema = {
     'Wie Pflegekassen-Töpfe nach §45a/45b/42a/40 SGB XI Ihre Entlastungs-Kosten decken. Anerkannter Anbieter Stuttgart und LK Böblingen. Aktuelle Beträge 2026.',
   datePublished: '2026-05-06T00:00:00+02:00',
   dateModified: '2026-05-06T00:00:00+02:00',
-  author: { '@type': 'Person', name: 'Daniel Altenhof', jobTitle: 'Initiator und operativer Leiter Katharis' },
+  author: PERSON_DANIEL,
+  reviewedBy: PERSON_KEMAL,
   image: `${SITE_URL}/og-image.png`,
   mainEntityOfPage: `${SITE_URL}/pflegekasse/`,
   publisher: { '@id': `${SITE_URL}/#organization` },
@@ -188,6 +189,19 @@ const articleSchema = {
       <strong>Hinweis:</strong> Pflegekassen-Entscheidungen sind individuell. Wir geben keine Rechtsberatung.
       Die finale Bewilligung liegt bei Ihrer Pflegekasse. Anerkannt für Stadt Stuttgart und Landkreis Böblingen.
     </div>
+  </section>
+
+  <!-- Vertiefende Ratgeber -->
+  <section class="py-12 max-w-content mx-auto px-4">
+    <h2 class="text-2xl font-bold text-primary mb-4">Vertiefende Ratgeber</h2>
+    <ul class="mt-3 space-y-1 text-primary/80 list-disc list-inside">
+      <li><a href="/ratgeber/pflegekasse-entlastung/" class="underline text-accent-dark">Pflegekasse und Entlastung 2026: Alle Töpfe im Überblick</a></li>
+      <li><a href="/ratgeber/pflegekasse-direktabrechnung/" class="underline text-accent-dark">Direktabrechnung mit der Pflegekasse: So läuft es ab</a></li>
+      <li><a href="/ratgeber/wohnumfeldverbesserung-antrag/" class="underline text-accent-dark">Paragraph 40 Wohnumfeldverbesserung beantragen</a></li>
+      <li><a href="/ratgeber/md-begutachtung-vorbereiten/" class="underline text-accent-dark">MD-Begutachtung vorbereiten</a></li>
+      <li><a href="/ratgeber/messie-syndrom/" class="underline text-accent-dark">Messie-Syndrom: Ratgeber für Angehörige</a></li>
+      <li><a href="/ratgeber/heimumzug-kosten/" class="underline text-accent-dark">Heimumzug und Kosten: Wer zahlt die Räumung?</a></li>
+    </ul>
   </section>
 
   <!-- FAQ -->

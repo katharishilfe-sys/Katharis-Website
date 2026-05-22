@@ -129,7 +129,7 @@ export const pflegekassenTöpfe = [
 export const standorte = [
   { slug: '/standorte/stuttgart/', name: 'Stuttgart', noindex: false },
   { slug: '/standorte/boeblingen/', name: 'Böblingen', noindex: false },
-  { slug: '/standorte/sindelfingen/', name: 'Sindelfingen', noindex: true },
-  { slug: '/standorte/leonberg/', name: 'Leonberg', noindex: true },
-  { slug: '/standorte/herrenberg/', name: 'Herrenberg', noindex: true },
+  { slug: '/standorte/sindelfingen/', name: 'Sindelfingen', noindex: false },
+  { slug: '/standorte/leonberg/', name: 'Leonberg', noindex: false },
+  { slug: '/standorte/herrenberg/', name: 'Herrenberg', noindex: false },
 ];
