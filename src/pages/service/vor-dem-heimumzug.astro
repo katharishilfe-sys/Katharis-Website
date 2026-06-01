@@ -10,6 +10,8 @@ const serviceSchema = generateServiceSchema({
   serviceName: 'Vollräumung vor dem Pflegeheim-Umzug',
   serviceDescription: 'Vollräumung mit Pflegekassen-Direktabrechnung in Stuttgart und LK Böblingen. Vermieter-Übergabe besenrein. Para 45a SGB XI anerkannt.',
   serviceUrl: 'https://katharis.de/service/vor-dem-heimumzug/',
+  category: 'Vollräumung und Haushaltsauflösung vor Heimumzug',
+  serviceOutput: 'Vollständig geräumte Wohnung mit besenreiner Vermieter-Übergabe. Erbstück-Sortierung mit Foto-Doku und Wert-Liste. Pflegekassen-Direktabrechnung ohne Vorkasse durch die Familie.',
 });
 const breadcrumbSchema = generateBreadcrumbListSchema([
   { name: 'Start', url: 'https://katharis.de/' },
@@ -130,6 +132,9 @@ const serviceKarten = [
     <p class="mt-4 text-primary/80 text-sm">
       Kostenfaktoren, Fristen-Übersicht und Antworten zu typischen Vermieter-Situationen im Ratgeber
       <a href="/ratgeber/heimumzug-kosten/" class="underline text-accent-dark">Heimumzug und Kosten: Wer zahlt die Wohnungsräumung?</a>.
+      Bei Sterbefall stattdessen siehe
+      <a href="/ratgeber/sterbefall-wohnungsraeumung/" class="underline text-accent-dark">Sterbefall-Wohnungsräumung</a>
+      (anderer Rechtsrahmen, Erbschein-Pflicht).
     </p>
   </section>
 
@@ -146,7 +151,7 @@ const serviceKarten = [
       <li>"Pflegegrad liegt vor, ich habe gehört dass die Pflegekasse die Räumung übernehmen kann."</li>
       <li>"Drei Zimmer voller Sachen aus 40 Jahren Ehe, ich kann das nicht alleine sortieren."</li>
       <li>"Erbstücke sollen gesichert werden, der Rest darf weg."</li>
-      <li>"Wir sind nicht aus Stuttgart, können Sie die Vermieter-Übergabe in unserer Vertretung machen?"</li>
+      <li>"Wir sind nicht aus <a href='/standorte/stuttgart/' class='underline text-accent-dark'>Stuttgart</a>, können Sie die Vermieter-Übergabe in unserer Vertretung machen?"</li>
       <li>"Die Wohnung ist verwahrlost, normale Räumungsdienste lehnen das ab oder verlangen Mondpreise."</li>
     </ul>
     <p class="mt-4 text-primary/80 text-sm">
@@ -174,6 +179,12 @@ const serviceKarten = [
         Vollständige Topf-Erklärung und Beispiel-Rechnung auf
         <a href="/pflegekasse/" class="underline text-accent-dark">Pflegekassen-Leistungen</a> und im Ratgeber
         <a href="/ratgeber/pflegekasse-entlastung/" class="underline text-accent-dark">Pflegekasse und Entlastung 2026</a>.
+        Speziell zum §45b siehe
+        <a href="/ratgeber/entlastungsbetrag-richtig-nutzen/" class="underline text-accent-dark">Entlastungsbetrag 131 € richtig nutzen</a>,
+        zur Direktabrechnungs-Mechanik
+        <a href="/ratgeber/pflegekasse-direktabrechnung/" class="underline text-accent-dark">Direktabrechnung erklärt</a>.
+        Bei Pflegekassen-Ablehnung der Ratgeber
+        <a href="/ratgeber/pflegekasse-ablehnung-widerspruch/" class="underline text-accent-dark">Widerspruch einlegen</a>.
         Noch kein Pflegegrad? Siehe
         <a href="/pflegegrad-antrag/" class="underline text-accent-dark">Pflegegrad-Antrag</a>.
       </p>
@@ -207,6 +218,38 @@ const serviceKarten = [
         ))}
       </div>
     </div>
+  </section>
+
+  <!-- Vertiefende Ratgeber + Einsatzgebiet -->
+  <section class="py-12 max-w-content mx-auto px-4">
+    <h2 class="text-2xl font-bold text-primary mb-6">Vertiefende Ratgeber und Einsatzgebiet</h2>
+
+    <h3 class="text-lg font-bold text-primary mb-2">Ratgeber zu Vollräumung, Pflegekasse und Sterbefall</h3>
+    <ul class="space-y-1 text-primary/80 list-disc list-inside">
+      <li><a href="/ratgeber/heimumzug-kosten/" class="underline text-accent-dark">Heimumzug und Kosten: Wer zahlt die Räumung?</a> – Pillar-Übersicht mit Pflegekassen-Töpfen</li>
+      <li><a href="/ratgeber/sterbefall-wohnungsraeumung/" class="underline text-accent-dark">Sterbefall-Wohnungsräumung</a> – Erbschein, Sonderkündigungsrecht, Pflegekassen-Klärung</li>
+      <li><a href="/ratgeber/pflegekasse-entlastung/" class="underline text-accent-dark">Pflegekassen-Töpfe 2026</a> – §45a/45b/42a/40 im Überblick</li>
+      <li><a href="/ratgeber/entlastungsbetrag-richtig-nutzen/" class="underline text-accent-dark">Entlastungsbetrag 131 € richtig nutzen</a> – §45b im Detail</li>
+      <li><a href="/ratgeber/pflegegrad-1-was-zahlt-die-kasse/" class="underline text-accent-dark">Pflegegrad 1 – was zahlt die Kasse?</a> – auch bei niedrigstem PG bis 6.000 €/Jahr</li>
+      <li><a href="/ratgeber/pflegekasse-direktabrechnung/" class="underline text-accent-dark">Direktabrechnung mit der Pflegekasse</a> – wie die Abtretung läuft</li>
+      <li><a href="/ratgeber/pflegekasse-ablehnung-widerspruch/" class="underline text-accent-dark">Pflegekasse abgelehnt – Widerspruch einlegen</a> – 1-Monats-Frist mit Mustertext</li>
+      <li><a href="/ratgeber/md-begutachtung-vorbereiten/" class="underline text-accent-dark">MD-Begutachtung vorbereiten</a> – relevant bei laufendem Pflegegrad-Antrag</li>
+      <li><a href="/ratgeber/messie-syndrom/" class="underline text-accent-dark">Messie-Syndrom verstehen</a> – falls die Wohnung zusätzlich verwahrlost ist</li>
+    </ul>
+
+    <h3 class="text-lg font-bold text-primary mt-8 mb-2">Vollräumung in Ihrer Region</h3>
+    <p class="text-primary/80">
+      Wir sind anerkannt nach §45a SGB XI für Stadt Stuttgart und Landkreis Böblingen. Bei laufendem
+      Heimumzug zählt jeder Tag - Detailseiten je Stadt mit Anfahrtszeiten und lokalen Pflegestützpunkten:
+    </p>
+    <ul class="mt-3 space-y-1 text-primary/80 list-disc list-inside">
+      <li><a href="/standorte/stuttgart/" class="underline text-accent-dark">Vollräumung Stuttgart</a> – alle 23 Stadtbezirke</li>
+      <li><a href="/standorte/boeblingen/" class="underline text-accent-dark">Vollräumung Böblingen</a> – operative Zentrale, schnellste Anfahrt</li>
+      <li><a href="/standorte/sindelfingen/" class="underline text-accent-dark">Vollräumung Sindelfingen</a> – inkl. Maichingen</li>
+      <li><a href="/standorte/leonberg/" class="underline text-accent-dark">Vollräumung Leonberg</a> – inkl. Eltingen, Höfingen, Warmbronn</li>
+      <li><a href="/standorte/herrenberg/" class="underline text-accent-dark">Vollräumung Herrenberg</a> – inkl. Kuppingen, Mönchberg, Affstätt</li>
+      <li><a href="/standorte/" class="underline text-accent-dark font-bold">Alle Standorte und weitere Gemeinden im Geltungsbereich</a></li>
+    </ul>
   </section>
 
   <!-- FAQ -->

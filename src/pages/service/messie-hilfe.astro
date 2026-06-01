@@ -10,6 +10,8 @@ const serviceSchema = generateServiceSchema({
   serviceName: 'Messie-Hilfe in Stuttgart und Landkreis Böblingen',
   serviceDescription: 'Spezialist für Entlastungsleistungen bei Verwahrlosung. Para 45a SGB XI anerkannt. Pflegekassen-Direktabrechnung möglich.',
   serviceUrl: 'https://katharis.de/service/messie-hilfe/',
+  category: 'Messie-Hilfe und Tiefenreinigung',
+  serviceOutput: 'Gereinigte, hygienisch unbedenkliche Wohnung mit besenreiner Übergabe. Foto-Dokumentation aller Wertgegenstände. Diskrete Durchführung in neutralen Fahrzeugen ohne Werbung.',
 });
 const breadcrumbSchema = generateBreadcrumbListSchema([
   { name: 'Start', url: 'https://katharis.de/' },
@@ -147,8 +149,8 @@ const serviceKarten = [
       <li>"Mein Vater ist dement, die Wohnung ist verwahrlost und der Pflegestützpunkt empfiehlt eine Räumung."</li>
       <li>"Pflegegrad liegt vor, der Heimumzug steht in vier Wochen an, ich weiß nicht wo anfangen."</li>
       <li>"Der Vermieter hat sich gemeldet wegen Hygiene-Mängeln, droht mit Kündigung."</li>
-      <li>"Wir sind eine Familie aus Stuttgart, die Wohnung in Cannstatt müsste dringend geräumt werden."</li>
-      <li>"Mutter wurde nach Krankenhaus-Aufenthalt entlassen, die Wohnung in Sindelfingen ist nicht bewohnbar."</li>
+      <li>"Wir sind eine Familie aus <a href='/standorte/stuttgart/' class='underline text-accent-dark'>Stuttgart</a>, die Wohnung in Cannstatt müsste dringend geräumt werden."</li>
+      <li>"Mutter wurde nach Krankenhaus-Aufenthalt entlassen, die Wohnung in <a href='/standorte/sindelfingen/' class='underline text-accent-dark'>Sindelfingen</a> ist nicht bewohnbar."</li>
       <li>"Sozialdienst hat uns auf einen anerkannten Anbieter mit Pflegekassen-Direktabrechnung verwiesen."</li>
     </ul>
     <p class="mt-4 text-primary/80 text-sm">
@@ -180,6 +182,12 @@ const serviceKarten = [
         <a href="/pflegekasse/" class="underline text-accent-dark">Pflegekassen-Leistungen</a>
         und im Ratgeber
         <a href="/ratgeber/pflegekasse-entlastung/" class="underline text-accent-dark">Pflegekasse und Entlastung 2026</a>.
+        Speziell zum Entlastungsbetrag siehe
+        <a href="/ratgeber/entlastungsbetrag-richtig-nutzen/" class="underline text-accent-dark">Entlastungsbetrag 131 € richtig nutzen</a>,
+        bei nur Pflegegrad 1 die Detail-Aufschlüsselung in
+        <a href="/ratgeber/pflegegrad-1-was-zahlt-die-kasse/" class="underline text-accent-dark">Pflegegrad 1 – was zahlt die Kasse?</a>.
+        Bei einer Pflegekassen-Ablehnung hilft der Ratgeber
+        <a href="/ratgeber/pflegekasse-ablehnung-widerspruch/" class="underline text-accent-dark">Widerspruch einlegen</a>.
       </p>
     </div>
   </section>
@@ -230,7 +238,7 @@ const serviceKarten = [
       </p>
       <div class="space-y-6">
         <article class="bg-white p-6 rounded-xl border border-primary/15">
-          <h3 class="font-bold text-primary">Demenz-Wohnung in Stuttgart-West, 2 Zimmer</h3>
+          <h3 class="font-bold text-primary">Demenz-Wohnung in <a href="/standorte/stuttgart/" class="underline text-accent-dark">Stuttgart</a>-West, 2 Zimmer</h3>
           <p class="mt-2 text-sm text-primary/80">
             Tochter sah Mutter (78, Pflegegrad 3) zum Geburtstag und stand vor Wohnung die seit Jahren nicht mehr
             geluefte oder geputzt war. Lebensmittel angeschimmelt, Wege durch Wohnung schmal, Bad nicht nutzbar.
@@ -241,7 +249,7 @@ const serviceKarten = [
           </p>
         </article>
         <article class="bg-white p-6 rounded-xl border border-primary/15">
-          <h3 class="font-bold text-primary">Witwer in Böblingen, 3 Zimmer</h3>
+          <h3 class="font-bold text-primary">Witwer in <a href="/standorte/boeblingen/" class="underline text-accent-dark">Böblingen</a>, 3 Zimmer</h3>
           <p class="mt-2 text-sm text-primary/80">
             Witwer (82, Pflegegrad 1) lebte allein nach Tod der Frau. Sozialdienst meldete Sich beim Klient-Sohn
             mit Hinweis auf Hygiene-Maengel. Sohn rief uns an. Wir kamen, der Witwer war vorsichtig aber liess
@@ -251,7 +259,7 @@ const serviceKarten = [
           </p>
         </article>
         <article class="bg-white p-6 rounded-xl border border-primary/15">
-          <h3 class="font-bold text-primary">Sozialdienst-Vermittlung Sindelfingen</h3>
+          <h3 class="font-bold text-primary">Sozialdienst-Vermittlung <a href="/standorte/sindelfingen/" class="underline text-accent-dark">Sindelfingen</a></h3>
           <p class="mt-2 text-sm text-primary/80">
             Pflegestützpunkt vermittelte Klientin (66, Pflegegrad 2 nach Schlaganfall). Wohnung im Erdgeschoss,
             Betroffene konnte sich nicht mehr buecken, Boden voller liegengebliebener Waesche, Küche unbenutzbar.
@@ -277,6 +285,38 @@ const serviceKarten = [
         ))}
       </div>
     </div>
+  </section>
+
+  <!-- Vertiefende Ratgeber + Einsatzgebiet -->
+  <section class="py-12 max-w-content mx-auto px-4">
+    <h2 class="text-2xl font-bold text-primary mb-6">Vertiefende Ratgeber und Einsatzgebiet</h2>
+
+    <h3 class="text-lg font-bold text-primary mb-2">Ratgeber zur Messie-Hilfe und Pflegekasse</h3>
+    <ul class="space-y-1 text-primary/80 list-disc list-inside">
+      <li><a href="/ratgeber/messie-syndrom/" class="underline text-accent-dark">Messie-Syndrom: Ratgeber für Angehörige</a> – Ursachen, Anzeichen, Gesprächsführung</li>
+      <li><a href="/ratgeber/pflegekasse-entlastung/" class="underline text-accent-dark">Pflegekassen-Töpfe 2026</a> – Pillar-Übersicht aller §45a/45b/42a/40-Töpfe</li>
+      <li><a href="/ratgeber/entlastungsbetrag-richtig-nutzen/" class="underline text-accent-dark">Entlastungsbetrag 131 € richtig nutzen</a> – wie Sie den §45b-Topf voll ausschöpfen</li>
+      <li><a href="/ratgeber/pflegegrad-1-was-zahlt-die-kasse/" class="underline text-accent-dark">Pflegegrad 1 – was zahlt die Kasse?</a> – auch bei niedrigstem Pflegegrad bis 6.000 € pro Jahr</li>
+      <li><a href="/ratgeber/pflegekasse-direktabrechnung/" class="underline text-accent-dark">Direktabrechnung mit der Pflegekasse</a> – wie der Abtretungs-Mechanismus läuft</li>
+      <li><a href="/ratgeber/pflegekasse-ablehnung-widerspruch/" class="underline text-accent-dark">Pflegekasse abgelehnt – Widerspruch einlegen</a> – 1-Monats-Frist mit Mustertext</li>
+      <li><a href="/ratgeber/md-begutachtung-vorbereiten/" class="underline text-accent-dark">MD-Begutachtung vorbereiten</a> – Pflegetagebuch und Termin-Vorbereitung</li>
+      <li><a href="/ratgeber/wohnumfeldverbesserung-antrag/" class="underline text-accent-dark">§40 Wohnumfeldverbesserung beantragen</a> – bis 4.180 € einmalig</li>
+      <li><a href="/ratgeber/sterbefall-wohnungsraeumung/" class="underline text-accent-dark">Sterbefall-Wohnungsräumung</a> – Erbschein, Vermieter-Frist, Pflegekassen-Klärung</li>
+    </ul>
+
+    <h3 class="text-lg font-bold text-primary mt-8 mb-2">Messie-Hilfe in Ihrer Region</h3>
+    <p class="text-primary/80">
+      Wir sind anerkannt nach §45a SGB XI für Stadt Stuttgart und Landkreis Böblingen. Detailseiten je
+      Stadt mit lokalen Anfahrtszeiten, Stadtteilen und Pflegestützpunkt-Informationen:
+    </p>
+    <ul class="mt-3 space-y-1 text-primary/80 list-disc list-inside">
+      <li><a href="/standorte/stuttgart/" class="underline text-accent-dark">Messie-Hilfe Stuttgart</a> – alle 23 Stadtbezirke, 5 Pflegestützpunkte</li>
+      <li><a href="/standorte/boeblingen/" class="underline text-accent-dark">Messie-Hilfe Böblingen</a> – operative Zentrale, Anfahrt unter 10 Min</li>
+      <li><a href="/standorte/sindelfingen/" class="underline text-accent-dark">Messie-Hilfe Sindelfingen</a> – inkl. Maichingen</li>
+      <li><a href="/standorte/leonberg/" class="underline text-accent-dark">Messie-Hilfe Leonberg</a> – inkl. Eltingen, Höfingen, Warmbronn</li>
+      <li><a href="/standorte/herrenberg/" class="underline text-accent-dark">Messie-Hilfe Herrenberg</a> – inkl. Kuppingen, Mönchberg, Affstätt</li>
+      <li><a href="/standorte/" class="underline text-accent-dark font-bold">Alle Standorte und weitere Gemeinden im Geltungsbereich</a></li>
+    </ul>
   </section>
 
   <!-- FAQ -->
