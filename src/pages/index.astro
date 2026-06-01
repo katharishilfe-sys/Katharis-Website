@@ -1,12 +1,47 @@
 ﻿---
 import PageLayout from '@layouts/PageLayout.astro';
 import { hooks, services, trustIndikatoren } from '@data/content';
-import { generateLocalBusinessSchema, generateWebSiteSchema } from '@lib/schema-org';
+import { generateLocalBusinessSchema, generateWebSiteSchema, generateFAQPageSchema } from '@lib/schema-org';
 import CallCTA from '@components/CallCTA';
 import RueckrufButton from '@components/RueckrufButton';
 
 const localBusinessSchema = generateLocalBusinessSchema();
 const webSiteSchema = generateWebSiteSchema();
+
+const homeFaqs = [
+  {
+    question: 'Was kostet das?',
+    answer:
+      'Im kostenlosen Erstgespräch klären wir, ob Ihre Pflegekasse die Kosten übernimmt. Bei Pflegegrad ab 1 können wir den Entlastungsbetrag von 131 Euro pro Monat nutzen, bei Pflegegrad ab 2 kommen weitere Töpfe dazu. Wenn die Pflegekasse nicht alles trägt, besprechen wir transparent welche Optionen es gibt.',
+  },
+  {
+    question: 'Wie schnell können Sie kommen?',
+    answer:
+      'Erstgespräch am Telefon meist innerhalb von 24 Stunden. Vor-Ort-Termin typisch innerhalb einer Woche. Bei akutem Termin-Druck (zum Beispiel Vermieter-Frist) sprechen Sie uns offen an.',
+  },
+  {
+    question: 'Wie diskret arbeiten Sie?',
+    answer:
+      'Neutrale Fahrzeuge ohne auffällige Werbung. Unauffällige Kleidung. Wenn gewünscht, arbeiten wir zu Tageszeiten, die wenig Aufmerksamkeit auf sich ziehen. Niemand außerhalb des Auftrags muss wissen, dass wir bei Ihnen sind.',
+  },
+  {
+    question: 'Wer zahlt das?',
+    answer:
+      'Bei vorhandenem Pflegegrad rechnen wir direkt mit der Pflegekasse ab. Bei fehlendem Pflegegrad helfen wir administrativ beim Antrag und können parallel die Entlastungsleistung erbringen, die bei Bewilligung rückwirkend ab Antragsdatum erstattet wird.',
+  },
+  {
+    question: 'Was bedeutet die Anerkennung nach Paragraph 45a SGB XI?',
+    answer:
+      'Wir sind als Anbieter zur Unterstützung im Alltag von der Anerkennungs-Stelle des Landes Baden-Württemberg für Stadt Stuttgart und Landkreis Böblingen anerkannt. Das heißt: wir können Entlastungsleistungen direkt mit Ihrer Pflegekasse abrechnen, ohne dass Sie das Geld vorstrecken müssen.',
+  },
+  {
+    question: 'Wie unterscheidet sich Ihre Hilfe von der Pflegeberatung im Pflegestützpunkt?',
+    answer:
+      'Der Pflegestützpunkt berät Sie inhaltlich zu Ihren Pflegekassen-Ansprüchen, kostenlos und neutral. Wir setzen die operative Arbeit um: Antrag administrativ ausfüllen, Begutachtung vorbereiten, Wohnung räumen, reinigen, übergeben. Beide Rollen ergänzen sich, ersetzen sich nicht.',
+  },
+];
+
+const homeFaqSchema = generateFAQPageSchema(homeFaqs);
 ---
 
 <PageLayout
@@ -15,6 +50,7 @@ const webSiteSchema = generateWebSiteSchema();
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(webSiteSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(homeFaqSchema)} />
 
   <!-- Hero -->
   <section class="bg-background py-16 md:py-24">
@@ -221,6 +257,83 @@ const webSiteSchema = generateWebSiteSchema();
           <p class="mt-3 text-primary/80 text-sm">Der Pflegestützpunkt berät Sie inhaltlich zu Ihren Pflegekassen-Ansprüchen, kostenlos und neutral. Wir setzen die operative Arbeit um: Antrag administrativ ausfüllen, Begutachtung vorbereiten, Wohnung räumen, reinigen, übergeben. Beide Rollen ergänzen sich, ersetzen sich nicht.</p>
         </details>
       </div>
+    </div>
+  </section>
+
+  <!-- Standorte -->
+  <section class="py-16 bg-background">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 class="text-3xl font-bold text-primary text-center mb-4">Unser Einsatzgebiet</h2>
+      <p class="text-center text-primary/80 mb-10 max-w-2xl mx-auto">
+        Anerkannt nach §45a SGB XI für Stadt Stuttgart und Landkreis Böblingen. Operative Zentrale
+        in Böblingen, Anfahrtszeiten 8 bis 40 Minuten je nach Ziel-Stadt.
+      </p>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 text-center">
+        <a href="/standorte/stuttgart/" class="bg-white p-4 rounded-xl hover:shadow-md transition-shadow block">
+          <p class="font-bold text-primary">Stuttgart</p>
+          <p class="text-xs text-primary/70 mt-1">23 Bezirke</p>
+        </a>
+        <a href="/standorte/boeblingen/" class="bg-white p-4 rounded-xl hover:shadow-md transition-shadow block">
+          <p class="font-bold text-primary">Böblingen</p>
+          <p class="text-xs text-primary/70 mt-1">Zentrale</p>
+        </a>
+        <a href="/standorte/sindelfingen/" class="bg-white p-4 rounded-xl hover:shadow-md transition-shadow block">
+          <p class="font-bold text-primary">Sindelfingen</p>
+          <p class="text-xs text-primary/70 mt-1">8-12 Min</p>
+        </a>
+        <a href="/standorte/leonberg/" class="bg-white p-4 rounded-xl hover:shadow-md transition-shadow block">
+          <p class="font-bold text-primary">Leonberg</p>
+          <p class="text-xs text-primary/70 mt-1">18-25 Min</p>
+        </a>
+        <a href="/standorte/herrenberg/" class="bg-white p-4 rounded-xl hover:shadow-md transition-shadow block">
+          <p class="font-bold text-primary">Herrenberg</p>
+          <p class="text-xs text-primary/70 mt-1">20-28 Min</p>
+        </a>
+        <a href="/standorte/" class="bg-primary text-white p-4 rounded-xl hover:opacity-90 transition-opacity block">
+          <p class="font-bold">Alle Standorte</p>
+          <p class="text-xs opacity-80 mt-1">+ 20 Gemeinden</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ratgeber -->
+  <section class="py-16 bg-white">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 class="text-3xl font-bold text-primary text-center mb-4">Ratgeber zu Pflegekasse und Räumung</h2>
+      <p class="text-center text-primary/80 mb-10 max-w-2xl mx-auto">
+        Verfasst von Daniel Altenhof, fachlich gegengelesen von Kemal David Gülcü. Mit aktuellen
+        Beträgen 2026 und Bezug auf den SGB-XI-Gesetzestext.
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <a href="/ratgeber/pflegekasse-entlastung/" class="bg-background/40 p-5 rounded-xl border border-primary/10 hover:shadow-md transition-shadow block">
+          <h3 class="font-bold text-primary">Pflegekassen-Töpfe 2026</h3>
+          <p class="mt-2 text-sm text-primary/70">§45a, §45b, §42a, §40 SGB XI im Überblick</p>
+        </a>
+        <a href="/ratgeber/entlastungsbetrag-richtig-nutzen/" class="bg-background/40 p-5 rounded-xl border border-primary/10 hover:shadow-md transition-shadow block">
+          <h3 class="font-bold text-primary">Entlastungsbetrag 131 € richtig nutzen</h3>
+          <p class="mt-2 text-sm text-primary/70">§45b im Detail mit Rechen-Beispielen</p>
+        </a>
+        <a href="/ratgeber/pflegegrad-1-was-zahlt-die-kasse/" class="bg-background/40 p-5 rounded-xl border border-primary/10 hover:shadow-md transition-shadow block">
+          <h3 class="font-bold text-primary">Pflegegrad 1 – was zahlt die Kasse?</h3>
+          <p class="mt-2 text-sm text-primary/70">Bis 6.000 € pro Jahr auch bei niedrigstem PG</p>
+        </a>
+        <a href="/ratgeber/pflegekasse-direktabrechnung/" class="bg-background/40 p-5 rounded-xl border border-primary/10 hover:shadow-md transition-shadow block">
+          <h3 class="font-bold text-primary">Direktabrechnung erklärt</h3>
+          <p class="mt-2 text-sm text-primary/70">Wie die Abtretung läuft, ohne Vorkasse</p>
+        </a>
+        <a href="/ratgeber/pflegekasse-ablehnung-widerspruch/" class="bg-background/40 p-5 rounded-xl border border-primary/10 hover:shadow-md transition-shadow block">
+          <h3 class="font-bold text-primary">Widerspruch einlegen</h3>
+          <p class="mt-2 text-sm text-primary/70">1-Monats-Frist nach Pflegekassen-Ablehnung</p>
+        </a>
+        <a href="/ratgeber/heimumzug-kosten/" class="bg-background/40 p-5 rounded-xl border border-primary/10 hover:shadow-md transition-shadow block">
+          <h3 class="font-bold text-primary">Heimumzug und Kosten</h3>
+          <p class="mt-2 text-sm text-primary/70">Wer zahlt die Wohnungsräumung?</p>
+        </a>
+      </div>
+      <p class="text-center mt-8">
+        <a href="/ratgeber/" class="underline text-accent-dark font-bold">Alle 10 Ratgeber ansehen &rarr;</a>
+      </p>
     </div>
   </section>
 

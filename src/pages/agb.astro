@@ -1,9 +1,19 @@
 ﻿---
 import PageLayout from '@layouts/PageLayout.astro';
+import { generateBreadcrumbListSchema } from '@lib/schema-org';
+
+const breadcrumbSchema = generateBreadcrumbListSchema([
+  { name: 'Start', url: 'https://katharis.de/' },
+  { name: 'AGB', url: 'https://katharis.de/agb/' },
+]);
 ---
 
 <PageLayout title="AGB | Katharis" description="Allgemeine Geschäftsbedingungen Katharis.">
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
   <article class="prose max-w-content mx-auto px-4 py-12">
+    <p class="text-sm">
+      <a href="/" class="underline">Start</a> &rsaquo; AGB
+    </p>
     <h1>Allgemeine Geschäftsbedingungen</h1>
     <p><em>Stand 2026-05-06. Marken-Auftritt: Katharis.</em></p>
 

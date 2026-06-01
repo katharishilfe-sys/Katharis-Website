@@ -1,13 +1,23 @@
 ---
 import PageLayout from '@layouts/PageLayout.astro';
 import { traeger, kontakt } from '@data/content';
+import { generateBreadcrumbListSchema } from '@lib/schema-org';
+
+const breadcrumbSchema = generateBreadcrumbListSchema([
+  { name: 'Start', url: 'https://katharis.de/' },
+  { name: 'Impressum', url: 'https://katharis.de/impressum/' },
+]);
 ---
 
 <PageLayout
   title="Impressum | Katharis"
   description="Impressum nach TMG. Cleanit Services LLC, Zweigniederlassung Stuttgart."
 >
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
   <article class="prose max-w-content mx-auto px-4 py-12">
+    <p class="text-sm">
+      <a href="/" class="underline">Start</a> &rsaquo; Impressum
+    </p>
     <h1>Impressum</h1>
 
     <h2>Anbieter</h2>

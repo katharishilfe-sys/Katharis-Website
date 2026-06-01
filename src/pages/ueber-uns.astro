@@ -1,7 +1,7 @@
 ---
 import PageLayout from '@layouts/PageLayout.astro';
 import { initiatoren, trustIndikatoren } from '@data/content';
-import { generateBreadcrumbListSchema } from '@lib/schema-org';
+import { generateBreadcrumbListSchema, generateFAQPageSchema } from '@lib/schema-org';
 import CallCTA from '@components/CallCTA';
 import RueckrufButton from '@components/RueckrufButton';
 import { Image } from 'astro:assets';
@@ -77,16 +77,96 @@ const breadcrumbSchema = generateBreadcrumbListSchema([
   { name: 'Start', url: 'https://katharis.de/' },
   { name: 'Über uns', url: 'https://katharis.de/ueber-uns/' },
 ]);
+
+const faqs = [
+  {
+    question: 'Wer ist mein Ansprechpartner bei Katharis?',
+    answer:
+      'Beim Erstgespräch melden sich entweder Daniel Altenhof oder Kemal David Gülcü direkt. Daniel führt die meisten Erstgespräche und Pflegekassen-Klärungen, Kemal ist verantwortlich für die operative Vor-Ort-Arbeit. Im laufenden Auftrag sind beide erreichbar.',
+  },
+  {
+    question: 'Wie viele Personen sind im Team?',
+    answer:
+      'Acht Personen insgesamt: Daniel Altenhof und Kemal David Gülcü als Initiatoren und operative Leiter plus sechs Spezialistinnen und Spezialisten für den Vor-Ort-Einsatz. Bei Großaufträgen koordinieren wir das Team in Schichten.',
+  },
+  {
+    question: 'Welche Ausbildung haben die Vor-Ort-Mitarbeitenden?',
+    answer:
+      'Alle Vor-Ort-Mitarbeitenden haben eine aktuelle Hygiene-Schulung und Erste-Hilfe-Auffrischung. Daniel und Kemal als Einsatz-Verantwortliche zusätzlich aktueller Hepatitis- und Tetanus-Impfschutz. Bei besonderen Anforderungen (Schimmel-Beseitigung, Asbest, Biowaste) ziehen wir zertifizierte Spezialisten hinzu.',
+  },
+  {
+    question: 'Wie ist Ihre Diskretion organisiert?',
+    answer:
+      'Neutrale Fahrzeuge ohne Werbung. Unauffällige Arbeitskleidung. Keine Sicht-Inhalte nach außen während der Räumung. Auf Wunsch arbeiten wir zu Tageszeiten mit wenig Nachbarn-Verkehr. Wir tragen die Geschichte nicht weiter - weder im Gespräch mit anderen Klienten noch privat.',
+  },
+  {
+    question: 'Arbeiten Sie auch mit Sozialdiensten und Pflegestützpunkten zusammen?',
+    answer:
+      'Ja, sehr eng. Etwa 30 Prozent unserer Aufträge kommen über Sozialdienst-Vermittlungen (Klinikum Sindelfingen-Böblingen, Klinikum Stuttgart, Klinikverbund Südwest), Pflegestützpunkt-Empfehlungen (LK Böblingen, Stadt Stuttgart) oder über Compass Pflegeberatung. Wir geben Rückmeldung an die vermittelnde Stelle nach Auftrags-Ende, wenn Sie als Klient damit einverstanden sind.',
+  },
+  {
+    question: 'Warum heißen Daniel und Kemal "Initiatoren", nicht "Geschäftsführer"?',
+    answer:
+      'Weil das die akkurate Rollenbeschreibung ist: Daniel und Kemal haben Katharis als operative Leistung initiiert, sie führen die Arbeit, kümmern sich um Aufträge und Klienten. Die juristische Geschäftsführung der Träger-Gesellschaft liegt bei einer separaten Person, die im Impressum genannt ist. Das ist eine ehrliche Trennung zwischen Marke und Trägerschaft.',
+  },
+];
+
+const faqSchema = generateFAQPageSchema(faqs);
+
+const prozessSchritte = [
+  {
+    nummer: 1,
+    titel: 'Erstgespräch am Telefon',
+    text: 'Sie rufen an oder lassen sich zurückrufen. Daniel oder Kemal hören zu, fragen nach Pflegegrad-Stand, Wohnsituation, Vermieter-Frist, Erwartungs-Horizont. Dauer 10 bis 20 Minuten, kostenfrei.',
+  },
+  {
+    nummer: 2,
+    titel: 'Vor-Ort-Begehung',
+    text: 'Wir kommen zu Ihnen. Begehung der Wohnung, Foto-Doku für unsere internen Unterlagen, Gespräch über Erbstücke und besondere Empfindlichkeiten. Erstellen eines Leistungs- und Kostenrahmens. Dauer 45 bis 90 Minuten, kostenfrei.',
+  },
+  {
+    nummer: 3,
+    titel: 'Pflegekassen-Klärung',
+    text: 'Wir prüfen, welche Pflegekassen-Töpfe greifen können (§45a, §45b, §42a, §40), holen schriftliche Bestätigung bei Ihrer Pflegekasse ein. Dauer 1-3 Wochen je nach Pflegekasse.',
+  },
+  {
+    nummer: 4,
+    titel: 'Vertrag und Abtretung',
+    text: 'Sie unterschreiben einen Pflegekassen-Sondervertrag mit Abtretungs-Erklärung. Damit dürfen wir direkt mit Ihrer Pflegekasse abrechnen, Sie strecken nichts vor. Privater Backup-Vertrag bei Ablehnung wäre transparent vor Beginn besprochen.',
+  },
+  {
+    nummer: 5,
+    titel: 'Durchführung',
+    text: 'Wir kommen mit dem Team. Sortierung mit Foto-Doku, Tiefenreinigung, Erbstück-Sicherung, Vermieter-Übergabe besenrein. Sie sind im Loop, was wann passiert. Dauer typisch 2-7 Tage je nach Wohnungsgröße.',
+  },
+  {
+    nummer: 6,
+    titel: 'Abrechnung und Rückmeldung',
+    text: 'Wir rechnen direkt mit Ihrer Pflegekasse ab. Sie bekommen eine Rechnungs-Kopie zur Information. Bei Sozialdienst-Vermittlung Rückmeldung an die vermittelnde Stelle, wenn Sie zustimmen. Dokumentations-Abschluss in Ihrer Akte.',
+  },
+];
+
+const vermittler = [
+  'Pflegestützpunkt Landkreis Böblingen',
+  'Pflegestützpunkte der Stadt Stuttgart (5 Standorte)',
+  'Compass Pflegeberatung (0800 101 88 00)',
+  'Sozialdienst Klinikverbund Südwest (Sindelfingen-Böblingen)',
+  'Sozialdienst Klinikum Stuttgart',
+  'Caritas-Sozialdienste in Stuttgart und Böblingen',
+  'Diakonie Stetten in Leonberg und Umgebung',
+  'Hausärztinnen und Hausärzte mit Pflegebedarfs-Erfahrung',
+];
 ---
 
 <PageLayout
-  title="Über Katharis: Daniel Altenhof und Kemal David Gülcü | Stuttgart Böblingen"
-  description="Wer hinter Katharis steht: Daniel Altenhof und Kemal David Gülcü als Initiatoren und operative Leiter. Spezialist für Entlastungsleistungen in komplexen Pflegefällen. Anerkannt nach §45a SGB XI für Stuttgart und LK Böblingen."
+  title="Über Katharis: Daniel Altenhof und Kemal David Gülcü"
+  description="Wer hinter Katharis steht: Daniel und Kemal als Initiatoren plus 6-köpfiges Spezialisten-Team. §45a SGB XI für Stuttgart und LK Böblingen."
 >
   {personSchemas.map((schema) => (
     <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
   ))}
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 
   <!-- Hero -->
   <section class="bg-background py-16">
@@ -113,6 +193,7 @@ const breadcrumbSchema = generateBreadcrumbListSchema([
           height={200}
           class="rounded-xl object-cover w-48 h-48"
           loading="lazy"
+          decoding="async"
         />
         <div>
           <h2 class="text-2xl font-bold text-primary">{person.name}</h2>
@@ -234,6 +315,124 @@ const breadcrumbSchema = generateBreadcrumbListSchema([
         Hinter Katharis steht der Anspruch, dass Würde nicht von Wohnungs-Zustand abhängt und dass
         Pflege-Last nicht Ihre Familie ruinieren muss. Das ist der Kern.
       </p>
+    </div>
+  </section>
+
+  <!-- Wie wir arbeiten - 6-Schritte-Prozess -->
+  <section class="py-12 max-w-content mx-auto px-4">
+    <h2 class="text-2xl font-bold text-primary mb-4">Wie wir arbeiten</h2>
+    <p class="text-primary/80 mb-6">
+      Von Ihrem ersten Anruf bis zur Schlussabrechnung mit der Pflegekasse. Sechs Etappen, die wir
+      strukturieren - und die für Sie als Klient oder Familie transparent bleiben.
+    </p>
+    <ol class="space-y-4">
+      {prozessSchritte.map((s) => (
+        <li class="flex gap-4 items-start bg-white p-5 rounded-xl border border-primary/10">
+          <span class="flex-none w-8 h-8 bg-accent text-white font-bold rounded-full flex items-center justify-center">
+            {s.nummer}
+          </span>
+          <div>
+            <h3 class="font-bold text-primary">{s.titel}</h3>
+            <p class="mt-2 text-sm text-primary/80">{s.text}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <!-- Wer uns vermittelt -->
+  <section class="py-12 bg-white">
+    <div class="max-w-content mx-auto px-4">
+      <h2 class="text-2xl font-bold text-primary mb-4">Wer uns vermittelt</h2>
+      <p class="text-primary/80">
+        Wir bekommen rund 30 Prozent unserer Aufträge über Vermittler aus Sozialdienst, Pflegestützpunkt
+        und Pflegeberatung. Das funktioniert, weil wir verlässlich liefern und Rückmeldung geben - mit
+        Klient-Zustimmung. Aktive Empfehlungs-Partner:
+      </p>
+      <ul class="mt-4 space-y-1 text-primary/80 list-disc list-inside">
+        {vermittler.map((v) => (
+          <li>{v}</li>
+        ))}
+      </ul>
+      <p class="mt-4 text-primary/80 text-sm">
+        Wenn Sie aus einer dieser Stellen kommen: Vermittlungs-Nummer im Erstgespräch erwähnen, dann
+        können wir die Dokumentation entsprechend vorbereiten.
+      </p>
+    </div>
+  </section>
+
+  <!-- Trägerschaft -->
+  <section class="py-12 max-w-content mx-auto px-4">
+    <h2 class="text-2xl font-bold text-primary mb-4">Trägerschaft und Verantwortung</h2>
+    <p class="text-primary/80">
+      <strong>Katharis</strong> ist die Marke. Als Klient oder Vermittler haben Sie es operativ mit Daniel
+      Altenhof und Kemal David Gülcü zu tun - sie sind die Initiatoren und operativen Leiter.
+    </p>
+    <p class="mt-4 text-primary/80">
+      Die <strong>operative Zentrale</strong> liegt in der Olgastraße 8, 71032 Böblingen. Träger der
+      Marke ist eine eigenständige Gesellschaft mit Hauptsitz in Stuttgart - vollständige Angaben mit
+      Geschäftsführung, Steuernummer und Versicherungs-Details im
+      <a href="/impressum/" class="underline text-accent-dark">Impressum</a>.
+    </p>
+    <p class="mt-4 text-primary/80">
+      <strong>Anerkennung nach §45a SGB XI:</strong> erteilt durch die Untere Sozialverwaltung Baden-
+      Württemberg (USTA-BW) für Stadt Stuttgart und Landkreis Böblingen. Geltungsbereich orts-, nicht
+      personen-gebunden.
+    </p>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-12 bg-white">
+    <div class="max-w-content mx-auto px-4">
+      <h2 class="text-2xl font-bold text-primary mb-6">Häufige Fragen zum Team</h2>
+      <div class="space-y-3">
+        {faqs.map((faq) => (
+          <details class="border border-primary/20 rounded-lg p-4 bg-background/30">
+            <summary class="font-bold text-primary cursor-pointer">{faq.question}</summary>
+            <p class="mt-3 text-primary/80 text-sm">{faq.answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Vertiefende Verlinkung -->
+  <section class="py-12 max-w-content mx-auto px-4">
+    <h2 class="text-2xl font-bold text-primary mb-4">Mehr über unsere Arbeit</h2>
+    <p class="text-primary/80 mb-6">
+      Die konkreten Leistungen, das Einsatzgebiet und die Pflegekassen-Mechanik in eigenen Themen-Seiten:
+    </p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+      <div>
+        <h3 class="font-bold text-primary mb-2">Leistungen</h3>
+        <ul class="space-y-1 text-primary/80 list-disc list-inside">
+          <li><a href="/service/messie-hilfe/" class="underline text-accent-dark">Messie-Hilfe</a></li>
+          <li><a href="/service/vor-dem-heimumzug/" class="underline text-accent-dark">Vollräumung vor dem Heimumzug</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="font-bold text-primary mb-2">Pflegekasse</h3>
+        <ul class="space-y-1 text-primary/80 list-disc list-inside">
+          <li><a href="/pflegekasse/" class="underline text-accent-dark">Pflegekassen-Übersicht</a></li>
+          <li><a href="/pflegegrad-antrag/" class="underline text-accent-dark">Pflegegrad-Antrag</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="font-bold text-primary mb-2">Standorte</h3>
+        <ul class="space-y-1 text-primary/80 list-disc list-inside">
+          <li><a href="/standorte/stuttgart/" class="underline text-accent-dark">Stuttgart</a></li>
+          <li><a href="/standorte/boeblingen/" class="underline text-accent-dark">Böblingen (Zentrale)</a></li>
+          <li><a href="/standorte/" class="underline text-accent-dark">Alle Standorte</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="font-bold text-primary mb-2">Ratgeber</h3>
+        <ul class="space-y-1 text-primary/80 list-disc list-inside">
+          <li><a href="/ratgeber/pflegekasse-entlastung/" class="underline text-accent-dark">Pflegekassen-Töpfe 2026</a></li>
+          <li><a href="/ratgeber/pflegekasse-direktabrechnung/" class="underline text-accent-dark">Direktabrechnung erklärt</a></li>
+          <li><a href="/ratgeber/" class="underline text-accent-dark">Alle Ratgeber</a></li>
+        </ul>
+      </div>
     </div>
   </section>
 

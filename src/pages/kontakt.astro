@@ -1,15 +1,81 @@
 ---
 import PageLayout from '@layouts/PageLayout.astro';
 import { kontakt } from '@data/content';
+import { generateFAQPageSchema, generateBreadcrumbListSchema } from '@lib/schema-org';
 import RueckrufButton from '@components/RueckrufButton';
+
+const SITE_URL = 'https://katharis.de';
+
+const kontaktFaqs = [
+  {
+    question: 'Muss ich zum Erstgespräch persönlich kommen?',
+    answer:
+      'Nein. Das Erstgespräch läuft am Telefon, das ist für beide Seiten unkomplizierter. Persönliche Treffen machen wir vor Ort bei Ihnen oder bei der pflegebedürftigen Person, nicht in unserer Zentrale.',
+  },
+  {
+    question: 'Kann ich anonym anrufen?',
+    answer:
+      'Ja. Im ersten Gespräch reichen Vorname und Telefonnummer. Wenn Sie sich entscheiden mit uns weiter zu machen, brauchen wir später Adresse und Pflegekassen-Daten für die Auftrags-Verträge.',
+  },
+  {
+    question: 'Was wenn ich nicht der Auftraggeber bin sondern Tochter oder Sohn?',
+    answer:
+      'Sie können anrufen und das Erstgespräch führen. Für den Auftrag selbst brauchen wir entweder die Einwilligung des Klienten oder eine Vollmacht. Bei Demenz oder Geschäftsunfähigkeit ist eine Vorsorgevollmacht oder gerichtliche Betreuung notwendig.',
+  },
+  {
+    question: 'Telefon klingelt aber niemand nimmt ab',
+    answer:
+      'Wir sind im Einsatz. Sprechen Sie auf den Anrufbeantworter, wir rufen binnen 24 Stunden zurück. Oder füllen Sie das Rückruf-Formular aus, dann melden wir uns gezielt zu Ihrer Wunschzeit.',
+  },
+];
+
+const faqSchema = generateFAQPageSchema(kontaktFaqs);
+
+const breadcrumbSchema = generateBreadcrumbListSchema([
+  { name: 'Start', url: 'https://katharis.de/' },
+  { name: 'Kontakt', url: 'https://katharis.de/kontakt/' },
+]);
+
+const contactPageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ContactPage',
+  url: `${SITE_URL}/kontakt/`,
+  name: 'Kontakt Katharis - Pflegekassen-Entlastung Stuttgart und Böblingen',
+  description: 'Telefon, Rückruf-Formular und Erreichbarkeit. Operative Zentrale Böblingen, Mo-Sa 8-20 Uhr.',
+  mainEntity: {
+    '@type': 'Organization',
+    '@id': `${SITE_URL}/#organization`,
+    contactPoint: {
+      '@type': 'ContactPoint',
+      telephone: kontakt.telefon,
+      email: kontakt.email,
+      contactType: 'customer service',
+      areaServed: ['Stadt Stuttgart', 'Landkreis Böblingen'],
+      availableLanguage: 'German',
+      hoursAvailable: {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+        opens: '08:00',
+        closes: '20:00',
+      },
+    },
+  },
+};
 ---
 
 <PageLayout
   title="Kontakt Katharis Stuttgart - Kostenloses Erstgespräch"
   description="Telefon 07031 6953604 oder Rückruf-Form. Kostenloses Erstgespräch zu Pflegekassen-Entlastung in Stuttgart und LK Böblingen. Mo-Sa 8-20 Uhr."
 >
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(contactPageSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
   <section class="py-16 max-w-4xl mx-auto px-4">
-    <h1 class="text-4xl font-bold text-primary">Sprechen Sie uns an</h1>
+    <p class="text-sm text-primary/80">
+      <a href="/" class="underline">Start</a> &rsaquo; Kontakt
+    </p>
+    <h1 class="text-4xl font-bold text-primary mt-4">Sprechen Sie uns an</h1>
     <p class="mt-4 text-lg text-primary/80">
       Im kostenlosen Erstgespräch am Telefon klären wir Ihre Situation, Pflegekassen-Optionen
       und nächste Schritte.
@@ -48,8 +114,9 @@ import RueckrufButton from '@components/RueckrufButton';
         {kontakt.adresse.operativeZentrale.strasse}, {kontakt.adresse.operativeZentrale.plz} {kontakt.adresse.operativeZentrale.ort}
       </p>
       <p class="mt-2 text-primary/80">
-        Einsatzgebiet: Stadt Stuttgart, Landkreis Böblingen. Anerkannt nach Para 45a SGB XI für
-        Direkt-Abrechnung mit der Pflegekasse.
+        Einsatzgebiet: Stadt Stuttgart, Landkreis Böblingen. Anerkannt nach §45a SGB XI für
+        Direkt-Abrechnung mit der Pflegekasse. Details zum Geltungsbereich und allen Standorten unter
+        <a href="/standorte/" class="underline text-accent-dark">Standorte</a>.
       </p>
     </div>
 

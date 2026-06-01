@@ -1,9 +1,19 @@
 ﻿---
 import PageLayout from '@layouts/PageLayout.astro';
+import { generateBreadcrumbListSchema } from '@lib/schema-org';
+
+const breadcrumbSchema = generateBreadcrumbListSchema([
+  { name: 'Start', url: 'https://katharis.de/' },
+  { name: 'Barrierefreiheit', url: 'https://katharis.de/barrierefreiheit/' },
+]);
 ---
 
 <PageLayout title="Erklärung zur Barrierefreiheit | Katharis" description="BFSG Para 14 Erklärung der Barrierefreiheit für katharis.de.">
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
   <article class="prose max-w-content mx-auto px-4 py-12">
+    <p class="text-sm">
+      <a href="/" class="underline">Start</a> &rsaquo; Barrierefreiheit
+    </p>
     <h1>Erklärung zur Barrierefreiheit</h1>
     <p>Stand: 2026-05-06.</p>
 
