@@ -1,50 +1,158 @@
-﻿---
+---
 import PageLayout from '@layouts/PageLayout.astro';
 import { hooks } from '@data/content';
 import { generateHowToSchema, generateFAQPageSchema, generateBreadcrumbListSchema } from '@lib/schema-org';
 import CallCTA from '@components/CallCTA';
 import RueckrufButton from '@components/RueckrufButton';
 
+const pflegegradStufen = [
+  {
+    grad: 'Pflegegrad 1',
+    punkte: '12,5 bis unter 27',
+    beschreibung: 'Geringe Beeinträchtigung der Selbständigkeit',
+    typischeFaelle: 'Leichte Demenz-Anzeichen, Bewegungs-Einschränkungen nach Hüft-OP, dauerhaft erhöhter Hilfebedarf bei Hauswirtschaft',
+  },
+  {
+    grad: 'Pflegegrad 2',
+    punkte: '27 bis unter 47,5',
+    beschreibung: 'Erhebliche Beeinträchtigung der Selbständigkeit',
+    typischeFaelle: 'Mittelschwere Demenz, deutliche Bewegungs-Einschränkungen, regelmäßige Hilfe bei mehreren Bereichen der Selbstversorgung',
+  },
+  {
+    grad: 'Pflegegrad 3',
+    punkte: '47,5 bis unter 70',
+    beschreibung: 'Schwere Beeinträchtigung der Selbständigkeit',
+    typischeFaelle: 'Fortgeschrittene Demenz, schwere körperliche Einschränkungen, mehrfach tägliche Pflegeleistungen erforderlich',
+  },
+  {
+    grad: 'Pflegegrad 4',
+    punkte: '70 bis unter 90',
+    beschreibung: 'Schwerste Beeinträchtigung der Selbständigkeit',
+    typischeFaelle: 'Schwerste Pflegebedürftigkeit mit umfassendem Hilfebedarf rund um die Uhr',
+  },
+  {
+    grad: 'Pflegegrad 5',
+    punkte: '90 bis 100',
+    beschreibung: 'Schwerste Beeinträchtigung mit besonderen Anforderungen',
+    typischeFaelle: 'Schwerste Pflegebedürftigkeit mit besonderen Anforderungen an die pflegerische Versorgung (zum Beispiel ständige künstliche Beatmung)',
+  },
+];
+
+const nbaModule = [
+  {
+    modul: '1. Mobilität',
+    gewicht: '10 %',
+    pruef: 'Wie selbständig kann sich die Person fortbewegen? Aus dem Bett aufstehen, in der Wohnung gehen, Treppen steigen, sich umlagern.',
+  },
+  {
+    modul: '2. Kognitive und kommunikative Fähigkeiten',
+    gewicht: '7,5 %*',
+    pruef: 'Erkennen der Person Personen aus dem Umfeld, Orientierung in Raum und Zeit, Verstehen einfacher Aufforderungen, Mitteilung eigener Bedürfnisse.',
+  },
+  {
+    modul: '3. Verhaltensweisen und psychische Problemlagen',
+    gewicht: '7,5 %*',
+    pruef: 'Nächtliche Unruhe, Aggressionen, Ängste, depressive Verstimmungen, Unwille zu pflegerischen Maßnahmen.',
+  },
+  {
+    modul: '4. Selbstversorgung',
+    gewicht: '40 %',
+    pruef: 'Wichtigstes Modul. Waschen, Anziehen, Toilettengang, Essen und Trinken, Mund-Hygiene - vollständig selbständig oder mit welcher Hilfe.',
+  },
+  {
+    modul: '5. Krankheits- und therapiebedingte Anforderungen',
+    gewicht: '20 %',
+    pruef: 'Medikamenten-Einnahme, Injektionen, Verbandwechsel, Therapie-Termine, Arzt-Besuche - welche Hilfe ist nötig.',
+  },
+  {
+    modul: '6. Gestaltung des Alltagslebens und sozialer Kontakte',
+    gewicht: '15 %',
+    pruef: 'Tagesablauf strukturieren, Aktivitäten planen, Kontakte zu Familie und Freunden aufrechterhalten.',
+  },
+];
+
+const vorbereitungCheckliste = [
+  '14-Tage-Pflegetagebuch (minutengenau, was wann gebraucht wird)',
+  'Aktueller Hausarzt-Bericht mit Diagnosen-Liste',
+  'Fach-Arzt-Berichte (Neurologe bei Demenz, Orthopädie bei Bewegungs-Einschränkungen, Psychiatrie wo relevant)',
+  'Medikamenten-Plan (welche Tabletten täglich, wer richtet)',
+  'Hilfsmittel-Liste (Rollator, Rollstuhl, Bettpfanne, Toiletten-Erhöhung etc.)',
+  'Pflegehilfsmittel-Belege bei Vorhandensein',
+  'Vertrauensperson für den Termin (Tochter, Sohn, Partner) einplanen',
+  'Termin tagsüber in den Stunden mit dem schlechtesten Zustand legen, falls möglich',
+  'Wohnung NICHT extra aufräumen - der MD soll den Alltag sehen, nicht eine Inszenierung',
+  'Bei beginnender Demenz: Beispiele für Gedächtnis-Aussetzer aus den letzten Tagen notieren',
+];
+
+const eilfallTimeline = [
+  { tag: 'Tag 1', ereignis: 'Krankenhaus-Entlassung mit Pflegebedarf, oder akute Verschlechterung zu Hause' },
+  { tag: 'Tag 1-2', ereignis: 'Antrag bei Pflegekasse stellen mit Hinweis "Eilfall nach §18 SGB XI" - telefonisch und schriftlich' },
+  { tag: 'Tag 2-5', ereignis: 'MD meldet sich, vereinbart Hausbesuch (in Eilfällen oft binnen 48 Stunden)' },
+  { tag: 'Tag 5-7', ereignis: 'MD-Begutachtung und Schnell-Gutachten' },
+  { tag: 'Tag 7', ereignis: 'Pflegekasse muss binnen 1 Woche entscheiden (Eilfall-Frist)' },
+  { tag: 'Nach Bewilligung', ereignis: 'Pflegegrad gilt rückwirkend ab Antragsdatum, Leistungen sofort verfügbar' },
+];
+
 const faqs = [
   {
     question: 'Beraten Sie mich auch zu meinen Pflegekassen-Ansprüchen?',
-    answer: 'Nein. Wir helfen administrativ beim Antrag (Formulare ausfüllen, Begutachtung vorbereiten, Botengang). Inhaltliche Beratung zu Leistungs-Ansprüchen ist Aufgabe der Pflegestützpunkte. Die Pflegestützpunkte beraten kostenlos. Wir vermitteln Ihnen gerne den richtigen Stadtbezirks-Kontakt.',
+    answer:
+      'Nein. Wir helfen administrativ beim Antrag (Formulare ausfüllen, Begutachtung vorbereiten, Botengang). Inhaltliche Beratung zu Leistungs-Ansprüchen ist Aufgabe der Pflegestützpunkte. Die Pflegestützpunkte beraten kostenlos. Wir vermitteln Ihnen gerne den richtigen Stadtbezirks-Kontakt.',
   },
   {
     question: 'Wie lange dauert der Pflegegrad-Antrag?',
-    answer: 'Typisch fünf bis 25 Wochen. Bei Eilfällen (zum Beispiel direkt nach Krankenhaus-Entlassung) muss die Pflegekasse innerhalb von einer Woche entscheiden.',
+    answer:
+      'Typisch fünf bis 25 Wochen. Bei Eilfällen (zum Beispiel direkt nach Krankenhaus-Entlassung) muss die Pflegekasse innerhalb von einer Woche entscheiden (§18 SGB XI).',
   },
   {
     question: 'Was ist die MD-Begutachtung?',
-    answer: 'Ein Termin bei Ihnen zuhause, bei dem ein Gutachter des Medizinischen Dienstes prüft, wie selbstständig die pflegebedürftige Person noch ist. Das Gutachten ist die Grundlage für die Pflegekassen-Entscheidung. Vorbereitung ist wichtig.',
+    answer:
+      'Ein Termin bei Ihnen zu Hause, bei dem ein Gutachter des Medizinischen Dienstes prüft, wie selbständig die pflegebedürftige Person noch ist. Der MD prüft anhand des Neuen Begutachtungs-Instruments (NBA) sechs Module: Mobilität, Kognition, Verhalten, Selbstversorgung, krankheitsbedingte Anforderungen und Alltagsgestaltung. Vorbereitung ist wichtig.',
   },
   {
     question: 'Was wenn ich keinen Pflegegrad bekomme?',
-    answer: 'Sie haben einen Monat Zeit für einen Widerspruch. Wir vermitteln Ihnen Pflegestützpunkt oder Sozialrechts-Anwalt. Falls Sie sich gegen einen Widerspruch entscheiden, können Sie die Entlastungsleistung als Privatauftrag bei uns buchen.',
+    answer:
+      'Sie haben einen Monat Zeit für einen Widerspruch nach §84 SGB X. Detaillierte Anleitung im Ratgeber Pflegekassen-Widerspruch. Falls Sie sich gegen einen Widerspruch entscheiden, können Sie die Entlastungsleistung als Privatauftrag bei uns buchen.',
   },
   {
     question: 'Was kostet die Antrags-Hilfe?',
-    answer: 'Im kostenlosen Erstgespräch am Telefon klären wir Ihre Situation. Wenn Sie unsere Antrags-Hilfe in Anspruch nehmen, rechnen wir das im Rahmen der späteren Entlastungsleistung mit Ihrer Pflegekasse direkt ab. Bei Antrags-Ablehnung tragen wir den Aufwand für die Antrags-Hilfe selbst, Sie zahlen nichts dafür.',
+    answer:
+      'Im kostenlosen Erstgespräch am Telefon klären wir Ihre Situation. Wenn Sie unsere Antrags-Hilfe in Anspruch nehmen, rechnen wir das im Rahmen der späteren Entlastungsleistung mit Ihrer Pflegekasse direkt ab. Bei Antrags-Ablehnung tragen wir den Aufwand für die Antrags-Hilfe selbst, Sie zahlen nichts dafür.',
   },
   {
     question: 'Was passiert wenn die pflegebedürftige Person den Antrag nicht selbst stellen kann?',
-    answer: 'Sie können den Antrag als Angehöriger stellen, brauchen dafür aber eine schriftliche Vollmacht. Bei dauerhafter Geschäftsunfähigkeit ist eine Vorsorgevollmacht oder gerichtliche Betreuung notwendig. Im Erstgespräch klären wir, welcher Weg in Ihrer Situation passt. Vollmachts-Templates haben wir vorbereitet.',
+    answer:
+      'Sie können den Antrag als Angehöriger stellen, brauchen dafür aber eine schriftliche Vollmacht. Bei dauerhafter Geschäftsunfähigkeit ist eine Vorsorgevollmacht oder gerichtliche Betreuung notwendig. Im Erstgespräch klären wir, welcher Weg in Ihrer Situation passt. Vollmachts-Templates haben wir vorbereitet.',
   },
   {
     question: 'Welche Pflegegrade gibt es und wofür reicht welcher?',
-    answer: 'Pflegegrad 1 (geringe Beeinträchtigung) gibt Zugang zum Entlastungsbetrag und Wohnumfeldverbesserung. Ab Pflegegrad 2 öffnet sich der gemeinsame Jahresbetrag (Verhinderungs- plus Kurzzeitpflege) und die Pflegesachleistungen. Ab Pflegegrad 4 sind die Beträge spürbar höher. Wir helfen Ihnen administrativ den Antrag zu stellen, die Einstufung trifft der Medizinische Dienst nach Hausbesuch.',
+    answer:
+      'Pflegegrad 1 (geringe Beeinträchtigung, 12,5 bis 27 Punkte) gibt Zugang zum Entlastungsbetrag (131 €/Monat) und Wohnumfeldverbesserung (bis 4.180 €). Ab Pflegegrad 2 (27 bis 47,5 Punkte) öffnet sich der gemeinsame Jahresbetrag §42a (3.539 €/Jahr) und die Pflegesachleistung §36. Ab Pflegegrad 4 sind die Beträge spürbar höher. Wir helfen Ihnen administrativ den Antrag zu stellen, die Einstufung trifft der Medizinische Dienst.',
   },
   {
     question: 'Wie bereite ich die MD-Begutachtung am besten vor?',
-    answer: 'Führen Sie über mindestens 14 Tage ein Pflegetagebuch. Notieren Sie täglich, welche Hilfe wann notwendig war: Körperpflege, Anziehen, Essen, Mobilität, Medikamenten-Verabreichung, Termin-Begleitung. Halten Sie alle Diagnosen, Medikamenten-Listen und Hilfsmittel bereit. Schönen Sie nichts. Der MD-Gutachter sieht oft nur eine Stunde, das Tagebuch zeigt den Alltag.',
+    answer:
+      'Führen Sie über mindestens 14 Tage ein Pflegetagebuch. Notieren Sie täglich, welche Hilfe wann notwendig war: Körperpflege, Anziehen, Essen, Mobilität, Medikamenten-Verabreichung, Termin-Begleitung. Halten Sie alle Diagnosen, Medikamenten-Listen und Hilfsmittel bereit. Schönen Sie nichts. Der MD-Gutachter sieht oft nur eine Stunde, das Tagebuch zeigt den Alltag. Detaillierte Anleitung im Ratgeber MD-Begutachtung vorbereiten.',
   },
   {
     question: 'Wer trägt die Kosten wenn die Pflegekasse ablehnt?',
-    answer: 'Wenn der Pflegegrad-Antrag abgelehnt wird und Sie keinen Widerspruch einlegen wollen, können Sie unsere Entlastungsleistung als Privatauftrag buchen. Wir besprechen die Kosten transparent vor Beginn der Arbeit. Eine versteckte Kosten-Falle gibt es bei uns nicht.',
+    answer:
+      'Wenn der Pflegegrad-Antrag abgelehnt wird und Sie keinen Widerspruch einlegen wollen, können Sie unsere Entlastungsleistung als Privatauftrag buchen. Wir besprechen die Kosten transparent vor Beginn der Arbeit. Eine versteckte Kosten-Falle gibt es bei uns nicht.',
   },
   {
     question: 'Kann ich auch nach Krankenhaus-Entlassung kurzfristig einen Antrag stellen?',
-    answer: 'Ja, sogar mit Eilfristen-Vorrang. Bei akut neu entstandener Pflegebedürftigkeit nach Krankenhaus-Entlassung muss die Pflegekasse innerhalb einer Woche entscheiden. Wir helfen Ihnen, den Antrag in dieser Eilfrist korrekt zu stellen, damit kein Zeitverlust entsteht.',
+    answer:
+      'Ja, sogar mit Eilfristen-Vorrang. Bei akut neu entstandener Pflegebedürftigkeit nach Krankenhaus-Entlassung muss die Pflegekasse innerhalb einer Woche entscheiden (§18 SGB XI). Wir helfen Ihnen, den Antrag in dieser Eilfrist korrekt zu stellen, damit kein Zeitverlust entsteht.',
+  },
+  {
+    question: 'Kann ein bestehender Pflegegrad höher gestuft werden?',
+    answer:
+      'Ja. Wenn sich der Hilfebedarf merklich erhöht (Demenz schreitet voran, neue Erkrankung, Sturz mit Folgen), können Sie einen Höherstufungs-Antrag stellen. Verfahren ist identisch zum Erstantrag: Anruf bei Pflegekasse, neuer MD-Termin, neues Gutachten, neuer Bescheid. Die alte Einstufung bleibt während des Verfahrens gültig.',
+  },
+  {
+    question: 'Was brauche ich an Vollmachten, wenn ich als Tochter den Antrag stelle?',
+    answer:
+      'Für reine Antragstellung: schriftliche Vollmacht des Betroffenen (kann formlos sein). Für die Pflegekassen-Kommunikation: erweiterte Vollmacht zur Akteneinsicht und Kommunikation. Bei dauerhafter Geschäftsunfähigkeit (zum Beispiel fortgeschrittene Demenz ohne Vorsorgevollmacht): gerichtliche Betreuung durch das Betreuungsgericht. Vorsorgevollmacht zu Lebzeiten regeln, das verhindert die gerichtliche Betreuung.',
   },
 ];
 
@@ -63,10 +171,10 @@ const howToSchema = generateHowToSchema({
 });
 
 const steps = [
-  { num: 1, title: 'Antrag stellen', body: 'Formloser Anruf bei der Pflegekasse reicht. Antragsdatum ist der Tag des Anrufs.' },
-  { num: 2, title: 'MD-Termin abwarten', body: 'Der Medizinische Dienst meldet sich innerhalb von ein bis vier Wochen mit einem Termin.' },
-  { num: 3, title: 'Begutachtung vorbereiten', body: 'Pflegetagebuch, Hilfsmittel-Liste, Symptom-Dokumentation. Wir helfen Ihnen administrativ.' },
-  { num: 4, title: 'MD-Gutachten + Bescheid', body: 'Wartezeit typisch 5 bis 25 Wochen ab Antrag.' },
+  { num: 1, title: 'Antrag stellen', body: 'Formloser Anruf bei der Pflegekasse reicht. Antragsdatum ist der Tag des Anrufs - schriftlich nachreichen für die Aktenlage.' },
+  { num: 2, title: 'MD-Termin abwarten', body: 'Der Medizinische Dienst meldet sich innerhalb von ein bis vier Wochen mit einem Termin-Vorschlag.' },
+  { num: 3, title: 'Begutachtung vorbereiten', body: 'Pflegetagebuch, Hilfsmittel-Liste, Symptom-Dokumentation. Wir helfen Ihnen administrativ - siehe Checkliste weiter unten.' },
+  { num: 4, title: 'MD-Gutachten + Bescheid', body: 'Wartezeit typisch 5 bis 25 Wochen ab Antrag. Bei Eilfällen 1 Woche.' },
   { num: 5, title: 'Bei Bewilligung', body: 'Pflegegrad gilt rückwirkend ab Antragsdatum. Leistungen rückwirkend erstattbar.' },
 ];
 
@@ -77,8 +185,8 @@ const breadcrumbSchema = generateBreadcrumbListSchema([
 ---
 
 <PageLayout
-  title="Pflegegrad-Antrag mit Profi-Hilfe Stuttgart | Katharis"
-  description="Wir helfen Ihnen administrativ beim Pflegegrad-Antrag. Formulare ausfüllen, Begutachtung vorbereiten, Botengang. Bei Bewilligung rückwirkende Erstattung möglich."
+  title="Pflegegrad-Antrag 2026: Schritt für Schritt mit Profi-Hilfe | Katharis"
+  description="So beantragen Sie einen Pflegegrad: 5 Stufen, 6 Begutachtungs-Module, 14-Tage-Vorbereitung, Eilfall-Verfahren. Administrative Unterstützung in Stuttgart und Landkreis Böblingen."
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
@@ -87,7 +195,10 @@ const breadcrumbSchema = generateBreadcrumbListSchema([
   <!-- Hero -->
   <section class="bg-background py-16">
     <div class="max-w-content mx-auto px-4">
-      <h1 class="text-4xl font-bold text-primary">Noch kein Pflegegrad? So beantragen Sie ihn.</h1>
+      <p class="text-sm text-primary/80">
+        <a href="/" class="underline">Start</a> &rsaquo; Pflegegrad-Antrag
+      </p>
+      <h1 class="text-4xl font-bold text-primary mt-4">Noch kein Pflegegrad? So beantragen Sie ihn.</h1>
       <p class="mt-4 text-lg text-primary/80">
         Wir helfen Ihnen <strong>administrativ</strong> beim Antrag bei der Pflegekasse. Bei Bewilligung
         kann die Pflegekasse Ihre Kosten ab Antragsdatum erstatten.
@@ -100,78 +211,285 @@ const breadcrumbSchema = generateBreadcrumbListSchema([
     </div>
   </section>
 
-  <!-- Was ist Pflegegrad + Wer kann beantragen -->
+  <!-- Was ist Pflegegrad -->
   <section class="py-12 max-w-content mx-auto px-4">
     <h2 class="text-2xl font-bold text-primary mb-4">Was ist ein Pflegegrad?</h2>
     <p class="text-primary/80">
       Ein Pflegegrad zeigt, wie viel Hilfe ein Mensch im Alltag braucht. Es gibt fünf Stufen: Pflegegrad 1
-      für geringe Beeinträchtigung, Pflegegrad 5 für schwerste Beeinträchtigung. Mit jedem Pflegegrad öffnet
-      die Pflegekasse bestimmte Leistungen, die Ihre Mutter, Ihren Vater oder Sie selbst entlasten.
+      für geringe Beeinträchtigung, Pflegegrad 5 für schwerste Beeinträchtigung mit besonderen
+      Anforderungen. Mit jedem Pflegegrad öffnet die Pflegekasse bestimmte Leistungen, die Ihre Mutter,
+      Ihren Vater oder Sie selbst entlasten.
     </p>
     <p class="mt-4 text-primary/80">
-      Wer keinen Antrag stellt, bekommt keine Leistung. Auch wenn der Bedarf da ist.
+      Die Einstufung erfolgt nach dem Neuen Begutachtungs-Instrument (NBA, §15 SGB XI). Der Medizinische
+      Dienst (MD) prüft sechs Module bei einem Hausbesuch und vergibt insgesamt 0 bis 100 Punkte. Aus der
+      Punktzahl ergibt sich der Pflegegrad.
     </p>
-  </section>
-
-  <section class="py-12 max-w-content mx-auto px-4">
-    <h2 class="text-2xl font-bold text-primary mb-6">Schritt-für-Schritt-Antrag</h2>
-    <ol class="space-y-6">
-      {steps.map((step) => (
-        <li class="flex gap-4">
-          <div class="flex-shrink-0 w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center font-bold text-lg">{step.num}</div>
-          <div>
-            <h3 class="font-bold text-primary text-lg">{step.title}</h3>
-            <p class="mt-1 text-primary/80">{step.body}</p>
-          </div>
-        </li>
-      ))}
-    </ol>
-  </section>
-
-  <section class="py-12 bg-white">
-    <div class="max-w-content mx-auto px-4">
-      <h2 class="text-2xl font-bold text-primary mb-4">Wie wir Ihnen helfen</h2>
-      <p class="font-bold text-primary mt-4">Was wir für Sie tun (administrative Antrags-Hilfe):</p>
-      <ul class="mt-2 space-y-1 text-primary/80 list-disc list-inside">
-        <li>Wir helfen Ihnen beim Ausfüllen des Pflegekassen-Antragsformulars.</li>
-        <li>Wir bereiten den MD-Begutachtungs-Termin mit Ihnen vor.</li>
-        <li>Bei schriftlicher Bevollmächtigung übernehmen wir den Botengang bei der Pflegekasse.</li>
-      </ul>
-      <p class="font-bold text-primary mt-4">Was wir nicht tun:</p>
-      <ul class="mt-2 space-y-1 text-primary/80 list-disc list-inside">
-        <li>Wir geben keine Beratung zu Leistungs-Ansprüchen oder Anspruchs-Höhe (Para 7a SGB XI).</li>
-        <li>Wir begleiten keine Widersprüche gegen abgelehnte Bescheide (juristische Vertretung).</li>
-      </ul>
-      <p class="mt-4 text-sm text-primary/70">
-        <strong>Inhaltliche Pflegeberatung</strong> bekommen Sie kostenlos beim Pflegestützpunkt in Ihrem Stadtbezirk.
-        <strong>Bei Widerspruch</strong> vermitteln wir an Pflegestützpunkt oder Sozialrechts-Anwalt.
+    <div class="mt-4 bg-accent/10 border-l-4 border-accent rounded-r-lg p-4">
+      <p class="text-primary font-bold">Wichtig zu wissen:</p>
+      <p class="text-primary/80 mt-2 text-sm">
+        Wer keinen Antrag stellt, bekommt keine Leistung. Auch wenn der Bedarf da ist. Das ist die
+        häufigste Konstellation, in der pflegende Angehörige sich Jahre lang ohne Pflegekassen-Geld
+        durchschlagen.
       </p>
     </div>
   </section>
 
-  <!-- Rückwirkende Erstattung -->
+  <!-- Pflegegrade im Detail -->
+  <section class="py-12 bg-white">
+    <div class="max-w-content mx-auto px-4">
+      <h2 class="text-2xl font-bold text-primary mb-4">Die 5 Pflegegrade im Detail</h2>
+      <p class="text-primary/80 mb-6">
+        Die Punktzahl aus der MD-Begutachtung ordnet die Person einem von fünf Pflegegraden zu:
+      </p>
+      <div class="space-y-3">
+        {pflegegradStufen.map((pg) => (
+          <div class="bg-background/40 rounded-xl p-5 border border-primary/10">
+            <div class="flex flex-wrap items-center gap-3">
+              <h3 class="text-lg font-bold text-primary">{pg.grad}</h3>
+              <span class="text-xs px-2 py-1 bg-accent/15 text-accent-dark font-bold rounded-full">{pg.punkte} Punkte</span>
+            </div>
+            <p class="mt-2 text-primary/80 font-medium">{pg.beschreibung}</p>
+            <p class="mt-2 text-sm text-primary/70"><strong>Typisch:</strong> {pg.typischeFaelle}</p>
+          </div>
+        ))}
+      </div>
+      <p class="mt-6 text-sm text-primary/70">
+        Welche konkreten Pflegekassen-Leistungen mit welchem Pflegegrad einhergehen, finden Sie auf der
+        <a href="/pflegekasse/" class="underline text-accent-dark">Pflegekassen-Übersicht</a>
+        in der Pflegegrad-Tabelle.
+      </p>
+    </div>
+  </section>
+
+  <!-- Was prüft der MD: 6 Module -->
   <section class="py-12 max-w-content mx-auto px-4">
-    <h2 class="text-2xl font-bold text-primary mb-4">Rückwirkende Erstattung erklärt</h2>
-    <p class="text-primary/80">
-      Pflegegrad-Bewilligungen wirken rückwirkend ab Antragsdatum. Das bedeutet konkret:
+    <h2 class="text-2xl font-bold text-primary mb-4">Was prüft der MD genau? Die 6 NBA-Module</h2>
+    <p class="text-primary/80 mb-6">
+      Das Neue Begutachtungs-Instrument (NBA) prüft seit 2017 sechs Lebensbereiche. Jeder Bereich wird
+      separat bewertet und nach unterschiedlicher Gewichtung in die Gesamt-Punktzahl eingerechnet:
     </p>
-    <ol class="mt-4 space-y-2 text-primary/80 list-decimal list-inside">
-      <li>Sie stellen den Antrag heute.</li>
-      <li>Die Pflegekasse braucht typisch acht bis zwölf Wochen für die Entscheidung.</li>
-      <li>In dieser Wartezeit können Sie schon Entlastungsleistungen in Anspruch nehmen.</li>
-      <li>Bei Bewilligung werden diese Leistungen rückwirkend ab Antragsdatum erstattet.</li>
-      <li>Bei Ablehnung gehen wir mit Ihnen den privaten Weg, transparent besprochen vor Beginn.</li>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm border-collapse">
+        <thead>
+          <tr class="bg-primary text-white text-left">
+            <th class="p-3 font-bold border border-primary/30">Modul</th>
+            <th class="p-3 font-bold border border-primary/30">Gewichtung</th>
+            <th class="p-3 font-bold border border-primary/30">Was wird geprüft</th>
+          </tr>
+        </thead>
+        <tbody>
+          {nbaModule.map((m, idx) => (
+            <tr class={idx % 2 === 0 ? 'bg-background/30' : 'bg-white'}>
+              <td class="p-3 border border-primary/20 font-bold text-primary">{m.modul}</td>
+              <td class="p-3 border border-primary/20 text-accent-dark font-bold">{m.gewicht}</td>
+              <td class="p-3 border border-primary/20 text-primary/80">{m.pruef}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="mt-4 text-sm text-primary/70">
+      * Module 2 und 3 werden zusammen gewichtet (15 % insgesamt) - es zählt der höhere der beiden Wert.
+      Das benachteiligt Demenz-Erkrankungen nicht.
+    </p>
+  </section>
+
+  <!-- 5-Schritt-Prozess -->
+  <section class="py-12 bg-white">
+    <div class="max-w-content mx-auto px-4">
+      <h2 class="text-2xl font-bold text-primary mb-6">Schritt-für-Schritt-Antrag</h2>
+      <ol class="space-y-6">
+        {steps.map((step) => (
+          <li class="flex gap-4">
+            <div class="flex-shrink-0 w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center font-bold text-lg">{step.num}</div>
+            <div>
+              <h3 class="font-bold text-primary text-lg">{step.title}</h3>
+              <p class="mt-1 text-primary/80">{step.body}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- Vorbereitungs-Checkliste -->
+  <section class="py-12 max-w-content mx-auto px-4">
+    <h2 class="text-2xl font-bold text-primary mb-4">Vorbereitungs-Checkliste für den MD-Termin</h2>
+    <p class="text-primary/80 mb-4">
+      Eine gute Vorbereitung macht oft den Unterschied zwischen Pflegegrad 1 und Pflegegrad 2 oder 3 - der
+      MD sieht nur eine Stunde, das Tagebuch zeigt den Alltag.
+    </p>
+    <div class="bg-background/40 rounded-xl p-6 border border-primary/10">
+      <ul class="space-y-3 text-primary/80">
+        {vorbereitungCheckliste.map((punkt) => (
+          <li class="flex items-start gap-3">
+            <span class="flex-none mt-1 w-5 h-5 bg-accent/20 rounded text-accent-dark text-xs font-bold flex items-center justify-center">✓</span>
+            <span>{punkt}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+    <p class="mt-4 text-primary/80">
+      Sehr ausführlich und mit Vorlagen im Ratgeber <a href="/ratgeber/md-begutachtung-vorbereiten/" class="underline text-accent-dark">MD-Begutachtung vorbereiten</a>.
+    </p>
+  </section>
+
+  <!-- Eilfall-Verfahren -->
+  <section class="py-12 bg-white">
+    <div class="max-w-content mx-auto px-4">
+      <h2 class="text-2xl font-bold text-primary mb-4">Eilfall: 1-Wochen-Verfahren nach §18 SGB XI</h2>
+      <p class="text-primary/80 mb-6">
+        Bei akut neu entstandener Pflegebedürftigkeit - typischerweise direkt nach Krankenhaus-Entlassung -
+        muss die Pflegekasse binnen einer Woche entscheiden. So läuft der Eilfall:
+      </p>
+      <div class="space-y-3">
+        {eilfallTimeline.map((punkt) => (
+          <div class="grid grid-cols-[100px_1fr] gap-4 bg-background/40 rounded-xl p-4 border border-primary/10">
+            <div class="font-bold text-accent-dark">{punkt.tag}</div>
+            <div class="text-primary/80 text-sm">{punkt.ereignis}</div>
+          </div>
+        ))}
+      </div>
+      <p class="mt-4 text-primary/80">
+        <strong>Wichtig:</strong> Der Eilfall muss schon im Antrag ausdrücklich als solcher markiert sein
+        - "Antrag auf Pflegegrad-Feststellung mit Eilfristen-Vorrang nach §18 SGB XI wegen
+        Krankenhaus-Entlassung am [Datum]". Sonst gilt die normale 5-25-Wochen-Frist.
+      </p>
+    </div>
+  </section>
+
+  <!-- Wie wir helfen -->
+  <section class="py-12 max-w-content mx-auto px-4">
+    <h2 class="text-2xl font-bold text-primary mb-4">Wie wir Ihnen helfen</h2>
+    <p class="font-bold text-primary mt-4">Was wir für Sie tun (administrative Antrags-Hilfe):</p>
+    <ul class="mt-2 space-y-1 text-primary/80 list-disc list-inside">
+      <li>Wir helfen Ihnen beim Ausfüllen des Pflegekassen-Antragsformulars</li>
+      <li>Wir bereiten den MD-Begutachtungs-Termin mit Ihnen vor (Pflegetagebuch-Vorlage, Hilfsmittel-Liste, Doku-Tipps)</li>
+      <li>Bei schriftlicher Bevollmächtigung übernehmen wir den Botengang bei der Pflegekasse</li>
+      <li>Wir vermitteln den richtigen Pflegestützpunkt-Kontakt für Ihre Region</li>
+      <li>Wir prüfen anschließend, welche Pflegekassen-Töpfe für die geplante Entlastungs-Leistung greifen</li>
+    </ul>
+    <p class="font-bold text-primary mt-4">Was wir NICHT tun:</p>
+    <ul class="mt-2 space-y-1 text-primary/80 list-disc list-inside">
+      <li>Wir geben keine Beratung zu Leistungs-Ansprüchen oder Anspruchs-Höhe (das ist §7a SGB XI, Sache der Pflegestützpunkte)</li>
+      <li>Wir begleiten keine Widersprüche gegen abgelehnte Bescheide (juristische Vertretung - dafür Pflegestützpunkt oder Sozialrechts-Anwalt)</li>
+      <li>Wir entscheiden nicht für die Pflegekasse (das macht der MD und die Kasse)</li>
+    </ul>
+    <p class="mt-4 text-sm text-primary/70">
+      <strong>Inhaltliche Pflegeberatung</strong> bekommen Sie kostenlos beim Pflegestützpunkt in Ihrem
+      Stadtbezirk. <strong>Bei Widerspruch</strong> vermitteln wir an Pflegestützpunkt oder Sozialrechts-
+      Anwalt - oder Sie nutzen direkt unseren Ratgeber
+      <a href="/ratgeber/pflegekasse-ablehnung-widerspruch/" class="underline text-accent-dark">Pflegekassen-Widerspruch einlegen</a>.
+    </p>
+  </section>
+
+  <!-- Rückwirkende Erstattung -->
+  <section class="py-12 bg-white">
+    <div class="max-w-content mx-auto px-4">
+      <h2 class="text-2xl font-bold text-primary mb-4">Rückwirkende Erstattung erklärt</h2>
+      <p class="text-primary/80">
+        Pflegegrad-Bewilligungen wirken rückwirkend ab Antragsdatum. Das bedeutet konkret:
+      </p>
+      <ol class="mt-4 space-y-2 text-primary/80 list-decimal list-inside">
+        <li>Sie stellen den Antrag heute</li>
+        <li>Die Pflegekasse braucht typisch acht bis zwölf Wochen für die Entscheidung</li>
+        <li>In dieser Wartezeit können Sie bereits Entlastungsleistungen in Anspruch nehmen</li>
+        <li>Bei Bewilligung werden diese Leistungen rückwirkend ab Antragsdatum erstattet</li>
+        <li>Bei Ablehnung gehen wir mit Ihnen den privaten Weg, transparent besprochen vor Beginn</li>
+      </ol>
+      <p class="mt-4 text-primary/80">
+        <strong>Praxis-Tipp:</strong> in der Wartezeit dokumentieren Sie alle Hilfen, die Sie privat
+        bezahlen müssen, mit Datum und Rechnung. Bei nachträglicher Anerkennung wird in vielen Fällen
+        rückwirkend erstattet.
+      </p>
+    </div>
+  </section>
+
+  <!-- Höherstufung -->
+  <section class="py-12 max-w-content mx-auto px-4">
+    <h2 class="text-2xl font-bold text-primary mb-4">Höherstufungs-Antrag bei laufendem Pflegegrad</h2>
+    <p class="text-primary/80">
+      Wenn sich der Hilfebedarf merklich erhöht - Demenz schreitet voran, neue Erkrankung, schwerer
+      Sturz, Verschlechterung des Allgemeinzustands - können Sie einen <strong>Höherstufungs-Antrag</strong>
+      stellen.
+    </p>
+    <p class="mt-4 text-primary/80">
+      Verfahren identisch zum Erstantrag:
+    </p>
+    <ol class="mt-3 space-y-1 text-primary/80 list-decimal list-inside">
+      <li>Telefonischer Antrag bei der Pflegekasse mit Hinweis "Höherstufungs-Antrag"</li>
+      <li>Neuer MD-Termin wird vereinbart</li>
+      <li>Neues Pflegetagebuch über 14 Tage führen</li>
+      <li>MD-Gutachten ergeht neu, alte Einstufung bleibt während des Verfahrens gültig</li>
+      <li>Bescheid bestätigt entweder die alte Einstufung oder gibt eine höhere</li>
     </ol>
+    <p class="mt-4 text-primary/80">
+      <strong>Wichtig:</strong> die Höherstufung gilt rückwirkend ab dem neuen Antragsdatum, nicht ab dem
+      Original-Antrag. Frühzeitig stellen lohnt sich.
+    </p>
+  </section>
+
+  <!-- Vollmachten -->
+  <section class="py-12 bg-white">
+    <div class="max-w-content mx-auto px-4">
+      <h2 class="text-2xl font-bold text-primary mb-4">Vollmachten - wenn Angehörige für die pflegebedürftige Person handeln</h2>
+      <p class="text-primary/80">
+        Wer als Tochter, Sohn oder Partner den Pflegegrad-Antrag für die pflegebedürftige Person stellt,
+        braucht je nach Situation unterschiedliche Vollmachten:
+      </p>
+      <div class="mt-6 space-y-4">
+        <div class="bg-background/40 rounded-xl p-5 border border-primary/10">
+          <h3 class="font-bold text-primary">1. Reine Antrags-Vollmacht (formlos)</h3>
+          <p class="mt-2 text-sm text-primary/80">
+            Schriftliche Erklärung der pflegebedürftigen Person: "Hiermit bevollmächtige ich [Name] zur
+            Stellung eines Pflegegrad-Antrags bei der [Pflegekasse]." Reicht für Antragstellung selbst,
+            nicht für Pflegekassen-Kommunikation darüber hinaus.
+          </p>
+        </div>
+        <div class="bg-background/40 rounded-xl p-5 border border-primary/10">
+          <h3 class="font-bold text-primary">2. Erweiterte Vollmacht (Akteneinsicht + Kommunikation)</h3>
+          <p class="mt-2 text-sm text-primary/80">
+            Für vollständige Kommunikation mit der Pflegekasse - Aktenanforderung, Widerspruch-Vorbereitung,
+            Auskünfte. Formular oft auf der Pflegekassen-Website verfügbar.
+          </p>
+        </div>
+        <div class="bg-background/40 rounded-xl p-5 border border-primary/10">
+          <h3 class="font-bold text-primary">3. Vorsorgevollmacht (umfassend)</h3>
+          <p class="mt-2 text-sm text-primary/80">
+            Geregelt zu Lebzeiten, gilt auch im Fall der Geschäftsunfähigkeit. Empfehlenswert beim
+            Erstantrag mitzuregeln, bevor zum Beispiel bei fortschreitender Demenz die
+            Geschäftsfähigkeit verloren geht.
+          </p>
+        </div>
+        <div class="bg-background/40 rounded-xl p-5 border border-primary/10">
+          <h3 class="font-bold text-primary">4. Gerichtliche Betreuung</h3>
+          <p class="mt-2 text-sm text-primary/80">
+            Wenn die pflegebedürftige Person bereits nicht mehr geschäftsfähig ist UND keine
+            Vorsorgevollmacht vorliegt: Antrag beim Betreuungsgericht. Verfahren dauert 3-6 Monate.
+            Beratung durch Betreuungsverein (Caritas, Diakonie, Sozialdienst-Katholischer-Männer und
+            Frauen).
+          </p>
+        </div>
+      </div>
+      <p class="mt-6 text-primary/80">
+        Wir haben Vollmachts-Templates für die Antrags-Konstellation vorbereitet und stellen sie im
+        Erstgespräch bereit.
+      </p>
+    </div>
   </section>
 
   <!-- Vertiefende Ratgeber -->
   <section class="py-12 max-w-content mx-auto px-4">
     <h2 class="text-2xl font-bold text-primary mb-4">Vertiefende Ratgeber</h2>
     <ul class="mt-3 space-y-1 text-primary/80 list-disc list-inside">
-      <li><a href="/ratgeber/md-begutachtung-vorbereiten/" class="underline text-accent-dark">MD-Begutachtung vorbereiten</a></li>
+      <li><a href="/ratgeber/md-begutachtung-vorbereiten/" class="underline text-accent-dark">MD-Begutachtung vorbereiten (14-Tage-Pflegetagebuch)</a></li>
+      <li><a href="/ratgeber/pflegegrad-1-was-zahlt-die-kasse/" class="underline text-accent-dark">Pflegegrad 1 – was zahlt die Kasse?</a></li>
       <li><a href="/ratgeber/pflegekasse-entlastung/" class="underline text-accent-dark">Pflegekasse und Entlastung 2026: Alle Töpfe</a></li>
+      <li><a href="/ratgeber/entlastungsbetrag-richtig-nutzen/" class="underline text-accent-dark">Entlastungsbetrag 131 € richtig nutzen</a></li>
       <li><a href="/ratgeber/pflegekasse-direktabrechnung/" class="underline text-accent-dark">Direktabrechnung mit der Pflegekasse</a></li>
-      <li><a href="/ratgeber/wohnumfeldverbesserung-antrag/" class="underline text-accent-dark">Paragraph 40 Wohnumfeldverbesserung beantragen</a></li>
+      <li><a href="/ratgeber/pflegekasse-ablehnung-widerspruch/" class="underline text-accent-dark">Pflegekasse abgelehnt – Widerspruch einlegen</a></li>
+      <li><a href="/ratgeber/wohnumfeldverbesserung-antrag/" class="underline text-accent-dark">§40 Wohnumfeldverbesserung beantragen</a></li>
     </ul>
   </section>
 
@@ -190,14 +508,14 @@ const breadcrumbSchema = generateBreadcrumbListSchema([
     </div>
   </section>
 
-  <!-- Para 7a-Scope-Hinweis (3-fach redundant: Hero + Block "Wie wir helfen" + hier) -->
+  <!-- §7a-Scope-Hinweis -->
   <section class="py-8 bg-primary/5">
     <div class="max-w-content mx-auto px-4">
       <p class="text-sm text-primary/80">
-        <strong>Scope-Hinweis:</strong> Wir leisten administrative Unterstützung beim Pflegegrad-Antragsprozess.
-        Wir leisten keine Pflegeberatung im Sinne von Paragraph 7a SGB XI. Pflegeberatung ist Aufgabe der
-        Pflegestützpunkte und qualifizierter Pflegeberater. Pflegekassen-Entscheidungen sind individuell.
-        Wir geben keine Rechtsberatung. Die finale Bewilligung liegt bei Ihrer Pflegekasse.
+        <strong>Scope-Hinweis:</strong> Wir leisten administrative Unterstützung beim Pflegegrad-
+        Antragsprozess. Wir leisten keine Pflegeberatung im Sinne von §7a SGB XI. Pflegeberatung ist
+        Aufgabe der Pflegestützpunkte und qualifizierter Pflegeberater. Pflegekassen-Entscheidungen sind
+        individuell. Wir geben keine Rechtsberatung. Die finale Bewilligung liegt bei Ihrer Pflegekasse.
       </p>
     </div>
   </section>

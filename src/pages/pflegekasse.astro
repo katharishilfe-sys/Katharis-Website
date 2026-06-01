@@ -1,20 +1,152 @@
 ---
 import PageLayout from '@layouts/PageLayout.astro';
 import { hooks, pflegekassenTöpfe } from '@data/content';
-import { generateFAQPageSchema, generateBreadcrumbListSchema, PERSON_DANIEL, PERSON_KEMAL } from '@lib/schema-org';
+import { generateFAQPageSchema, generateBreadcrumbListSchema, generateHowToSchema, PERSON_DANIEL, PERSON_KEMAL } from '@lib/schema-org';
 import CallCTA from '@components/CallCTA';
 import RueckrufButton from '@components/RueckrufButton';
+
+const SITE_URL = 'https://katharis.de';
+
+const pflegegradUebersicht = [
+  {
+    grad: 'Pflegegrad 1',
+    pflegegeld: 'kein Pflegegeld',
+    sachleistung: 'keine §36-Sachleistung',
+    entlastung: '131 €/Monat',
+    j42a: 'nicht verfügbar',
+    wohnumfeld: '4.180 € einmalig',
+  },
+  {
+    grad: 'Pflegegrad 2',
+    pflegegeld: '347 €/Monat',
+    sachleistung: '796 €/Monat',
+    entlastung: '131 €/Monat',
+    j42a: '3.539 €/Jahr',
+    wohnumfeld: '4.180 € einmalig',
+  },
+  {
+    grad: 'Pflegegrad 3',
+    pflegegeld: '599 €/Monat',
+    sachleistung: '1.497 €/Monat',
+    entlastung: '131 €/Monat',
+    j42a: '3.539 €/Jahr',
+    wohnumfeld: '4.180 € einmalig',
+  },
+  {
+    grad: 'Pflegegrad 4',
+    pflegegeld: '800 €/Monat',
+    sachleistung: '1.859 €/Monat',
+    entlastung: '131 €/Monat',
+    j42a: '3.539 €/Jahr',
+    wohnumfeld: '4.180 € einmalig',
+  },
+  {
+    grad: 'Pflegegrad 5',
+    pflegegeld: '990 €/Monat',
+    sachleistung: '2.299 €/Monat',
+    entlastung: '131 €/Monat',
+    j42a: '3.539 €/Jahr',
+    wohnumfeld: '4.180 € einmalig',
+  },
+];
+
+const leistungenZuTöpfen = [
+  {
+    leistung: 'Wohnungsreinigung (laufend)',
+    voraussetzung: 'Pflegegrad 1-5',
+    töpfe: '§45b (131 €/Monat) - bis zu 4 Std. Reinigung pro Monat möglich',
+  },
+  {
+    leistung: 'Messie-Hilfe / Verwahrlosungs-Räumung',
+    voraussetzung: 'Pflegegrad 1-5',
+    töpfe: '§45b kumuliert über mehrere Monate, optional §45a Abs. 4 ab PG 2, optional §42a ab PG 2',
+  },
+  {
+    leistung: 'Vollräumung vor Pflegeheim-Umzug',
+    voraussetzung: 'Pflegegrad 2-5',
+    töpfe: '§42a Jahresbetrag (bis 3.539 €) primär, plus §45b und §45a Abs. 4 ergänzend',
+  },
+  {
+    leistung: 'Bauliche Anpassung (z.B. Bad barrierefrei) + Vor-Räumung',
+    voraussetzung: 'Pflegegrad 1-5',
+    töpfe: '§40 Wohnumfeld (bis 4.180 € einmalig pro Maßnahme) - Räumung als Vorbereitung anrechenbar',
+  },
+  {
+    leistung: 'Tiefen- und Hygiene-Reinigung',
+    voraussetzung: 'Pflegegrad 1-5',
+    töpfe: '§45b primär, bei Schimmel oder schweren Hygiene-Mängeln evtl. §40 als Wohnumfeld-Anpassung',
+  },
+  {
+    leistung: 'Sterbefall-Räumung',
+    voraussetzung: 'kein Pflegegrad-Bezug nach Sterbefall',
+    töpfe: 'Pflegekasse zahlt nicht mehr - Kosten gehen über Nachlass',
+  },
+];
+
+const antragsSchritte = [
+  {
+    name: 'Erstgespräch telefonisch',
+    text: 'Wir klären in 5-15 Minuten am Telefon Ihre Pflegegrad-Situation, die zu erwartende Leistung und welche Pflegekassen-Töpfe greifen können. Kostenfrei und unverbindlich.',
+  },
+  {
+    name: 'Vor-Ort-Begehung',
+    text: 'Kostenfreie Begehung der Wohnung. Wir erstellen einen Leistungs- und Kostenrahmen, prüfen Hygiene-Anforderungen und planen Termine.',
+  },
+  {
+    name: 'Pflegekassen-Bestätigung einholen',
+    text: 'Wir reichen ein Kostenvoranschlag-Schreiben bei Ihrer Pflegekasse ein. Die Kasse bestätigt die geplante Übernahme aus den anwendbaren Töpfen schriftlich. Dauer typisch 1-3 Wochen.',
+  },
+  {
+    name: 'Vertrag und Abtretungs-Erklärung',
+    text: 'Sie unterschreiben einen Pflegekassen-Sondervertrag inklusive Abtretungs-Erklärung. Damit dürfen wir direkt mit Ihrer Pflegekasse abrechnen, Sie strecken nichts vor.',
+  },
+  {
+    name: 'Durchführung',
+    text: 'Wir führen die Leistung durch - mit Foto-Dokumentation, Wert-Listen bei Räumungen und Hygiene-Protokoll bei Tiefenreinigungen.',
+  },
+  {
+    name: 'Abrechnung mit Pflegekasse',
+    text: 'Wir rechnen direkt mit Ihrer Pflegekasse ab. Sie erhalten eine Kopie zur Information, ein eventueller privater Differenz-Betrag wird vorher schriftlich vereinbart und nach Abschluss separat fakturiert.',
+  },
+];
+
+const missverstaendnisse = [
+  {
+    mythos: 'Pflegekasse und Krankenkasse sind dasselbe.',
+    realitaet: 'Nein. Pflegekasse ist eine eigenständige Sozialversicherung (SGB XI), Krankenkasse ist Krankenversicherung (SGB V). Die Pflegekasse ist organisatorisch bei der Krankenkasse angesiedelt, aber rechtlich und finanziell getrennt. Anträge laufen separat.',
+  },
+  {
+    mythos: 'Bei Pflegegrad 1 gibt es eh kein Geld.',
+    realitaet: 'Stimmt teilweise: Pflegegeld nicht, aber 131 € Entlastungsbetrag monatlich (1.572 € pro Jahr), 4.180 € Wohnumfeld einmalig und 504 € Pflegehilfsmittel pro Jahr - in Summe über 6.000 € Sachleistungen im ersten Jahr möglich.',
+  },
+  {
+    mythos: 'Ich kann den Entlastungsbetrag bar ausgezahlt bekommen.',
+    realitaet: 'Nein. Der §45b-Entlastungsbetrag ist zweckgebunden und wird ausschließlich gegen Rechnung anerkannter Anbieter (§45a) erstattet bzw. direkt abgerechnet.',
+  },
+  {
+    mythos: 'Bei einer Pflegekassen-Ablehnung ist die Sache erledigt.',
+    realitaet: 'Falsch. Sie haben 1 Monat Widerspruchsfrist (§84 SGB X). In begründeten Fällen sind Widersprüche zu 30-50 % erfolgreich. Details im Ratgeber Pflegekassen-Widerspruch.',
+  },
+  {
+    mythos: 'Wenn ich keinen Pflegegrad habe, kann ich nichts tun.',
+    realitaet: 'Doch. Sie können jederzeit einen Pflegegrad beantragen. Der gilt rückwirkend ab Antragsdatum, sobald bewilligt - Leistungen ab Antragstellung sind nachträglich erstattungsfähig.',
+  },
+  {
+    mythos: 'Eine Räumung ist immer Privatauftrag.',
+    realitaet: 'Bei verwahrlosten Wohnungen oder vor Pflegeheim-Umzug ist sie oft als §45a-Entlastungsleistung anerkannt - dann Direktabrechnung mit der Pflegekasse möglich.',
+  },
+];
 
 const faqs = [
   {
     question: 'Was ist der Unterschied zwischen Entlastungsbetrag und Gemeinsamem Jahresbetrag?',
     answer:
-      'Der Entlastungsbetrag (Para 45b, 131 Euro pro Monat) gilt für alle Pflegegrade 1 bis 5 und ist explizit für Entlastungsleistungen anerkannter Anbieter. Der Gemeinsame Jahresbetrag (Para 42a, bis 3.539 Euro pro Jahr) gilt nur ab Pflegegrad 2 und ist eigentlich für Verhinderungs- und Kurzzeitpflege, kann aber flexibel auch für Entlastungsleistungen eingesetzt werden.',
+      'Der Entlastungsbetrag (§45b, 131 Euro pro Monat) gilt für alle Pflegegrade 1 bis 5 und ist explizit für Entlastungsleistungen anerkannter Anbieter. Der Gemeinsame Jahresbetrag (§42a, bis 3.539 Euro pro Jahr) gilt nur ab Pflegegrad 2 und ist eigentlich für Verhinderungs- und Kurzzeitpflege, kann aber seit der PUEG-Reform 2025 flexibel auch für Entlastungsleistungen eingesetzt werden.',
   },
   {
     question: 'Wann verfällt mein Entlastungsbetrag?',
     answer:
-      'Der Entlastungsbetrag eines Kalenderjahres kann ins Folgejahr übertragen werden, verfällt dann aber am 30. Juni des Folgejahres. Beispiel: was Sie 2025 nicht abrufen, können Sie noch bis 30. Juni 2026 nutzen, danach ist es weg.',
+      'Der Entlastungsbetrag eines Kalenderjahres kann ins Folgejahr übertragen werden, verfällt dann aber am 30. Juni des Folgejahres. Beispiel: was Sie 2026 nicht abrufen, können Sie noch bis 30. Juni 2027 nutzen, danach ist es weg.',
   },
   {
     question: 'Brauche ich einen Pflegegrad, damit Sie kommen?',
@@ -24,30 +156,53 @@ const faqs = [
   {
     question: 'Was kostet das Erstgespräch?',
     answer:
-      'Nichts. Sowohl das Telefon-Erstgespräch als auch ein Vor-Ort-Termin zur Auftrags-Einschätzung sind kostenlos.',
+      'Nichts. Sowohl das Telefon-Erstgespräch als auch ein Vor-Ort-Termin zur Auftrags-Einschätzung sind kostenlos und unverbindlich.',
   },
   {
     question: 'Was wenn meine Pflegekasse nicht zahlt?',
     answer:
-      'Wir besprechen das transparent vor Auftragsbeginn. Bei einer Pflegekassen-Ablehnung haben Sie zwei Optionen: Widerspruch (über Pflegestützpunkt oder Sozialrechts-Anwalt, vermitteln wir gerne) oder Privat-Backup-Vertrag mit transparentem Festpreis oder Stundensatz und 19 Prozent Umsatzsteuer.',
+      'Wir besprechen das transparent vor Auftragsbeginn. Bei einer Pflegekassen-Ablehnung haben Sie zwei Optionen: Widerspruch (1 Monat Frist nach §84 SGB X, über Pflegestützpunkt oder Sozialrechts-Anwalt) oder Privat-Backup-Vertrag mit transparentem Festpreis und 19% Umsatzsteuer.',
   },
   {
     question: 'Welche Pflegekassen rechnet Katharis direkt ab?',
     answer:
-      'Alle gesetzlichen Pflegekassen. Bei privaten Pflege-Pflichtversicherungen klären wir das im Einzelfall.',
+      'Alle gesetzlichen Pflegekassen: AOK, Barmer, Techniker, IKK, DAK, BKK-Gruppen und alle weiteren. Bei privaten Pflege-Pflichtversicherungen (Beihilfe-fähig oder vollprivat) klären wir das im Einzelfall, weil dort die Erstattungs-Mechanik unterschiedlich ist.',
+  },
+  {
+    question: 'Können Töpfe aus Vorjahren noch aktiviert werden?',
+    answer:
+      '§45b Entlastungsbetrag aus Vorjahr verfällt am 30.06. des Folgejahres - bis dahin nutzbar. §42a Gemeinsamer Jahresbetrag ist kalenderjahres-gebunden, alte Beträge verfallen am 31.12. §40 Wohnumfeld ist nicht jahres-gebunden, sondern maßnahmen-gebunden.',
+  },
+  {
+    question: 'Was hat sich mit der PUEG-Reform geändert?',
+    answer:
+      'Das Pflegeunterstützungs- und Entlastungsgesetz (PUEG) brachte ab 1.1.2025 eine Anhebung des Entlastungsbetrags von 125 auf 131 Euro pro Monat. Ab 1.7.2025 gibt es zusätzlich den neuen §42a Gemeinsamen Jahresbetrag (3.539 €), der Verhinderungs- und Kurzzeitpflege zusammenführt und flexibler einsetzbar macht. Pflegegeld und Pflegesachleistung wurden um 4,5 % erhöht.',
   },
   {
     question: 'Welche Stadtteile von Stuttgart bedienen Sie?',
     answer:
-      'Alle Stadtbezirke. Anfahrt aus unserer operativen Zentrale Böblingen, Stuttgart-Mitte ist in 25 bis 30 Minuten erreichbar.',
+      'Alle 23 Stadtbezirke. Anfahrt aus unserer operativen Zentrale Böblingen typisch 22 bis 40 Minuten je nach Stadtbezirk. Mehr unter Standorte Stuttgart.',
+  },
+  {
+    question: 'Was bedeutet die Abtretungs-Erklärung konkret?',
+    answer:
+      'Mit der Abtretungs-Erklärung übertragen Sie uns Ihren Anspruch auf Kostenerstattung gegenüber der Pflegekasse - aber nur für unsere konkrete Leistung. Wir rechnen dann direkt mit der Kasse ab, Sie sehen die Rechnungsbeträge zur Information. Die Abtretung gilt nur für den vereinbarten Auftrag, nicht darüber hinaus.',
   },
 ];
+
 const faqSchema = generateFAQPageSchema(faqs);
+
+const howToSchema = generateHowToSchema({
+  name: 'Pflegekassen-Direktabrechnung beauftragen: 6 Schritte',
+  description: 'So funktioniert die Direktabrechnung über §45a SGB XI bei Katharis - vom Erstgespräch bis zur Schlussabrechnung mit der Pflegekasse.',
+  steps: antragsSchritte,
+});
+
 const breadcrumbSchema = generateBreadcrumbListSchema([
   { name: 'Start', url: 'https://katharis.de/' },
   { name: 'Pflegekasse', url: 'https://katharis.de/pflegekasse/' },
 ]);
-const SITE_URL = 'https://katharis.de';
+
 const articleSchema = {
   '@context': 'https://schema.org',
   '@type': 'Article',
@@ -55,7 +210,7 @@ const articleSchema = {
   description:
     'Wie Pflegekassen-Töpfe nach §45a/45b/42a/40 SGB XI Ihre Entlastungs-Kosten decken. Anerkannter Anbieter Stuttgart und LK Böblingen. Aktuelle Beträge 2026.',
   datePublished: '2026-05-06T00:00:00+02:00',
-  dateModified: '2026-05-06T00:00:00+02:00',
+  dateModified: '2026-05-27T00:00:00+02:00',
   author: PERSON_DANIEL,
   reviewedBy: PERSON_KEMAL,
   image: `${SITE_URL}/og-image.png`,
@@ -66,16 +221,20 @@ const articleSchema = {
 
 <PageLayout
   title="Pflegekasse zahlt Entlastung - 131 EUR pro Monat 2026 | Katharis"
-  description="Wie Pflegekassen-Töpfe nach Para 45a/45b/42a/40 SGB XI Ihre Entlastungs-Kosten decken. Anerkannter Anbieter Stuttgart und LK Böblingen. Aktuelle Beträge 2026."
+  description="Wie Pflegekassen-Töpfe nach §45a/45b/42a/40 SGB XI Ihre Entlastungs-Kosten decken. Anerkannter Anbieter Stuttgart und LK Böblingen. Aktuelle Beträge 2026."
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
 
   <!-- Hero -->
   <section class="bg-background py-16">
     <div class="max-w-content mx-auto px-4">
-      <h1 class="text-4xl font-bold text-primary">Pflegekassen-Leistungen für Entlastung: Was Ihnen zusteht</h1>
+      <p class="text-sm text-primary/80">
+        <a href="/" class="underline">Start</a> &rsaquo; Pflegekasse
+      </p>
+      <h1 class="text-4xl font-bold text-primary mt-4">Pflegekassen-Leistungen für Entlastung: Was Ihnen zusteht</h1>
       <p class="mt-4 text-lg text-primary/80">{hooks.master}</p>
       <p class="mt-2 text-sm text-primary/80">{hooks.geltungsbereich}</p>
     </div>
@@ -85,100 +244,281 @@ const articleSchema = {
   <section class="py-8 max-w-content mx-auto px-4">
     <div class="bg-primary/5 p-6 rounded-xl border border-primary/10">
       <p class="text-sm text-primary/80">
-        <strong>Verfasser:</strong> Daniel Altenhof, Initiator und operativer Leiter Katharis
+        <strong>Verfasser:</strong> Daniel Altenhof, Initiator und operativer Leiter Katharis · <strong>Fachlich gegengelesen:</strong> Kemal David Gülcü
       </p>
       <p class="text-sm text-primary/80 mt-2">
-        <strong>Stand:</strong> 2026-05-06. Fachliche Prüfung gegen Gesetzestext und sechs Fachquellen
-        (gesetze-im-internet.de §45b SGB XI, Bundesgesundheitsministerium PUEG-Erklärungen, pflege.de,
+        <strong>Stand:</strong> 2026-05-27. Fachliche Prüfung gegen Gesetzestext und sechs Fachquellen
+        (gesetze-im-internet.de §45a/45b/42a/40 SGB XI, Bundesgesundheitsministerium PUEG-Erklärungen, pflege.de,
         pflegekompassmagazin.de, sozialgesetzbuch-sgb.de, Compass Pflegeberatung).
       </p>
     </div>
   </section>
 
-  <!-- Was ist Para 45a -->
+  <!-- Was ist §45a -->
   <section class="py-12 max-w-content mx-auto px-4">
     <h2 class="text-2xl font-bold text-primary mb-4">Was ist Paragraph 45a SGB XI?</h2>
     <p class="text-primary/80">
       Paragraph 45a SGB XI regelt die Anerkennung von Anbietern zur Unterstützung im Alltag. Anbieter, die
-      nach Para 45a anerkannt sind (wie Katharis für Stadt Stuttgart und Landkreis Böblingen), können
-      Entlastungsleistungen direkt mit der Pflegekasse abrechnen. Das heißt: Sie als Klient müssen die Kosten
-      nicht vorstrecken.
+      nach §45a anerkannt sind (wie Katharis für Stadt Stuttgart und Landkreis Böblingen), können
+      Entlastungsleistungen direkt mit der Pflegekasse abrechnen. Das heißt: Sie als Klient oder Familie
+      müssen die Kosten nicht vorstrecken.
     </p>
     <p class="mt-4 text-primary/80">
-      Die Entlastungs-Töpfe der Pflegeversicherung sind kumulierbar. In Kombination können sie bei Pflegegrad
-      ab 2 oft die kompletten Kosten einer Entlastungsleistung decken.
+      Die Entlastungs-Töpfe der Pflegeversicherung sind <strong>kumulierbar</strong>. In Kombination
+      können sie bei Pflegegrad ab 2 oft die kompletten Kosten einer Entlastungsleistung decken - bei
+      Pflegegrad 1 zumindest substantielle Anteile.
     </p>
   </section>
 
-  <!-- Vergleichs-Tabelle 4 Töpfe -->
+  <!-- Pflegegrad-Übersicht -->
   <section class="py-12 bg-white">
     <div class="max-w-content mx-auto px-4">
-      <h2 class="text-2xl font-bold text-primary mb-6">Pflegekassen-Töpfe für Entlastung im Vergleich (Beträge 2026)</h2>
-
+      <h2 class="text-2xl font-bold text-primary mb-4">Was bekomme ich bei welchem Pflegegrad? (Beträge 2026)</h2>
+      <p class="text-primary/80 mb-6">
+        Schnell-Übersicht aller wichtigen Leistungen je Pflegegrad. Beträge stammen aus der PUEG-Reform
+        (gültig ab 1.1.2025, unverändert 2026).
+      </p>
       <div class="overflow-x-auto">
-        <table class="w-full text-sm border-collapse">
+        <table class="w-full text-xs sm:text-sm border-collapse">
           <thead>
             <tr class="bg-primary text-white text-left">
-              <th class="p-3 font-bold border border-primary/30">Paragraph</th>
-              <th class="p-3 font-bold border border-primary/30">Topf</th>
-              <th class="p-3 font-bold border border-primary/30">Höhe</th>
               <th class="p-3 font-bold border border-primary/30">Pflegegrad</th>
-              <th class="p-3 font-bold border border-primary/30">Wofür einsetzbar</th>
+              <th class="p-3 font-bold border border-primary/30">Pflegegeld §37</th>
+              <th class="p-3 font-bold border border-primary/30">Sachleistung §36</th>
+              <th class="p-3 font-bold border border-primary/30">Entlastung §45b</th>
+              <th class="p-3 font-bold border border-primary/30">Jahresbetrag §42a</th>
+              <th class="p-3 font-bold border border-primary/30">Wohnumfeld §40</th>
             </tr>
           </thead>
           <tbody>
-            {pflegekassenTöpfe.map((topf, idx) => (
+            {pflegegradUebersicht.map((pg, idx) => (
               <tr class={idx % 2 === 0 ? 'bg-background/30' : 'bg-white'}>
-                <td class="p-3 border border-primary/20 font-bold text-primary">{topf.paragraph}</td>
-                <td class="p-3 border border-primary/20 text-primary/80">{topf.title}</td>
-                <td class="p-3 border border-primary/20 font-bold text-accent-dark">{topf.betrag}</td>
-                <td class="p-3 border border-primary/20 text-primary/80 text-xs">{topf.wer}</td>
-                <td class="p-3 border border-primary/20 text-primary/80 text-xs">{topf.description}</td>
+                <td class="p-3 border border-primary/20 font-bold text-primary">{pg.grad}</td>
+                <td class="p-3 border border-primary/20 text-primary/80">{pg.pflegegeld}</td>
+                <td class="p-3 border border-primary/20 text-primary/80">{pg.sachleistung}</td>
+                <td class="p-3 border border-primary/20 text-accent-dark font-bold">{pg.entlastung}</td>
+                <td class="p-3 border border-primary/20 text-accent-dark font-bold">{pg.j42a}</td>
+                <td class="p-3 border border-primary/20 text-accent-dark font-bold">{pg.wohnumfeld}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-
-      <p class="mt-6 text-sm text-primary/70">
-        Töpfe sind kumulierbar. Welche in Ihrer Situation greifen, klären wir kostenlos im Erstgespräch.
+      <p class="mt-4 text-sm text-primary/70">
+        Pflegegeld und Sachleistung sind sich gegenseitig ausschließend (Wahl-Recht). Entlastung,
+        Jahresbetrag und Wohnumfeld kommen zusätzlich dazu. Die rechte Hälfte der Tabelle (orange) ist
+        für unsere Direktabrechnung relevant.
       </p>
+    </div>
+  </section>
+
+  <!-- 4 Töpfe -->
+  <section class="py-12 max-w-content mx-auto px-4">
+    <h2 class="text-2xl font-bold text-primary mb-6">Pflegekassen-Töpfe für Entlastung im Detail</h2>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm border-collapse">
+        <thead>
+          <tr class="bg-primary text-white text-left">
+            <th class="p-3 font-bold border border-primary/30">Paragraph</th>
+            <th class="p-3 font-bold border border-primary/30">Topf</th>
+            <th class="p-3 font-bold border border-primary/30">Höhe</th>
+            <th class="p-3 font-bold border border-primary/30">Pflegegrad</th>
+            <th class="p-3 font-bold border border-primary/30">Wofür einsetzbar</th>
+          </tr>
+        </thead>
+        <tbody>
+          {pflegekassenTöpfe.map((topf, idx) => (
+            <tr class={idx % 2 === 0 ? 'bg-background/30' : 'bg-white'}>
+              <td class="p-3 border border-primary/20 font-bold text-primary">{topf.paragraph}</td>
+              <td class="p-3 border border-primary/20 text-primary/80">{topf.title}</td>
+              <td class="p-3 border border-primary/20 font-bold text-accent-dark">{topf.betrag}</td>
+              <td class="p-3 border border-primary/20 text-primary/80 text-xs">{topf.wer}</td>
+              <td class="p-3 border border-primary/20 text-primary/80 text-xs">{topf.description}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="mt-6 text-sm text-primary/70">
+      Töpfe sind kumulierbar. Welche in Ihrer Situation greifen, klären wir kostenlos im Erstgespräch.
+    </p>
+  </section>
+
+  <!-- Welche Töpfe für welche Leistung -->
+  <section class="py-12 bg-white">
+    <div class="max-w-content mx-auto px-4">
+      <h2 class="text-2xl font-bold text-primary mb-4">Welche Töpfe für welche Leistung?</h2>
+      <p class="text-primary/80 mb-6">
+        Häufige Konstellationen aus unserer Praxis - mit den jeweils passenden Pflegekassen-Töpfen:
+      </p>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm border-collapse">
+          <thead>
+            <tr class="bg-primary text-white text-left">
+              <th class="p-3 font-bold border border-primary/30">Leistung</th>
+              <th class="p-3 font-bold border border-primary/30">Voraussetzung</th>
+              <th class="p-3 font-bold border border-primary/30">Passende Töpfe</th>
+            </tr>
+          </thead>
+          <tbody>
+            {leistungenZuTöpfen.map((l, idx) => (
+              <tr class={idx % 2 === 0 ? 'bg-background/30' : 'bg-white'}>
+                <td class="p-3 border border-primary/20 font-bold text-primary">{l.leistung}</td>
+                <td class="p-3 border border-primary/20 text-primary/80">{l.voraussetzung}</td>
+                <td class="p-3 border border-primary/20 text-primary/80">{l.töpfe}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Rechen-Beispiele -->
+  <section class="py-12 max-w-content mx-auto px-4">
+    <h2 class="text-2xl font-bold text-primary mb-4">Drei Rechen-Beispiele aus der Praxis</h2>
+    <p class="text-primary/80 mb-6">
+      Konkrete Konstellationen mit voller Pflegekassen-Deckung oder Anteils-Deckung. Beträge realistisch
+      aus 2026.
+    </p>
+
+    <div class="space-y-4">
+      <div class="bg-background/40 rounded-xl p-6 border border-primary/10">
+        <h3 class="font-bold text-primary">Beispiel 1 – Pflegegrad 1, Verwahrlosungs-Räumung 2-Zimmer-Wohnung</h3>
+        <p class="mt-2 text-sm text-primary/80">
+          Gesamtaufwand 2.800 €. Strategie: 12 Monate §45b-Entlastungsbetrag gesammelt (1.572 €) + §40-
+          Wohnumfeld-Antrag wegen baulicher Vorbereitung (Erstattung 1.228 €). <strong>Pflegekassen-Deckung
+          100 %</strong>, Eigenanteil 0 €.
+        </p>
+      </div>
+
+      <div class="bg-background/40 rounded-xl p-6 border border-primary/10">
+        <h3 class="font-bold text-primary">Beispiel 2 – Pflegegrad 3, Vor-Heimumzugs-Vollräumung Reihenhaus</h3>
+        <p class="mt-2 text-sm text-primary/80">
+          Gesamtaufwand 8.500 €. Töpfe: §45b 1.572 € + §42a Jahresbetrag 3.539 € + §45a Abs. 4 Umwandlung
+          (40 % von 1.497 € Pflegesachleistung × 12 = 7.186 €, davon 599 €/Monat zur Verfügung × 8 Monate
+          = max. 4.789 €, je nach Restbudget). <strong>Pflegekassen-Deckung 5.100-8.500 €</strong>,
+          eventueller Eigenanteil 0-3.400 €.
+        </p>
+      </div>
+
+      <div class="bg-background/40 rounded-xl p-6 border border-primary/10">
+        <h3 class="font-bold text-primary">Beispiel 3 – Pflegegrad 5, schwere Verwahrlosung Eigenheim</h3>
+        <p class="mt-2 text-sm text-primary/80">
+          Gesamtaufwand 14.000 € (groß, schwere Hygiene-Mängel). Töpfe: §45b 1.572 € + §42a 3.539 € + §45a
+          Abs. 4 Umwandlung (40 % von 2.299 € = 919 €/Monat, max. ca. 11.000 € pro Jahr je nach
+          Restbudget) + §40 Wohnumfeld 4.180 € bei baulicher Anpassung. <strong>Pflegekassen-Deckung in
+          der Spitze über 14.000 €</strong>, oft komplett gedeckt.
+        </p>
+      </div>
+    </div>
+
+    <p class="mt-6 text-sm text-primary/70">
+      Disclaimer: Beispiel-Rechnungen, keine Garantie. Die finale Pflegekassen-Bewilligung hängt von
+      Restbudgets, Pflegekassen-Einzelfall-Prüfung und Antrags-Qualität ab. Wir prüfen Ihre Situation
+      individuell.
+    </p>
+  </section>
+
+  <!-- PUEG-Reform 2025 Update -->
+  <section class="py-12 bg-white">
+    <div class="max-w-content mx-auto px-4">
+      <h2 class="text-2xl font-bold text-primary mb-4">Was hat sich mit der PUEG-Reform geändert?</h2>
+      <p class="text-primary/80">
+        Das <strong>Pflegeunterstützungs- und Entlastungsgesetz (PUEG)</strong> brachte zwischen 2024
+        und 2025 mehrere Verbesserungen, die auch 2026 unverändert gelten:
+      </p>
+      <ul class="mt-3 space-y-2 text-primary/80 list-disc list-inside">
+        <li><strong>Ab 1.1.2024:</strong> Pflegegeld und Sachleistung um 5 % erhöht</li>
+        <li><strong>Ab 1.1.2025:</strong> Entlastungsbetrag von 125 € auf <strong>131 € pro Monat</strong> angehoben</li>
+        <li><strong>Ab 1.7.2025:</strong> Neuer <strong>§42a Gemeinsamer Jahresbetrag (3.539 €)</strong> fasst Verhinderungs- und Kurzzeitpflege zusammen, deutlich flexibler einsetzbar</li>
+        <li><strong>Ab 1.1.2025:</strong> Pflegegeld und Sachleistung um weitere 4,5 % erhöht</li>
+      </ul>
+      <p class="mt-4 text-primary/80">
+        Die nächste Anpassung ist für 1.1.2028 turnusmäßig vorgesehen. Für die Zwischenzeit gelten die
+        2025/2026er Beträge.
+      </p>
+    </div>
+  </section>
+
+  <!-- 6 Schritte Antrags-Prozess -->
+  <section class="py-12 max-w-content mx-auto px-4">
+    <h2 class="text-2xl font-bold text-primary mb-4">So läuft die Direktabrechnung ab</h2>
+    <p class="text-primary/80 mb-6">
+      Sechs Schritte vom Erstgespräch bis zur Schlussabrechnung. Wir nehmen den administrativen Aufwand
+      so weit wie möglich von Ihnen ab.
+    </p>
+    <ol class="space-y-4">
+      {antragsSchritte.map((schritt, idx) => (
+        <li class="flex gap-4 items-start bg-white p-5 rounded-xl border border-primary/10">
+          <span class="flex-none w-8 h-8 bg-accent text-white font-bold rounded-full flex items-center justify-center">
+            {idx + 1}
+          </span>
+          <div>
+            <h3 class="font-bold text-primary">{schritt.name}</h3>
+            <p class="mt-2 text-sm text-primary/80">{schritt.text}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <!-- Häufige Missverständnisse -->
+  <section class="py-12 bg-white">
+    <div class="max-w-content mx-auto px-4">
+      <h2 class="text-2xl font-bold text-primary mb-4">Häufige Missverständnisse</h2>
+      <p class="text-primary/80 mb-6">
+        Was Familien immer wieder falsch annehmen - und was wirklich gilt:
+      </p>
+      <div class="space-y-4">
+        {missverstaendnisse.map((m) => (
+          <div class="grid grid-cols-1 md:grid-cols-[140px_1fr] gap-3 bg-background/30 rounded-xl p-5 border border-primary/10">
+            <p class="text-xs font-bold uppercase tracking-widest text-primary/70 mt-1">Mythos</p>
+            <p class="text-primary/80 italic">„{m.mythos}"</p>
+            <p class="text-xs font-bold uppercase tracking-widest text-accent-dark mt-1">Realität</p>
+            <p class="text-primary/80">{m.realitaet}</p>
+          </div>
+        ))}
+      </div>
     </div>
   </section>
 
   <!-- So gehen wir vor -->
   <section class="py-12 max-w-content mx-auto px-4">
-    <h2 class="text-2xl font-bold text-primary mb-4">So gehen wir vor</h2>
+    <h2 class="text-2xl font-bold text-primary mb-4">Was wir vorab klären</h2>
     <p class="text-primary/80">
       Im kostenlosen Erstgespräch klären wir gemeinsam mit Ihnen, welche Pflegekassen-Leistungen für Ihre
       Situation in Frage kommen. Dabei müssen wir wissen:
     </p>
     <ul class="mt-4 space-y-1 text-primary/80 list-disc list-inside">
       <li>Liegt ein Pflegegrad vor und welcher (Pflegegrad 1 bis 5)?</li>
-      <li>Wird eine Pflegesachleistung genutzt (relevant für Para 45a Abs. 4 Umwandlung)?</li>
-      <li>Gibt es Restbudgets aus dem Vorjahr (Para 45b Verfall 30. Juni)?</li>
-      <li>Welche Pflegekasse ist zuständig?</li>
+      <li>Wird eine Pflegesachleistung nach §36 genutzt (relevant für §45a Abs. 4 Umwandlung)?</li>
+      <li>Gibt es Restbudgets aus dem Vorjahr (§45b Verfall 30. Juni)?</li>
+      <li>Welche Pflegekasse ist zuständig (AOK, Barmer, Techniker, IKK, DAK, BKK, andere)?</li>
+      <li>Ist eine bauliche Anpassung im Anschluss geplant (relevant für §40 Wohnumfeld)?</li>
     </ul>
     <p class="mt-4 text-primary/80">
-      Noch kein Pflegegrad? Wir helfen beim Antrag administrativ. Bei Bewilligung kann die Pflegekasse Ihre
-      Kosten ab Antragsdatum erstatten. Mehr dazu auf
+      Noch kein Pflegegrad? Wir helfen beim Antrag administrativ. Bei Bewilligung kann die Pflegekasse
+      Ihre Kosten ab Antragsdatum erstatten. Mehr dazu auf
       <a href="/pflegegrad-antrag/" class="underline text-accent-dark">Pflegegrad-Antrags-Hilfe</a>.
     </p>
   </section>
 
-  <!-- Para 7a-Abgrenzung -->
+  <!-- §7a-Abgrenzung -->
   <section class="py-12 bg-white">
     <div class="max-w-content mx-auto px-4">
       <h2 class="text-2xl font-bold text-primary mb-4">Paragraph 7a-Abgrenzung</h2>
       <p class="text-primary/80">
-        Wir helfen Ihnen administrativ beim Antrag und übernehmen die operative Entlastungsleistung. Wir leisten
-        <strong>keine Pflegeberatung im Sinne von Paragraph 7a SGB XI</strong>. Das ist Aufgabe der
+        Wir helfen Ihnen administrativ beim Antrag und übernehmen die operative Entlastungsleistung. Wir
+        leisten <strong>keine Pflegeberatung im Sinne von §7a SGB XI</strong>. Das ist Aufgabe der
         Pflegestützpunkte und qualifizierter Pflegeberater mit Versorgungs-Vertrag mit der Pflegekasse.
       </p>
       <p class="mt-4 text-primary/80">
         Bei Beratungs-Bedarf vermitteln wir an Ihren Pflegestützpunkt oder die Compass Pflegeberatung
-        (kostenlos, Telefon 0800 101 88 00). Bei Widerspruch gegen Pflegekassen-Bescheide vermitteln wir an
-        Pflegestützpunkt oder Sozialrechts-Anwalt.
+        (kostenlos, Telefon <a href="tel:08001018800" class="underline text-accent-dark">0800 101 88 00</a>).
+        Bei Widerspruch gegen Pflegekassen-Bescheide vermitteln wir an Pflegestützpunkt oder Sozialrechts-
+        Anwalt - oder Sie nutzen direkt unseren Ratgeber
+        <a href="/ratgeber/pflegekasse-ablehnung-widerspruch/" class="underline text-accent-dark">Pflegekassen-Widerspruch einlegen</a>.
       </p>
     </div>
   </section>
@@ -196,10 +536,12 @@ const articleSchema = {
     <h2 class="text-2xl font-bold text-primary mb-4">Vertiefende Ratgeber</h2>
     <ul class="mt-3 space-y-1 text-primary/80 list-disc list-inside">
       <li><a href="/ratgeber/pflegekasse-entlastung/" class="underline text-accent-dark">Pflegekasse und Entlastung 2026: Alle Töpfe im Überblick</a></li>
+      <li><a href="/ratgeber/entlastungsbetrag-richtig-nutzen/" class="underline text-accent-dark">Entlastungsbetrag 131 € richtig nutzen</a></li>
+      <li><a href="/ratgeber/pflegegrad-1-was-zahlt-die-kasse/" class="underline text-accent-dark">Pflegegrad 1 – was zahlt die Kasse?</a></li>
       <li><a href="/ratgeber/pflegekasse-direktabrechnung/" class="underline text-accent-dark">Direktabrechnung mit der Pflegekasse: So läuft es ab</a></li>
-      <li><a href="/ratgeber/wohnumfeldverbesserung-antrag/" class="underline text-accent-dark">Paragraph 40 Wohnumfeldverbesserung beantragen</a></li>
+      <li><a href="/ratgeber/pflegekasse-ablehnung-widerspruch/" class="underline text-accent-dark">Pflegekasse abgelehnt – Widerspruch einlegen</a></li>
+      <li><a href="/ratgeber/wohnumfeldverbesserung-antrag/" class="underline text-accent-dark">§40 Wohnumfeldverbesserung beantragen</a></li>
       <li><a href="/ratgeber/md-begutachtung-vorbereiten/" class="underline text-accent-dark">MD-Begutachtung vorbereiten</a></li>
-      <li><a href="/ratgeber/messie-syndrom/" class="underline text-accent-dark">Messie-Syndrom: Ratgeber für Angehörige</a></li>
       <li><a href="/ratgeber/heimumzug-kosten/" class="underline text-accent-dark">Heimumzug und Kosten: Wer zahlt die Räumung?</a></li>
     </ul>
   </section>
