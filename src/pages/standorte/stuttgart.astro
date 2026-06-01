@@ -1,41 +1,114 @@
 ---
 import PageLayout from '@layouts/PageLayout.astro';
 import { hooks } from '@data/content';
-import { generateLocalBusinessSchema, generateBreadcrumbListSchema } from '@lib/schema-org';
+import { generateLocalBusinessSchema, generateFAQPageSchema, generateBreadcrumbListSchema } from '@lib/schema-org';
 import CallCTA from '@components/CallCTA';
 import RueckrufButton from '@components/RueckrufButton';
 
-const localBusinessSchema = generateLocalBusinessSchema({ areaServed: ['Stadt Stuttgart'] });
-const breadcrumbSchema = generateBreadcrumbListSchema([
-  { name: 'Start', url: 'https://katharis.de/' },
-  { name: 'Standorte', url: 'https://katharis.de/standorte/' },
-  { name: 'Stuttgart', url: 'https://katharis.de/standorte/stuttgart/' },
-]);
+const localBusinessSchema = generateLocalBusinessSchema({
+  areaServed: ['Stadt Stuttgart', 'Stuttgart-Mitte', 'Stuttgart-Nord', 'Stuttgart-Ost', 'Stuttgart-Süd', 'Stuttgart-West', 'Bad Cannstatt', 'Vaihingen', 'Möhringen', 'Feuerbach', 'Degerloch', 'Zuffenhausen', 'Weilimdorf'],
+});
 
-const pflegestützpunkte = [
+const innereBezirke = [
+  { name: 'Stuttgart-Mitte', anfahrt: '25-35 Min', via: 'A81 / B14' },
+  { name: 'Stuttgart-Nord', anfahrt: '28-38 Min', via: 'A81 / B27' },
+  { name: 'Stuttgart-Ost', anfahrt: '30-40 Min', via: 'A81 / B14' },
+  { name: 'Stuttgart-Süd', anfahrt: '25-35 Min', via: 'B14' },
+  { name: 'Stuttgart-West', anfahrt: '25-32 Min', via: 'A81 / B295' },
+];
+
+const aeussereBezirke = [
+  { name: 'Bad Cannstatt', anfahrt: '30-40 Min', via: 'A81 / B14' },
+  { name: 'Birkach', anfahrt: '22-30 Min', via: 'A81' },
+  { name: 'Botnang', anfahrt: '25-32 Min', via: 'B295' },
+  { name: 'Degerloch', anfahrt: '20-28 Min', via: 'A8 / B27' },
+  { name: 'Feuerbach', anfahrt: '28-38 Min', via: 'A81' },
+  { name: 'Hedelfingen', anfahrt: '32-42 Min', via: 'B10' },
+  { name: 'Möhringen', anfahrt: '20-28 Min', via: 'A8 / B27' },
+  { name: 'Mühlhausen', anfahrt: '32-42 Min', via: 'A81 / B10' },
+  { name: 'Münster', anfahrt: '32-42 Min', via: 'A81 / B14' },
+  { name: 'Obertürkheim', anfahrt: '30-40 Min', via: 'B10' },
+  { name: 'Plieningen', anfahrt: '22-30 Min', via: 'A8' },
+  { name: 'Sillenbuch', anfahrt: '25-32 Min', via: 'B27 / B14' },
+  { name: 'Stammheim', anfahrt: '30-40 Min', via: 'A81' },
+  { name: 'Untertürkheim', anfahrt: '30-40 Min', via: 'B10 / B14' },
+  { name: 'Vaihingen', anfahrt: '22-30 Min', via: 'A8 / B14' },
+  { name: 'Wangen', anfahrt: '30-40 Min', via: 'B10' },
+  { name: 'Weilimdorf', anfahrt: '25-35 Min', via: 'A81' },
+  { name: 'Zuffenhausen', anfahrt: '30-40 Min', via: 'A81' },
+];
+
+const pflegestuetzpunkte = [
   { bezirke: 'Mitte, Nord, West, Botnang', adresse: 'Eberhardstraße 33, 70173 Stuttgart', tel: '0711 216-59100' },
   { bezirke: 'Bad Cannstatt, Mühlhausen, Münster', adresse: 'Deckerstraße 35, 70372 Stuttgart', tel: '0711 216-21341' },
   { bezirke: 'Vaihingen, Degerloch', adresse: 'Große Falterstraße 2, 70597 Stuttgart', tel: '0711 216-21301' },
   { bezirke: 'Möhringen, Plieningen, Birkach, Sillenbuch', adresse: 'Filderhauptstraße 155, 70599 Stuttgart', tel: '0711 216-21308' },
   { bezirke: 'Feuerbach, Weilimdorf, Zuffenhausen, Stammheim', adresse: 'Löwen-Markt 1, 70499 Stuttgart', tel: '0711 216-25798' },
 ];
+
+const faqs = [
+  {
+    question: 'Kommen Sie wirklich in jeden Stuttgarter Stadtbezirk?',
+    answer:
+      'Ja. Unsere Anerkennung nach Paragraph 45a SGB XI gilt für die gesamte Stadt Stuttgart, alle 23 Stadtbezirke eingeschlossen - von Stuttgart-Mitte über Bad Cannstatt und Vaihingen bis nach Stammheim und Hedelfingen. Anfahrt aus unserer operativen Zentrale Böblingen typisch 20 bis 42 Minuten je nach Stadtbezirk und Verkehrslage.',
+  },
+  {
+    question: 'Welcher Pflegestützpunkt ist für meinen Stadtbezirk zuständig?',
+    answer:
+      'Stuttgart hat 5 Pflegestützpunkt-Standorte, je nach Bezirks-Cluster. Mitte, Nord, West und Botnang gehören zum Standort Eberhardstraße. Bad Cannstatt, Mühlhausen, Münster zum Standort Deckerstraße. Vaihingen und Degerloch zum Standort Große Falterstraße. Möhringen, Plieningen, Birkach und Sillenbuch zum Standort Filderhauptstraße. Feuerbach, Weilimdorf, Zuffenhausen, Stammheim zum Standort Löwen-Markt. Alle Kontakte siehe Tabelle weiter unten.',
+  },
+  {
+    question: 'Wie schnell sind Sie nach Stuttgart vor Ort?',
+    answer:
+      'Telefonisches Erstgespräch noch am gleichen oder nächsten Werktag. Vor-Ort-Termin in Stuttgart innerhalb von 3 bis 7 Tagen. Bei akutem Druck (Vermieter-Frist, schwere Verwahrlosung, anstehender Pflegeheim-Umzug) priorisieren wir und sind oft schon innerhalb von 24 bis 48 Stunden zur Begehung vor Ort.',
+  },
+  {
+    question: 'Ist die A81-Anfahrt aus Böblingen ein Problem bei akuten Aufträgen?',
+    answer:
+      'Selten. Aus der Olgastraße in Böblingen erreichen wir Stuttgart-Vaihingen über die A8 in 22 bis 30 Minuten, Stuttgart-Mitte über die A81 in 25 bis 35 Minuten, Stuttgart-Bad Cannstatt in 30 bis 40 Minuten. Die meisten Stadtbezirke sind in unter 35 Minuten erreichbar. Bei akutem Druck koordinieren wir die Termin-Zeiten so, dass die Anfahrt nicht in die Berufsverkehr-Spitzen fällt.',
+  },
+  {
+    question: 'Rechnen Sie mit den Pflegekassen aller Krankenkassen in Stuttgart ab?',
+    answer:
+      'Ja. Unsere §45a-Anerkennung erlaubt die Direktabrechnung mit allen Pflegekassen, unabhängig von der Krankenkasse - AOK Baden-Württemberg, Barmer, Techniker, IKK classic, DAK-Gesundheit und alle weiteren. Voraussetzung ist nur ein vorhandener Pflegegrad ab 1.',
+  },
+  {
+    question: 'Bedienen Sie auch Stuttgart-Hofen, Stuttgart-Rohracker oder andere Teilorte?',
+    answer:
+      'Ja. Alle Stuttgarter Teilorte gehören zum jeweiligen Stadtbezirk (Hofen zu Mühlhausen, Rohracker zu Hedelfingen, Heumaden zu Sillenbuch und so weiter) und sind damit Teil unseres §45a-Anerkennungs-Gebiets.',
+  },
+];
+
+const faqSchema = generateFAQPageSchema(faqs);
+
+const breadcrumbSchema = generateBreadcrumbListSchema([
+  { name: 'Start', url: 'https://katharis.de/' },
+  { name: 'Standorte', url: 'https://katharis.de/standorte/' },
+  { name: 'Stuttgart', url: 'https://katharis.de/standorte/stuttgart/' },
+]);
 ---
 
 <PageLayout
-  title="Katharis in Stuttgart - Pflegekassen-Entlastung"
-  description="Anerkannt nach Para 45a SGB XI für alle Stadtbezirke Stuttgart. Bis zu 100 Prozent Kostenübernahme möglich. Pflegestützpunkte je Stadtbezirk."
+  title="Messie-Hilfe und Vollräumung Stuttgart | Katharis"
+  description="Anerkannter Anbieter für Entlastungsleistungen in Stuttgart. §45a SGB XI für alle 23 Stadtbezirke. Pflegekassen-Direktabrechnung, Vor-Ort-Termin in 3-7 Tagen ab Böblingen."
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 
+  <!-- Hero -->
   <section class="bg-background py-16">
     <div class="max-w-content mx-auto px-4">
       <p class="text-sm text-primary/80">
         <a href="/" class="underline">Start</a> &rsaquo; <a href="/standorte/" class="underline">Standorte</a> &rsaquo; Stuttgart
       </p>
-      <h1 class="text-4xl font-bold text-primary mt-4">Katharis in Stuttgart</h1>
+      <h1 class="text-4xl font-bold text-primary mt-4">Entlastungsleistungen in Stuttgart</h1>
       <p class="mt-4 text-lg text-primary/80">{hooks.master}</p>
-      <p class="mt-2 text-sm text-primary/80">Anerkannt nach Para 45a SGB XI für alle Stadtbezirke.</p>
+      <p class="mt-2 text-sm text-primary/80">
+        Anerkannt nach Paragraph 45a SGB XI für die gesamte Stadt Stuttgart mit allen 23
+        Stadtbezirken - von Stuttgart-Mitte über Bad Cannstatt und Vaihingen bis Stammheim und
+        Hedelfingen. Operative Zentrale Böblingen, Anfahrt typisch 22 bis 40 Minuten.
+      </p>
       <div class="flex flex-col sm:flex-row gap-3 mt-8">
         <CallCTA client:load />
         <RueckrufButton client:load sourceCta="rueckruf-stuttgart-hero" />
@@ -43,37 +116,52 @@ const pflegestützpunkte = [
     </div>
   </section>
 
+  <!-- Was wir in Stuttgart leisten -->
   <section class="py-12 max-w-content mx-auto px-4">
-    <h2 class="text-2xl font-bold text-primary mb-4">Was wir in Stuttgart anbieten</h2>
+    <h2 class="text-2xl font-bold text-primary mb-4">Was wir in Stuttgart leisten</h2>
     <p class="text-primary/80">
-      Wir übernehmen Entlastungsleistungen in komplexen Pflegefällen: Messie-Wohnungen, Verwahrlosung,
-      Vollräumungen vor dem Pflegeheim-Umzug. Diskret, würdevoll, mit Pflegekassen-Direktabrechnung.
+      Stuttgart ist mit über 630.000 Einwohnern die größte Stadt unseres Einsatzgebiets - mit
+      besonders vielfältigen Wohnsituationen, von Altbau-Wohnungen in der Stuttgarter Innenstadt über
+      Reihenhäuser in den Filder-Vororten bis zu Hochhaus-Apartments in Bad Cannstatt. Wir sind hier
+      regelmäßig im Einsatz mit Schwerpunkt auf:
+    </p>
+    <ul class="mt-3 space-y-2 text-primary/80 list-disc list-inside">
+      <li><strong>Messie-Hilfe</strong> bei Verwahrlosung der Wohnung, mit Tiefenreinigung und diskreter Vor-Ort-Begehung</li>
+      <li><strong>Vollräumung vor dem Pflegeheim-Umzug</strong> mit Erbstück-Sicherung und besenreiner Vermieter-Übergabe</li>
+      <li><strong>Pflegekassen-Direktabrechnung</strong> bei vorhandenem Pflegegrad, ohne Vorkasse durch die Familie</li>
+      <li><strong>Hygiene- und Geruchsbeseitigung</strong>, vor denen Standard-Reinigungsdienste zurückschrecken</li>
+    </ul>
+    <p class="mt-4 text-primary/80">
+      Wegen der Stuttgarter Altbau-Struktur in vielen Innen-Bezirken haben wir besondere Erfahrung mit
+      Treppenhaus-Logistik, engen Aufzügen und schwer zugänglichen Dachgeschoss-Wohnungen. Mehr zu
+      den Leistungen unter <a href="/service/messie-hilfe/" class="underline text-accent-dark">Messie-Hilfe</a>
+      und <a href="/service/vor-dem-heimumzug/" class="underline text-accent-dark">Vollräumung vor dem Heimumzug</a>.
     </p>
   </section>
 
+  <!-- Innere Stadtbezirke -->
   <section class="py-12 bg-white">
     <div class="max-w-content mx-auto px-4">
-      <h2 class="text-2xl font-bold text-primary mb-4">Pflegestützpunkte Stuttgart</h2>
-      <p class="text-primary/80 mb-6">
-        Inhaltliche Pflegeberatung bekommen Sie kostenlos beim Pflegestützpunkt in Ihrem Stadtbezirk:
+      <h2 class="text-2xl font-bold text-primary mb-4">Stuttgarter Innenstadt-Bezirke</h2>
+      <p class="text-primary/80 mb-4">
+        Die fünf inneren Stadtbezirke sind aus Böblingen typisch in 25 bis 38 Minuten erreichbar -
+        je nach A81-Verkehrslage und Ziel-Bezirk.
       </p>
       <div class="overflow-x-auto">
-        <table class="w-full border-collapse">
+        <table class="w-full border-collapse text-sm">
           <thead>
             <tr class="border-b-2 border-primary/20">
-              <th class="text-left py-3 pr-4 text-primary text-sm">Bezirke</th>
-              <th class="text-left py-3 pr-4 text-primary text-sm">Adresse</th>
-              <th class="text-left py-3 text-primary text-sm">Telefon</th>
+              <th class="text-left py-3 pr-4 text-primary">Stadtbezirk</th>
+              <th class="text-left py-3 pr-4 text-primary">Anfahrt ab Böblingen</th>
+              <th class="text-left py-3 text-primary">Anbindung</th>
             </tr>
           </thead>
           <tbody>
-            {pflegestützpunkte.map((ps) => (
+            {innereBezirke.map((b) => (
               <tr class="border-b border-primary/10">
-                <td class="py-3 pr-4 text-primary/80 text-sm">{ps.bezirke}</td>
-                <td class="py-3 pr-4 text-primary/80 text-sm">{ps.adresse}</td>
-                <td class="py-3 text-primary/80 text-sm">
-                  <a href={`tel:${ps.tel.replace(/[\s-]/g, '')}`} class="hover:underline">{ps.tel}</a>
-                </td>
+                <td class="py-3 pr-4 text-primary/80 font-medium">{b.name}</td>
+                <td class="py-3 pr-4 text-primary/80">{b.anfahrt}</td>
+                <td class="py-3 text-primary/80">{b.via}</td>
               </tr>
             ))}
           </tbody>
@@ -82,18 +170,135 @@ const pflegestützpunkte = [
     </div>
   </section>
 
+  <!-- Äußere Stadtbezirke -->
   <section class="py-12 max-w-content mx-auto px-4">
-    <h2 class="text-2xl font-bold text-primary mb-4">Anfahrt</h2>
-    <p class="text-primary/80">
-      Wir kommen aus unserer operativen Zentrale in Böblingen (Olgastraße 8, 71032 Böblingen) zu Ihnen.
-      Stuttgart-Mitte ist über die A81 in 25 bis 30 Minuten erreichbar, je nach Stadtbezirk und Verkehr.
+    <h2 class="text-2xl font-bold text-primary mb-4">Stuttgarter Außenbezirke</h2>
+    <p class="text-primary/80 mb-4">
+      Die 18 äußeren Stadtbezirke decken einen großen geographischen Bereich ab. Die Filder-Bezirke
+      (Vaihingen, Möhringen, Plieningen, Birkach, Degerloch) erreichen wir oft schneller als die
+      Innenstadt, weil die A8 aus Böblingen direkt dorthin führt. Stuttgart-Hedelfingen und
+      Untertürkheim im Neckar-Tal sind die am weitesten entfernten Bezirke.
+    </p>
+    <div class="overflow-x-auto">
+      <table class="w-full border-collapse text-sm">
+        <thead>
+          <tr class="border-b-2 border-primary/20">
+            <th class="text-left py-3 pr-4 text-primary">Stadtbezirk</th>
+            <th class="text-left py-3 pr-4 text-primary">Anfahrt ab Böblingen</th>
+            <th class="text-left py-3 text-primary">Anbindung</th>
+          </tr>
+        </thead>
+        <tbody>
+          {aeussereBezirke.map((b) => (
+            <tr class="border-b border-primary/10">
+              <td class="py-3 pr-4 text-primary/80 font-medium">{b.name}</td>
+              <td class="py-3 pr-4 text-primary/80">{b.anfahrt}</td>
+              <td class="py-3 text-primary/80">{b.via}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="mt-4 text-sm text-primary/70">
+      Anfahrtszeiten sind Erfahrungswerte ab Olgastraße 8, Böblingen, ohne Berufsverkehr-Spitzen. Bei
+      akuten Aufträgen koordinieren wir Termine außerhalb der A8/A81-Stoßzeiten.
     </p>
   </section>
 
+  <!-- Pflegekassen-Direktabrechnung -->
+  <section class="py-12 bg-white">
+    <div class="max-w-content mx-auto px-4">
+      <h2 class="text-2xl font-bold text-primary mb-4">Pflegekassen-Direktabrechnung in Stuttgart</h2>
+      <p class="text-primary/80">
+        Stuttgart ist eigener Geltungsbereich unserer §45a-Anerkennung (neben Landkreis Böblingen).
+        Bei vorhandenem Pflegegrad ab 1 rechnen wir die Leistung direkt mit Ihrer Pflegekasse ab, Sie
+        strecken nichts vor. Die Direktabrechnung funktioniert mit allen Pflegekassen - AOK Baden-
+        Württemberg, Barmer, Techniker, IKK classic, DAK-Gesundheit und alle anderen.
+      </p>
+      <p class="mt-4 text-primary/80">
+        Welche Pflegekassen-Töpfe in Ihrer konkreten Situation greifen, klären wir kostenlos am
+        Telefon. Hintergrund auf
+        <a href="/pflegekasse/" class="underline text-accent-dark">Pflegekassen-Übersicht</a>,
+        <a href="/pflegegrad-antrag/" class="underline text-accent-dark">Pflegegrad-Antrag</a>
+        und in den Ratgebern <a href="/ratgeber/pflegekasse-entlastung/" class="underline text-accent-dark">Pflegekassen-Töpfe 2026</a>
+        sowie <a href="/ratgeber/pflegekasse-direktabrechnung/" class="underline text-accent-dark">Direktabrechnung erklärt</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- Pflegestützpunkte Stuttgart -->
+  <section class="py-12 max-w-content mx-auto px-4">
+    <h2 class="text-2xl font-bold text-primary mb-4">Pflegestützpunkte in Stuttgart</h2>
+    <p class="text-primary/80 mb-6">
+      Inhaltliche Pflegeberatung ist nicht unsere Aufgabe und gehört in die Hände der neutralen,
+      kostenfreien Anlaufstellen. Stuttgart hat fünf Pflegestützpunkt-Standorte, je nach
+      Bezirks-Cluster:
+    </p>
+    <div class="overflow-x-auto">
+      <table class="w-full border-collapse">
+        <thead>
+          <tr class="border-b-2 border-primary/20">
+            <th class="text-left py-3 pr-4 text-primary text-sm">Zuständig für Bezirke</th>
+            <th class="text-left py-3 pr-4 text-primary text-sm">Adresse</th>
+            <th class="text-left py-3 text-primary text-sm">Telefon</th>
+          </tr>
+        </thead>
+        <tbody>
+          {pflegestuetzpunkte.map((ps) => (
+            <tr class="border-b border-primary/10">
+              <td class="py-3 pr-4 text-primary/80 text-sm">{ps.bezirke}</td>
+              <td class="py-3 pr-4 text-primary/80 text-sm">{ps.adresse}</td>
+              <td class="py-3 text-primary/80 text-sm">
+                <a href={`tel:${ps.tel.replace(/[\s-]/g, '')}`} class="hover:underline">{ps.tel}</a>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="mt-4 text-sm text-primary/70">
+      Bundesweit zusätzlich: <strong>Compass Pflegeberatung</strong> unter
+      <a href="tel:08001018800" class="underline">0800 101 88 00</a>, auch mit Hausbesuch in
+      Stuttgart.
+    </p>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-12 bg-white">
+    <div class="max-w-content mx-auto px-4">
+      <h2 class="text-2xl font-bold text-primary mb-6">Häufige Fragen aus Stuttgart</h2>
+      <div class="space-y-3">
+        {faqs.map((faq) => (
+          <details class="border border-primary/20 rounded-lg p-4 bg-background/30">
+            <summary class="font-bold text-primary cursor-pointer">{faq.question}</summary>
+            <p class="mt-3 text-primary/80 text-sm">{faq.answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Vertiefende Ratgeber -->
+  <section class="py-12 max-w-content mx-auto px-4">
+    <h2 class="text-2xl font-bold text-primary mb-4">Vertiefende Ratgeber</h2>
+    <ul class="space-y-1 text-primary/80 list-disc list-inside text-sm">
+      <li><a href="/ratgeber/pflegekasse-entlastung/" class="underline text-accent-dark">Pflegekassen-Töpfe 2026</a></li>
+      <li><a href="/ratgeber/entlastungsbetrag-richtig-nutzen/" class="underline text-accent-dark">Entlastungsbetrag 131 € richtig nutzen</a></li>
+      <li><a href="/ratgeber/pflegegrad-1-was-zahlt-die-kasse/" class="underline text-accent-dark">Pflegegrad 1 – was zahlt die Kasse?</a></li>
+      <li><a href="/ratgeber/pflegekasse-direktabrechnung/" class="underline text-accent-dark">Direktabrechnung erklärt</a></li>
+      <li><a href="/ratgeber/pflegekasse-ablehnung-widerspruch/" class="underline text-accent-dark">Pflegekasse abgelehnt – Widerspruch einlegen</a></li>
+      <li><a href="/ratgeber/heimumzug-kosten/" class="underline text-accent-dark">Heimumzug und Kosten</a></li>
+      <li><a href="/ratgeber/messie-syndrom/" class="underline text-accent-dark">Messie-Syndrom verstehen</a></li>
+      <li><a href="/standorte/" class="underline text-accent-dark font-bold">Alle Standorte</a></li>
+    </ul>
+  </section>
+
+  <!-- Final CTA -->
   <section class="py-16 bg-background text-center">
     <div class="max-w-2xl mx-auto px-4">
       <h2 class="text-3xl font-bold text-primary">Sprechen wir.</h2>
-      <div class="flex flex-col sm:flex-row gap-3 mt-6 justify-center">
+      <p class="mt-4 text-primary/80">Im kostenlosen Erstgespräch klären wir Ihre Pflegekassen-Optionen.</p>
+      <div class="flex flex-col sm:flex-row gap-3 mt-8 justify-center">
         <CallCTA client:load />
         <RueckrufButton client:load sourceCta="rueckruf-stuttgart-final" />
       </div>

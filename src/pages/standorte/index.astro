@@ -3,6 +3,7 @@ import PageLayout from '@layouts/PageLayout.astro';
 import CallCTA from '@components/CallCTA';
 import RueckrufButton from '@components/RueckrufButton';
 import { hooks } from '@data/content';
+import { generateLocalBusinessSchema, generateFAQPageSchema, generateBreadcrumbListSchema } from '@lib/schema-org';
 
 const SITE_URL = 'https://katharis.de';
 
@@ -11,40 +12,118 @@ const standorte = [
     slug: '/standorte/boeblingen/',
     stadt: 'Böblingen',
     badge: 'Operative Zentrale',
-    text: 'Operative Zentrale von Katharis. Anerkannt nach Para 45a SGB XI für den gesamten Landkreis Böblingen. Olgastraße 8, 71032 Böblingen.',
+    anfahrt: 'Vor Ort',
+    text: 'Operative Zentrale von Katharis. Anerkannt nach Paragraph 45a SGB XI für den gesamten Landkreis Böblingen. Olgastraße 8, 71032 Böblingen.',
   },
   {
     slug: '/standorte/stuttgart/',
     stadt: 'Stuttgart',
-    badge: 'Para 45a anerkannt',
-    text: 'Para 45a SGB XI anerkannt für die Stadt Stuttgart. Wir kommen aus Böblingen in alle Stadtbezirke - Mitte, Bad Cannstatt, Vaihingen, Möhringen, Feuerbach.',
+    badge: '§45a anerkannt',
+    anfahrt: '25-35 Min',
+    text: 'Paragraph 45a SGB XI anerkannt für die Stadt Stuttgart. Wir kommen aus Böblingen in alle Stadtbezirke - Mitte, Bad Cannstatt, Vaihingen, Möhringen, Feuerbach.',
   },
   {
     slug: '/standorte/sindelfingen/',
     stadt: 'Sindelfingen',
     badge: 'Landkreis Böblingen',
-    text: 'Sindelfingen liegt im Landkreis Böblingen und ist somit Teil unseres anerkannten Geltungsbereichs nach Para 45a SGB XI. Anfahrt 10 Minuten von Böblingen.',
+    anfahrt: '8-12 Min',
+    text: 'Sindelfingen liegt im Landkreis Böblingen und ist Teil unseres anerkannten Geltungsbereichs. Anfahrt 8 bis 12 Minuten ab Olgastraße.',
   },
   {
     slug: '/standorte/leonberg/',
     stadt: 'Leonberg',
     badge: 'Landkreis Böblingen',
-    text: 'Leonberg gehört zum Landkreis Böblingen. Para 45a SGB XI Direktabrechnung mit Pflegekasse möglich. Anfahrt 15 Minuten.',
+    anfahrt: '18-25 Min',
+    text: 'Leonberg gehört zum Landkreis Böblingen. Paragraph 45a Direktabrechnung mit Pflegekasse möglich. Anfahrt 18 bis 25 Minuten ab Böblingen über A8.',
   },
   {
     slug: '/standorte/herrenberg/',
     stadt: 'Herrenberg',
     badge: 'Landkreis Böblingen',
-    text: 'Herrenberg im südlichen Landkreis Böblingen. Para 45a SGB XI anerkannt, Direkt-Abrechnung mit der Pflegekasse möglich.',
+    anfahrt: '20-28 Min',
+    text: 'Herrenberg im südlichen Landkreis Böblingen. Paragraph 45a anerkannt, Direkt-Abrechnung mit der Pflegekasse möglich. Anfahrt 20 bis 28 Minuten über A81.',
   },
 ];
+
+const weitereOrte = [
+  { name: 'Weil der Stadt', anfahrt: '25-32 Min' },
+  { name: 'Holzgerlingen', anfahrt: '12-18 Min' },
+  { name: 'Schönaich', anfahrt: '10-15 Min' },
+  { name: 'Deckenpfronn', anfahrt: '22-30 Min' },
+  { name: 'Ehningen', anfahrt: '10-15 Min' },
+  { name: 'Gärtringen', anfahrt: '15-20 Min' },
+  { name: 'Hildrizhausen', anfahrt: '15-22 Min' },
+  { name: 'Altdorf', anfahrt: '12-18 Min' },
+];
+
+const pflegestuetzpunkte = [
+  {
+    name: 'Pflegestützpunkt Landkreis Böblingen',
+    zuständig: 'Böblingen, Sindelfingen, Leonberg, Herrenberg + weitere Kommunen im Landkreis',
+    info: 'Beratung kostenfrei und neutral. Hausbesuche möglich.',
+  },
+  {
+    name: 'Pflegestützpunkte der Stadt Stuttgart',
+    zuständig: 'Alle 23 Stadtbezirke',
+    info: 'Mehrere Standorte. Beratung kostenfrei und neutral.',
+  },
+  {
+    name: 'Compass Pflegeberatung',
+    zuständig: 'Bundesweit, auch in Stuttgart und LK Böblingen',
+    info: 'Telefonisch 0800 101 88 00. Auch Hausbesuche.',
+  },
+];
+
+const faqs = [
+  {
+    question: 'Was bedeutet "anerkannt nach Paragraph 45a SGB XI"?',
+    answer:
+      'Nur anerkannte Anbieter dürfen Entlastungs-Leistungen direkt mit der Pflegekasse abrechnen. Die Anerkennung wird in Baden-Württemberg durch die Untere Sozialverwaltung (USTA-BW) vergeben und ist ortsgebunden. Katharis hat die Anerkennung für Stadt Stuttgart und den gesamten Landkreis Böblingen.',
+  },
+  {
+    question: 'Welche Orte sind im Landkreis Böblingen alle enthalten?',
+    answer:
+      'Der Landkreis umfasst 26 Städte und Gemeinden: Böblingen, Sindelfingen, Leonberg, Herrenberg, Weil der Stadt, Holzgerlingen, Schönaich, Ehningen, Gärtringen, Hildrizhausen, Altdorf, Aidlingen, Bondorf, Deckenpfronn, Gäufelden, Grafenau, Jettingen, Magstadt, Mötzingen, Nufringen, Renningen, Rutesheim, Steinenbronn, Waldenbuch, Weissach, Wildberg. In allen 26 sind wir nach §45a anerkannt.',
+  },
+  {
+    question: 'Wie schnell sind Sie vor Ort?',
+    answer:
+      'Vor-Ort-Termin innerhalb von 3 bis 7 Tagen ab Erstgespräch. Bei akutem Druck wie Vermieter-Frist oder schwerer Verwahrlosung priorisieren wir. Telefonisches Erstgespräch noch am gleichen oder nächsten Werktag.',
+  },
+  {
+    question: 'Was ist, wenn mein Ort außerhalb von Stuttgart und LK Böblingen liegt?',
+    answer:
+      'Wir können auch dort tätig werden, allerdings nicht mehr über §45a-Direktabrechnung. Mögliche Alternativen sind Privat-Auftrag mit transparentem Festpreis, Erstattung über §40 Wohnumfeldverbesserung bei baulichem Bezug, oder Vermittlung an einen Kollegen-Anbieter in Ihrer Region. Rufen Sie uns an, wir klären das ehrlich.',
+  },
+  {
+    question: 'Wer berät mich neutral zur Pflegekasse?',
+    answer:
+      'Wir sind nicht der richtige Ansprechpartner für rein beraterische Pflegekassen-Fragen. Kostenfrei und neutral beraten Pflegestützpunkt Landkreis Böblingen, Pflegestützpunkte der Stadt Stuttgart und Compass Pflegeberatung (0800 101 88 00). Wir vermitteln gerne den richtigen Kontakt.',
+  },
+  {
+    question: 'Kann ich vorab telefonisch klären, ob mein Fall passt?',
+    answer:
+      'Ja. Das Erstgespräch am Telefon ist immer kostenlos und unverbindlich. Wir prüfen, ob Ihr Ort im Geltungsbereich liegt, ob Ihre Situation zu unserem Leistungs-Spektrum passt, und welche Pflegekassen-Töpfe in Ihrer Konstellation greifen können.',
+  },
+];
+
+const localBusinessSchema = generateLocalBusinessSchema({
+  areaServed: ['Stadt Stuttgart', 'Landkreis Böblingen', 'Böblingen', 'Sindelfingen', 'Leonberg', 'Herrenberg'],
+});
+
+const faqSchema = generateFAQPageSchema(faqs);
+
+const breadcrumbSchema = generateBreadcrumbListSchema([
+  { name: 'Start', url: 'https://katharis.de/' },
+  { name: 'Standorte', url: 'https://katharis.de/standorte/' },
+]);
 
 const collectionSchema = {
   '@context': 'https://schema.org',
   '@type': 'CollectionPage',
   name: 'Einsatzgebiete von Katharis',
   url: `${SITE_URL}/standorte/`,
-  description: 'Übersicht der 5 Städte, in denen Katharis nach Para 45a SGB XI für die Pflegekasse direkt abrechnet.',
+  description: 'Übersicht der 5 Städte mit eigenen Seiten und der weiteren Orte im §45a-Geltungsbereich Stuttgart und Landkreis Böblingen.',
   hasPart: standorte.map((s) => ({
     '@type': 'Place',
     name: s.stadt,
@@ -54,20 +133,27 @@ const collectionSchema = {
 ---
 
 <PageLayout
-  title="Einsatzgebiete in Stuttgart und Landkreis Böblingen | Katharis"
-  description="Katharis arbeitet im Geltungsbereich Stadt Stuttgart und Landkreis Böblingen. Anerkannt nach Para 45a SGB XI für Direkt-Abrechnung mit der Pflegekasse."
+  title="Einsatzgebiete: Stuttgart und Landkreis Böblingen | Katharis"
+  description="Katharis arbeitet im §45a-SGB-XI-Geltungsbereich Stadt Stuttgart und Landkreis Böblingen. Direkt-Abrechnung mit der Pflegekasse. 5 Hauptstandorte und 20+ weitere Gemeinden."
 >
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(collectionSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 
   <!-- Hero -->
   <section class="bg-background py-16">
     <div class="max-w-content mx-auto px-4">
-      <h1 class="text-4xl font-bold text-primary">Einsatzgebiete</h1>
+      <p class="text-sm text-primary/80">
+        <a href="/" class="underline">Start</a> &rsaquo; Standorte
+      </p>
+      <h1 class="text-4xl font-bold text-primary mt-4">Einsatzgebiete</h1>
       <p class="mt-4 text-lg text-primary/80">{hooks.master}</p>
       <p class="mt-2 text-base text-primary/80">
-        Katharis ist nach Para 45a SGB XI anerkannt für <strong>Stadt Stuttgart</strong> und den
+        Katharis ist nach Paragraph 45a SGB XI anerkannt für <strong>Stadt Stuttgart</strong> und den
         gesamten <strong>Landkreis Böblingen</strong>. Das bedeutet: Direkt-Abrechnung mit der
-        Pflegekasse möglich, kein Vorschuss durch den Klienten nötig.
+        Pflegekasse möglich, kein Vorschuss durch den Klienten oder die Familie. Operative Zentrale
+        in der Olgastraße 8, 71032 Böblingen.
       </p>
       <div class="flex flex-col sm:flex-row gap-3 mt-8">
         <CallCTA client:load />
@@ -76,18 +162,22 @@ const collectionSchema = {
     </div>
   </section>
 
-  <!-- Standorte-Grid -->
+  <!-- 5 Standorte mit Detail-Seiten -->
   <section class="py-12 max-w-content mx-auto px-4">
-    <h2 class="text-2xl font-bold text-primary mb-6">Unsere Einsatzorte</h2>
+    <h2 class="text-2xl font-bold text-primary mb-2">Unsere fünf Hauptstandorte mit eigenen Detail-Seiten</h2>
+    <p class="text-primary/70 text-sm mb-6">Für jede Stadt finden Sie auf der Detail-Seite Anfahrtszeiten, Stadtteile, zuständige Pflegestützpunkte und konkrete Fragen aus der Region.</p>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {standorte.map((s) => (
         <a
           href={s.slug}
           class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow border border-primary/10 flex flex-col"
         >
-          <span class="inline-block self-start px-3 py-1 bg-accent/10 text-accent-dark text-xs font-bold rounded-full mb-3">
-            {s.badge}
-          </span>
+          <div class="flex items-center justify-between mb-3">
+            <span class="inline-block px-3 py-1 bg-accent/10 text-accent-dark text-xs font-bold rounded-full">
+              {s.badge}
+            </span>
+            <span class="text-xs text-primary/70">{s.anfahrt}</span>
+          </div>
           <h3 class="text-xl font-bold text-primary">{s.stadt}</h3>
           <p class="mt-3 text-primary/80 text-sm flex-grow">{s.text}</p>
           <p class="mt-4 text-accent-dark font-bold text-sm">Mehr zu {s.stadt} &rarr;</p>
@@ -96,27 +186,143 @@ const collectionSchema = {
     </div>
   </section>
 
-  <!-- Geltungsbereich-Erklärung -->
+  <!-- Was wir im gesamten Geltungsbereich leisten -->
   <section class="py-12 bg-white">
     <div class="max-w-content mx-auto px-4">
-      <h2 class="text-2xl font-bold text-primary mb-4">Was bedeutet Para-45a-Anerkennung?</h2>
+      <h2 class="text-2xl font-bold text-primary mb-4">Was wir im gesamten Geltungsbereich leisten</h2>
       <p class="text-primary/80">
-        Para 45a SGB XI ist die gesetzliche Grundlage für anerkannte Angebote zur Unterstützung
-        im Alltag. Mit dieser Anerkennung darf Katharis seine Leistungen direkt mit der Pflegekasse
-        abrechnen - der Klient muss nicht in Vorleistung gehen. Die Anerkennung erfolgt durch die
-        Untere Sozialverwaltung Baden-Württemberg (USTA-BW) und ist ortsgebunden:
-        Stadt Stuttgart und Landkreis Böblingen.
+        Unsere zwei Kernleistungen sind in allen Orten von Stadt Stuttgart und Landkreis Böblingen
+        identisch verfügbar:
       </p>
-      <p class="mt-4 text-primary/80">
-        <strong>Was außerhalb dieses Gebiets passiert:</strong> Wir können dort grundsätzlich
-        eingesetzt werden, aber nicht über Para 45a abrechnen. Der Klient müsste die Rechnung
-        privat tragen oder über andere SGB-XI-Töpfe (zB §40 Wohnumfeldverbesserung) zurückholen.
-        Klären Sie das mit uns telefonisch.
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+        <a href="/service/messie-hilfe/" class="bg-background/40 p-6 rounded-xl border border-primary/10 hover:shadow-md transition-shadow block">
+          <h3 class="text-lg font-bold text-primary">Messie-Hilfe und Verwahrlosung</h3>
+          <p class="mt-3 text-primary/80 text-sm">
+            Sortierung, Tiefenreinigung und besenreine Vermieter-Übergabe bei verwahrlosten Wohnungen.
+            Mit Atemschutz, Hygiene-Ausrüstung und Diskretions-Garantie.
+          </p>
+          <p class="mt-4 text-accent-dark font-bold text-sm">Leistung &rarr;</p>
+        </a>
+        <a href="/service/vor-dem-heimumzug/" class="bg-background/40 p-6 rounded-xl border border-primary/10 hover:shadow-md transition-shadow block">
+          <h3 class="text-lg font-bold text-primary">Vollräumung vor dem Pflegeheim-Umzug</h3>
+          <p class="mt-3 text-primary/80 text-sm">
+            Komplett-Räumung mit Erbstück-Sicherung, Wert-Liste, Sortierung und besenreiner Vermieter-
+            Übergabe. Mit Pflegekassen-Direktabrechnung bei vorhandenem Pflegegrad.
+          </p>
+          <p class="mt-4 text-accent-dark font-bold text-sm">Leistung &rarr;</p>
+        </a>
+      </div>
+      <p class="mt-6 text-primary/80">
+        Hintergrund zur Pflegekassen-Finanzierung in unseren Ratgebern
+        <a href="/ratgeber/pflegekasse-entlastung/" class="underline text-accent-dark">Pflegekassen-Töpfe 2026</a>
+        und <a href="/ratgeber/pflegekasse-direktabrechnung/" class="underline text-accent-dark">Direktabrechnung erklärt</a>.
       </p>
     </div>
   </section>
 
-  <!-- CTA -->
+  <!-- Weitere Orte mit Anfahrtszeiten -->
+  <section class="py-12 max-w-content mx-auto px-4">
+    <h2 class="text-2xl font-bold text-primary mb-2">Weitere Orte im Geltungsbereich</h2>
+    <p class="text-primary/70 text-sm mb-6">
+      Auch wenn diese Orte (noch) keine eigene Detail-Seite haben - die §45a-Anerkennung gilt für den
+      gesamten Landkreis Böblingen. Anfahrten ab Olgastraße 8, Böblingen.
+    </p>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+      {weitereOrte.map((ort) => (
+        <div class="bg-white p-4 rounded-lg border border-primary/10">
+          <p class="font-bold text-primary text-sm">{ort.name}</p>
+          <p class="text-xs text-primary/70 mt-1">{ort.anfahrt}</p>
+        </div>
+      ))}
+    </div>
+    <p class="mt-6 text-sm text-primary/70">
+      Ihr Ort fehlt in der Liste? Wenn er im Landkreis Böblingen oder in Stadt Stuttgart liegt, sind
+      wir trotzdem da. Telefonisches Erstgespräch klärt das in 5 Minuten.
+    </p>
+  </section>
+
+  <!-- §45a-Erklärung -->
+  <section class="py-12 bg-white">
+    <div class="max-w-content mx-auto px-4">
+      <h2 class="text-2xl font-bold text-primary mb-4">Was bedeutet die §45a-Anerkennung?</h2>
+      <p class="text-primary/80">
+        Paragraph 45a SGB XI regelt die Anerkennung von Angeboten zur Unterstützung im Alltag.
+        Mit dieser Anerkennung darf Katharis seine Entlastungs-Leistungen direkt mit der Pflegekasse
+        abrechnen - Sie als Klient oder Angehöriger müssen nichts vorstrecken. Die Anerkennung
+        erfolgt in Baden-Württemberg durch die <strong>Untere Sozialverwaltung Baden-Württemberg
+        (USTA-BW)</strong> und ist ortsgebunden:
+      </p>
+      <ul class="mt-4 space-y-2 text-primary/80 list-disc list-inside">
+        <li><strong>Stadt Stuttgart</strong> mit allen 23 Stadtbezirken (Mitte, Bad Cannstatt, Vaihingen, Möhringen, Feuerbach und weitere)</li>
+        <li><strong>Landkreis Böblingen</strong> mit allen 26 Städten und Gemeinden, darunter Böblingen, Sindelfingen, Leonberg, Herrenberg, Weil der Stadt, Holzgerlingen, Schönaich, Ehningen, Gärtringen, Hildrizhausen, Altdorf, Aidlingen und weitere</li>
+      </ul>
+      <p class="mt-4 text-primary/80">
+        <strong>Was außerhalb dieses Gebiets passiert:</strong> Wir können dort grundsätzlich
+        eingesetzt werden, aber nicht über §45a abrechnen. Mögliche Alternativen sind ein privater
+        Festpreis-Auftrag, eine Erstattung über §40 Wohnumfeldverbesserung bei baulichem Bezug oder
+        eine Vermittlung an einen Kollegen-Anbieter in Ihrer Region. Wir klären das ehrlich am
+        Telefon.
+      </p>
+    </div>
+  </section>
+
+  <!-- Zuständige Pflegestützpunkte -->
+  <section class="py-12 max-w-content mx-auto px-4">
+    <h2 class="text-2xl font-bold text-primary mb-2">Wer berät neutral zur Pflegekasse?</h2>
+    <p class="text-primary/70 text-sm mb-6">
+      Inhaltliche Pflegekassen-Beratung ist nicht unsere Aufgabe und gehört in die Hände der neutralen,
+      kostenfreien Anlaufstellen. Wir vermitteln gerne den richtigen Kontakt.
+    </p>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      {pflegestuetzpunkte.map((stelle) => (
+        <div class="bg-white p-5 rounded-xl border border-primary/10">
+          <h3 class="font-bold text-primary">{stelle.name}</h3>
+          <p class="mt-2 text-sm text-primary/70">Zuständig für: {stelle.zuständig}</p>
+          <p class="mt-3 text-sm text-primary/80">{stelle.info}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Anfahrt ab Olgastraße -->
+  <section class="py-12 bg-white">
+    <div class="max-w-content mx-auto px-4">
+      <h2 class="text-2xl font-bold text-primary mb-4">Anfahrt ab Operative Zentrale Böblingen</h2>
+      <p class="text-primary/80">
+        Unsere operative Zentrale liegt in der <strong>Olgastraße 8, 71032 Böblingen</strong> - zentral
+        im Landkreis und mit guter Anbindung über A8 (Richtung Stuttgart und Karlsruhe) und A81
+        (Richtung Heilbronn und Singen). Typische Anfahrtszeiten:
+      </p>
+      <ul class="mt-4 space-y-1 text-primary/80 list-disc list-inside">
+        <li>Sindelfingen-Mitte: 8 bis 12 Minuten</li>
+        <li>Leonberg-Mitte: 18 bis 25 Minuten (A8)</li>
+        <li>Herrenberg-Mitte: 20 bis 28 Minuten (A81)</li>
+        <li>Stuttgart-Vaihingen: 22 bis 30 Minuten</li>
+        <li>Stuttgart-Mitte: 25 bis 35 Minuten</li>
+        <li>Stuttgart-Bad Cannstatt: 30 bis 40 Minuten</li>
+        <li>Weil der Stadt: 25 bis 32 Minuten</li>
+      </ul>
+      <p class="mt-4 text-primary/80">
+        Bei akuten Aufträgen koordinieren wir Termine so, dass die Anfahrtszeit nicht ins Honorar
+        fließt - wir leben hier, das gehört zur Selbstverständlichkeit.
+      </p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-12 max-w-content mx-auto px-4">
+    <h2 class="text-2xl font-bold text-primary mb-6">Häufige Fragen zum Einsatzgebiet</h2>
+    <div class="space-y-3">
+      {faqs.map((faq) => (
+        <details class="border border-primary/20 rounded-lg p-4 bg-white">
+          <summary class="font-bold text-primary cursor-pointer">{faq.question}</summary>
+          <p class="mt-3 text-primary/80 text-sm">{faq.answer}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <!-- Final CTA -->
   <section class="py-12 max-w-content mx-auto px-4">
     <div class="bg-primary text-white p-8 rounded-xl text-center">
       <h2 class="text-2xl font-bold">Nicht sicher, ob Ihr Ort dabei ist?</h2>

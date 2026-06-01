@@ -1,11 +1,59 @@
 ---
 import PageLayout from '@layouts/PageLayout.astro';
-import { hooks, kontakt } from '@data/content';
-import { generateLocalBusinessSchema, generateBreadcrumbListSchema } from '@lib/schema-org';
+import { hooks, kontakt, trustIndikatoren } from '@data/content';
+import { generateLocalBusinessSchema, generateFAQPageSchema, generateBreadcrumbListSchema } from '@lib/schema-org';
 import CallCTA from '@components/CallCTA';
 import RueckrufButton from '@components/RueckrufButton';
 
-const localBusinessSchema = generateLocalBusinessSchema({ areaServed: ['Landkreis Böblingen'] });
+const localBusinessSchema = generateLocalBusinessSchema({
+  areaServed: ['Stadt Böblingen', 'Landkreis Böblingen', 'Stadtmitte', 'Hulb', 'Diezenhalde', 'Tannenberg', 'Rauher Kapf', 'Dagersheim', 'Darmsheim'],
+});
+
+const stadtteile = [
+  { name: 'Stadtmitte / Kernstadt', anfahrt: '3-7 Min', hinweis: 'Altbau-Wohnungen rund um Marktplatz, Kongresshalle, Hauptbahnhof' },
+  { name: 'Hulb', anfahrt: '5-10 Min', hinweis: 'Industriegebiet im Norden, einzelne Wohnbereiche an der Stuttgarter Straße' },
+  { name: 'Diezenhalde', anfahrt: '5-10 Min', hinweis: 'Wohngebiet im Süden, viele Reihenhäuser und Mehrfamilienhäuser' },
+  { name: 'Tannenberg', anfahrt: '5-10 Min', hinweis: 'Wohngebiet mit gemischter Bebauung, viele Pflegebedürftige im Alter' },
+  { name: 'Rauher Kapf', anfahrt: '5-10 Min', hinweis: 'Wohngebiet im Westen, Einfamilien- und Reihenhaus-Bestand' },
+  { name: 'Dagersheim', anfahrt: '8-12 Min', hinweis: 'Teilort im Süden mit dörflicher Struktur' },
+  { name: 'Darmsheim', anfahrt: '8-12 Min', hinweis: 'Teilort im Westen mit dörflicher Struktur' },
+];
+
+const faqs = [
+  {
+    question: 'Wo genau ist Ihre operative Zentrale in Böblingen?',
+    answer:
+      'Olgastraße 8, 71032 Böblingen - im südlichen Stadtbereich, nahe der Schönbuchstraße und mit guter Anbindung über die L1183 zur A81. Persönliche Termine in der Olgastraße nur nach Vereinbarung. In den meisten Fällen kommen wir für die kostenfreie Vor-Ort-Begehung zu Ihnen, das ist niedrigschwelliger.',
+  },
+  {
+    question: 'Wie schnell sind Sie bei Klienten in Böblingen vor Ort?',
+    answer:
+      'Anfahrt zu Klienten in der Stadt Böblingen typisch unter 10 Minuten ab Olgastraße. Stadtmitte und Innenstadt-Süd sind in 3 bis 7 Minuten erreichbar, die Teilorte Dagersheim und Darmsheim in 8 bis 12 Minuten. Bei akutem Druck können wir oft am gleichen Tag eine Begehung machen.',
+  },
+  {
+    question: 'Bedienen Sie auch Dagersheim und Darmsheim?',
+    answer:
+      'Ja. Beide Teilorte gehören zur Stadt Böblingen und sind damit Teil unseres §45a-Anerkennungs-Gebiets. Anfahrt ab Olgastraße 8 bis 12 Minuten je nach Verkehrslage.',
+  },
+  {
+    question: 'Wer ist Pflegestützpunkt Landkreis Böblingen?',
+    answer:
+      'Der Pflegestützpunkt sitzt im Landratsamt Böblingen, Parkstraße 16, 71034 Böblingen. Telefonisch erreichbar unter 07031 663-1530. Beratung kostenfrei und neutral, auch mit Hausbesuch. Zuständig für die ganze Stadt Böblingen plus alle 26 Gemeinden im Landkreis.',
+  },
+  {
+    question: 'Welche Trust-Signale haben Sie als Anbieter?',
+    answer:
+      '73+ erfolgreich abgewickelte Aufträge in Stadt Stuttgart und Landkreis Böblingen seit 2024. Anerkannt nach §45a SGB XI durch die Untere Sozialverwaltung Baden-Württemberg. Versichert über andsafe AG mit 3 Millionen Euro Deckungssumme ohne Selbstbeteiligung. Operatives Team aus Daniel Altenhof und Kemal David Gülcü als Initiatoren plus 6 Spezialisten mit aktueller Hygiene- und Erste-Hilfe-Schulung.',
+  },
+  {
+    question: 'Was unterscheidet Katharis von einem regulären Entrümpelungs-Dienst?',
+    answer:
+      'Drei wesentliche Unterschiede: (1) §45a-Anerkennung erlaubt die Direktabrechnung mit der Pflegekasse - reguläre Entrümpelungs-Dienste haben das nicht. (2) Schwerpunkt auf komplexen Pflegefällen mit Verwahrlosung, nicht reines Wegfahren. (3) Diskretions-Standards: neutrale Fahrzeuge ohne Werbung, unauffällige Arbeitskleidung, keine Sicht-Inhalte nach außen. Beim regulären Dienstleister gibt es keinen davon.',
+  },
+];
+
+const faqSchema = generateFAQPageSchema(faqs);
+
 const breadcrumbSchema = generateBreadcrumbListSchema([
   { name: 'Start', url: 'https://katharis.de/' },
   { name: 'Standorte', url: 'https://katharis.de/standorte/' },
@@ -15,9 +63,10 @@ const breadcrumbSchema = generateBreadcrumbListSchema([
 
 <PageLayout
   title="Katharis Böblingen: operative Zentrale Olgastraße 8 | Katharis"
-  description="Operative Zentrale in der Olgastraße 8 Böblingen. Anerkannt nach Para 45a SGB XI für den gesamten Landkreis Böblingen. Pflegekassen-Direktabrechnung, Vor-Ort-Begehung kostenlos."
+  description="Operative Zentrale in der Olgastraße 8 Böblingen. Anerkannt nach §45a SGB XI für den gesamten Landkreis Böblingen. Pflegekassen-Direktabrechnung, Vor-Ort-Begehung kostenlos."
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 
   <!-- Hero -->
@@ -26,11 +75,13 @@ const breadcrumbSchema = generateBreadcrumbListSchema([
       <p class="text-sm text-primary/80">
         <a href="/" class="underline">Start</a> &rsaquo; <a href="/standorte/" class="underline">Standorte</a> &rsaquo; Böblingen
       </p>
-      <h1 class="text-4xl font-bold text-primary mt-4">Katharis in Böblingen: operative Zentrale</h1>
+      <h1 class="text-4xl font-bold text-primary mt-4">Katharis Böblingen: operative Zentrale</h1>
       <p class="mt-4 text-lg text-primary/80">{hooks.master}</p>
       <p class="mt-2 text-sm text-primary/80">
-        Anerkannt nach Paragraph 45a SGB XI für den gesamten Landkreis Böblingen. Olgastraße 8 in Böblingen
-        ist unsere operative Zentrale, von hier aus organisieren wir alle Einsätze.
+        Anerkannt nach Paragraph 45a SGB XI für den gesamten Landkreis Böblingen. Olgastraße 8 ist
+        unsere operative Zentrale - von hier aus organisieren wir alle Einsätze in der Stadt Böblingen,
+        im Landkreis und in Stuttgart. Anfahrt zu Klienten in der Stadt Böblingen typisch unter 10
+        Minuten.
       </p>
       <div class="flex flex-col sm:flex-row gap-3 mt-8">
         <CallCTA client:load />
@@ -39,25 +90,99 @@ const breadcrumbSchema = generateBreadcrumbListSchema([
     </div>
   </section>
 
-  <!-- Was wir in Böblingen leisten -->
+  <!-- Trust-Bar (operative Zentrale Beweise) -->
+  <section class="py-8 bg-white border-y border-primary/10">
+    <div class="max-w-content mx-auto px-4">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        <div>
+          <p class="text-3xl font-bold text-accent-dark">{trustIndikatoren.bilanzZahl}+</p>
+          <p class="text-xs text-primary/70 mt-1">Aufträge seit 2024</p>
+        </div>
+        <div>
+          <p class="text-3xl font-bold text-accent-dark">§45a</p>
+          <p class="text-xs text-primary/70 mt-1">SGB-XI-anerkannt</p>
+        </div>
+        <div>
+          <p class="text-3xl font-bold text-accent-dark">3 Mio</p>
+          <p class="text-xs text-primary/70 mt-1">Euro Versicherungs-Deckung</p>
+        </div>
+        <div>
+          <p class="text-3xl font-bold text-accent-dark">8</p>
+          <p class="text-xs text-primary/70 mt-1">Team-Mitglieder (Daniel + Kemal + 6 Spezialisten)</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Warum operative Zentrale Böblingen -->
   <section class="py-12 max-w-content mx-auto px-4">
-    <h2 class="text-2xl font-bold text-primary mb-4">Was wir in Böblingen leisten</h2>
+    <h2 class="text-2xl font-bold text-primary mb-4">Warum Böblingen unsere operative Zentrale ist</h2>
     <p class="text-primary/80">
-      Böblingen ist unsere operative Zentrale. Von hier aus bedienen wir die Stadt Böblingen, den
-      gesamten Landkreis Böblingen sowie die Stadt Stuttgart mit komplexen Entlastungsleistungen für
-      Pflegebedürftige. Schwerpunkte:
+      Böblingen liegt geographisch ideal für unser Einsatzgebiet: zentral im Landkreis, mit
+      direktem A8-Anschluss Richtung Stuttgart-West/Vaihingen, A81-Anschluss Richtung Heilbronn und
+      Singen, und kurzen Wegen zu allen anderen Landkreis-Gemeinden. Die Olgastraße 8 selbst liegt
+      im südlichen Stadtbereich, ruhig aber verkehrstechnisch optimal angebunden.
+    </p>
+    <p class="mt-4 text-primary/80">
+      <strong>Was das praktisch bedeutet:</strong>
     </p>
     <ul class="mt-3 space-y-2 text-primary/80 list-disc list-inside">
-      <li><strong>Messie-Hilfe</strong> bei Verwahrlosung der Wohnung, mit diskreter Vor-Ort-Begehung und Tiefenreinigung</li>
-      <li><strong>Vollräumung vor dem Pflegeheim-Umzug</strong>, mit Erbstück-Sicherung und besenreiner Vermieter-Übergabe</li>
-      <li><strong>Pflegekassen-Direktabrechnung</strong> bei vorhandenem Pflegegrad, ohne Vorkasse durch die Familie</li>
-      <li><strong>Hygiene- und Geruchsbeseitigung</strong> in Fällen, vor denen normale Reinigungsdienste zurückschrecken</li>
+      <li>Klienten in der Stadt Böblingen sehen uns oft schon binnen 24-48 Stunden zur Erstbegehung</li>
+      <li>Bei Vermieter-Druck oder anstehendem Pflegeheim-Umzug können wir schnell reagieren</li>
+      <li>Material und Werkzeug sind hier zentral gelagert - keine Vorlauf-Zeiten</li>
+      <li>Direkter Kontakt zum Pflegestützpunkt Landkreis Böblingen (Parkstraße 16, 5 Minuten entfernt)</li>
     </ul>
-    <p class="mt-4 text-primary/80">
-      In Böblingen selbst sind wir regelmäßig in allen Stadtteilen tätig: Stadtmitte, Hulb,
-      Diezenhalde, Tannenberg, Rauher Kapf, Dagersheim und Darmsheim. Anfahrt zu Klienten in Böblingen
-      typisch unter 10 Minuten ab Olgastraße.
+  </section>
+
+  <!-- Was wir in Böblingen leisten -->
+  <section class="py-12 bg-white">
+    <div class="max-w-content mx-auto px-4">
+      <h2 class="text-2xl font-bold text-primary mb-4">Was wir in Böblingen leisten</h2>
+      <p class="text-primary/80">
+        Wir sind in der Stadt Böblingen und ihren Teilorten regelmäßig im Einsatz mit Schwerpunkt
+        auf komplexen Entlastungsleistungen für Pflegebedürftige:
+      </p>
+      <ul class="mt-3 space-y-2 text-primary/80 list-disc list-inside">
+        <li><strong>Messie-Hilfe</strong> bei Verwahrlosung der Wohnung, mit Tiefenreinigung und diskreter Vor-Ort-Begehung</li>
+        <li><strong>Vollräumung vor dem Pflegeheim-Umzug</strong> mit Erbstück-Sicherung und besenreiner Vermieter-Übergabe</li>
+        <li><strong>Pflegekassen-Direktabrechnung</strong> bei vorhandenem Pflegegrad, ohne Vorkasse durch die Familie</li>
+        <li><strong>Hygiene- und Geruchsbeseitigung</strong> in Fällen, vor denen normale Reinigungsdienste zurückschrecken</li>
+        <li><strong>Sterbefall-Wohnungsräumung</strong> mit Foto-Doku, Wert-Liste und Abstimmung mit Erbengemeinschaft</li>
+      </ul>
+      <p class="mt-4 text-primary/80">
+        Mehr zu den einzelnen Leistungen unter <a href="/service/messie-hilfe/" class="underline text-accent-dark">Messie-Hilfe</a>,
+        <a href="/service/vor-dem-heimumzug/" class="underline text-accent-dark">Vollräumung vor dem Heimumzug</a>
+        und im Ratgeber <a href="/ratgeber/sterbefall-wohnungsraeumung/" class="underline text-accent-dark">Sterbefall-Wohnungsräumung</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- Stadtteile-Tabelle -->
+  <section class="py-12 max-w-content mx-auto px-4">
+    <h2 class="text-2xl font-bold text-primary mb-4">Böblinger Stadtteile und Teilorte</h2>
+    <p class="text-primary/80 mb-4">
+      Alle Stadtteile und Teilorte sind aus der Olgastraße in 3 bis 12 Minuten erreichbar:
     </p>
+    <div class="overflow-x-auto">
+      <table class="w-full border-collapse text-sm">
+        <thead>
+          <tr class="border-b-2 border-primary/20">
+            <th class="text-left py-3 pr-4 text-primary">Stadtteil / Teilort</th>
+            <th class="text-left py-3 pr-4 text-primary">Anfahrt</th>
+            <th class="text-left py-3 text-primary">Hinweise zur Wohn-Struktur</th>
+          </tr>
+        </thead>
+        <tbody>
+          {stadtteile.map((s) => (
+            <tr class="border-b border-primary/10">
+              <td class="py-3 pr-4 text-primary/80 font-medium">{s.name}</td>
+              <td class="py-3 pr-4 text-primary/80">{s.anfahrt}</td>
+              <td class="py-3 text-primary/80">{s.hinweis}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   </section>
 
   <!-- Adresse -->
@@ -76,8 +201,8 @@ const breadcrumbSchema = generateBreadcrumbListSchema([
           <strong>Geschäftszeiten:</strong> {kontakt.oeffnungszeiten}
         </p>
         <p class="text-primary/80 mt-4 text-sm">
-          Persönliche Termine in der Olgastraße nur nach Vereinbarung. Wir kommen für die unverbindliche
-          Begehung zu Ihnen, das ist meistens niedrigschwelliger.
+          Persönliche Termine in der Olgastraße nur nach Vereinbarung. Wir kommen für die
+          unverbindliche Begehung zu Ihnen, das ist meistens niedrigschwelliger.
         </p>
       </div>
     </div>
@@ -87,35 +212,40 @@ const breadcrumbSchema = generateBreadcrumbListSchema([
   <section class="py-12 max-w-content mx-auto px-4">
     <h2 class="text-2xl font-bold text-primary mb-4">Pflegekassen-Direktabrechnung in Böblingen</h2>
     <p class="text-primary/80">
-      Für den Landkreis Böblingen haben wir die Anerkennung nach Paragraph 45a SGB XI. Bei vorhandenem
-      Pflegegrad ab 1 rechnen wir unsere Entlastungsleistung direkt mit Ihrer Pflegekasse ab. Sie strecken
-      nichts vor.
+      Unsere §45a-Anerkennung gilt für den gesamten Landkreis Böblingen - die Stadt Böblingen
+      eingeschlossen. Bei vorhandenem Pflegegrad ab 1 rechnen wir die Leistung direkt mit Ihrer
+      Pflegekasse ab. Sie strecken nichts vor.
     </p>
     <p class="mt-4 text-primary/80">
-      Welche Töpfe in Ihrer konkreten Situation greifen, klären wir kostenlos am Telefon. Hintergrund-Erklärung
-      auf <a href="/pflegekasse/" class="underline text-accent-dark">Pflegekassen-Übersicht</a> und im Ratgeber
-      <a href="/ratgeber/pflegekasse-entlastung/" class="underline text-accent-dark">Pflegekasse und Entlastung</a>.
+      Welche Töpfe in Ihrer konkreten Situation greifen, klären wir kostenlos am Telefon. Hintergrund auf
+      <a href="/pflegekasse/" class="underline text-accent-dark">Pflegekassen-Übersicht</a>,
+      <a href="/pflegegrad-antrag/" class="underline text-accent-dark">Pflegegrad-Antrag</a>
+      und in den Ratgebern <a href="/ratgeber/pflegekasse-entlastung/" class="underline text-accent-dark">Pflegekassen-Töpfe 2026</a>,
+      <a href="/ratgeber/entlastungsbetrag-richtig-nutzen/" class="underline text-accent-dark">Entlastungsbetrag richtig nutzen</a>
+      und <a href="/ratgeber/pflegekasse-direktabrechnung/" class="underline text-accent-dark">Direktabrechnung erklärt</a>.
     </p>
   </section>
 
-  <!-- Einzugsgebiet -->
+  <!-- Einzugsgebiet aus Böblingen -->
   <section class="py-12 bg-white">
     <div class="max-w-content mx-auto px-4">
-      <h2 class="text-2xl font-bold text-primary mb-4">Einzugsgebiet Landkreis Böblingen</h2>
+      <h2 class="text-2xl font-bold text-primary mb-4">Einzugsgebiet ab Olgastraße</h2>
       <p class="text-primary/80">
-        Aus der Olgastraße 8 bedienen wir alle Gemeinden im Landkreis Böblingen. Typische Anfahrtszeiten:
+        Aus der Olgastraße 8 bedienen wir alle Gemeinden im Landkreis Böblingen und die Stadt
+        Stuttgart. Typische Anfahrtszeiten:
       </p>
       <ul class="mt-3 space-y-1 text-primary/80 list-disc list-inside">
-        <li>Sindelfingen: 8 bis 12 Minuten</li>
+        <li><a href="/standorte/sindelfingen/" class="underline text-accent-dark">Sindelfingen</a>: 8 bis 12 Minuten</li>
         <li>Holzgerlingen, Schönaich: 10 bis 15 Minuten</li>
-        <li>Leonberg: 18 bis 25 Minuten</li>
-        <li>Herrenberg: 20 bis 28 Minuten</li>
+        <li><a href="/standorte/leonberg/" class="underline text-accent-dark">Leonberg</a>: 18 bis 25 Minuten über A8</li>
+        <li><a href="/standorte/herrenberg/" class="underline text-accent-dark">Herrenberg</a>: 20 bis 28 Minuten über A81</li>
         <li>Weil der Stadt, Deckenpfronn: 25 bis 35 Minuten</li>
-        <li>Stadt Stuttgart über A81: 25 bis 30 Minuten je nach Stadtbezirk und Verkehr</li>
+        <li><a href="/standorte/stuttgart/" class="underline text-accent-dark">Stadt Stuttgart</a> (Filder über A8 / Mitte über A81): 22 bis 40 Minuten je nach Stadtbezirk</li>
       </ul>
       <p class="mt-4 text-primary/80">
-        Für Klienten in Sindelfingen, Leonberg und Herrenberg gibt es eigene Standort-Seiten mit
-        lokalen Details. Pflegekassen-Direktabrechnung greift im gesamten Landkreis Böblingen.
+        Für die fünf Hauptstädte gibt es eigene Detail-Seiten mit lokalen Anfahrts-Informationen,
+        Stadtteilen und Pflegestützpunkt-Daten - siehe Übersicht unter
+        <a href="/standorte/" class="underline text-accent-dark">Standorte</a>.
       </p>
     </div>
   </section>
@@ -124,16 +254,57 @@ const breadcrumbSchema = generateBreadcrumbListSchema([
   <section class="py-12 max-w-content mx-auto px-4">
     <h2 class="text-2xl font-bold text-primary mb-4">Kostenlose Pflegeberatung in Böblingen</h2>
     <p class="text-primary/80">
-      Inhaltliche Pflegeberatung ist kostenlos und unabhängig:
+      Inhaltliche Pflegekassen-Beratung ist nicht unsere Aufgabe und gehört in die Hände der
+      neutralen, kostenfreien Anlaufstellen:
     </p>
-    <ul class="mt-3 space-y-1 text-primary/80 list-disc list-inside">
-      <li><strong>Pflegestützpunkt Landkreis Böblingen</strong> in Böblingen, neutral und kostenfrei</li>
-      <li><strong>Compass Pflegeberatung</strong> bundesweit unter 0800 101 88 00, auch mit Hausbesuch</li>
+    <div class="mt-6 bg-background/40 rounded-xl p-6 border border-primary/10">
+      <h3 class="font-bold text-primary">Pflegestützpunkt Landkreis Böblingen</h3>
+      <p class="mt-2 text-sm text-primary/80">
+        Landratsamt Böblingen, Parkstraße 16, 71034 Böblingen<br />
+        Telefon: <a href="tel:070316631530" class="underline text-accent-dark">07031 663-1530</a><br />
+        Zuständig für die Stadt Böblingen und alle 26 Gemeinden im Landkreis. Beratung kostenfrei,
+        neutral, auch mit Hausbesuch.
+      </p>
+    </div>
+    <ul class="mt-4 space-y-1 text-primary/80 list-disc list-inside">
+      <li><strong>Compass Pflegeberatung</strong> bundesweit unter
+        <a href="tel:08001018800" class="underline text-accent-dark">0800 101 88 00</a>, auch Hausbesuch</li>
       <li><strong>Hausärztin oder Hausarzt</strong> als erste Anlaufstelle für medizinische Klärung</li>
+      <li><strong>Sozialdienst Klinikum Sindelfingen-Böblingen</strong> bei Krankenhaus-Entlassung mit Pflegebedarf</li>
     </ul>
     <p class="mt-4 text-primary/80">
       Wir helfen Ihnen gerne, den passenden Beratungs-Kontakt herzustellen.
     </p>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-12 bg-white">
+    <div class="max-w-content mx-auto px-4">
+      <h2 class="text-2xl font-bold text-primary mb-6">Häufige Fragen zur Zentrale Böblingen</h2>
+      <div class="space-y-3">
+        {faqs.map((faq) => (
+          <details class="border border-primary/20 rounded-lg p-4 bg-background/30">
+            <summary class="font-bold text-primary cursor-pointer">{faq.question}</summary>
+            <p class="mt-3 text-primary/80 text-sm">{faq.answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Vertiefende Ratgeber -->
+  <section class="py-12 max-w-content mx-auto px-4">
+    <h2 class="text-2xl font-bold text-primary mb-4">Vertiefende Ratgeber</h2>
+    <ul class="space-y-1 text-primary/80 list-disc list-inside text-sm">
+      <li><a href="/ratgeber/pflegekasse-entlastung/" class="underline text-accent-dark">Pflegekassen-Töpfe 2026</a></li>
+      <li><a href="/ratgeber/entlastungsbetrag-richtig-nutzen/" class="underline text-accent-dark">Entlastungsbetrag 131 € richtig nutzen</a></li>
+      <li><a href="/ratgeber/pflegegrad-1-was-zahlt-die-kasse/" class="underline text-accent-dark">Pflegegrad 1 – was zahlt die Kasse?</a></li>
+      <li><a href="/ratgeber/pflegekasse-direktabrechnung/" class="underline text-accent-dark">Direktabrechnung erklärt</a></li>
+      <li><a href="/ratgeber/pflegekasse-ablehnung-widerspruch/" class="underline text-accent-dark">Pflegekasse abgelehnt – Widerspruch einlegen</a></li>
+      <li><a href="/ratgeber/heimumzug-kosten/" class="underline text-accent-dark">Heimumzug und Kosten</a></li>
+      <li><a href="/ratgeber/messie-syndrom/" class="underline text-accent-dark">Messie-Syndrom verstehen</a></li>
+      <li><a href="/standorte/" class="underline text-accent-dark font-bold">Alle Standorte</a></li>
+    </ul>
   </section>
 
   <!-- Final CTA -->
