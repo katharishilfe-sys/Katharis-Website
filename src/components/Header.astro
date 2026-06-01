@@ -19,7 +19,7 @@ const navLinks = [
 <header class="bg-white shadow-sm sticky top-0 z-50">
   <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
     <a href="/" class="flex items-center gap-2" aria-label="Katharis Startseite">
-      <Image src={logo} alt="" width={44} height={44} aria-hidden="true" loading="eager" />
+      <Image src={logo} alt="" width={44} height={44} aria-hidden="true" loading="eager" fetchpriority="high" decoding="async" />
       <span class="text-xl font-bold text-primary">Katharis</span>
     </a>
 

@@ -24,6 +24,7 @@
 /*.svg
   Cache-Control: public, max-age=2592000
 
-# Pages-Subdomain noindex (vor Etappe-7-Cutover)
-https://*.pages.dev/*
-  X-Robots-Tag: noindex
+# TODO Pages-Subdomain noindex: Cloudflare _headers unterstützt nur Pfad-Patterns,
+# nicht volle URLs. Falls pages.dev-Indexierung verhindert werden soll, im
+# Cloudflare-Dashboard unter Pages-Settings die Subdomain-Sichtbarkeit anpassen
+# oder eine Cloudflare-Function mit Host-Check einsetzen.

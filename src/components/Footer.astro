@@ -7,7 +7,7 @@ import logo from '@/assets/katharis-logo.png';
 <footer class="bg-primary text-white mt-auto">
   <div class="max-w-6xl mx-auto px-4 py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
     <div>
-      <Image src={logo} alt="" width={48} height={48} class="brightness-0 invert" aria-hidden="true" loading="lazy" />
+      <Image src={logo} alt="" width={48} height={48} class="brightness-0 invert" aria-hidden="true" loading="lazy" decoding="async" />
       <p class="text-xl font-bold mt-3">Katharis</p>
       <ul class="flex flex-col gap-3 mt-5 text-sm text-white/75">
         <li>{kontakt.adresse.operativeZentrale.strasse}, {kontakt.adresse.operativeZentrale.plz} {kontakt.adresse.operativeZentrale.ort}</li>
@@ -33,25 +33,33 @@ import logo from '@/assets/katharis-logo.png';
         <li><a href="/standorte/sindelfingen/" class="hover:text-white">Sindelfingen</a></li>
         <li><a href="/standorte/leonberg/" class="hover:text-white">Leonberg</a></li>
         <li><a href="/standorte/herrenberg/" class="hover:text-white">Herrenberg</a></li>
+        <li><a href="/standorte/" class="hover:text-white font-bold">Alle Standorte →</a></li>
       </ul>
     </div>
     <div>
       <h3 class="text-xs font-semibold uppercase tracking-widest text-accent">Ratgeber</h3>
       <ul class="flex flex-col gap-2 mt-5 text-sm text-white/75">
-        <li><a href="/ratgeber/messie-syndrom/" class="hover:text-white">Messie-Syndrom verstehen</a></li>
         <li><a href="/ratgeber/pflegekasse-entlastung/" class="hover:text-white">Pflegekassen-Töpfe 2026</a></li>
+        <li><a href="/ratgeber/entlastungsbetrag-richtig-nutzen/" class="hover:text-white">Entlastungsbetrag 131 €</a></li>
+        <li><a href="/ratgeber/pflegegrad-1-was-zahlt-die-kasse/" class="hover:text-white">Pflegegrad 1 nutzen</a></li>
         <li><a href="/ratgeber/pflegekasse-direktabrechnung/" class="hover:text-white">Direktabrechnung erklärt</a></li>
+        <li><a href="/ratgeber/pflegekasse-ablehnung-widerspruch/" class="hover:text-white">Widerspruch einlegen</a></li>
         <li><a href="/ratgeber/md-begutachtung-vorbereiten/" class="hover:text-white">MD-Begutachtung</a></li>
         <li><a href="/ratgeber/wohnumfeldverbesserung-antrag/" class="hover:text-white">Wohnumfeldverbesserung</a></li>
+        <li><a href="/ratgeber/heimumzug-kosten/" class="hover:text-white">Heimumzug-Kosten</a></li>
         <li><a href="/ratgeber/sterbefall-wohnungsraeumung/" class="hover:text-white">Sterbefall-Räumung</a></li>
+        <li><a href="/ratgeber/messie-syndrom/" class="hover:text-white">Messie-Syndrom</a></li>
         <li><a href="/ratgeber/" class="hover:text-white font-bold">Alle Artikel →</a></li>
       </ul>
     </div>
   </div>
   <div class="border-t border-white/15">
-    <div class="max-w-6xl mx-auto px-4 py-5 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-white/60">
-      <p>&copy; 2026 Katharis. Alle Rechte vorbehalten.</p>
-      <div class="flex gap-4">
+    <div class="max-w-6xl mx-auto px-4 py-5 flex flex-col gap-3 text-xs text-white/60">
+      <div class="flex flex-wrap gap-x-4 gap-y-2 justify-center sm:justify-start">
+        <a href="/ueber-uns/" class="hover:text-white">Über uns</a>
+        <span class="opacity-40">|</span>
+        <a href="/kontakt/" class="hover:text-white">Kontakt</a>
+        <span class="opacity-40">|</span>
         <a href="/impressum/" class="hover:text-white">Impressum</a>
         <span class="opacity-40">|</span>
         <a href="/datenschutz/" class="hover:text-white">Datenschutz</a>
@@ -60,6 +68,7 @@ import logo from '@/assets/katharis-logo.png';
         <span class="opacity-40">|</span>
         <a href="/barrierefreiheit/" class="hover:text-white">Barrierefreiheit</a>
       </div>
+      <p class="text-center sm:text-left">&copy; 2026 Katharis. Alle Rechte vorbehalten.</p>
     </div>
   </div>
 </footer>
