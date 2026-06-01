@@ -1,0 +1,286 @@
+---
+import PageLayout from '@layouts/PageLayout.astro';
+import { generateFAQPageSchema, generateBreadcrumbListSchema, PERSON_DANIEL, PERSON_KEMAL } from '@lib/schema-org';
+import CallCTA from '@components/CallCTA';
+import RueckrufButton from '@components/RueckrufButton';
+
+const SITE_URL = 'https://katharis.de';
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Entlastungsbetrag (§45b SGB XI) – 131 Euro pro Monat richtig nutzen',
+  description:
+    'Wofür der Entlastungsbetrag verwendet werden darf, wofür nicht. Wie Sie ihn ansparen, kombinieren und nicht verfallen lassen. Mit Praxis-Beispielen für Pflegegrad 1 bis 5.',
+  datePublished: '2026-05-27T00:00:00+02:00',
+  dateModified: '2026-05-27T00:00:00+02:00',
+  author: PERSON_DANIEL,
+  reviewedBy: PERSON_KEMAL,
+  image: `${SITE_URL}/og-image.png`,
+  mainEntityOfPage: `${SITE_URL}/ratgeber/entlastungsbetrag-richtig-nutzen/`,
+  publisher: { '@id': `${SITE_URL}/#organization` },
+};
+
+const faqs = [
+  {
+    question: 'Wie hoch ist der Entlastungsbetrag 2026?',
+    answer:
+      '131 Euro pro Monat, also 1.572 Euro pro Jahr. Diesen Betrag gibt es einheitlich für alle Pflegegrade 1 bis 5. Seit 1. Januar 2025 wurde er von 125 auf 131 Euro angehoben, der Wert gilt unverändert 2026.',
+  },
+  {
+    question: 'Kann ich den Entlastungsbetrag bar ausgezahlt bekommen?',
+    answer:
+      'Nein. Der Entlastungsbetrag ist ein zweckgebundener Sachleistungs-Anspruch. Er wird direkt vom Anbieter mit der Pflegekasse abgerechnet, oder Sie reichen bezahlte Rechnungen anerkannter Anbieter zur Erstattung ein. Geld auf das eigene Konto gibt es nicht.',
+  },
+  {
+    question: 'Was passiert mit nicht genutzten Beträgen?',
+    answer:
+      'Nicht genutzte Beträge eines Kalenderjahres werden in das Folgehalbjahr übertragen und stehen bis zum 30. Juni des Folgejahres zur Verfügung. Was bis dahin nicht verbraucht ist, verfällt. Praxis-Beispiel: Beträge aus 2026 müssen bis 30.06.2027 ausgegeben sein.',
+  },
+  {
+    question: 'Darf ich den Entlastungsbetrag bei Verwandten oder Bekannten verwenden?',
+    answer:
+      'Nein, nicht direkt. Der Entlastungsbetrag setzt voraus, dass die Leistung über einen anerkannten Anbieter erbracht wird – mit landesrechtlicher Anerkennung nach §45a SGB XI. Eine Privatperson oder Nachbarschaftshilfe ohne Anerkennung kann den Betrag nicht abrechnen.',
+  },
+  {
+    question: 'Was ist der Unterschied zwischen Entlastungsbetrag und Umwandlungsanspruch?',
+    answer:
+      'Der Entlastungsbetrag ist ein eigener Topf von 131 Euro pro Monat (§45b). Der Umwandlungsanspruch (§45a Absatz 4) erlaubt zusätzlich, bis zu 40 Prozent des Pflegesachleistungs-Budgets nach §36 in Entlastungsleistungen umzuwandeln – allerdings erst ab Pflegegrad 2. Beide lassen sich kombinieren.',
+  },
+  {
+    question: 'Wie rechne ich den Entlastungsbetrag konkret ab?',
+    answer:
+      'Zwei Wege: (1) Direktabrechnung – der anerkannte Anbieter rechnet direkt mit Ihrer Pflegekasse ab, Sie zahlen nichts vor. Das machen wir bei Katharis standardmäßig so. (2) Kostenerstattung – Sie zahlen die Rechnung selbst und reichen sie mit dem Erstattungsformular bei Ihrer Pflegekasse ein. Erstattung kommt 2–6 Wochen später.',
+  },
+  {
+    question: 'Welche Leistungen sind explizit ausgeschlossen?',
+    answer:
+      'Nicht abrechenbar über den Entlastungsbetrag sind: medizinische Versorgung (das ist Krankenkasse, nicht Pflegekasse), körperbezogene Pflege wie Waschen und Anziehen ab Pflegegrad 2 (das wäre Pflegesachleistung §36), Therapeut-Leistungen wie Physio, Ergo, Logopädie (laufen über Krankenkasse) und reine Hauswirtschafts-Leistungen ohne Anerkennung.',
+  },
+];
+
+const faqSchema = generateFAQPageSchema(faqs);
+
+const breadcrumbSchema = generateBreadcrumbListSchema([
+  { name: 'Start', url: 'https://katharis.de/' },
+  { name: 'Ratgeber', url: 'https://katharis.de/ratgeber/' },
+  { name: 'Entlastungsbetrag richtig nutzen', url: 'https://katharis.de/ratgeber/entlastungsbetrag-richtig-nutzen/' },
+]);
+---
+
+<PageLayout
+  title="Entlastungsbetrag 131 € richtig nutzen: §45b SGB XI 2026 | Katharis"
+  description="Den Entlastungsbetrag von 131 Euro pro Monat optimal einsetzen. Wofür er gilt, wofür nicht, wie Sie ihn ansparen und mit anderen Pflegekassen-Töpfen kombinieren. Mit Praxis-Beispielen."
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+  <article class="max-w-content mx-auto px-4 py-12">
+    <p class="text-sm text-primary/80">
+      <a href="/ratgeber/" class="underline">Ratgeber</a> &rsaquo; Entlastungsbetrag richtig nutzen
+    </p>
+    <h1 class="text-4xl font-bold text-primary mt-4">Entlastungsbetrag (§45b SGB XI): 131 Euro pro Monat richtig nutzen</h1>
+    <p class="text-sm text-primary/80 mt-2">
+      Verfasser: Daniel Altenhof · Fachlich gegengelesen von Kemal David Gülcü · Stand: 2026-05-27
+    </p>
+
+    <p class="mt-8 text-primary/80">
+      Der Entlastungsbetrag ist der am häufigsten unterschätzte Topf der Pflegeversicherung. 131 Euro
+      pro Monat klingen wenig, summieren sich aber auf 1.572 Euro pro Jahr – Geld, das nahezu jeder
+      Pflegebedürftige (Pflegegrad 1 bis 5) bekommen kann, das aber jedes Jahr bei vielen einfach
+      verfällt. Dieser Ratgeber zeigt, wie Sie ihn voll ausschöpfen.
+    </p>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Was der Entlastungsbetrag konkret ist</h2>
+    <p class="text-primary/80">
+      Der Entlastungsbetrag nach §45b SGB XI ist eine zweckgebundene Sachleistung. Pflegebedürftige
+      bekommen kein Geld auf das Konto, sondern können Leistungen anerkannter Anbieter bis zur Höhe
+      von 131 Euro pro Monat in Anspruch nehmen, ohne dafür privat bezahlen zu müssen.
+    </p>
+    <p class="mt-4 text-primary/80">
+      Wichtig zu wissen:
+    </p>
+    <ul class="mt-3 space-y-1 text-primary/80 list-disc list-inside">
+      <li><strong>131 €/Monat einheitlich</strong> für alle Pflegegrade 1 bis 5 (seit 1. Januar 2025)</li>
+      <li><strong>1.572 € pro Jahr</strong> Gesamtbudget</li>
+      <li><strong>Übertragbar</strong>: nicht genutzte Beträge wandern ins Folgehalbjahr</li>
+      <li><strong>Frist</strong>: bis 30. Juni des Folgejahres aufgebraucht, sonst verfällt</li>
+      <li><strong>Bei häuslicher Pflege</strong>: voll verfügbar; im Pflegeheim wird er auf die Eigenanteile umgelegt</li>
+    </ul>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Wofür Sie den Entlastungsbetrag verwenden dürfen</h2>
+    <p class="text-primary/80">
+      Der Gesetzgeber listet vier Kategorien (§45a SGB XI):
+    </p>
+    <ol class="mt-3 space-y-3 text-primary/80 list-decimal list-inside">
+      <li>
+        <strong>Tages- oder Nachtpflege</strong> – als ergänzende Finanzierung, wenn die Tagespflege-
+        Sachleistung (§41) bereits ausgeschöpft ist oder bei Pflegegrad 1 nicht zur Verfügung steht.
+      </li>
+      <li>
+        <strong>Kurzzeitpflege</strong> – als ergänzende Finanzierung, wenn der §42a-Topf bereits
+        verbraucht ist oder bei Pflegegrad 1 nicht greift.
+      </li>
+      <li>
+        <strong>Leistungen ambulanter Pflegedienste</strong> – bei Pflegegrad 2 bis 5 für
+        hauswirtschaftliche Leistungen (Reinigung, Wäsche, Einkauf). Bei Pflegegrad 1 zusätzlich für
+        körperbezogene Pflege.
+      </li>
+      <li>
+        <strong>Anerkannte Angebote zur Unterstützung im Alltag</strong> – das ist die wichtigste
+        Kategorie für viele Familien: anerkannte Demenz-Begleitung, Betreuungs-Cafés, anerkannte
+        Haushaltshilfen, anerkannte Anbieter für komplexe Entlastungs-Aufträge wie Katharis.
+      </li>
+    </ol>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Wofür Sie ihn NICHT verwenden dürfen</h2>
+    <ul class="mt-3 space-y-1 text-primary/80 list-disc list-inside">
+      <li>Medizinische Versorgung (das ist Krankenkasse)</li>
+      <li>Therapeut-Leistungen wie Physio, Ergo, Logopädie (laufen über Krankenkasse mit Heilmittel-Verordnung)</li>
+      <li>Reine Hauswirtschafts-Hilfe ohne §45a-Anerkennung des Anbieters</li>
+      <li>Hilfe durch Verwandte oder Bekannte ohne formale Anerkennung</li>
+      <li>Eigentliche körperbezogene Pflege ab Pflegegrad 2 (das wäre Pflegesachleistung §36)</li>
+    </ul>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Wie Sie den Anbieter prüfen</h2>
+    <p class="text-primary/80">
+      Damit ein Anbieter den Entlastungsbetrag direkt abrechnen darf, muss er nach Landesrecht
+      anerkannt sein. Diese Anerkennung wird je Bundesland von einer zuständigen Behörde vergeben.
+    </p>
+    <p class="mt-4 text-primary/80">
+      So prüfen Sie es:
+    </p>
+    <ul class="mt-3 space-y-1 text-primary/80 list-disc list-inside">
+      <li>Fragen Sie nach der Anerkennungs-Urkunde oder dem Bescheid des Landratsamtes</li>
+      <li>Fragen Sie, in welchen Landkreisen die Anerkennung gilt (häufig sehr eng gefasst)</li>
+      <li>Fragen Sie nach dem Anerkennungs-Paragraphen (in Baden-Württemberg: §45a SGB XI in Verbindung mit der UstG-Anerkennungs-VO)</li>
+      <li>Bei Unsicherheit: kurzer Anruf beim Pflegestützpunkt Ihres Landkreises – die haben die Liste</li>
+    </ul>
+    <p class="mt-4 text-primary/80">
+      Katharis ist nach §45a SGB XI anerkannt für Stadt Stuttgart und Landkreis Böblingen
+      (umfasst Böblingen, Sindelfingen, Leonberg, Herrenberg, Weil der Stadt und weitere Kommunen).
+    </p>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">So sparen Sie den Entlastungsbetrag richtig an</h2>
+    <p class="text-primary/80">
+      Der Entlastungsbetrag ist „rollierend" – Monatsbeträge, die nicht verbraucht werden, wandern ins
+      Folgehalbjahr. Drei Strategien aus der Praxis:
+    </p>
+    <h3 class="text-lg font-bold text-primary mt-6 mb-2">Strategie 1: Anlass-bezogen ansparen</h3>
+    <p class="text-primary/80">
+      Wer ohnehin eine größere Entlastung plant (zum Beispiel Frühjahrs-Tiefenreinigung der Wohnung,
+      Vor-Heimumzugs-Räumung), kann den Betrag bewusst stehen lassen und dann auf einen Schlag
+      einsetzen. 6 Monate ansparen ergibt 786 Euro Budget, 12 Monate ergibt 1.572 Euro.
+    </p>
+    <h3 class="text-lg font-bold text-primary mt-6 mb-2">Strategie 2: Mit anderen Töpfen kombinieren</h3>
+    <p class="text-primary/80">
+      Bei Pflegegrad 2 bis 5 kann der Entlastungsbetrag mit dem Umwandlungs-Anspruch nach §45a
+      Absatz 4 (bis 40 % des Pflegesachleistungs-Budgets) und dem Gemeinsamen Jahresbetrag (§42a)
+      kombiniert werden. Bei Pflegegrad 3 zum Beispiel sind so über das Jahr Entlastungs-Leistungen
+      im Wert von rund 6.000 bis 8.000 Euro möglich. Details im Pillar-Ratgeber
+      <a href="/ratgeber/pflegekasse-entlastung/" class="underline text-accent-dark">Pflegekassen-Töpfe 2026</a>.
+    </p>
+    <h3 class="text-lg font-bold text-primary mt-6 mb-2">Strategie 3: Direktabrechnung statt Kostenerstattung</h3>
+    <p class="text-primary/80">
+      Bei der Direktabrechnung übernimmt der anerkannte Anbieter die ganze Abwicklung mit der
+      Pflegekasse. Sie unterschreiben nur eine Abtretungs-Erklärung und brauchen keine Rechnung
+      vorzustrecken. Bei Katharis machen wir das standardmäßig so – mehr im Ratgeber
+      <a href="/ratgeber/pflegekasse-direktabrechnung/" class="underline text-accent-dark">Direktabrechnung erklärt</a>.
+    </p>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Drei Rechen-Beispiele</h2>
+
+    <div class="mt-3 bg-background/40 rounded-xl p-6 border border-primary/10">
+      <h3 class="font-bold text-primary mb-2">Beispiel 1 – Pflegegrad 1, monatliche Hauswirtschafts-Entlastung</h3>
+      <p class="text-primary/80 text-sm">
+        Wohnungsreinigung, Wäsche, Einkauf – 4 Stunden pro Monat à 33 € durch §45a-Anbieter = 132 €/Monat.
+        Direkt mit Pflegekasse abgerechnet. Eigenkosten: 0 €.
+      </p>
+    </div>
+
+    <div class="mt-3 bg-background/40 rounded-xl p-6 border border-primary/10">
+      <h3 class="font-bold text-primary mb-2">Beispiel 2 – Pflegegrad 1, einmalige Verwahrlosungs-Räumung</h3>
+      <p class="text-primary/80 text-sm">
+        Räumung einer 2-Zimmer-Wohnung mit moderater Verwahrlosung, Tiefenreinigung, besenreine
+        Übergabe. Gesamtaufwand ca. 2.800 €. Strategie: 12 Monate Entlastungsbetrag angespart
+        (1.572 €) plus §40-Wohnumfeld-Antrag (Erstattung 1.228 €) plus 0 € Eigenleistung. Direkt mit
+        Pflegekasse abgerechnet.
+      </p>
+    </div>
+
+    <div class="mt-3 bg-background/40 rounded-xl p-6 border border-primary/10">
+      <h3 class="font-bold text-primary mb-2">Beispiel 3 – Pflegegrad 3, kombinierte Maximalnutzung</h3>
+      <p class="text-primary/80 text-sm">
+        Vorbereitung Pflegeheim-Umzug, Vollräumung Reihenhaus inkl. Erbstück-Sortierung, 8.500 €
+        Gesamtaufwand. Pflegekassen-Töpfe: §45b Entlastungsbetrag 1.572 € + §42a Gemeinsamer
+        Jahresbetrag 3.539 € + §45a Absatz 4 Umwandlungs-Anspruch (40 % von 1.497 € Pflegesachleistung
+        = 599 €) + §40 Wohnumfeld nur bei baulicher Anpassung. Summe Pflegekassen-Deckung: bis zu
+        5.710 €. Restbetrag privat: 2.790 € oder in 2 Halbjahre splitten.
+      </p>
+    </div>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Häufige Fehler</h2>
+    <ul class="mt-3 space-y-2 text-primary/80 list-disc list-inside">
+      <li><strong>„Den nehme ich, wenn ich ihn brauche":</strong> Wer den Entlastungsbetrag erst dann beantragt, wenn akuter Bedarf besteht, hat in dem Jahr nur einen Bruchteil zur Verfügung. Besser: laufend nutzen, sodass der Anbieter eingespielt ist.</li>
+      <li><strong>Anbieter ohne Anerkennung beauftragen:</strong> Die Rechnung wird dann nicht erstattet. Vorher prüfen.</li>
+      <li><strong>Frist 30.06. übersehen:</strong> Vorjahres-Restbeträge verfallen. Im Januar/Februar Übersicht bei der Pflegekasse anfordern und planen.</li>
+      <li><strong>Direktabrechnung mit Eigenanteil verwechseln:</strong> Direktabrechnung über §45a ist möglich für Entlastungsleistungen, nicht für medizinische Pflege.</li>
+    </ul>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Was wir bei Katharis konkret leisten</h2>
+    <p class="text-primary/80">
+      Über den Entlastungsbetrag (kombinierbar mit weiteren Töpfen) rechnen wir direkt mit Ihrer
+      Pflegekasse ab:
+    </p>
+    <ul class="mt-3 space-y-1 text-primary/80 list-disc list-inside">
+      <li>Wohnungsreinigung und Haushaltsführung bei Pflegebedürftigen, laufend oder einmalig</li>
+      <li>Messie-Hilfe und Verwahrlosungs-Räumung mit Tiefenreinigung</li>
+      <li>Vor-Heimumzugs-Räumung mit Erbstück-Sicherung</li>
+      <li>Diskrete Vor-Ort-Begehung, Festpreis vor Beginn, keine Vorkasse</li>
+    </ul>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Häufige Fragen</h2>
+    <div class="mt-4 space-y-3">
+      {faqs.map((faq) => (
+        <details class="border border-primary/20 rounded-lg p-4 bg-white">
+          <summary class="font-bold text-primary cursor-pointer">{faq.question}</summary>
+          <p class="mt-3 text-primary/80 text-sm">{faq.answer}</p>
+        </details>
+      ))}
+    </div>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Verwandte Themen</h2>
+    <ul class="mt-3 space-y-1 text-primary/80 list-disc list-inside">
+      <li><a href="/ratgeber/pflegekasse-entlastung/" class="underline text-accent-dark">Pflegekassen-Töpfe 2026</a> – Pillar-Übersicht aller Töpfe</li>
+      <li><a href="/ratgeber/pflegegrad-1-was-zahlt-die-kasse/" class="underline text-accent-dark">Pflegegrad 1 – was zahlt die Kasse?</a></li>
+      <li><a href="/ratgeber/pflegekasse-direktabrechnung/" class="underline text-accent-dark">Direktabrechnung erklärt</a></li>
+      <li><a href="/ratgeber/pflegekasse-ablehnung-widerspruch/" class="underline text-accent-dark">Pflegekasse abgelehnt – Widerspruch einlegen</a></li>
+      <li><a href="/ratgeber/wohnumfeldverbesserung-antrag/" class="underline text-accent-dark">§40 Wohnumfeldverbesserung beantragen</a></li>
+      <li><a href="/ratgeber/heimumzug-kosten/" class="underline text-accent-dark">Heimumzug und Kosten</a></li>
+      <li><a href="/pflegekasse/" class="underline text-accent-dark">Pflegekassen-Übersicht (Hub-Seite)</a></li>
+    </ul>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Quellen</h2>
+    <ul class="mt-3 space-y-1 text-primary/80 list-disc list-inside text-sm">
+      <li>SGB XI §45a (Anerkennung von Angeboten zur Unterstützung im Alltag)</li>
+      <li>SGB XI §45a Absatz 4 (Umwandlungs-Anspruch, bis 40 % der Pflegesachleistung)</li>
+      <li>SGB XI §45b (Entlastungsbetrag, 131 €/Monat seit 1.1.2025)</li>
+      <li>SGB XI §36 (Pflegesachleistungen ab Pflegegrad 2)</li>
+      <li>SGB XI §42a (Gemeinsamer Jahresbetrag, 3.539 € seit 1.7.2025 ab Pflegegrad 2)</li>
+      <li>Bundesgesundheitsministerium: Übersicht Entlastungsleistungen</li>
+      <li>GKV-Spitzenverband: Empfehlungen zur Anerkennung nach §45a</li>
+    </ul>
+  </article>
+
+  <section class="py-16 bg-background text-center">
+    <div class="max-w-2xl mx-auto px-4">
+      <h2 class="text-2xl font-bold text-primary">Sie wollen den Entlastungsbetrag nutzen?</h2>
+      <p class="mt-4 text-primary/80">Wir rechnen direkt mit Ihrer Pflegekasse ab. Erstgespräch kostenlos.</p>
+      <div class="flex flex-col sm:flex-row gap-3 mt-6 justify-center">
+        <CallCTA client:load />
+        <RueckrufButton client:load sourceCta="rueckruf-ratgeber-entlastungsbetrag" />
+      </div>
+    </div>
+  </section>
+</PageLayout>

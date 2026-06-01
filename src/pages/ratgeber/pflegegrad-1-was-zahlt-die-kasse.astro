@@ -1,0 +1,254 @@
+---
+import PageLayout from '@layouts/PageLayout.astro';
+import { generateFAQPageSchema, generateBreadcrumbListSchema, PERSON_DANIEL, PERSON_KEMAL } from '@lib/schema-org';
+import CallCTA from '@components/CallCTA';
+import RueckrufButton from '@components/RueckrufButton';
+
+const SITE_URL = 'https://katharis.de';
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Pflegegrad 1 – was zahlt die Pflegekasse 2026?',
+  description:
+    'Pflegegrad 1 wird oft unterschätzt. Welche Töpfe Sie tatsächlich nutzen können: 131 Euro Entlastungsbetrag, 4.180 Euro Wohnumfeldverbesserung und Pflegehilfsmittel. Mit Rechen-Beispiel und Antrags-Schritten.',
+  datePublished: '2026-05-27T00:00:00+02:00',
+  dateModified: '2026-05-27T00:00:00+02:00',
+  author: PERSON_DANIEL,
+  reviewedBy: PERSON_KEMAL,
+  image: `${SITE_URL}/og-image.png`,
+  mainEntityOfPage: `${SITE_URL}/ratgeber/pflegegrad-1-was-zahlt-die-kasse/`,
+  publisher: { '@id': `${SITE_URL}/#organization` },
+};
+
+const faqs = [
+  {
+    question: 'Bekommt man bei Pflegegrad 1 überhaupt Geld auf das Konto?',
+    answer:
+      'Nein. Pflegegrad 1 hat keinen Anspruch auf Pflegegeld (das gibt es erst ab Pflegegrad 2). Die 131 Euro pro Monat Entlastungsbetrag werden nicht ausgezahlt, sondern direkt mit anerkannten Anbietern verrechnet. Das ist ein Sachleistungs-Anspruch, kein Bar-Anspruch.',
+  },
+  {
+    question: 'Was zählt als „Entlastungsleistung" im Sinne von §45b?',
+    answer:
+      'Haushaltsführung wie Wohnungsreinigung, Wäsche und Einkaufshilfe, Betreuung in einer Tagespflege-Einrichtung, anerkannte Angebote zur Unterstützung im Alltag (zum Beispiel Demenz-Betreuung) und Entlastung pflegender Angehöriger durch §45a-Anbieter. Wichtig: der Anbieter muss eine landesrechtliche Anerkennung haben.',
+  },
+  {
+    question: 'Was ist, wenn ich die 131 Euro im Monat nicht aufbrauche?',
+    answer:
+      'Nicht genutzte Beträge werden in das Folgehalbjahr übertragen und stehen bis zum 30. Juni des Folgejahres zur Verfügung. Wer also im Januar bis Juni nichts braucht, kann im Juli–Dezember effektiv 262 Euro pro Monat anrechnen. Was bis 30. Juni des Folgejahres nicht verbraucht ist, verfällt.',
+  },
+  {
+    question: 'Kann ich bei Pflegegrad 1 eine Wohnungsräumung über die Pflegekasse abrechnen?',
+    answer:
+      'Ja, anteilig. Wenn die Räumung wegen Verwahrlosung als Entlastungsleistung nach §45a anerkannt ist, kann sie über den 131-Euro-Entlastungsbetrag abgerechnet werden. Bei größeren Aufträgen reicht das selten allein, kann aber mit §40 Wohnumfeldverbesserung (bis 4.180 Euro einmalig) kombiniert werden, wenn die Räumung der Vorbereitung auf einen barrierefreien Umbau dient.',
+  },
+  {
+    question: 'Lohnt sich der Antrag bei Pflegegrad 1 überhaupt?',
+    answer:
+      'In der Regel ja. Über ein Jahr gerechnet sind das 1.572 Euro Entlastungsbetrag plus potenziell 4.180 Euro Wohnumfeldverbesserung plus 504 Euro Pflegehilfsmittel-Pauschale. Das sind in der Spitze über 6.000 Euro Leistungswert pro Jahr, plus 23 Euro pro Monat als Pflegehilfsmittel-Pauschale.',
+  },
+  {
+    question: 'Was passiert, wenn der MD nur Pflegegrad 1 vergibt, ich aber auf 2 gehofft hatte?',
+    answer:
+      'Sie können binnen einem Monat Widerspruch einlegen (§84 SGB X). Wichtig ist eine sachliche Begründung mit Verweis auf das Pflegetagebuch und gegebenenfalls ergänzende Arzt-Berichte. Wir haben einen separaten Ratgeber zu <a href="/ratgeber/pflegekasse-ablehnung-widerspruch/">Pflegekassen-Widerspruch</a>.',
+  },
+];
+
+const faqSchema = generateFAQPageSchema(faqs);
+
+const breadcrumbSchema = generateBreadcrumbListSchema([
+  { name: 'Start', url: 'https://katharis.de/' },
+  { name: 'Ratgeber', url: 'https://katharis.de/ratgeber/' },
+  { name: 'Pflegegrad 1 – was zahlt die Kasse', url: 'https://katharis.de/ratgeber/pflegegrad-1-was-zahlt-die-kasse/' },
+]);
+---
+
+<PageLayout
+  title="Pflegegrad 1: Was zahlt die Pflegekasse 2026? | Ratgeber Katharis"
+  description="Welche Leistungen bei Pflegegrad 1 wirklich greifen: 131 Euro Entlastungsbetrag pro Monat, 4.180 Euro Wohnumfeld, 504 Euro Pflegehilfsmittel. Mit Antrags-Anleitung und Rechen-Beispiel."
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+  <article class="max-w-content mx-auto px-4 py-12">
+    <p class="text-sm text-primary/80">
+      <a href="/ratgeber/" class="underline">Ratgeber</a> &rsaquo; Pflegegrad 1 – was zahlt die Kasse
+    </p>
+    <h1 class="text-4xl font-bold text-primary mt-4">Pflegegrad 1 – was zahlt die Pflegekasse 2026?</h1>
+    <p class="text-sm text-primary/80 mt-2">
+      Verfasser: Daniel Altenhof · Fachlich gegengelesen von Kemal David Gülcü · Stand: 2026-05-27
+    </p>
+
+    <p class="mt-8 text-primary/80">
+      Pflegegrad 1 wird oft unterschätzt – „der niedrigste, da kommt eh kaum was". Das stimmt für das
+      Pflegegeld (gibt es bei Pflegegrad 1 nicht), aber nicht für die übrigen Töpfe der Pflegekasse.
+      Wer Pflegegrad 1 nutzt, kann jährlich Sachleistungen im Wert von über 6.000 Euro abrufen. In
+      diesem Ratgeber zeigen wir genau, welche Töpfe greifen, welche nicht – und wie Sie sie kombinieren.
+    </p>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Was Pflegegrad 1 überhaupt bedeutet</h2>
+    <p class="text-primary/80">
+      Pflegegrad 1 wird vergeben bei „geringer Beeinträchtigung der Selbständigkeit" – konkret bei
+      einem Punktwert zwischen 12,5 und unter 27 im Begutachtungs-Instrument des Medizinischen
+      Dienstes (§15 SGB XI). Beispiele aus der Praxis: leichte Demenz-Anzeichen, Bewegungs-
+      einschränkungen nach Hüft-OP, dauerhaft erhöhter Hilfebedarf bei Hauswirtschaft.
+    </p>
+    <p class="mt-4 text-primary/80">
+      Es ist der „Einstieg" in die Pflegeversicherung. Die Pflegekasse erkennt damit an, dass Sie
+      Unterstützung brauchen – auch wenn diese (noch) nicht den ganzen Tag betrifft.
+    </p>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Was es bei Pflegegrad 1 NICHT gibt</h2>
+    <ul class="mt-3 space-y-2 text-primary/80 list-disc list-inside">
+      <li><strong>Kein Pflegegeld</strong> (§37 SGB XI) – Pflegegeld gibt es erst ab Pflegegrad 2</li>
+      <li><strong>Keine Pflegesachleistungen</strong> nach §36 in voller Höhe – diese sind ebenfalls erst ab Pflegegrad 2 verfügbar</li>
+      <li><strong>Keine Verhinderungs- oder Kurzzeitpflege</strong> als eigene Töpfe (§42a Gemeinsamer Jahresbetrag startet ebenfalls ab Pflegegrad 2)</li>
+      <li><strong>Keine Tages- oder Nachtpflege</strong> als Sachleistung (§41) – Tagespflege kann aber über den Entlastungsbetrag mitfinanziert werden</li>
+    </ul>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Was es bei Pflegegrad 1 sehr wohl gibt</h2>
+
+    <h3 class="text-lg font-bold text-primary mt-6 mb-2">1. Entlastungsbetrag (§45b SGB XI) – 131 Euro pro Monat</h3>
+    <p class="text-primary/80">
+      Das ist der zentrale Topf für Pflegegrad 1. Seit 1. Januar 2025 beträgt der Entlastungsbetrag
+      131 Euro pro Monat (vorher 125 Euro). Das macht 1.572 Euro pro Jahr.
+    </p>
+    <p class="mt-4 text-primary/80">
+      Verwenden lässt er sich für:
+    </p>
+    <ul class="mt-3 space-y-1 text-primary/80 list-disc list-inside">
+      <li>Haushaltsführung (Reinigung, Wäsche, Einkauf)</li>
+      <li>Betreuung in einer anerkannten Tagespflege-Einrichtung</li>
+      <li>Anerkannte Angebote zur Unterstützung im Alltag (zum Beispiel Demenz-Begleitung)</li>
+      <li>Entlastungsleistungen durch §45a-Anbieter wie Katharis</li>
+    </ul>
+    <p class="mt-4 text-primary/80">
+      Mehr dazu im Detail-Ratgeber <a href="/ratgeber/entlastungsbetrag-richtig-nutzen/" class="underline text-accent-dark">Entlastungsbetrag richtig nutzen</a>.
+    </p>
+
+    <h3 class="text-lg font-bold text-primary mt-6 mb-2">2. Wohnumfeldverbesserung (§40 SGB XI) – bis 4.180 Euro einmalig je Maßnahme</h3>
+    <p class="text-primary/80">
+      Bauliche Anpassungen zur Verbesserung der Wohnsituation: Bad-Umbau, Treppenlift, Türverbreiterung,
+      Rampe vor der Haustür, Anti-Rutsch-Belag. Auch bei Pflegegrad 1 voll verfügbar. Mehr in unserem
+      <a href="/ratgeber/wohnumfeldverbesserung-antrag/" class="underline text-accent-dark">Wohnumfeldverbesserungs-Ratgeber</a>.
+    </p>
+    <p class="mt-4 text-primary/80">
+      <strong>Praxis-Tipp:</strong> Wenn eine Verwahrlosungs-Räumung der Vorbereitung auf einen
+      barrierefreien Umbau dient (zum Beispiel: erst entrümpeln, dann bodengleiche Dusche einbauen),
+      kann ein Teil der Räumungs-Kosten in den §40-Antrag aufgenommen werden.
+    </p>
+
+    <h3 class="text-lg font-bold text-primary mt-6 mb-2">3. Pflegehilfsmittel zum Verbrauch (§40 SGB XI) – 504 Euro pro Jahr</h3>
+    <p class="text-primary/80">
+      42 Euro pro Monat für Verbrauchsmaterial wie Einmal-Handschuhe, Bett-Schutz-Unterlagen,
+      Desinfektionsmittel, Fingerlinge. Abgewickelt meist über Sanitätshäuser, die das direkt mit
+      der Pflegekasse abrechnen. Sie zahlen nichts.
+    </p>
+
+    <h3 class="text-lg font-bold text-primary mt-6 mb-2">4. Pflegekurs für Angehörige (§45 SGB XI) – kostenfrei</h3>
+    <p class="text-primary/80">
+      Die Pflegekasse zahlt Pflegekurse für Angehörige, auch wenn der Versicherte nur Pflegegrad 1
+      hat. Angeboten von Volkshochschulen, Pflegeberatungs-Stellen, AOK/Barmer und anderen Kassen.
+      Sehr empfehlenswert, weil Sie hier oft erst lernen, welche Anträge überhaupt sinnvoll sind.
+    </p>
+
+    <h3 class="text-lg font-bold text-primary mt-6 mb-2">5. Beratungs-Anspruch (§37 Abs. 3 SGB XI) – freiwillig</h3>
+    <p class="text-primary/80">
+      Bei Pflegegrad 1 ist der Beratungseinsatz freiwillig (anders als bei Pflegegrad 2–5 mit
+      Pflegegeld). Sie können ihn aber nutzen, kostenfrei und neutral, durch Pflegestützpunkt,
+      Compass Pflegeberatung (0800 101 88 00) oder Wohlfahrtsverbände.
+    </p>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Rechen-Beispiel: 1 Jahr Pflegegrad 1 voll ausgeschöpft</h2>
+    <div class="mt-3 bg-background/40 rounded-xl p-6 border border-primary/10">
+      <ul class="space-y-2 text-primary/80">
+        <li><strong>Entlastungsbetrag:</strong> 12 × 131 € = <strong>1.572 €</strong></li>
+        <li><strong>Pflegehilfsmittel-Pauschale:</strong> 12 × 42 € = <strong>504 €</strong></li>
+        <li><strong>Wohnumfeldverbesserung (einmalig):</strong> bis <strong>4.180 €</strong></li>
+        <li class="pt-2 border-t border-primary/20"><strong>Summe Jahr 1 (mit §40-Maßnahme):</strong> bis zu <strong>6.256 €</strong></li>
+        <li><strong>Summe Folgejahre (ohne §40-Maßnahme):</strong> ca. <strong>2.076 €</strong> pro Jahr</li>
+      </ul>
+    </div>
+    <p class="mt-4 text-primary/80 text-sm">
+      Plus optional: Pflegekurs für Angehörige (Wert ca. 200–400 €), freiwilliger Beratungseinsatz
+      (kostenlos durch Pflegestützpunkt oder Compass).
+    </p>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">So beantragen Sie Pflegegrad 1</h2>
+    <ol class="mt-3 space-y-3 text-primary/80 list-decimal list-inside">
+      <li><strong>Anruf bei der Pflegekasse</strong> der Krankenversicherung. Formloser Antrag genügt. Datum schriftlich notieren (Antragsdatum gilt für Rückwirkung).</li>
+      <li><strong>Pflegetagebuch führen</strong> über 14 Tage. Was tun Sie wann, wo brauchen Sie Hilfe, wie lange dauert was. Mehr im Ratgeber <a href="/ratgeber/md-begutachtung-vorbereiten/" class="underline text-accent-dark">MD-Begutachtung vorbereiten</a>.</li>
+      <li><strong>MD-Begutachtung</strong> kommt zu Ihnen nach Hause. Dauer typisch 60–90 Minuten. Vertrauensperson sollte dabei sein.</li>
+      <li><strong>Bescheid</strong> kommt 5–25 Werktage später. Pflegegrad wird zugeordnet, ab Antragsdatum rückwirkend gültig.</li>
+      <li><strong>Bei Ablehnung:</strong> binnen 1 Monat Widerspruch (§84 SGB X). Details im Ratgeber <a href="/ratgeber/pflegekasse-ablehnung-widerspruch/" class="underline text-accent-dark">Pflegekassen-Widerspruch</a>.</li>
+    </ol>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Wann eine Höherstufung sinnvoll ist</h2>
+    <p class="text-primary/80">
+      Wenn sich der Hilfebedarf merklich erhöht – zum Beispiel bei fortschreitender Demenz, nach
+      Krankenhausaufenthalt, bei zunehmender Bewegungs-Einschränkung – können Sie einen Höherstufungs-
+      Antrag stellen. Ab Pflegegrad 2 greifen dann deutlich mehr Töpfe: Pflegegeld, §36-Pflege-
+      sachleistung, §42a Gemeinsamer Jahresbetrag (Verhinderungs- und Kurzzeitpflege bis 3.539 € pro
+      Jahr).
+    </p>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Wie wir bei Pflegegrad 1 helfen</h2>
+    <p class="text-primary/80">
+      Katharis ist nach §45a SGB XI anerkannt – damit können Sie unsere Leistungen über den
+      Entlastungsbetrag (131 € pro Monat) direkt mit Ihrer Pflegekasse abrechnen, ohne Vorkasse.
+      Konkret übernehmen wir:
+    </p>
+    <ul class="mt-3 space-y-1 text-primary/80 list-disc list-inside">
+      <li>Wohnungsreinigung und Haushaltsführung bei Pflegebedürftigen</li>
+      <li>Entlastung bei Verwahrlosung kleineren Umfangs</li>
+      <li>Vorbereitung von §40-Wohnumfeld-Maßnahmen (zum Beispiel Entrümpelung vor Bad-Umbau)</li>
+    </ul>
+    <p class="mt-4 text-primary/80">
+      Hintergrund zu allen Töpfen im Pillar-Artikel <a href="/ratgeber/pflegekasse-entlastung/" class="underline text-accent-dark">Pflegekasse und Entlastung 2026</a>.
+    </p>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Häufige Fragen</h2>
+    <div class="mt-4 space-y-3">
+      {faqs.map((faq) => (
+        <details class="border border-primary/20 rounded-lg p-4 bg-white">
+          <summary class="font-bold text-primary cursor-pointer">{faq.question}</summary>
+          <p class="mt-3 text-primary/80 text-sm" set:html={faq.answer} />
+        </details>
+      ))}
+    </div>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Verwandte Themen</h2>
+    <ul class="mt-3 space-y-1 text-primary/80 list-disc list-inside">
+      <li><a href="/ratgeber/entlastungsbetrag-richtig-nutzen/" class="underline text-accent-dark">Entlastungsbetrag 131 € richtig nutzen</a> – §45b im Detail</li>
+      <li><a href="/ratgeber/pflegekasse-entlastung/" class="underline text-accent-dark">Pflegekassen-Töpfe 2026</a> – komplette Übersicht aller PG-Stufen</li>
+      <li><a href="/ratgeber/pflegekasse-direktabrechnung/" class="underline text-accent-dark">Direktabrechnung erklärt</a></li>
+      <li><a href="/ratgeber/pflegekasse-ablehnung-widerspruch/" class="underline text-accent-dark">Pflegekasse abgelehnt – Widerspruch einlegen</a></li>
+      <li><a href="/ratgeber/md-begutachtung-vorbereiten/" class="underline text-accent-dark">MD-Begutachtung vorbereiten</a> – für Höherstufung von PG 1</li>
+      <li><a href="/ratgeber/wohnumfeldverbesserung-antrag/" class="underline text-accent-dark">§40 Wohnumfeldverbesserung beantragen</a></li>
+      <li><a href="/pflegegrad-antrag/" class="underline text-accent-dark">Pflegegrad-Antrag – Schritt für Schritt</a></li>
+    </ul>
+
+    <h2 class="text-2xl font-bold text-primary mt-8 mb-3">Quellen</h2>
+    <ul class="mt-3 space-y-1 text-primary/80 list-disc list-inside text-sm">
+      <li>SGB XI §14, §15 (Begriff Pflegebedürftigkeit, Begutachtungs-Instrument)</li>
+      <li>SGB XI §28a (Leistungen bei Pflegegrad 1)</li>
+      <li>SGB XI §40 (Wohnumfeldverbesserung, Pflegehilfsmittel)</li>
+      <li>SGB XI §45 (Pflegekurse für Angehörige)</li>
+      <li>SGB XI §45b (Entlastungsbetrag, seit 1.1.2025 131 €/Monat)</li>
+      <li>SGB X §84 (Widerspruch)</li>
+      <li>Bundesgesundheitsministerium: Übersicht Pflegegrade und Leistungen</li>
+    </ul>
+  </article>
+
+  <section class="py-16 bg-background text-center">
+    <div class="max-w-2xl mx-auto px-4">
+      <h2 class="text-2xl font-bold text-primary">Sie haben Pflegegrad 1 und brauchen Unterstützung?</h2>
+      <p class="mt-4 text-primary/80">Erstgespräch kostenlos. Wir klären, welche Töpfe in Ihrer Situation greifen.</p>
+      <div class="flex flex-col sm:flex-row gap-3 mt-6 justify-center">
+        <CallCTA client:load />
+        <RueckrufButton client:load sourceCta="rueckruf-ratgeber-pflegegrad-1" />
+      </div>
+    </div>
+  </section>
+</PageLayout>
