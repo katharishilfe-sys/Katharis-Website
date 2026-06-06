@@ -68,13 +68,14 @@ const KLARO_CDN_BASE = 'https://cdn.jsdelivr.net/npm/klaro@0.7.22/dist';
       </>
     )}
 
-    {/* GTM */}
+    {/* GTM - als Loader unter "Analyse"-Consent. Einzelne Tags drin (GA4, Ads)
+        respektieren Consent-Mode V2 separat (analytics_storage / ad_storage). */}
     {gtmId && (
       <script
         is:inline
         type="text/plain"
         data-type="application/javascript"
-        data-name="google-ads"
+        data-name="google-analytics"
         set:html={`
           (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${gtmId}');
         `}
