@@ -23,6 +23,10 @@ Thumbs.db
 .idea/
 *.swp
 
+# Office-Lockfiles (Word/LibreOffice schreibt ~$<filename> wenn Datei offen)
+# Astro baut sonst /ratgeber/~$index/ als kaputte Seite ohne Title/Meta.
+~$*
+
 # Logs
 *.log
 npm-debug.log*
