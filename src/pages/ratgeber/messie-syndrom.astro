@@ -1,6 +1,6 @@
 ---
 import PageLayout from '@layouts/PageLayout.astro';
-import { generateFAQPageSchema, generateBreadcrumbListSchema, PERSON_DANIEL, PERSON_KEMAL } from '@lib/schema-org';
+import { generateFAQPageSchema, generateBreadcrumbListSchema, PERSON_DANIEL } from '@lib/schema-org';
 import CallCTA from '@components/CallCTA';
 import RueckrufButton from '@components/RueckrufButton';
 
@@ -15,7 +15,6 @@ const articleSchema = {
   datePublished: '2026-05-07T00:00:00+02:00',
   dateModified: '2026-05-22T00:00:00+02:00',
   author: PERSON_DANIEL,
-  reviewedBy: PERSON_KEMAL,
   image: `${SITE_URL}/og-image.png`,
   mainEntityOfPage: `${SITE_URL}/ratgeber/messie-syndrom/`,
   publisher: { '@id': `${SITE_URL}/#organization` },
@@ -82,7 +81,7 @@ const breadcrumbSchema = generateBreadcrumbListSchema([
     </p>
     <h1 class="text-4xl font-bold text-primary mt-4">Messie-Syndrom: Was Angehörige wissen sollten</h1>
     <p class="text-sm text-primary/80 mt-2">
-      Verfasser: Daniel Altenhof · Fachlich gegengelesen von Kemal David Gülcü · Stand: 2026-05-22
+      Verfasser: Daniel Altenhof · Stand: 2026-05-22
     </p>
 
     <p class="mt-8 text-primary/80">

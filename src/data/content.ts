@@ -47,13 +47,7 @@ export const initiatoren = [
     name: 'Daniel Altenhof',
     rolle: 'Initiator und operativer Leiter',
     foto: '/daniel.jpg',
-    bio: 'Daniel ist seit 2024 das organisatorische Herz von Katharis. Er führt die Erstgespräche, koordiniert Vor-Ort-Termine, klärt die Pflegekassen-Direktabrechnung mit den Klienten.',
-  },
-  {
-    name: 'Kemal David Gülcü',
-    rolle: 'Initiator und operativer Leiter',
-    foto: '/kemal.jpg',
-    bio: 'Kemal verantwortet die operative Vor-Ort-Arbeit. Er ist erste Ansprechperson am Termin, koordiniert das Spezialisten-Team, sichert Würdigungs- und Diskretions-Standards.',
+    bio: 'Daniel ist seit 2024 das organisatorische Herz von Katharis. Er führt die Erstgespräche, koordiniert Vor-Ort-Termine, klärt die Pflegekassen-Direktabrechnung mit den Klienten und verantwortet den operativen Einsatz vor Ort gemeinsam mit dem Spezialisten-Team.',
   },
 ];
 
@@ -88,7 +82,7 @@ export const trustIndikatoren = {
   bilanzZahl: 73,
   bilanzText:
     'erfolgreich abgewickelte Fälle in Stadt Stuttgart und Landkreis Böblingen, 2024 bis heute',
-  team: 'Daniel Altenhof und Kemal David Gülcü als Initiatoren plus 6 Spezialisten im operativen Team',
+  team: 'Daniel Altenhof als Initiator und operativer Leiter plus 6 Spezialisten im operativen Team',
 };
 
 export const pflegekassenTöpfe = [

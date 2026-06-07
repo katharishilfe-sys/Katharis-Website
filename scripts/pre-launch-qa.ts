@@ -153,7 +153,7 @@ async function testContentSamples() {
     { url: '/', expectH1: true, mustContain: ['Pflegekasse', 'Stuttgart'], mustNotContain: ['garantiert', 'niemand erfaehrt'] },
     { url: '/service/messie-hilfe/', expectH1: true, mustContain: ['Messie', 'für', 'können'] },
     { url: '/pflegekasse/', expectH1: true, mustContain: ['45a', '131 Euro pro Monat', '4.180', '3.539'], mustNotContain: ['125 Euro pro Monat', '1.572 Euro pro Jahr'] },
-    { url: '/ueber-uns/', expectH1: true, mustContain: ['Daniel', 'Kemal'], mustNotContain: ['Cleanit', 'Geschäftsführer'] },
+    { url: '/ueber-uns/', expectH1: true, mustContain: ['Daniel'], mustNotContain: ['Cleanit', 'Geschäftsführer', 'Kemal', 'Gülcü'] },
   ];
 
   for (const sample of samples) {

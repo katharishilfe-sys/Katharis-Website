@@ -14,14 +14,6 @@ export const PERSON_DANIEL = {
   url: `${SITE_URL}/ueber-uns/`,
 };
 
-export const PERSON_KEMAL = {
-  '@type': 'Person',
-  '@id': `${SITE_URL}/ueber-uns/#kemal`,
-  name: 'Kemal David Gülcü',
-  jobTitle: 'Initiator und operativer Leiter Katharis',
-  url: `${SITE_URL}/ueber-uns/`,
-};
-
 export function generateWebSiteSchema() {
   return {
     '@context': 'https://schema.org',
@@ -64,7 +56,6 @@ export function generateOrganizationSchema() {
     areaServed: traeger.para45aGeltungsbereich,
     founder: [
       { '@id': `${SITE_URL}/ueber-uns/#daniel` },
-      { '@id': `${SITE_URL}/ueber-uns/#kemal` },
     ],
     knowsAbout: [
       'Pflegekassen-Entlastungsleistungen nach §45a SGB XI',

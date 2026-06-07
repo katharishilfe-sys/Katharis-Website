@@ -6,11 +6,9 @@ import CallCTA from '@components/CallCTA';
 import RueckrufButton from '@components/RueckrufButton';
 import { Image } from 'astro:assets';
 import danielFoto from '@/assets/daniel.jpg';
-import kemalFoto from '@/assets/kemal.jpg';
 
 const portraits: Record<string, ImageMetadata> = {
   '/daniel.jpg': danielFoto,
-  '/kemal.jpg': kemalFoto,
 };
 
 const SITE_URL = 'https://katharis.de';
@@ -22,12 +20,8 @@ const personKnowsAbout: Record<string, string[]> = {
     '§45b Entlastungsbetrag SGB XI',
     'Pflegegrad-Antragsverfahren',
     'Koordination mit Pflegestützpunkten in Stuttgart und Böblingen',
-  ],
-  'Kemal David Gülcü': [
-    'Operative Durchführung von Entlastungsleistungen',
-    'Vor-Ort-Begehung und Auftragsplanung',
+    'Operative Leitung beim Vor-Ort-Einsatz',
     'Hygiene- und Sicherheits-Standards bei Verwahrlosung',
-    'Sortierung, Tiefenreinigung, Vermieter-Übergabe',
     'Team-Koordination im Spezialisten-Einsatz',
   ],
 };
@@ -38,14 +32,11 @@ const personVerantwortung: Record<string, string[]> = {
     'Vor-Ort-Begehung und Auftrags-Einschätzung',
     'Pflegekassen-Direktabrechnung und Vertrags-Unterlagen',
     'Kontakt zu Pflegestützpunkten und Sozialdiensten',
-    'Daten- und Diskretionsstandards',
-  ],
-  'Kemal David Gülcü': [
     'Operative Leitung beim Vor-Ort-Einsatz',
     'Koordination des Spezialisten-Teams',
     'Qualitätssicherung Sortierung und Tiefenreinigung',
     'Vermieter-Übergabe und Übergabe-Protokoll',
-    'Würdigungs- und Diskretions-Standards im Einsatz',
+    'Daten-, Diskretions- und Würdigungs-Standards',
   ],
 };
 
@@ -82,17 +73,17 @@ const faqs = [
   {
     question: 'Wer ist mein Ansprechpartner bei Katharis?',
     answer:
-      'Beim Erstgespräch melden sich entweder Daniel Altenhof oder Kemal David Gülcü direkt. Daniel führt die meisten Erstgespräche und Pflegekassen-Klärungen, Kemal ist verantwortlich für die operative Vor-Ort-Arbeit. Im laufenden Auftrag sind beide erreichbar.',
+      'Beim Erstgespräch meldet sich Daniel Altenhof direkt. Er führt die Erstgespräche und Pflegekassen-Klärungen und verantwortet auch die operative Vor-Ort-Arbeit mit dem Spezialisten-Team. Im laufenden Auftrag bleibt er Ihr Hauptansprechpartner.',
   },
   {
     question: 'Wie viele Personen sind im Team?',
     answer:
-      'Acht Personen insgesamt: Daniel Altenhof und Kemal David Gülcü als Initiatoren und operative Leiter plus sechs Spezialistinnen und Spezialisten für den Vor-Ort-Einsatz. Bei Großaufträgen koordinieren wir das Team in Schichten.',
+      'Sieben Personen insgesamt: Daniel Altenhof als Initiator und operativer Leiter plus sechs Spezialistinnen und Spezialisten für den Vor-Ort-Einsatz. Bei Großaufträgen koordinieren wir das Team in Schichten.',
   },
   {
     question: 'Welche Ausbildung haben die Vor-Ort-Mitarbeitenden?',
     answer:
-      'Alle Vor-Ort-Mitarbeitenden haben eine aktuelle Hygiene-Schulung und Erste-Hilfe-Auffrischung. Daniel und Kemal als Einsatz-Verantwortliche zusätzlich aktueller Hepatitis- und Tetanus-Impfschutz. Bei besonderen Anforderungen (Schimmel-Beseitigung, Asbest, Biowaste) ziehen wir zertifizierte Spezialisten hinzu.',
+      'Alle Vor-Ort-Mitarbeitenden haben eine aktuelle Hygiene-Schulung und Erste-Hilfe-Auffrischung. Daniel als Einsatz-Verantwortlicher zusätzlich aktueller Hepatitis- und Tetanus-Impfschutz. Bei besonderen Anforderungen (Schimmel-Beseitigung, Asbest, Biowaste) ziehen wir zertifizierte Spezialisten hinzu.',
   },
   {
     question: 'Wie ist Ihre Diskretion organisiert?',
@@ -105,9 +96,9 @@ const faqs = [
       'Ja, sehr eng. Etwa 30 Prozent unserer Aufträge kommen über Sozialdienst-Vermittlungen (Klinikum Sindelfingen-Böblingen, Klinikum Stuttgart, Klinikverbund Südwest), Pflegestützpunkt-Empfehlungen (LK Böblingen, Stadt Stuttgart) oder über Compass Pflegeberatung. Wir geben Rückmeldung an die vermittelnde Stelle nach Auftrags-Ende, wenn Sie als Klient damit einverstanden sind.',
   },
   {
-    question: 'Warum heißen Daniel und Kemal "Initiatoren", nicht "Geschäftsführer"?',
+    question: 'Warum heißt Daniel "Initiator", nicht "Geschäftsführer"?',
     answer:
-      'Weil das die akkurate Rollenbeschreibung ist: Daniel und Kemal haben Katharis als operative Leistung initiiert, sie führen die Arbeit, kümmern sich um Aufträge und Klienten. Die juristische Geschäftsführung der Träger-Gesellschaft liegt bei einer separaten Person, die im Impressum genannt ist. Das ist eine ehrliche Trennung zwischen Marke und Trägerschaft.',
+      'Weil das die akkurate Rollenbeschreibung ist: Daniel hat Katharis als operative Leistung initiiert, er führt die Arbeit, kümmert sich um Aufträge und Klienten. Die juristische Geschäftsführung der Träger-Gesellschaft liegt bei einer separaten Person, die im Impressum genannt ist. Das ist eine ehrliche Trennung zwischen Marke und Trägerschaft.',
   },
 ];
 
@@ -117,7 +108,7 @@ const prozessSchritte = [
   {
     nummer: 1,
     titel: 'Erstgespräch am Telefon',
-    text: 'Sie rufen an oder lassen sich zurückrufen. Daniel oder Kemal hören zu, fragen nach Pflegegrad-Stand, Wohnsituation, Vermieter-Frist, Erwartungs-Horizont. Dauer 10 bis 20 Minuten, kostenfrei.',
+    text: 'Sie rufen an oder lassen sich zurückrufen. Daniel hört zu, fragt nach Pflegegrad-Stand, Wohnsituation, Vermieter-Frist, Erwartungs-Horizont. Dauer 10 bis 20 Minuten, kostenfrei.',
   },
   {
     nummer: 2,
@@ -159,8 +150,8 @@ const vermittler = [
 ---
 
 <PageLayout
-  title="Über Katharis: Daniel Altenhof und Kemal David Gülcü"
-  description="Wer hinter Katharis steht: Daniel und Kemal als Initiatoren plus 6-köpfiges Spezialisten-Team. §45a SGB XI für Stuttgart und LK Böblingen."
+  title="Über Katharis: Daniel Altenhof"
+  description="Wer hinter Katharis steht: Daniel Altenhof als Initiator plus 6-köpfiges Spezialisten-Team. §45a SGB XI für Stuttgart und LK Böblingen."
 >
   {personSchemas.map((schema) => (
     <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
@@ -212,7 +203,8 @@ const vermittler = [
     ))}
     <p class="text-sm text-primary/70 mt-4">
       Hinzu kommen sechs Spezialistinnen und Spezialisten im operativen Team, alle für die Arbeit
-      bei Verwahrlosung und Pflegefall vor Ort geschult.
+      bei Verwahrlosung und Pflegefall vor Ort geschult. Bei Großaufträgen koordiniert Daniel das
+      Team in Schichten.
     </p>
   </section>
 
@@ -366,7 +358,7 @@ const vermittler = [
     <h2 class="text-2xl font-bold text-primary mb-4">Trägerschaft und Verantwortung</h2>
     <p class="text-primary/80">
       <strong>Katharis</strong> ist die Marke. Als Klient oder Vermittler haben Sie es operativ mit Daniel
-      Altenhof und Kemal David Gülcü zu tun - sie sind die Initiatoren und operativen Leiter.
+      Altenhof zu tun - er ist Initiator und operativer Leiter.
     </p>
     <p class="mt-4 text-primary/80">
       Die <strong>operative Zentrale</strong> liegt in der Olgastraße 8, 71032 Böblingen. Träger der

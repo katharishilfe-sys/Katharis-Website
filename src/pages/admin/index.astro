@@ -2,7 +2,7 @@
 import BaseLayout from '@layouts/BaseLayout.astro';
 
 /**
- * Operations-Dashboard für Daniel + Kemal + Maxim.
+ * Operations-Dashboard für Daniel + Maxim.
  *
  * SCHUTZ:
  *   - noindex,nofollow per Meta (BaseLayout-Prop)
@@ -10,7 +10,7 @@ import BaseLayout from '@layouts/BaseLayout.astro';
  *   - Cloudflare Access OBLIGATORISCH vor Live-Gang (Daniel-Aktion):
  *       Cloudflare Dashboard -> Zero Trust -> Access -> Applications
  *       -> Add application: katharis-v2.pages.dev/admin/*
- *       -> Policy: Email-Liste daniel/kemal/maxim
+ *       -> Policy: Email-Liste daniel/maxim
  *
  * Zweck: zentrale Anlaufstelle für alle Operations-Dokumente, AVV-Pakete,
  * SOPs, UWG-Playbooks. Source-of-Truth bleibt katharis-build/-Ordner lokal,
@@ -56,7 +56,7 @@ const operationsDocs: OpsDoc[] = [
     titel: 'Vertretungsmatrix Daniel-Ausfall',
     zweck: 'Wer macht was wenn Daniel ausfaellt. Backup-Telefon, Email, Pflegekassen-Kontakte.',
     status: 'live',
-    wer: 'Daniel + Kemal',
+    wer: 'Daniel',
     pfad: 'katharis-build/etappe-3/anhang-a/a5-vertretungsmatrix.md',
   },
   {
@@ -72,7 +72,7 @@ const operationsDocs: OpsDoc[] = [
     titel: 'Operations-Handbuch v1.0.0',
     zweck: 'Konsolidiertes Handbuch für den taeglichen Betrieb (12 Sektionen inkl. Schulungs-Modul + Versionierung). Querverweise zu allen anderen SOPs.',
     status: 'live',
-    wer: 'Daniel + Kemal (Maxim-Approval ausstehend)',
+    wer: 'Daniel (Maxim-Approval ausstehend)',
     pfad: 'katharis-build/etappe-3/anhang-a/a9-operations-handbuch-skelett.md',
   },
   {
@@ -104,15 +104,15 @@ const operationsDocs: OpsDoc[] = [
     titel: 'Pflegegrad-Antrags-SOP + Vollmachts-Templates',
     zweck: 'Wie wir Pflegegrad-Antraege administrativ helfen ohne Para-7a-Konflikt. Vollmachts-Templates.',
     status: 'live',
-    wer: 'Daniel + Kemal',
+    wer: 'Daniel',
     pfad: 'katharis-build/etappe-3/anhang-a/a14-pflegegrad-antrags-sop.md',
   },
   {
     id: 'EG',
     titel: 'Erstgespräch-Master-Skript',
-    zweck: 'Telefon-Skript für Daniel + Kemal. Strukturierte Bedarfsklärung in 8-12 min.',
+    zweck: 'Telefon-Skript für Daniel. Strukturierte Bedarfsklärung in 8-12 min.',
     status: 'live',
-    wer: 'Daniel + Kemal',
+    wer: 'Daniel',
     pfad: 'katharis-build/etappe-3/anhang-a/erstgespraech-master-skript.md',
   },
   {
@@ -165,7 +165,7 @@ const grouped = {
 
 <BaseLayout
   title="Operations-Dashboard | Katharis Intern"
-  description="Internes Dashboard für Daniel, Kemal, Maxim."
+  description="Internes Dashboard für Daniel, Maxim."
   noindex={true}
 >
   <main id="main" class="bg-background min-h-screen py-12">
@@ -183,7 +183,7 @@ const grouped = {
           <strong>Sicherheits-Hinweis:</strong> Vor Live-Gang muss Cloudflare Access
           über <code>/admin/*</code> gelegt werden. Dashboard -> Zero Trust ->
           Access -> Applications -> Add application -> Policy mit Email-Allow-Liste
-          (daniel, kemal, maxim).
+          (Daniel, Maxim).
         </div>
       </header>
 
